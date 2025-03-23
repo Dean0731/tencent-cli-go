@@ -1,9 +1,10 @@
 package config
 
 import (
-	"github.com/dean0731/tencent-cli-go/exception"
-	"github.com/dean0731/tencent-cli-go/log"
-	"github.com/dean0731/tencent-cli-go/utils"
+	"github.com/dean0731/dean-tool/config"
+	"github.com/dean0731/dean-tool/exception"
+	"github.com/dean0731/dean-tool/log"
+	"github.com/dean0731/dean-tool/utils"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -54,7 +55,7 @@ func BindFlags(cmd *cobra.Command) {
 	if err := viper.BindPFlags(cmd.PersistentFlags()); err != nil {
 		panic(exception.UnknownError.SetMessage(err.Error()))
 	}
-	LoadConfig()
+	config.LoadConfig(AppDir)
 	viper.SetDefault(Region, DefaultRegion)
 }
 

@@ -1,9 +1,9 @@
 package common
 
 import (
+	"github.com/dean0731/dean-tool/log"
+	"github.com/dean0731/dean-tool/utils"
 	"github.com/dean0731/tencent-cli-go/config"
-	"github.com/dean0731/tencent-cli-go/log"
-	"github.com/dean0731/tencent-cli-go/utils"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"

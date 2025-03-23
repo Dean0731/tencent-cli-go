@@ -3,8 +3,8 @@ package app
 import (
 	"embed"
 	"encoding/json"
+	"github.com/dean0731/dean-tool/exception"
 	"github.com/dean0731/tencent-cli-go/app/common"
-	"github.com/dean0731/tencent-cli-go/exception"
 	"github.com/spf13/cobra"
 	"io/fs"
 )

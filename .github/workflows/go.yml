@@ -1,0 +1,253 @@
+name: Release Go Application
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [linux, windows]
+        goarch: [amd64, arm64]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.7'
+          cache: true
+
+      # ========== 构建 ==========
+      - name: Build ${{ matrix.goos }}/${{ matrix.goarch }}
+        run: |
+          if [ "${{ matrix.goos }}" = "windows" ]; then
+            BINARY_NAME="tencent_cli_go.exe"
+          else
+            BINARY_NAME="tencent_cli_go"
+          fi
+          CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} \
+          go build -ldflags="-s -w" -o "$BINARY_NAME" .
+
+      # ========== 打包 ==========
+      - name: Package ${{ matrix.goos }}/${{ matrix.goarch }}
+        id: package_binary
+        run: |
+          PKG_DIR="tencent_cli_go-${{ github.ref_name }}-${{ matrix.goos }}-${{ matrix.goarch }}"
+          mkdir -p "$PKG_DIR"
+          
+          # 输出当前路径和文件列表
+          echo "📁 当前目录: $(pwd)"
+          ls -la .
+          
+          # 编译二进制
+          if [ "${{ matrix.goos }}" = "windows" ]; then
+            BINARY_NAME="tencent_cli_go.exe"
+          else
+            BINARY_NAME="tencent_cli_go"
+          fi
+          
+          CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} \
+          go build -ldflags="-s -w" -o "$BINARY_NAME" .
+
+          # 检查是否编译成功
+          if [ ! -f "$BINARY_NAME" ]; then
+            echo "❌ 编译失败: $BINARY_NAME 不存在"
+            ls -la .  # 列出所有文件
+            exit 1
+          fi
+
+          # 复制到 PKG_DIR
+          cp "$BINARY_NAME" "$PKG_DIR/"
+          cp README.md "$PKG_DIR/" || echo "⚠️ README.md not found"
+          cp LICENSE "$PKG_DIR/" || echo "⚠️ LICENSE not found"
+
+          # 压缩
+          if [ "${{ matrix.goos }}" = "windows" ]; then
+            zip -r "${PKG_DIR}.zip" "$PKG_DIR/"
+            ASSET_PATH="${PKG_DIR}.zip"
+          else
+            tar -czf "${PKG_DIR}.tar.gz" "$PKG_DIR/"
+            ASSET_PATH="${PKG_DIR}.tar.gz"
+          fi
+
+          # 检查压缩文件是否存在
+          if [ ! -f "$ASSET_PATH" ]; then
+            echo "❌ 压缩失败: $ASSET_PATH 不存在"
+            ls -la *.zip *.tar.gz
+            exit 1
+          fi
+
+          # 输出变量
+          echo "asset_path=$ASSET_PATH" >> $GITHUB_OUTPUT
+          echo "asset_name=$(basename "$ASSET_PATH")" >> $GITHUB_OUTPUT
+
+          # 调试：打印结果
+          echo "✅ asset_path = $ASSET_PATH"
+          echo "✅ asset_name = $(basename "$ASSET_PATH")"
+
+      # ========== 提取 Changelog 并创建 Release（仅 linux/amd64 执行）==========
+      - name: Extract Changelog and Create Release
+        if: matrix.goos == 'linux' && matrix.goarch == 'amd64'
+        id: create_release
+        uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          script: |
+            const { readFileSync } = require('fs');
+            const tagName = context.ref.replace('refs/tags/', '');
+
+            // 读取 CHANGELOG.md
+            let changelogContent;
+            try {
+              changelogContent = readFileSync('CHANGELOG.md', 'utf8');
+            } catch (err) {
+              core.setFailed('❌ CHANGELOG.md 文件未找到！');
+              throw err;
+            }
+
+            // 按行拆分
+            const lines = changelogContent.split('\n');
+            let inSection = false;
+            let changelogBody = '';
+
+            for (let i = 0; i < lines.length; i++) {
+              const line = lines[i].trim();
+
+              // 匹配当前版本：## [v1.0.0] 或 ## v1.0.0
+              if (line.startsWith(`## [${tagName}]`) || line.startsWith(`## ${tagName}`)) {
+                inSection = true;
+                // 从下一行开始收集内容
+                let content = [];
+                for (let j = i + 1; j < lines.length; j++) {
+                  const nextLine = lines[j].trim();
+
+                  // 如果遇到下一个版本标题（## [v... 或 ## v...），停止
+                  if (nextLine.startsWith('## [') || (nextLine.startsWith('## ') && nextLine.includes('] -') || nextLine.match(/## v\d+\.\d+\.\d+/))) {
+                    break;
+                  }
+
+                  content.push(lines[j]); // 保留原始格式（包括缩进、换行）
+                }
+
+                changelogBody = content.join('\n').trim();
+                break;
+              }
+            }
+
+            // 如果没找到内容
+            if (!changelogBody) {
+              changelogBody = `未在 CHANGELOG.md 中找到版本 ${tagName} 的更新记录。`;
+            }
+
+            // 添加标题
+            changelogBody = `### 📝 更新日志\n\n${changelogBody}`;
+
+            // 创建或获取 Release
+            let release;
+            try {
+              release = await github.rest.repos.getReleaseByTag({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag: tagName
+              });
+              console.log(`ℹ️ Release 已存在: ${release.data.html_url}`);
+            } catch (error) {
+              if (error.status === 404) {
+                release = await github.rest.repos.createRelease({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  tag_name: tagName,
+                  name: `Release ${tagName}`,
+                  body: changelogBody,
+                  draft: false,
+                  prerelease: false
+                });
+                console.log(`✅ 成功创建 Release: ${release.data.html_url}`);
+              } else {
+                core.setFailed(`❌ 获取 Release 失败: ${error.message}`);
+                throw error;
+              }
+            }
+
+            // 输出 release_id
+            core.setOutput('id', release.data.id);
+            core.setOutput('html_url', release.data.html_url);
+
+      # ========== 所有平台上传资产 ==========
+      - name: Upload Release Asset
+        uses: actions/github-script@v7
+        env:
+          ASSET_PATH: ${{ steps.package_binary.outputs.asset_path }}
+          ASSET_NAME: ${{ steps.package_binary.outputs.asset_name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          script: |
+            const { readFileSync } = require('fs');
+            const assetPath = process.env.ASSET_PATH;
+            const assetName = process.env.ASSET_NAME;
+            const tagName = context.ref.replace('refs/tags/', '');
+
+            if (!assetPath || !assetName) {
+              throw new Error('❌ asset_path 或 asset_name 为空，请检查 package_binary 步骤是否正确输出');
+            }
+
+            console.log(`📁 准备上传: ${assetName} (路径: ${assetPath})`);
+
+            // 重试获取 Release
+            async function getReleaseWithRetry(retries = 15, delay = 10000) {
+              for (let i = 0; i < retries; i++) {
+                try {
+                  const { data: release } = await github.rest.repos.getReleaseByTag({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    tag: tagName
+                  });
+                  console.log(`✅ 找到 Release: ${release.html_url}`);
+                  return release;
+                } catch (error) {
+                  if (error.status === 404) {
+                    if (i === retries - 1) {
+                      throw new Error(`❌ 超时：未找到 Release ${tagName}`);
+                    }
+                    console.log(`⏳ 等待 Release... (${i + 1}/${retries})`);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                  } else {
+                    throw error;
+                  }
+                }
+              }
+            }
+
+            const release = await getReleaseWithRetry();
+
+            const fileBuffer = readFileSync(assetPath);
+            const fileSize = fileBuffer.length;
+            const contentType = assetName.endsWith('.zip') 
+              ? 'application/zip' 
+              : 'application/gzip';
+
+            console.log(`📤 上传中: ${assetName} (${fileSize} bytes)`);
+
+            await github.rest.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: release.id,
+              name: assetName,
+              data: fileBuffer,
+              headers: {
+                'content-type': contentType,
+                'content-length': fileSize
+              }
+            });
+
+            console.log(`✅ 上传成功: ${assetName}`);
