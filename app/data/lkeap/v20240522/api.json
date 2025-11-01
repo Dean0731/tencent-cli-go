@@ -1,7 +1,7 @@
 {
   "actions": {
     "ChatCompletions": {
-      "document": "### 接口功能\n\n调用接口，发起一次对话请求。单账号限制接口并发上限为5。\n如需使用OpenAI兼容接口， 请参考文档：[Deepseek OpenAI对话接口](https://cloud.tencent.com/document/product/1772/115969)\n\n#### 在线体验\n如您希望在网页内直接体验 DeepSeek 模型对话，推荐您前往[腾讯云大模型知识引擎](https://cloud.tencent.com/product/lke)，使用[ DeepSeek 联网助手](https://lke.cloud.tencent.com/webim_exp/#/chat/wQrAwR)。\n\n#### 已支持的模型\n- DeepSeek-V3（model 参数值为**deepseek-v3**）\n    - DeepSeek-V3为671B参数MoE模型，在百科知识、数学推理等多项任务上优势突出，评测成绩在主流榜单中位列开源模型榜首。\n    - 支持64K上下文长度，最大输入56k，最大输出8k（不含思维链）。\n- DeepSeek-R1（model 参数值为**deepseek-r1**）\n    - DeepSeek-R1为671B模型，使用强化学习训练，推理过程包含大量反思和验证，思维链长度可达数万字。 该系列模型在数学、代码以及各种复杂逻辑推理任务上推理效果优异，并为用户展现了完整的思考过程。\n    -  支持64K上下文长度，最大输入56k，最大输出8k（不含思维链）。\n\n### 计费说明\n\n- 标准计费（2025年2月26日起生效），计费模式为后付费小时结，为保证您账户资源的正常使用，请提前[开通后付费](https://lke.cloud.tencent.com/lke#/app/system/charge/postpaid)并及时[充值](https://console.cloud.tencent.com/expense/recharge)。\n ![image](https://cdn.xiaowei.qq.com/static/lke/deekseep-token0212.png)\n\n### Openai兼容协议接口\n知识引擎原子能力大模型对话 API 兼容了 OpenAI 的接口规范，这意味着您可以直接使用 OpenAI 官方提供的 SDK 来调用大模型对话接口。您仅需要将 base_url 和 [api_key](https://cloud.tencent.com/document/product/1772/115970) 替换成相关配置，不需要对应用做额外修改，即可无缝将您的应用切换到相应的大模型。请参考文档：[Deepseek OpenAI对话接口](https://cloud.tencent.com/document/product/1772/115969)。\n> base_url：  https://api.lkeap.cloud.tencent.com/v1\n\n> api_key的获取请参考[API KEY管理](https://cloud.tencent.com/document/product/1772/115970)\n\n\n### 快速接入\n1. 完成[实名认证](https://console.cloud.tencent.com/developer/auth)。\n2. 主账户前往[控制台](https://console.cloud.tencent.com/lkeap)开通服务。若为子账户，需由主账号在[权限管理](https://console.cloud.tencent.com/cam)中为子账号授权，关联预设策略，策略名称：QcloudLKEAPFullAccess。\n3. 通过API Explorer[在线调试](https://console.cloud.tencent.com/api/explorer?Product=lkeap&Version=2024-05-22&Action=ChatCompletions)。\n4. 使用[官方 SDK ](https://cloud.tencent.com/document/product/1772/115963#SDK)调用本接口（支持Python/Java/PHP/Go/Node.js/.NET等语言）。\n\n-----------\n\n### SDK调用示例\n通过本地代码调用本接口（支持Python/Java/PHP/Go/Node.js/.NET等语言）：下面的代码以 Python 语言为例，展示如何访问腾讯云上的DeepSeek模型API的样例。\n（1）安装环境\n```\npython3 -m pip install --upgrade tencentcloud-sdk-python-common\npython3 -m pip install --upgrade tencentcloud-sdk-python-lkeap\n```\n\n（2）示例代码\n\n- 其中SecretKey和SecretID需要从腾讯云控制台获取\n\n- 参数params中模型Model字段可以选择“deepseek-r1“和“deepseek-v3”\n\n```\n# -*- coding: utf-8 -*-\nimport json\n\nfrom tencentcloud.common.common_client import CommonClient\nfrom tencentcloud.common import credential\nfrom tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentCloudSDKException\nfrom tencentcloud.common.profile.client_profile import ClientProfile\nfrom tencentcloud.common.profile.http_profile import HttpProfile\n\nclass NonStreamResponse(object):\n    def __init__(self):\n        self.response = \"\"\n\n    def _deserialize(self, obj):\n        self.response = json.dumps(obj)\n\ntry:\n    # 实例化一个认证对象，入参需要传入腾讯云账户 SecretId 和 SecretKey，此处还需注意密钥对的保密\n    # 代码泄露可能会导致 SecretId 和 SecretKey 泄露，并威胁账号下所有资源的安全性。以下代码示例仅供参考，建议采用更安全的方式来使用密钥，请参见：https://cloud.tencent.com/document/product/1278/85305\n    # 密钥可前往官网控制台 https://console.cloud.tencent.com/cam/capi 进行获取\n    cred = credential.Credential(\"\", \"\")\n\n    httpProfile = HttpProfile()\n    httpProfile.endpoint = \"lkeap.tencentcloudapi.com\"\n    httpProfile.reqTimeout = 40000  # 流式接口可能耗时较长\n    clientProfile = ClientProfile()\n    clientProfile.httpProfile = httpProfile\n\n    params = \"{\\\"Model\\\":\\\"deepseek-r1\\\",\\\"Messages\\\":[{\\\"Role\\\":\\\"user\\\",\\\"Content\\\":\\\"你好\\\"}],\\\"Stream\\\":true}\";\n    common_client = CommonClient(\"lkeap\", \"2024-05-22\", cred, \"ap-guangzhou\", profile=clientProfile)\n    resp = common_client._call_and_deserialize(\"ChatCompletions\", json.loads(params), NonStreamResponse)\n    if isinstance(resp, NonStreamResponse):  # 非流式响应\n        print(resp.response)\n    else:  # 流式响应\n        for event in resp:\n            print(event)\nexcept TencentCloudSDKException as err:\n    print(err)\n\n```\n\n**DeepSeek-R1使用建议**\n\n1. 将温度设置在 0.5-0.7 范围内（建议为0.6），以防止无休止的重复或不连贯的输出。\n2. 避免添加system prompt，所有说明都应包含在user prompt中。",
+      "document": "### 接口功能\n\n调用接口，发起一次对话请求。默认该接口下的单账号QPM上限为15000 ，TPM上限为1200000\n如需使用OpenAI兼容接口， 请参考文档：[Deepseek OpenAI对话接口](https://cloud.tencent.com/document/product/1772/115969)\n\n#### 在线体验\n如您希望在网页内直接体验 DeepSeek 模型对话，推荐您前往[腾讯云智能体开发平台](https://cloud.tencent.com/product/lke)，使用[ DeepSeek 联网助手](https://lke.cloud.tencent.com/webim_exp/#/chat/wQrAwR)。\n\n#### 已支持的模型\n- DeepSeek-V3-0324（model 参数值为**deepseek-v3-0324**）\n    - DeepSeek-V3-0324为671B参数MoE模型，在编程与技术能力、上下文理解与长文本处理等方面优势突出。\n    - 支持128K上下文长度，最大输出16k（不含思维链）。\n    - 注意：相比于DeepSeek-V3，DeepSeek-V3-0324仅更新了模型权重，未增加参数量。总模型大小为685B，其中包括671B的主模型权重和 14B 的多令牌预测（MTP）模块权重，后续均描述主模型参数量。\n- DeepSeek-V3（model 参数值为**deepseek-v3**）\n    - DeepSeek-V3为671B参数MoE模型，在百科知识、数学推理等多项任务上优势突出，评测成绩在主流榜单中位列开源模型榜首。\n    - 支持64K上下文长度，最大输出16k。\n- DeepSeek-R1（model 参数值为**deepseek-r1**）\n    - DeepSeek-R1为671B模型，使用强化学习训练，推理过程包含大量反思和验证，思维链长度可达数万字。 该系列模型在数学、代码以及各种复杂逻辑推理任务上推理效果优异，并为用户展现了完整的思考过程。\n    -  支持96K上下文长度，最大输入长度64k，最大输出16k（默认4k），最大思维链输出长度32k。\n- DeepSeek-R1-0528（model 参数值为**deepseek-r1-0528**）\n    - DeepSeek-R1-0528为671B 模型，架构优化与训练策略升级后，相比上一版本在代码生成、长文本处理和复杂推理领域提升明显。\n    -  支持128K上下文长度，最大输入长度96k，最大输出16k（默认4k），最大思维链输出长度32k。\n- DeepSeek-V3.1（model 参数值为 deepseek-v3.1）\n    - DeepSeek-V3.1 为685B 参数 MoE 模型，支持混合推理架构，有更高的思考效率和更强的 Agent 能力。\n    -  支持128K上下文长度，最大输入长度96k，最大输出32k（默认4k），最大思维链输出长度32k。\n- DeepSeek-V3.1-Terminus（model 参数值为 deepseek-v3.1-terminus）\n    - DeepSeek-V3.1-Terminus 为685B 参数 MoE 模型，在保持模型原有能力的基础上，优化了语言一致性，Agent 能力等问题，输出效果相比前一版本更加稳定。\n    -  支持128K上下文长度，最大输入长度96k，最大输出32k（默认4k），最大思维链输出长度32k。\n- DeepSeek-V3.2-Exp（model 参数值为 deepseek-v3.2-exp）\n    - DeepSeek-V3.2-Exp 为685B 参数 MoE 模型，在 V3.1-Terminus 的基础上引入了 DeepSeek Sparse Attention（一种稀疏注意力机制），针对长文本的训练和推理效率进行了探索性的优化和验证。\n    -  支持128K上下文长度，最大输入长度96k，非思考模式最大输出8k（默认4k），思考模式最大输出64k（默认32k），最大思维链输出长度32k。\n    -  该模型目前处于试运营阶段，仅支持少量接入，如需申请开通请联系您的商务经理。\n### 计费说明\n\n- 标准计费（2025年2月26日起生效），计费模式为后付费小时结，为保证您账户资源的正常使用，请提前[开通后付费](https://console.cloud.tencent.com/lkeap/settings)并及时[充值](https://console.cloud.tencent.com/expense/recharge)。\n\n    -  DeepSeek-R1 模型   | 输入：0.004元/千token | 输出（含思维链）：0.016元/千token\n\n    -  DeepSeek-R1-0528 模型   | 输入：0.004元/千token | 输出（含思维链）：0.016元/千token\n\n    - DeepSeek-V3 模型 | 输入：0.002元/千token | 输出：0.008元/千token\n\n    - DeepSeek-V3-0324 模型 | 输入：0.002元/千token | 输出：0.008元/千token\n\n    - DeepSeek-V3.1 模型 | 输入：0.004元/千token | 输出：0.012元/千token\n\n    - DeepSeek-V3.1-Terminus 模型 | 输入：0.004元/千token | 输出：0.012元/千token\n\n    - DeepSeek-V3.2-Exp 模型 | 输入：0.002元/千token | 输出：0.003元/千token\n\n\n### Openai兼容协议接口\n知识引擎原子能力大模型对话 API 兼容了 OpenAI 的接口规范，这意味着您可以直接使用 OpenAI 官方提供的 SDK 来调用大模型对话接口。您仅需要将 base_url 和 [api_key](https://cloud.tencent.com/document/product/1772/115970) 替换成相关配置，不需要对应用做额外修改，即可无缝将您的应用切换到相应的大模型。请参考文档：[Deepseek OpenAI对话接口](https://cloud.tencent.com/document/product/1772/115969)。\n> base_url：  https://api.lkeap.cloud.tencent.com/v1\n\n> api_key的获取请参考[API KEY管理](https://cloud.tencent.com/document/product/1772/115970)\n\n\n### 快速接入\n1. 完成[实名认证](https://console.cloud.tencent.com/developer/auth)。\n2. 主账户前往[控制台](https://console.cloud.tencent.com/lkeap)开通服务。若为子账户，需由主账号在[权限管理](https://console.cloud.tencent.com/cam)中为子账号授权，关联预设策略，策略名称：QcloudLKEAPFullAccess。\n3. 通过API Explorer[在线调试](https://console.cloud.tencent.com/api/explorer?Product=lkeap&Version=2024-05-22&Action=ChatCompletions)。\n4. 使用[官方 SDK ](https://cloud.tencent.com/document/product/1772/115963#SDK)调用本接口（支持Python/Java/PHP/Go/Node.js/.NET等语言）。\n\n-----------\n\n### SDK调用示例\n通过本地代码调用本接口（支持Python/Java/PHP/Go/Node.js/.NET等语言）：下面的代码以 Python 语言为例，展示如何访问腾讯云上的DeepSeek模型API的样例。\n（1）安装环境\n```\npython3 -m pip install --upgrade tencentcloud-sdk-python-common\npython3 -m pip install --upgrade tencentcloud-sdk-python-lkeap\n```\n\n（2）示例代码\n\n- 其中SecretKey和SecretID需要从腾讯云控制台获取\n\n- 参数params中模型Model字段可以选择“deepseek-r1“和“deepseek-v3”\n\n```\n# -*- coding: utf-8 -*-\nimport json\n\nfrom tencentcloud.common.common_client import CommonClient\nfrom tencentcloud.common import credential\nfrom tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentCloudSDKException\nfrom tencentcloud.common.profile.client_profile import ClientProfile\nfrom tencentcloud.common.profile.http_profile import HttpProfile\n\nclass NonStreamResponse(object):\n    def __init__(self):\n        self.response = \"\"\n\n    def _deserialize(self, obj):\n        self.response = json.dumps(obj)\n\ntry:\n    # 实例化一个认证对象，入参需要传入腾讯云账户 SecretId 和 SecretKey，此处还需注意密钥对的保密\n    # 代码泄露可能会导致 SecretId 和 SecretKey 泄露，并威胁账号下所有资源的安全性。以下代码示例仅供参考，建议采用更安全的方式来使用密钥，请参见：https://cloud.tencent.com/document/product/1278/85305\n    # 密钥可前往官网控制台 https://console.cloud.tencent.com/cam/capi 进行获取\n    cred = credential.Credential(\"\", \"\")\n\n    httpProfile = HttpProfile()\n    httpProfile.endpoint = \"lkeap.tencentcloudapi.com\"\n    httpProfile.reqTimeout = 40000  # 流式接口可能耗时较长\n    clientProfile = ClientProfile()\n    clientProfile.httpProfile = httpProfile\n\n    params = \"{\\\"Model\\\":\\\"deepseek-r1\\\",\\\"Messages\\\":[{\\\"Role\\\":\\\"user\\\",\\\"Content\\\":\\\"你好\\\"}],\\\"Stream\\\":true}\";\n    common_client = CommonClient(\"lkeap\", \"2024-05-22\", cred, \"ap-guangzhou\", profile=clientProfile)\n    resp = common_client._call_and_deserialize(\"ChatCompletions\", json.loads(params), NonStreamResponse)\n    if isinstance(resp, NonStreamResponse):  # 非流式响应\n        print(resp.response)\n    else:  # 流式响应\n        for event in resp:\n            print(event)\nexcept TencentCloudSDKException as err:\n    print(err)\n\n```\n\n**DeepSeek-R1使用建议**\n\n1. 将温度设置在 0.5-0.7 范围内（建议为0.6），以防止无休止的重复或不连贯的输出。\n2. 避免添加system prompt，所有说明都应包含在user prompt中。",
       "input": "ChatCompletionsRequest",
       "name": "DeepSeek API 接口",
       "output": "ChatCompletionsResponse",
@@ -15,7 +15,7 @@
       "status": "online"
     },
     "CreateKnowledgeBase": {
-      "document": "用于在系统中创建一个新的知识库。知识库是一个用于存储和管理知识条目的集合，可以包括文档、问答对、属性标签等。创建知识库后，可以向其中添加各种知识条目，以便在后续的知识检索中使用。 使用场景：当需要在系统中建立一个新的知识库以存储和管理特定领域或项目的知识条目时使用。例如，一个用户可能需要创建一个知识库，以存储用户指南、常见问题解答和技术文档。",
+      "document": "用于在系统中创建一个新的知识库。知识库是一个用于存储和管理知识条目的集合，可以包括文档、问答对、属性标签等。创建知识库后，可以向其中添加各种知识条目，以便在后续的知识检索中使用。 使用场景：当需要在系统中建立一个新的知识库以存储和管理特定领域或项目的知识条目时使用。例如，一个用户可能需要创建一个知识库，以存储用户指南、常见问题解答和技术文档。体验用户最多可创建3个知识库，付费用户最多可创建100个知识库。",
       "input": "CreateKnowledgeBaseRequest",
       "name": "创建知识库",
       "output": "CreateKnowledgeBaseResponse",
@@ -75,6 +75,13 @@
       "input": "DescribeDocRequest",
       "name": "查询文档详情",
       "output": "DescribeDocResponse",
+      "status": "online"
+    },
+    "GetCharacterUsage": {
+      "document": "获取字符使用量统计",
+      "input": "GetCharacterUsageRequest",
+      "name": "获取账号下字符使用量与容量",
+      "output": "GetCharacterUsageResponse",
       "status": "online"
     },
     "GetEmbedding": {
@@ -148,7 +155,7 @@
       "status": "online"
     },
     "ReconstructDocumentSSE": {
-      "document": "准实时文档解析接口，使用HTTP SSE 协议通信。",
+      "document": "准实时文档解析接口，使用HTTP SSE 协议通信。\n支持将图片或PDF文件转换成Markdown格式文件，可解析包括表格、公式、图片、标题、段落、页眉、页脚等内容元素，并将内容智能转换成阅读顺序。\n输入：pdf、ppt、docx、doc、jpg等\n输出：正常阅读顺序的md文件、识别结果的json（可选）等",
       "input": "ReconstructDocumentSSERequest",
       "name": "实时文档解析",
       "output": "ReconstructDocumentSSEResponse",
@@ -162,7 +169,7 @@
       "status": "online"
     },
     "RunRerank": {
-      "document": "基于知识引擎精调模型技术的rerank模型，支持对多路召回的结果进行重排序，根据query与切片内容的相关性，按分数由高到低对切片进行排序，并输出对应的打分结果。",
+      "document": "基于知识引擎精调模型技术的rerank模型，支持对多路召回的结果进行重排序，根据query与切片内容的相关性，按照顺序给出每一条结果和query的相关性分数。",
       "input": "RunRerankRequest",
       "name": "重排序",
       "output": "RunRerankResponse",
@@ -174,18 +181,11 @@
       "name": "上传文档",
       "output": "UploadDocResponse",
       "status": "online"
-    },
-    "UploadDocRealtime": {
-      "document": "用于上传实时文档内容。\n实时文档在上传后可以立即通过SearchRealtime进行实时检索，适用于在会话中对文档进行问答的场景。",
-      "input": "UploadDocRealtimeRequest",
-      "name": "实时文档上传",
-      "output": "UploadDocRealtimeResponse",
-      "status": "online"
     }
   },
   "metadata": {
     "apiVersion": "2024-05-22",
-    "api_brief": "支持直接通过API调用大模型能力。",
+    "api_brief": "知识引擎原子能力（LLM Knowledge Engine Basic API）基于知识引擎研发的知识问答全链路能力，面向企业及开发者，提供灵活组建及开发模型应用的能力。您可通过多款原子能力组建您专属的模型服务，调用大模型对话、文档解析、拆分、embedding、多轮改写等服务进行组装，定制企业专属 AI 业务。支持直接通过API调用大模型能力。",
     "serviceNameCN": "知识引擎原子能力",
     "serviceShortName": "lkeap"
   },
@@ -311,7 +311,7 @@
         {
           "disabled": false,
           "document": "聊天上下文信息。\n说明：\n1. 长度最多为 40，按对话时间从旧到新在数组中排列。\n2. Message.Role 可选值：system、user、assistant。\n其中，system 角色可选，如存在则必须位于列表的最开始。user 和 assistant 需交替出现，以 user 提问开始，user 提问结束，Content 不能为空。Role 的顺序示例：[system（可选） user assistant user assistant user ...]。\n",
-          "example": "{ \"Role\": \"user\", \"Content\": \"你是谁\" }",
+          "example": "无",
           "member": "Message",
           "name": "Messages",
           "required": true,
@@ -337,12 +337,30 @@
         },
         {
           "disabled": false,
-          "document": "最大生成的token数量",
-          "example": "100",
+          "document": "模型最大输出长度（单位 token），不包含思维链内容。\n默认为4096，取值范围：各个模型不同，参考各个模型最大输出长度（示例：4k，即4096）。\n输出 token 的总长度受模型的上下文长度限制。",
+          "example": "8192",
           "member": "int64",
           "name": "MaxTokens",
           "required": false,
           "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "是否启用联网搜索",
+          "example": "false",
+          "member": "bool",
+          "name": "EnableSearch",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "思维链开关，本参数仅在deepseek v3.1时生效",
+          "example": "无",
+          "member": "Thinking",
+          "name": "Thinking",
+          "required": false,
+          "type": "object"
         }
       ],
       "type": "object"
@@ -641,7 +659,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "Markdown文件中表格返回的形式\n0，表格以MD形式返回\n1，表格以HTML形式返回\n默认为1",
+          "document": "Markdown文件中表格返回的形式\n0，表格以MD形式返回\n1，表格以HTML形式返回\n默认为0",
           "example": "1",
           "member": "string",
           "name": "TableResultType",
@@ -650,12 +668,21 @@
         },
         {
           "disabled": false,
-          "document": "智能文档解析返回结果的格式\n0：只返回全文MD；\n1：只返回每一页的OCR原始Json；\n2：只返回每一页的MD，\n3：返回全文MD + 每一页的OCR原始Json；\n4：返回全文MD + 每一页的MD，\n默认值为3（返回全文MD + 每一页的OCR原始Json）\n\n",
+          "document": "智能文档解析返回结果的格式\n0：只返回全文MD；\n1：只返回每一页的OCR原始Json；\n2：只返回每一页的MD，\n3：返回全文MD + 每一页的OCR原始Json；\n4：返回全文MD + 每一页的MD\n5: 返回全文md，每一页ocr原始json，每一页md\n默认值为0\n",
           "example": "3",
           "member": "string",
           "name": "ResultType",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否忽略失败页，返回已成功的页数据。默认为true。",
+          "example": "true",
+          "member": "bool",
+          "name": "IgnoreFailedPage",
+          "required": false,
+          "type": "bool"
         }
       ],
       "usage": "in"
@@ -665,7 +692,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件类型。\n\n**支持的文件类型：**\n- `PDF`、`DOC`、`DOCX`、`XLS`、`XLSX`、`PPT`、`PPTX`、`MD`、`TXT`、`PNG`、`JPG`、`JPEG`、`CSV`、`HTML`、`EPUB`、`BMP`、`GIF`、`WEBP`、`HEIC`、`EPS`、`ICNS`、`IM`、`PCX`、`PPM`、`TIFF`、`XBM`、`HEIF`、`JP2`\n\n**支持的文件大小：**\n - `PDF` 最大500M\n - `DOCX`、`DOC`、`PPT`、`PPTX` 最大 200M\n - `TXT`、`MD` 最大10M\n - 其他 最大20M\n",
+          "document": "文件类型。**支持的文件类型：**- `WPS、PDF`、`DOC`、`DOCX`、`XLS`、`XLSX`、`PPT`、`PPTX`、`MD`、`TXT`、`PNG`、`JPG`、`JPEG`、`CSV`、`HTML`、`EPUB`、`BMP`、`GIF`、`WEBP`、`HEIC`、`EPS`、`ICNS`、`IM`、`PCX`、`PPM`、`TIFF`、`XBM`、`HEIF`、`JP2`**支持的文件大小：** - `PDF` 最大300M - `WPS`、`DOCX`、`DOC`、`PPT`、`PPTX` 最大 200M - `TXT`、`MD` 最大10M - 其他 最大20M",
           "example": "PDF",
           "member": "string",
           "name": "FileType",
@@ -674,8 +701,8 @@
         },
         {
           "disabled": false,
-          "document": "文件的 URL 地址。\n文件存储于腾讯云的 URL 可保障更高的下载速度和稳定性，建议文件存储于腾讯云。 非腾讯云存储的 URL 速度和稳定性可能受一定影响。\n参考：[腾讯云COS文档](https://cloud.tencent.com/document/product/436/7749)",
-          "example": "无",
+          "document": "说明：文件的 URL 地址。\n备注：文件存储于腾讯云的 URL 可保障更高的下载速度和稳定性，建议文件存储于腾讯云。 非腾讯云存储的 URL 速度和稳定性可能受一定影响。\n参考：[腾讯云COS文档](https://cloud.tencent.com/document/product/436/7749)",
+          "example": "http://examplebucket-1250000000.cos.ap-beijing.myqcloud.com/example.jpg",
           "member": "string",
           "name": "FileUrl",
           "required": false,
@@ -684,7 +711,7 @@
         {
           "disabled": false,
           "document": "文件的 Base64 值。\n支持的文件类型： PNG、JPG、JPEG、PDF、GIF、BMP、TIFF\n支持的文件大小：所下载文件经Base64编码后不超过 8M。文件下载时间不超过 3 秒。\n支持的图片像素：单边介于20-10000px之间。\n文件的 FileUrl、FileBase64 必须提供一个，如果都提供，只使用 FileUrl。",
-          "example": "无",
+          "example": "文件base64值",
           "member": "string",
           "name": "FileBase64",
           "required": false,
@@ -692,7 +719,7 @@
         },
         {
           "disabled": false,
-          "document": "文档的起始页码。\n当传入文件是PDF、PDF、PPT、PPTX、DOC类型时，用来指定识别的起始页码，识别的页码包含当前值。",
+          "document": "说明：文档的起始页码。\n备注：当传入文件是PDF、PDF、PPT、PPTX、DOC类型时，用来指定识别的起始页码，识别的页码包含当前值。\n默认值：无",
           "example": "1",
           "member": "int64",
           "name": "FileStartPageNumber",
@@ -701,7 +728,7 @@
         },
         {
           "disabled": false,
-          "document": "文档的结束页码。\n当传入文件是PDF、PDF、PPT、PPTX、DOC类型时，用来指定识别的结束页码，识别的页码包含当前值。",
+          "document": "说明：文档的结束页码。\n备注：当传入文件是PDF、PDF、PPT、PPTX、DOC类型时，用来指定识别的结束页码，识别的页码包含当前值。\n默认值：无",
           "example": "100",
           "member": "int64",
           "name": "FileEndPageNumber",
@@ -710,8 +737,8 @@
         },
         {
           "disabled": false,
-          "document": "创建文档解析任务配置信息。",
-          "example": "{\"TableResultType\":\"1\"}",
+          "document": "说明：创建文档解析任务配置信息。\n备注：可设置结果的返回格式\n默认值：无",
+          "example": "无",
           "member": "CreateReconstructDocumentFlowConfig",
           "name": "Config",
           "required": false,
@@ -726,7 +753,7 @@
         {
           "disabled": false,
           "document": "任务唯一id。30天内可以通过GetReconstructDocumentResult接口查询TaskId对应的处理结果。",
-          "example": "无",
+          "example": "25adcef61750343903609",
           "member": "string",
           "name": "TaskId",
           "output_required": true,
@@ -756,7 +783,7 @@
         },
         {
           "disabled": true,
-          "document": "智能文档解析返回结果的格式\n0：只返回全文MD；\n1：只返回每一页的OCR原始Json；\n2：只返回每一页的MD，\n3：返回全文MD + 每一页的OCR原始Json；\n4：返回全文MD + 每一页的MD，\n默认值为3（返回全文MD + 每一页的OCR原始Json）\n\n",
+          "document": "智能文档解析返回结果的格式\n0：只返回全文MD；\n1：只返回每一页的OCR原始Json；\n2：只返回每一页的MD；\n3：返回全文MD + 每一页的OCR原始Json；\n4：返回全文MD + 每一页的MD；\n5：返回全文md，每一页ocr原始json，每一页md。\n\n",
           "example": "3",
           "member": "string",
           "name": "ResultType",
@@ -780,6 +807,33 @@
           "name": "MaxChunkSize",
           "required": false,
           "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "是否忽略返回失败页码",
+          "example": "true",
+          "member": "bool",
+          "name": "IgnoreFailedPage",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "智能文档解析返回结果的格式\n0：只返回全文MD；\n1：只返回每一页的OCR原始Json；\n2：只返回每一页的MD；\n3：返回全文MD + 每一页的OCR原始Json；\n4：返回全文MD + 每一页的MD；\n5：返回全文md，每一页ocr原始json，每一页md。\n\n",
+          "example": "0",
+          "member": "string",
+          "name": "SplitResultType",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "Markdown文件中表格返回的形式\n0，表格以MD形式返回\n1，表格以HTML形式返回\n默认为",
+          "example": "0",
+          "member": "string",
+          "name": "SplitTableResultType",
+          "required": false,
+          "type": "string"
         }
       ],
       "usage": "in"
@@ -789,7 +843,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件类型。\n\n**支持的文件类型：**\n- `PDF`、`DOC`、`DOCX`、`XLS`、`XLSX`、`PPT`、`PPTX`、`MD`、`TXT`、`PNG`、`JPG`、`JPEG`、`CSV`、`HTML`、`EPUB`\n\n**支持的文件大小：**\n - `PDF` 最大500M\n - `DOCX`、`DOC`、`PPT`、`PPTX` 最大 200M\n - `TXT`、`MD` 最大10M\n - 其他 最大20M\n",
+          "document": "文件类型。**支持的文件类型：**- `WPS`、`PDF`、`DOC`、`DOCX`、`XLS`、`XLSX`、`PPT`、`PPTX`、`MD`、`TXT`、`PNG`、`JPG`、`JPEG`、`CSV`、`HTML`、`EPUB`**支持的文件大小：** - `PDF` 最大300M - `WPS`、`DOCX`、`DOC`、`PPT`、`PPTX` 最大 200M - `TXT`、`MD` 最大10M - 其他 最大20M",
           "example": "PDF",
           "member": "string",
           "name": "FileType",
@@ -817,7 +871,7 @@
         {
           "disabled": true,
           "document": "文件的 Base64 值。\n支持的文件大小：所下载文件经Base64编码后不超过 8M。文件下载时间不超过 3 秒。\n支持的图片像素：单边介于20-10000px之间。\n文件的 FileUrl、FileBase64 必须提供一个，如果都提供，只使用 FileUrl。",
-          "example": "无",
+          "example": "文件base64值",
           "member": "string",
           "name": "FileBase64",
           "required": false,
@@ -844,7 +898,7 @@
         {
           "disabled": false,
           "document": "文档拆分任务的配置信息。\n",
-          "example": "{\"EnableMllm\":true,\"MaxChunkSize\":4800}\t",
+          "example": "无",
           "member": "CreateSplitDocumentFlowConfig",
           "name": "Config",
           "required": false,
@@ -1032,6 +1086,16 @@
           "output_required": false,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "思维链内容。 ReasoningConent参数仅支持出参，且只有deepseek-r1模型会返回。",
+          "example": "无",
+          "member": "string",
+          "name": "ReasoningContent",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -1215,6 +1279,56 @@
           "output_required": false,
           "type": "int",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "拆分消耗的token数",
+          "example": "1024",
+          "member": "int64",
+          "name": "SplitTokens",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "mllm消耗的token数",
+          "example": "1024",
+          "member": "int64",
+          "name": "MllmTokens",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "解析成功页数",
+          "example": "10",
+          "member": "int64",
+          "name": "SuccessPageNum",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "解析失败页数",
+          "example": "1",
+          "member": "int64",
+          "name": "FailPageNum",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文件大小，单位：字节",
+          "example": "100",
+          "member": "int64",
+          "name": "FileSize",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -1236,12 +1350,75 @@
       ],
       "usage": "both"
     },
+    "ErrorInfo": {
+      "document": "错误信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "错误码",
+          "example": "FailedOperation.FileParseError",
+          "member": "string",
+          "name": "Code",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "错误信息",
+          "example": "file parse timeout",
+          "member": "string",
+          "name": "Message",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "GetCharacterUsageRequest": {
+      "document": "GetCharacterUsage请求参数结构体",
+      "members": [],
+      "type": "object"
+    },
+    "GetCharacterUsageResponse": {
+      "document": "GetCharacterUsage返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "已用字符数",
+          "example": "1000000",
+          "member": "uint64",
+          "name": "Used",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "可用字符数",
+          "example": "3000000",
+          "member": "uint64",
+          "name": "Total",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "GetEmbeddingRequest": {
       "document": "GetEmbedding请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "模型名称",
+          "document": "说明：选择生成向量的模型备注：可选[lke-text-embedding-v1,lke-text-embedding-v2,youtu-embedding-llm-v1]",
           "example": "lke-text-embedding-v1",
           "member": "string",
           "name": "Model",
@@ -1250,12 +1427,30 @@
         },
         {
           "disabled": false,
-          "document": "需要 embedding 的文本, 单条文本最大长度500个字符, 总条数最大7条",
+          "document": "说明：需要 embedding 的文本\n备注：单条query最多2000个字符，总条数最多7条",
           "example": "[\"hello\", \"world\"]",
           "member": "string",
           "name": "Inputs",
           "required": true,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "说明：文本向量化的类型，为使得检索任务有更好的检索效果，建议区分查询文本（query）和文档文本（document）类型, 聚类、分类等对称任务可以不用特殊指定，采用系统默认值document即可。",
+          "example": "document",
+          "member": "string",
+          "name": "TextType",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "说明：自定义任务指令词，当且仅当TextType=query且Model为youtu-embedding-llm-v1时，生效",
+          "example": "问题：",
+          "member": "string",
+          "name": "Instruction",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -1276,7 +1471,7 @@
         {
           "disabled": false,
           "document": "消耗量，返回TotalToken",
-          "example": "{\"TotalTokens\":3}",
+          "example": "无",
           "member": "Usage",
           "name": "Usage",
           "output_required": false,
@@ -1297,8 +1492,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "解析任务ID",
-          "example": "无",
+          "document": "说明：解析任务ID\n备注：仅支持单个任务ID",
+          "example": "25adcef61750343903609",
           "member": "string",
           "name": "TaskId",
           "required": true,
@@ -1338,6 +1533,26 @@
           "name": "FailedPages",
           "output_required": false,
           "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文档拆分任务的用量\t",
+          "example": "无",
+          "member": "DocumentUsage",
+          "name": "Usage",
+          "output_required": false,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文档解析任务失败错误信息，当文档解析任务失败会返回具体的错误信息",
+          "example": "无",
+          "member": "ErrorInfo",
+          "name": "Error",
+          "output_required": false,
+          "type": "object",
           "value_allowed_null": false
         },
         {
@@ -1400,9 +1615,19 @@
         {
           "disabled": false,
           "document": "文档拆分任务的用量",
-          "example": "{\"PageNumber\":10,\"TotalTokens\":2048}",
+          "example": "无",
           "member": "DocumentUsage",
           "name": "Usage",
+          "output_required": false,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文档拆分失败的错误信息，当拆分任务失败时返回该错误信息",
+          "example": "无",
+          "member": "ErrorInfo",
+          "name": "Error",
           "output_required": false,
           "type": "object",
           "value_allowed_null": false
@@ -1724,6 +1949,17 @@
           "required": false,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "搜索结果",
+          "example": "无",
+          "member": "SearchResult",
+          "name": "SearchResults",
+          "output_required": false,
+          "required": false,
+          "type": "list",
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -1733,8 +1969,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "知识库ID",
-          "example": "4901991032",
+          "document": "说明：知识库ID\n备注：通过创建知识库接口（DeleteKnowledgeBase）得到知识库ID（KnowledgeBaseId）",
+          "example": "34b46fe81750343723503",
           "member": "string",
           "name": "KnowledgeBaseId",
           "required": true,
@@ -1742,7 +1978,7 @@
         },
         {
           "disabled": false,
-          "document": "属性ID",
+          "document": "说明：属性ID\n备注：通过CreateAttributeLabel接口创建属性时会生成AttributeId，通过ListAttributeLabels接口可查询得到AttributeId、AttributeKey、AttributeName以及LabelId、LabelName的对应关系",
           "example": "1830996257459865531",
           "member": "string",
           "name": "AttributeId",
@@ -1751,7 +1987,7 @@
         },
         {
           "disabled": false,
-          "document": "属性标识，最大40个英文字符，如style",
+          "document": "说明：属性标识，\n备注：仅支持英文字符，不支持数字，支持下划线。最大支持40个英文字符，如style",
           "example": "stlye",
           "member": "string",
           "name": "AttributeKey",
@@ -1760,7 +1996,7 @@
         },
         {
           "disabled": false,
-          "document": "属性名称，最大80个英文字符，如风格",
+          "document": "说明：属性名称\n备注：支持中英文字符。最大支持80个中英文字符，如风格",
           "example": "风格",
           "member": "string",
           "name": "AttributeName",
@@ -1769,10 +2005,19 @@
         },
         {
           "disabled": false,
-          "document": "属性标签",
+          "document": "说明：标签ID（LabelId）以及标签名（LabelName）\n备注：\n- 不填写LabelId，默认在当前AttributeId下新增标签值（LabelName）；\n- 若填写该AttributeId下的LabelId以及LabelName，则为修改该LabelId对应的标签值",
           "example": "无",
           "member": "AttributeLabelItem",
           "name": "Labels",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "说明：删除的标签id",
+          "example": "[\"157622\"]",
+          "member": "string",
+          "name": "DeleteLabelIds",
           "required": false,
           "type": "list"
         }
@@ -1824,7 +2069,7 @@
         {
           "disabled": false,
           "document": "答案，最大4000个英文字符",
-          "example": "我是腾讯大模型知识引擎",
+          "example": "我是您的智能助手",
           "member": "string",
           "name": "Answer",
           "required": true,
@@ -1931,8 +2176,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "需要改写的多轮历史会话，每轮历史对话需要包含user（问）和assistant（答）成对输入，由于模型字符限制，最多提供4轮对话。针对最后一轮对话进行改写",
-          "example": "[{\"Role\":\"user\",\"Content\":\"你家在哪里\"},{\"Role\":\"assistant\",\"Content\":“我家在国内”}]",
+          "document": "说明：需要改写的多轮历史会话，每轮历史对话需要包含user（问）和assistant（答）成对输入\n备注：由于模型字符限制，最多提供4轮对话。针对最后一轮对话进行改写。四轮对话最多包含3600个字符。",
+          "example": "无",
           "member": "Message",
           "name": "Messages",
           "required": true,
@@ -1940,7 +2185,7 @@
         },
         {
           "disabled": false,
-          "document": "模型名称",
+          "document": "说明：模型名称\n备注：仅一个模型可选\n默认值：lke-query-rewrite-base",
           "example": "lke-query-rewrite-base",
           "member": "string",
           "name": "Model",
@@ -1956,7 +2201,7 @@
         {
           "disabled": false,
           "document": "改写结果",
-          "example": "无",
+          "example": "你好",
           "member": "string",
           "name": "Content",
           "output_required": true,
@@ -1966,7 +2211,7 @@
         {
           "disabled": false,
           "document": "消耗量，返回输入token数，输出token数以及总token数",
-          "example": "{\"InputTokens\":45,\"OutputTokens\":6,\"TotalTokens\":51}",
+          "example": "无",
           "member": "Usage",
           "name": "Usage",
           "output_required": false,
@@ -2036,6 +2281,15 @@
           "name": "PageFormat",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否忽略失败页，返回已成功的页数据",
+          "example": "true",
+          "member": "bool",
+          "name": "IgnoreFailedPage",
+          "required": false,
+          "type": "bool"
         }
       ],
       "usage": "in"
@@ -2045,7 +2299,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件类型。\n**支持的文件类型**：PDF、DOC、DOCX、PPT、PPTX、MD、TXT、XLS、XLSX、CSV、PNG、JPG、JPEG、BMP、GIF、WEBP、HEIC、EPS、ICNS、IM、PCX、PPM、TIFF、XBM、HEIF、JP2\n**支持的文件大小**：\n- PDF、DOC、DOCX、PPT、PPTX 支持100M\n- MD、TXT 支持10M\n- 其他支持20M\n",
+          "document": "支持解析的文件类型。**支持的文件类型**：WPS、PDF、DOC、DOCX、PPT、PPTX、MD、TXT、XLS、XLSX、CSV、PNG、JPG、JPEG、BMP、GIF、WEBP、HEIC、EPS、ICNS、IM、PCX、PPM、TIFF、XBM、HEIF、JP2**支持的文件大小**：- WPS、PDF、DOC、DOCX、PPT、PPTX 支持100M- MD、TXT、XLS、XLSX、CSV 支持10M- 其他支持20M",
           "example": "PDF",
           "member": "string",
           "name": "FileType",
@@ -2054,8 +2308,8 @@
         },
         {
           "disabled": false,
-          "document": "文件的 URL 地址。\n文件存储于腾讯云的 URL 可保障更高的下载速度和稳定性，建议文件存储于腾讯云。 非腾讯云存储的 URL 速度和稳定性可能受一定影响。\n参考：[腾讯云COS文档](https://cloud.tencent.com/document/product/436/7749)",
-          "example": "无",
+          "document": "文件的 URL 地址。文件存储于腾讯云的 URL 可保障更高的下载速度和稳定性，建议文件存储于腾讯云。 非腾讯云存储的 URL 速度和稳定性可能受一定影响。文件的 FileUrl、FileBase64 必须提供一个，如果都提供，只使用 FileUrl。\n参考：[腾讯云COS文档](https://cloud.tencent.com/document/product/436/7749)\n\n默认值：无",
+          "example": "url",
           "member": "string",
           "name": "FileUrl",
           "required": false,
@@ -2063,8 +2317,8 @@
         },
         {
           "disabled": false,
-          "document": "文件的 Base64 值。\n支持的文件大小：所下载文件经Base64编码后不超过 8M。文件下载时间不超过 3 秒。\n支持的图片像素：单边介于20-10000px之间。\n文件的 FileUrl、FileBase64 必须提供一个，如果都提供，只使用 FileUrl。",
-          "example": "无",
+          "document": "说明：文件的 Base64 值。\n备注：支持的文件大小：所下载文件经Base64编码后不超过 8M。文件下载时间不超过 3 秒。\n支持的图片像素：单边介于20-10000px之间。文件的 FileUrl、FileBase64 必须提供一个，如果都提供，只使用 FileUrl。\n\n默认值：无",
+          "example": "base64",
           "member": "string",
           "name": "FileBase64",
           "required": false,
@@ -2072,7 +2326,7 @@
         },
         {
           "disabled": false,
-          "document": "文档的起始页码。\n当传入文件是PDF、PDF、PPT、PPTX、DOC类型时，用来指定识别的起始页码，识别的页码包含当前值。",
+          "document": "说明：文档的起始页码。\n备注：当传入文件是PDF、PDF、PPT、PPTX、DOC类型时，用来指定识别的起始页码，识别的页码包含当前值。\n默认值：无",
           "example": "1",
           "member": "int64",
           "name": "FileStartPageNumber",
@@ -2081,7 +2335,7 @@
         },
         {
           "disabled": false,
-          "document": "文档的结束页码。\n当传入文件是PDF、PDF、PPT、PPTX、DOC类型时，用来指定识别的结束页码，识别的页码包含当前值。",
+          "document": "说明：文档的结束页码。\n备注：当传入文件是PDF、PDF、PPT、PPTX、DOC类型时，用来指定识别的结束页码，识别的页码包含当前值。\n默认值：无",
           "example": "100",
           "member": "int64",
           "name": "FileEndPageNumber",
@@ -2090,7 +2344,7 @@
         },
         {
           "disabled": false,
-          "document": "文档解析配置信息\t",
+          "document": "说明：文档解析配置信息\t\n备注：可设置返回markdown结果的格式\n默认值：无\n",
           "example": "无",
           "member": "ReconstructDocumentSSEConfig",
           "name": "Config",
@@ -2106,7 +2360,7 @@
         {
           "disabled": false,
           "document": "任务ID。本次请求的唯一标识",
-          "example": "无",
+          "example": "taskld",
           "member": "string",
           "name": "TaskId",
           "output_required": false,
@@ -2115,8 +2369,8 @@
         },
         {
           "disabled": false,
-          "document": "响应类型。1：返回进度信息，2：返回解析结果",
-          "example": "无",
+          "document": "响应类型。1：返回进度信息， 2：返回解析结果",
+          "example": "type",
           "member": "string",
           "name": "ResponseType",
           "output_required": false,
@@ -2126,7 +2380,7 @@
         {
           "disabled": false,
           "document": "进度。0~100",
-          "example": "无",
+          "example": "progress",
           "member": "string",
           "name": "Progress",
           "output_required": false,
@@ -2136,7 +2390,7 @@
         {
           "disabled": false,
           "document": "进度信息。",
-          "example": "无",
+          "example": "progressMessage",
           "member": "string",
           "name": "ProgressMessage",
           "output_required": false,
@@ -2145,8 +2399,8 @@
         },
         {
           "disabled": false,
-          "document": "文档解析结果URL。存储在腾讯云cos，可以通过http请求下载，URL十分钟内有效。",
-          "example": "无",
+          "document": "文档解析结果的临时下载地址。文件类型为zip压缩包，下载链接有效期30分钟。压缩包内包含*.md、*.json以及images文件夹。\n",
+          "example": "documentRecognizeResultUrl",
           "member": "string",
           "name": "DocumentRecognizeResultUrl",
           "output_required": false,
@@ -2161,6 +2415,26 @@
           "name": "FailedPages",
           "output_required": false,
           "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文档解析失败页数",
+          "example": "1",
+          "member": "int64",
+          "name": "FailPageNum",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文档解析成功页数",
+          "example": "10",
+          "member": "int64",
+          "name": "SuccessPageNum",
+          "output_required": false,
+          "type": "int",
           "value_allowed_null": false
         },
         {
@@ -2365,7 +2639,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "查询内容",
+          "document": "说明：查询内容\n备注：用于匹配的query",
           "example": "腾讯知识引擎大模型",
           "member": "string",
           "name": "Query",
@@ -2374,7 +2648,7 @@
         },
         {
           "disabled": false,
-          "document": "文档列表，最多20个",
+          "document": "说明：文档列表\n备注：最多60个，Query字段和Docs字段的总长度上限为2000字符",
           "example": "[\"腾讯知识引擎\",\"知识引擎大模型\"]",
           "member": "string",
           "name": "Docs",
@@ -2383,7 +2657,7 @@
         },
         {
           "disabled": false,
-          "document": "模型名称, 默认: lke-reranker-base",
+          "document": "说明：模型名称\n备注：仅一个模型可选\n默认值：lke-reranker-base",
           "example": "lke-reranker-base",
           "member": "string",
           "name": "Model",
@@ -2409,7 +2683,7 @@
         {
           "disabled": false,
           "document": "消耗量，仅返回TotalToken",
-          "example": "{\"TotalTokens\":3}",
+          "example": "无",
           "member": "Usage",
           "name": "Usage",
           "output_required": false,
@@ -2424,6 +2698,89 @@
         }
       ],
       "type": "object"
+    },
+    "SearchResult": {
+      "document": "搜索结果",
+      "members": [
+        {
+          "disabled": false,
+          "document": "索引",
+          "example": "1",
+          "member": "int64",
+          "name": "Index",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "链接地址",
+          "example": "https://www.qq.com/",
+          "member": "string",
+          "name": "Url",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "标题",
+          "example": "筑牢压舱石、澎湃新动能 一季度经济大省稳增长再提速_腾讯新闻",
+          "member": "string",
+          "name": "Name",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "摘要",
+          "example": "经济大省是国家经济发展的顶梁柱。 ",
+          "member": "string",
+          "name": "Snippet",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "图标",
+          "example": "https://mat1.gtimg.com/qqcdn/qqindex2021/favicon.ico",
+          "member": "string",
+          "name": "Icon",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "站点",
+          "example": "腾讯网",
+          "member": "string",
+          "name": "Site",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "1740412800",
+          "example": "发布时间",
+          "member": "int64",
+          "name": "PublishedTime",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
     },
     "SegmentationConfig": {
       "document": "分段配置",
@@ -2456,68 +2813,20 @@
       ],
       "usage": "out"
     },
-    "UploadDocRealtimeRequest": {
-      "document": "UploadDocRealtime请求参数结构体",
+    "Thinking": {
+      "document": "思维链开关类型",
       "members": [
         {
           "disabled": false,
-          "document": "知识库ID",
-          "example": "4901991032",
+          "document": "控制开启思维链，默认disabled\n\nenabled：开启思维链\ndisabled：关闭思维链",
+          "example": "disabled",
           "member": "string",
-          "name": "KnowledgeBaseId",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "文件名，可选。\n**需带文件类型后缀**，当文件名无法从传入的`FileUrl`获取时需要通过该字段来明确。",
-          "example": "example.pdf",
-          "member": "string",
-          "name": "FileName",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "文件类型。\n**支持的文件类型：**\n- `PDF`、`DOC`、`DOCX`、`XLS`、`XLSX`、`PPT`、`PPTX`、`MD`、`TXT`、`PNG`、`JPG`、`JPEG`、`CSV`、`HTML`、`EPUB`\n\n**支持的文件大小：**\n - `PDF`、`DOCX`、`DOC`、`PPT`、`PPTX` 最大 200M \n - `TXT`、`MD` 最大10M \n - 其他 最大20M",
-          "example": "PDF",
-          "member": "string",
-          "name": "FileType",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "文件的 URL 地址。\n文件存储于腾讯云的 URL 可保障更高的下载速度和稳定性，建议文件存储于腾讯云。 非腾讯云存储的 URL 速度和稳定性可能受一定影响。\n参考：[腾讯云COS文档](https://cloud.tencent.com/document/product/436/7749)",
-          "example": "https://example.com/example.pdf",
-          "member": "string",
-          "name": "FileUrl",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "过期时间的秒数，最长24小时，默认24小时",
-          "example": "86400",
-          "member": "int64",
-          "name": "ExpireTime",
+          "name": "Type",
           "required": false,
-          "type": "int"
-        }
-      ],
-      "type": "object"
-    },
-    "UploadDocRealtimeResponse": {
-      "document": "UploadDocRealtime返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。本接口为流式响应接口，当请求成功时，RequestId 会被放在 HTTP 响应的 Header \"X-TC-RequestId\" 中。",
-          "member": "string",
-          "name": "RequestId",
           "type": "string"
         }
       ],
-      "type": "object"
+      "usage": "in"
     },
     "UploadDocRequest": {
       "document": "UploadDoc请求参数结构体",

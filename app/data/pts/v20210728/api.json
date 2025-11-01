@@ -339,7 +339,7 @@
   },
   "metadata": {
     "apiVersion": "2021-07-28",
-    "api_brief": "介绍如何使用API的方式来构建压测相关场景",
+    "api_brief": "## 概述\n云压测（Performance Testing Service, 以下简称PTS）是一款分布式性能测试服务，可模拟海量用户的真实业务场景，全方位验证系统可用性和稳定性。支持按需发起压测任务，提供百万并发多地域流量发起能力。提供流量录制、场景编排、流量定制、高级脚本定制等功能，可快速根据业务模型定义压测场景，真实还原应用大规模业务访问场景，帮助用户提前识别应用性能问题。\n\n- 本章节介绍的 PTS API 接口均为 API 3.0接口。\n- 您可以调用 API 对 PTS 进行操作，例如创建压测场景、启动压测任务等。\n- PTS 支持的所有接口信息，请参见 [ API 概览](https://cloud.tencent.com/document/product/1484/78109)。\n\n\n## 术语表\nPTS API 接口的常见术语请参见下表：\n\n| 术语 | 描述 | \n|---------|---------|\n| VU | VU 是指并发用户数，用来模拟真实场景中，在同时执行操作的用户数量。 | \n| VUM |VUM是压测任务的计量单位，代表一个并发运行1分钟消耗的资源。1VUM=1VU * 1Min | \n|压测项目|压测项目用来组织压测和管理资源权限。一个压测项目可包含多个压测场景。|\n| 压测场景 | 压测场景是对一个真实业务场景的压力状况的模拟，也是管理一次压测的配置、资源、生命周期的最小单元。根据编排方式的不同，PTS 提供 [简单模式](https://cloud.tencent.com/document/product/1484/113933)、[脚本模式](https://cloud.tencent.com/document/product/1484/114089)、[JMeter模式](https://cloud.tencent.com/document/product/1484/114106) 等不同的压测场景。 | \n\n\n\n## 使用限制\n- 云压测支持按量计费和套餐包。按量计费压测规格限制请参考 [按量计费规格限制](https://cloud.tencent.com/document/product/1484/111996#a03fd1ae-411d-42e8-a9a7-a810d7c527bb)。 不同套餐包规格限制请参考 [套餐包规格限制](https://cloud.tencent.com/document/product/1484/111997#039808a3-9fc9-4ddf-adad-5c045f796887)。\n- 对于具体的参数限制，请参考各接口文档中的参数说明。\n\n\n## API 快速入门\n您可以使用  API Explorer 工具在线调用 API。\n\n本文以创建压测场景并启动压测任务为例，通过 API Explorer 工具调用 API 接口的步骤如下：\n\n1. 进入 [API Explorer](https://console.cloud.tencent.com/api/explorer)  工具页面。更多 API Explorer 工具使用信息，请参见 [使用API Explorer](https://cloud.tencent.com/document/product/1278/46697) 。\n2. 调用 [CreateProject](https://cloud.tencent.com/document/product/1484/78092) 接口，创建压测项目。创建完成后返回项目ID。\n3. 调用 [CreateScenario](https://cloud.tencent.com/document/product/1484/78091) 接口，在压测项目下创建压测场景。创建完成后会返回场景ID。\n4. 调用 [UpdateScenario](https://cloud.tencent.com/document/product/1484/78057) 接口，配置您的压测场景。比如：设置最大压测并发数，配置压测脚本等。\n5. 调用 [StartJob](https://cloud.tencent.com/document/product/1484/78062) 接口，基于您配置的压测场景，创建并启动压测任务。启动成功后返回压测任务ID。\n\n至此，您启动了一个压测任务。压测任务启动后会基于您的场景的配置对您的服务产生压测流量，并产生实时 [压测报告](https://cloud.tencent.com/document/product/1484/114119)。",
     "serviceNameCN": "云压测",
     "serviceShortName": "pts"
   },
@@ -454,6 +454,24 @@
           "name": "TargetRequestsPerSecond",
           "required": true,
           "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "压测项目ID",
+          "example": "project-12345",
+          "member": "string",
+          "name": "ProjectId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "测试场景ID",
+          "example": "scenario-12345",
+          "member": "string",
+          "name": "ScenarioId",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -1937,6 +1955,16 @@
           "output_required": true,
           "type": "list",
           "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "两个时间点的时间间隔，单位纳秒",
+          "example": "100",
+          "member": "int64",
+          "name": "Step",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -3475,7 +3503,7 @@
         },
         {
           "disabled": false,
-          "document": "加载更多日志时使用，透传上次返回的Context值，获取后续的日志内容。过期时间1小时",
+          "document": "加载更多日志时使用，透传上次返回的Context值，获取后续的日志内容。过期时间1小时，不与 Offset  参数同时使用",
           "example": "csdfeee-dsfll09ds-sdsf",
           "member": "string",
           "name": "Context",
@@ -3511,8 +3539,8 @@
         },
         {
           "disabled": false,
-          "document": "ap-shanghai, ap-guangzhou",
-          "example": "地域",
+          "document": "地域",
+          "example": "ap-shanghai",
           "member": "string",
           "name": "InstanceRegion",
           "required": false,
@@ -3521,7 +3549,7 @@
         {
           "disabled": false,
           "document": "施压引擎节点IP",
-          "example": "节点IP",
+          "example": "192.168.0.1",
           "member": "string",
           "name": "Instance",
           "required": false,
@@ -3529,12 +3557,21 @@
         },
         {
           "disabled": false,
-          "document": "request 代表采样日志,可为不填",
-          "example": "日志类型",
+          "document": "request 代表采样日志,engine 代表引擎日志，console 代表用户打印日志",
+          "example": "request/engine/console",
           "member": "string",
           "name": "LogType",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "日志偏移量，不与Context 参数同时使用",
+          "example": "10",
+          "member": "int64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
         },
         {
           "disabled": false,
@@ -3673,6 +3710,15 @@
           "name": "Queries",
           "required": true,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "最多返回的数据点个数",
+          "example": "500",
+          "member": "int64",
+          "name": "MaxPoint",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -3750,7 +3796,7 @@
         {
           "disabled": false,
           "document": "用标签过滤规则来过滤指标，规则中包含标签名 LabelName、标签值 LabelValue、操作符 Operator（0代表相等，1代表不等）",
-          "example": "{   \"LabelName\": \"method\",   \"LabelValue\": \"GET\",   \"Operator\": 0 }",
+          "example": "无",
           "member": "Filter",
           "name": "Filters",
           "required": false,
@@ -3759,11 +3805,20 @@
         {
           "disabled": false,
           "document": "分组；取值范围参见 DescribeMetricLabelWithValues 接口返回的指标及其支持的标签名",
-          "example": "[\"service\", \"result\", \"status\"]]",
+          "example": "[\"service\", \"result\", \"status\"]",
           "member": "string",
           "name": "GroupBy",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "返回的最大数据点个数",
+          "example": "500",
+          "member": "int64",
+          "name": "MaxPoint",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -6802,6 +6857,17 @@
           "output_required": true,
           "required": false,
           "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文件是否已上传，如果已上传，则可以不必填写 EncodedContent,EncodedHar 等内容。\n主要用于较大长度脚本上传。",
+          "example": "true/false",
+          "member": "bool",
+          "name": "Uploaded",
+          "output_required": false,
+          "required": false,
+          "type": "bool",
           "value_allowed_null": false
         }
       ],

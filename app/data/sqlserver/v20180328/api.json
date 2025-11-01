@@ -337,7 +337,7 @@
       "status": "online"
     },
     "DescribeDBInstances": {
-      "document": "本接口(DescribeDBInstances)用于查询实例列表。",
+      "document": "本接口（DescribeDBInstances）用于查询实例列表。",
       "input": "DescribeDBInstancesRequest",
       "name": "查询实例列表",
       "output": "DescribeDBInstancesResponse",
@@ -505,7 +505,7 @@
       "status": "online"
     },
     "DescribeProductConfig": {
-      "document": "本接口 (DescribeProductConfig) 用于查询售卖规格配置。",
+      "document": "本接口（DescribeProductConfig）用于查询售卖规格配置。",
       "input": "DescribeProductConfigRequest",
       "name": "查询售卖规格配置",
       "output": "DescribeProductConfigResponse",
@@ -638,7 +638,7 @@
       "status": "online"
     },
     "DescribeZones": {
-      "document": "本接口 (DescribeZones) 用于查询当前可售卖的可用区信息。",
+      "document": "本接口（DescribeZones）用于查询当前可售卖的可用区信息。",
       "input": "DescribeZonesRequest",
       "name": "查询售卖可用区",
       "output": "DescribeZonesResponse",
@@ -827,7 +827,7 @@
       "status": "online"
     },
     "ModifyDatabaseShrinkMDF": {
-      "document": "本接口(ModifyDatabaseShrinkDMF)用于收缩数据库mdf(Shrink mdf)。",
+      "document": "本接口（ModifyDatabaseShrinkMDF）用于收缩数据库 mdf（Shrink mdf）。",
       "input": "ModifyDatabaseShrinkMDFRequest",
       "name": "收缩数据库mdf",
       "output": "ModifyDatabaseShrinkMDFResponse",
@@ -1039,7 +1039,7 @@
   },
   "metadata": {
     "apiVersion": "2018-03-28",
-    "api_brief": "介绍如何使用API对云数据库SQL Server进行操作，包括实例管理、备份与恢复等。",
+    "api_brief": "介绍如何使用 API 对云数据库 SQL Server 进行操作，包括实例管理、备份与恢复等。",
     "serviceNameCN": "云数据库 SQL Server",
     "serviceShortName": "sqlserver"
   },
@@ -2286,7 +2286,7 @@
         },
         {
           "disabled": false,
-          "document": "实例ID（必填），形如mssql-i1z41iwd",
+          "document": "实例ID，形如mssql-i1z41iwd",
           "example": "mssql-njj2mtpl",
           "member": "string",
           "name": "InstanceId",
@@ -2536,6 +2536,15 @@
           "name": "TimeZone",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "磁盘加密标识，0-不加密，1-加密",
+          "example": "0",
+          "member": "int64",
+          "name": "DiskEncryptFlag",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -3036,6 +3045,15 @@
           "name": "DrZones",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "磁盘加密标识，0-不加密，1-加密",
+          "example": "0",
+          "member": "int64",
+          "name": "DiskEncryptFlag",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -3280,6 +3298,15 @@
           "name": "TimeZone",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "磁盘加密标识，0-不加密，1-加密",
+          "example": "0",
+          "member": "int64",
+          "name": "DiskEncryptFlag",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -3575,7 +3602,7 @@
         {
           "disabled": false,
           "document": "数据库创建信息",
-          "example": "[{ \"DBName\": \"db1\",\"Charset\": \"Chinese_PRC_CI_AS\",\"Accounts\": [{\"UserName\": \"andy\",\"Privilege\": \"ReadOnly\",\"AccountType\": \"L1\"}],\"Remark\": \"andy\"}]",
+          "example": "无",
           "member": "DBCreateInfo",
           "name": "DBs",
           "required": true,
@@ -4644,7 +4671,7 @@
         {
           "disabled": false,
           "document": "实例所在可用区名称，如 ap-guangzhou-1",
-          "example": "ap-guangzhou-2",
+          "example": "ap-guangzhou-3",
           "member": "string",
           "name": "Zone",
           "output_required": true,
@@ -4784,7 +4811,7 @@
         {
           "disabled": false,
           "document": "实例绑定的标签列表\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "['Tag1']",
+          "example": "无",
           "member": "ResourceTag",
           "name": "ResourceTags",
           "output_required": true,
@@ -4814,7 +4841,7 @@
         {
           "disabled": false,
           "document": "备份周期",
-          "example": "1",
+          "example": "[1]",
           "member": "int64",
           "name": "BackupCycle",
           "output_required": true,
@@ -4854,7 +4881,7 @@
         {
           "disabled": false,
           "document": "跨地域备份目的地域，如果为空，则表示未开启跨地域备份",
-          "example": "[ap-guangzhou]",
+          "example": "[\"ap-guangzhou\"]",
           "member": "string",
           "name": "CrossRegions",
           "output_required": true,
@@ -4934,7 +4961,7 @@
         {
           "disabled": false,
           "document": "双节点实例备可用区信息",
-          "example": "[{\"SlaveZone\": \"ap-guangzhou-1\",\"SlaveZoneName\": \"广州一区\",\"DrInstanceId\": \"mssqldr-9ji781\"}]",
+          "example": "无",
           "member": "SlaveZones",
           "name": "SlaveZones",
           "output_required": true,
@@ -4964,7 +4991,7 @@
         {
           "disabled": false,
           "document": "多节点实例备可用区信息",
-          "example": "[{\"SlaveZone\": \"ap-guangzhou-2\",\"SlaveZoneName\": \"广州二区\",\"DrInstanceId\": \"mssqldr-9ji782\"}]",
+          "example": "无",
           "member": "SlaveZones",
           "name": "MultiSlaveZones",
           "output_required": true,
@@ -5394,6 +5421,26 @@
           "member": "string",
           "name": "IsFullTextEnabled",
           "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否是可用性组 0：否 1：是",
+          "example": "0",
+          "member": "string",
+          "name": "IsAvailabilityGroups",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "AG组数据库同步状态",
+          "example": "0",
+          "member": "string",
+          "name": "AGSyncState",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         }
@@ -5923,15 +5970,17 @@
           "example": "1",
           "member": "int64",
           "name": "TotalCount",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
         {
           "disabled": false,
           "document": "账号权限列表",
-          "example": "[]",
+          "example": "无",
           "member": "AccountPrivilege",
           "name": "Accounts",
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -6020,7 +6069,7 @@
         {
           "disabled": false,
           "document": "账户信息列表",
-          "example": "[{\"Status\": 2,\"Remark\": \"--\",\"AccountType\": \"L0\",\"Host\": \"127.0.0.1\",\"Name\": \"xiaowei\",\"IsAdmin\": true,\"UpdateTime\": \"2020-09-22 00:00:00\",\"InternalStatus\": \"enable\",\"Authentication\": \"win-windows\",\"PassTime\": \"2020-09-22 00:00:00\",\"Dbs\": [{\"Privilege\": \"ReadOnly\",\"DBName\": \"db1\"}],\"CreateTime\": \"2020-09-22 00:00:00\"}]",
+          "example": "无",
           "member": "AccountDetail",
           "name": "Accounts",
           "output_required": true,
@@ -6326,10 +6375,19 @@
         },
         {
           "disabled": false,
-          "document": "列表项排序，目前只按照备份大小排序（desc-降序，asc-升序），默认desc",
+          "document": "列表项排序，desc-降序、asc-升序，按size排序默认desc，按database排序默认asc",
           "example": "desc",
           "member": "string",
           "name": "OrderBy",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "排序字段（Size-按备份大小排序，DBs-按数据库名称排序），默认size",
+          "example": "Size",
+          "member": "string",
+          "name": "OrderByType",
           "required": false,
           "type": "string"
         }
@@ -6352,7 +6410,7 @@
         {
           "disabled": false,
           "document": "备份文件列表详情",
-          "example": " [{\"CrossExternalAddr\": \"https://sqlserver-bucket-sg-1258415541.cos.ap-singapore.myqcloud.com/1251966477%2fsqlserver%2fmssql-mz23h8n7%2fbackup%2fmanual_specific_58002_db2_2021_09_14144312.bak?sign=q-sign-algorithm%3dsha1%26q-ak%3d*************************%26q-sign-time%3d1631605556%3b1631606456%26q-key-time%3d1631605556%3b1631606456%26q-header-list%3d%26q-url-param-list%3d%26q-signature%3df977b8f1afee59225e41a9e766b035953ef9527c\",             \"CrossInternalAddr\": \"https://sqlserver-bucket-sg-1258415541.cos.ap-singapore.myqcloud.com/1251966477%2fsqlserver%2fmssql-mz23h8n7%2fbackup%2fmanual_specific_58002_db2_2021_09_14144312.bak?sign=q-sign-algorithm%3dsha1%26q-ak%3d*************************%26q-sign-time%3d1631605556%3b1631606456%26q-key-time%3d1631605556%3b1631606456%26q-header-list%3d%26q-url-param-list%3d%26q-signature%3df977b8f1afee59225e41a9e766b035953ef9527c\",\"CrossRegion\": \"ap-singapore\"}],\"Region\": \"ap-singapore\",\"DBs\": [\"db1\"],\"DownloadLink\": \"https://sqlserver-bucket-sg-1258415541.cos.ap-singapore.myqcloud.com/1251966477%2fsqlserver%2fmssql-mz23h8n7%2fbackup%2fmanual_specific_58002_db1_2021_09_14144312.bak?sign=q-sign-algorithm%3dsha1%26q-ak%3d*************************%26q-sign-time%3d1631605556%3b1631606456%26q-key-time%3d1631605556%3b1631606456%26q-header-list%3d%26q-url-param-list%3d%26q-signature%3de5e61bfbccf44f6c3dd8a710296108dc95ba16db\",\"FileName\": \"manual_specific_58002_db1_2021_09_14144312.bak\",\"Id\": 36074,\"Size\": 184}]",
+          "example": "无",
           "member": "BackupFile",
           "name": "BackupFiles",
           "output_required": true,
@@ -6624,7 +6682,7 @@
         {
           "disabled": false,
           "document": "一个或者多个实例ID。实例ID，格式如：mssql-si2823jyl。",
-          "example": "[mssql-7vfv3rk3]",
+          "example": "[\"mssql-7vfv3rk3\"]",
           "member": "string",
           "name": "InstanceIdSet",
           "required": false,
@@ -6633,7 +6691,7 @@
         {
           "disabled": false,
           "document": "实例名称列表，模糊查询。",
-          "example": "[name]",
+          "example": "[\"name\"]",
           "member": "string",
           "name": "InstanceNameSet",
           "required": false,
@@ -6642,7 +6700,7 @@
         {
           "disabled": false,
           "document": "排序字段，默认default，则按照备份空间降序。\ndefault 按照备份空间排序\ndata 数据备份排序\nlog 日志备份排序\nauto 自动备份排序\nmanual 手动备份排序",
-          "example": "default",
+          "example": "order",
           "member": "string",
           "name": "OrderBy",
           "required": false,
@@ -6669,7 +6727,7 @@
           "example": "1",
           "member": "uint64",
           "name": "TotalCount",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -6679,7 +6737,7 @@
           "example": "无",
           "member": "SummaryDetailRes",
           "name": "Items",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -7348,7 +7406,7 @@
         {
           "disabled": false,
           "document": "实例ID列表",
-          "example": "[mssql-6upluvd5]",
+          "example": "[\"mssql-6upluvd5\"]",
           "member": "string",
           "name": "InstanceIdSet",
           "required": false,
@@ -7357,7 +7415,7 @@
         {
           "disabled": false,
           "document": "实例名称列表",
-          "example": "[name]",
+          "example": "[\"name\"]",
           "member": "string",
           "name": "InstanceNameSet",
           "required": false,
@@ -7383,8 +7441,8 @@
         },
         {
           "disabled": false,
-          "document": "排序字段，默认default-按照备份空间降序排序，data-按照数据备份排序，log-按照日志备份培训",
-          "example": "default",
+          "document": "排序字段，默认default-按照备份空间降序排序，data-按照数据备份排序，log-按照日志备份",
+          "example": "instanceId",
           "member": "string",
           "name": "OrderBy",
           "required": false,
@@ -7411,7 +7469,7 @@
           "example": "1",
           "member": "int64",
           "name": "TotalCount",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -7421,7 +7479,7 @@
           "example": "无",
           "member": "CrossSummaryDetailRes",
           "name": "Items",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -7738,7 +7796,7 @@
         {
           "disabled": false,
           "document": "TDE透明数据加密配置",
-          "example": "{\"Encryption\":\"disable\", \"CertificateAttribution\":\"self\"}",
+          "example": "无",
           "member": "TDEConfigAttribute",
           "name": "TDEConfig",
           "output_required": true,
@@ -7748,7 +7806,7 @@
         {
           "disabled": false,
           "document": "SSL加密",
-          "example": "{\"IsKMS\":0, \"Encryption\":\"disable\",\"SSLValidity\":0}",
+          "example": "无",
           "member": "SSLConfig",
           "name": "SSLConfig",
           "output_required": true,
@@ -7758,7 +7816,7 @@
         {
           "disabled": false,
           "document": "双节点备机只读信息",
-          "example": "{\"DrInstanceId\":\"mssqldr-0918ha7\", \"Zone\":\"ap-guangzhou\",\"SlaveStatus\":\"disable\"}",
+          "example": "无",
           "member": "DrReadableInfo",
           "name": "DrReadableInfo",
           "output_required": true,
@@ -7768,7 +7826,7 @@
         {
           "disabled": false,
           "document": "等待回收的IP列表",
-          "example": "[{\"Vip\":\"127.0.0.1\",\"RecycleTime\":\"2024-03-26 12:28:41\"}],]",
+          "example": "无",
           "member": "OldVip",
           "name": "OldVipList",
           "output_required": true,
@@ -7788,12 +7846,52 @@
         {
           "disabled": false,
           "document": "多节点备机只读信息",
-          "example": "[{\"DrInstanceId\":\"mssqldr-0918ha7\", \"Zone\":\"ap-guangzhou\",\"SlaveStatus\":\"disable\"}]",
+          "example": "无",
           "member": "DrReadableInfo",
           "name": "MultiDrReadableInfo",
           "output_required": false,
           "type": "list",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否开启磁盘加密，1-开启，0-未开启",
+          "example": "1",
+          "member": "int64",
+          "name": "IsDiskEncryptFlag",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否安全限制部分功能，0-没有限制，1-有限制。限制的功能有：修改可用区、迁移变配、DTS数据迁移等",
+          "example": "0",
+          "member": "uint64",
+          "name": "IsSafetyLimited",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否支持创建SA权限账号，0-不支持，1-支持",
+          "example": "0",
+          "member": "uint64",
+          "name": "IsSupportSA",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "慢SQL阈值，单位毫秒\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "1000",
+          "member": "int64",
+          "name": "SlowLogThreshold",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": true
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -7908,8 +8006,8 @@
         },
         {
           "disabled": false,
-          "document": "实例可用区，格式如：ap-guangzhou-2",
-          "example": "ap-guangzhou-2",
+          "document": "实例可用区",
+          "example": "ap-guangzhou-3",
           "member": "string",
           "name": "Zone",
           "required": false,
@@ -7936,7 +8034,7 @@
         {
           "disabled": false,
           "document": "实例唯一Uid列表",
-          "example": "gamedb.gz1.cdb.db",
+          "example": "[\"gamedb.gz1.cdb.db\"]",
           "member": "string",
           "name": "UidSet",
           "required": false,
@@ -8055,15 +8153,17 @@
           "example": "1",
           "member": "int64",
           "name": "TotalCount",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
         {
           "disabled": false,
           "document": "数据库权限列表",
-          "example": "[]",
+          "example": "无",
           "member": "DBPrivilege",
           "name": "DBList",
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -8297,6 +8397,15 @@
           "name": "Encryption",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "排序字段（Name-按名称排序，CreateTime-按创建时间排序），默认CreateTime",
+          "example": "CreateTime",
+          "member": "string",
+          "name": "OrderBy",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -8490,6 +8599,15 @@
           "example": "disable",
           "member": "string",
           "name": "Encryption",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "排序字段（Name-按名称排序，CreateTime-按创建时间排序），默认CreateTime",
+          "example": "CreateTime",
+          "member": "string",
+          "name": "OrderBy",
           "required": false,
           "type": "string"
         }
@@ -9803,8 +9921,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "可用区英文ID，形如ap-guangzhou-1",
-          "example": "ap-guangzhou-2",
+          "document": "可用区英文 ID",
+          "example": "ap-guangzhou-3",
           "member": "string",
           "name": "Zone",
           "required": true,
@@ -10699,7 +10817,7 @@
           "example": "[\"2022-10-24 00:00:00\"]",
           "member": "string",
           "name": "SaveModePeriod",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -10709,7 +10827,7 @@
           "example": "[\"2022-10-25 00:00:00\"]",
           "member": "string",
           "name": "SaveModeRegular",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -10852,7 +10970,7 @@
         {
           "disabled": false,
           "document": "回档任务记录列表",
-          "example": "[{\"TargetInstanceId\": \"mssql-892932uiu\",\"TargetInstanceName\": \"andy\", \"TargetInstanceStatus\": 2,\"TargetRegion\": \"ap-guangzhou\",\"TargetType\": 0,\"EndTime\": \"0000-00-00 00:00:00\",\"RestoreId\": 1012,\"RestoreTime\": \"2023-01-12 16:22:48\",\"RestoreType\": 0,\"StartTime\": \"2023-01-12 16:22:55\",\"Status\": 0,\"FlowId\": 100}]",
+          "example": "无",
           "member": "RestoreTask",
           "name": "Tasks",
           "output_required": true,
@@ -11214,7 +11332,7 @@
         {
           "disabled": false,
           "document": "多节点架构实例的备节点可用区，默认为空。如果需要在变配的同时修改指定备节点的可用区时必传，当MultiZones = MultiZones时主节点和备节点可用区不能全部相同。备机可用区集合最小为2个，最大不超过5个。",
-          "example": "[\"ap-guangzhou-6\"]",
+          "example": "无",
           "member": "DrZoneInfo",
           "name": "DrZones",
           "required": false,
@@ -11602,7 +11720,7 @@
         {
           "disabled": false,
           "document": "扩展事件列表",
-          "example": "[]",
+          "example": "无",
           "member": "Events",
           "name": "Events",
           "output_required": true,
@@ -11642,7 +11760,7 @@
           "example": "34",
           "member": "int64",
           "name": "TotalCount",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -11652,7 +11770,7 @@
           "example": "无",
           "member": "ZoneInfo",
           "name": "ZoneSet",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -11902,7 +12020,7 @@
         },
         {
           "disabled": false,
-          "document": "事件记录状态，1-成功，2-失败",
+          "document": "事件记录状态，1-成功，2-失败，3-文件待删除，4-写入中",
           "example": "1",
           "member": "int64",
           "name": "Status",
@@ -11922,7 +12040,7 @@
         },
         {
           "disabled": false,
-          "document": "扩展文件生成开始时间",
+          "document": "扩展文件最后更新时间",
           "example": "2023-01-01 12:05:00",
           "member": "string",
           "name": "EndTime",
@@ -13222,7 +13340,7 @@
         {
           "disabled": false,
           "document": "修改备注的账户信息",
-          "example": "[{\"Remark\":\"备注\",\"UserName\":\"userName\"}]",
+          "example": "无",
           "member": "AccountRemark",
           "name": "Accounts",
           "required": true,
@@ -13429,7 +13547,7 @@
         },
         {
           "disabled": false,
-          "document": "备份模式（必填），master_pkg-主节点上打包备份文件；master_no_pkg-主节点单库备份文件；slave_pkg-从节点上打包备份文件；slave_no_pkg-从节点上单库备份文件，从节点上备份只有在always on容灾模式下支持。",
+          "document": "备份模式，master_pkg-主节点上打包备份文件；master_no_pkg-主节点单库备份文件；slave_pkg-从节点上打包备份文件；slave_no_pkg-从节点上单库备份文件，从节点上备份只有在always on容灾模式下支持。",
           "example": "master_no_pkg",
           "member": "string",
           "name": "BackupModel",
@@ -14049,8 +14167,8 @@
         },
         {
           "disabled": false,
-          "document": "要修改的安全组 ID 列表，一个或者多个安全组 ID 组成的数组。",
-          "example": "[\"sg-igw86yth\\r\\n\"]",
+          "document": "要修改的安全组 ID 列表，一个或者多个安全组 ID 组成的数组。可通过 DescribeDBSecurityGroups 接口获取。输入的安全组 ID 数组无长度限制。\n注意：该入参会全量替换存量已有集合，非增量更新。修改需传入预期的全量集合。",
+          "example": "[\"sg-ajr1jzgj\"]",
           "member": "string",
           "name": "SecurityGroupIdSet",
           "required": true,
@@ -14497,7 +14615,7 @@
         {
           "disabled": false,
           "document": "数据库名数组",
-          "example": "[db_test]",
+          "example": "[\"db_test\"]",
           "member": "string",
           "name": "DBNames",
           "required": true,
@@ -15631,7 +15749,7 @@
         {
           "disabled": false,
           "document": "只读组名称",
-          "example": "default_name",
+          "example": "andy_ReadOnlyGroup",
           "member": "string",
           "name": "ReadOnlyGroupName",
           "output_required": true,
@@ -15651,7 +15769,7 @@
         {
           "disabled": false,
           "document": "只读组的可用区ID，与主实例相同",
-          "example": "ap-guangzhou-2",
+          "example": "ap-guangzhou-3",
           "member": "string",
           "name": "ZoneId",
           "output_required": true,
@@ -16159,8 +16277,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "地域英文ID，类似ap-guanghou",
-          "example": "ap-guanghou",
+          "document": "地域英文ID，类似ap-guangzhou",
+          "example": "ap-guangzhou",
           "member": "string",
           "name": "Region",
           "output_required": true,
@@ -16465,6 +16583,15 @@
           "name": "InstanceId",
           "required": true,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "重启设置，0-立刻重启，1-维护时间窗口内重启，默认0",
+          "example": "0",
+          "member": "uint64",
+          "name": "WaitSwitch",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -16758,7 +16885,7 @@
         {
           "disabled": false,
           "document": "按照ReNameRestoreDatabase中的库进行重命名，仅在Type = 1重命名回档方式有效；不填则按照默认方式命名库，DBs参数确定要恢复的库",
-          "example": "[{\"OldName\": \"db1\",\"NewName\": \"db2\"}]",
+          "example": "无",
           "member": "RenameRestoreDatabase",
           "name": "RenameRestore",
           "required": false,
@@ -18149,7 +18276,7 @@
         {
           "disabled": false,
           "document": "代金券ID，目前单个订单只能使用一张代金券",
-          "example": "0",
+          "example": "[\"134\"]",
           "member": "string",
           "name": "VoucherIds",
           "required": false,
@@ -18203,11 +18330,20 @@
         {
           "disabled": false,
           "document": "多节点架构实例的备节点可用区，默认为空。如果需要在变配的同时修改指定备节点的可用区时必传，当MultiZones = MultiZones时主节点和备节点可用区不能全部相同。备机可用区集合最小为2个，最大不超过5个。\n",
-          "example": "[\"ap-guangzhou-3\"]",
+          "example": "无",
           "member": "DrZoneInfo",
           "name": "DrZones",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "是否自动升级数据库的兼容性级别，默认0。0-否，1-是",
+          "example": "0",
+          "member": "int64",
+          "name": "UpgradeCompatLevel",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -18295,21 +18431,21 @@
       "members": [
         {
           "disabled": false,
-          "document": "规格地域",
-          "example": "ap-guangzhou-2",
+          "document": "规格可用区",
+          "example": "ap-guangzhou-3",
           "member": "string",
           "name": "Zone",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "规格可用区",
+          "document": "规格地域",
           "example": "ap-guangzhou",
           "member": "string",
           "name": "Region",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -18319,7 +18455,7 @@
           "example": "1",
           "member": "uint64",
           "name": "Status",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         }

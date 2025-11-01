@@ -1,5 +1,12 @@
 {
   "actions": {
+    "ApplyPathLifecyclePolicy": {
+      "document": "配置生命周期策略关联到的目录列表",
+      "input": "ApplyPathLifecyclePolicyRequest",
+      "name": "配置生命周期策略关联目录",
+      "output": "ApplyPathLifecyclePolicyResponse",
+      "status": "online"
+    },
     "BindAutoSnapshotPolicy": {
       "document": "文件系统绑定快照策略，可以同时绑定多个fs，一个fs 只能跟一个策略绑定",
       "input": "BindAutoSnapshotPolicyRequest",
@@ -49,8 +56,36 @@
       "output": "CreateCfsSnapshotResponse",
       "status": "online"
     },
+    "CreateDataFlow": {
+      "document": "创建数据流动接口",
+      "input": "CreateDataFlowRequest",
+      "name": "创建数据流动",
+      "output": "CreateDataFlowResponse",
+      "status": "online"
+    },
+    "CreateLifecycleDataTask": {
+      "document": "支持主动沉降/预热接口",
+      "input": "CreateLifecycleDataTaskRequest",
+      "name": "创建数据管理任务",
+      "output": "CreateLifecycleDataTaskResponse",
+      "status": "online"
+    },
+    "CreateLifecyclePolicy": {
+      "document": "创建文件存储生命周期策略",
+      "input": "CreateLifecyclePolicyRequest",
+      "name": "创建生命周期策略",
+      "output": "CreateLifecyclePolicyResponse",
+      "status": "online"
+    },
+    "CreateLifecyclePolicyDownloadTask": {
+      "document": "下载生命周期任务中文件列表",
+      "input": "CreateLifecyclePolicyDownloadTaskRequest",
+      "name": "创建下载生命周期文件列表任务",
+      "output": "CreateLifecyclePolicyDownloadTaskResponse",
+      "status": "online"
+    },
     "CreateMigrationTask": {
-      "document": "用于创建迁移任务。\n此接口需提交工单，开启白名单之后才能使用。",
+      "document": "用于创建迁移任务。",
       "input": "CreateMigrationTaskRequest",
       "name": "创建迁移任务",
       "output": "CreateMigrationTaskResponse",
@@ -71,7 +106,7 @@
       "status": "online"
     },
     "DeleteCfsPGroup": {
-      "document": "本接口（DeleteCfsPGroup）用于删除权限组。",
+      "document": "本接口（DeleteCfsPGroup）用于删除权限组，只有未绑定文件系统的权限组才能够被此接口删除。",
       "input": "DeleteCfsPGroupRequest",
       "name": "删除权限组",
       "output": "DeleteCfsPGroupResponse",
@@ -91,8 +126,22 @@
       "output": "DeleteCfsSnapshotResponse",
       "status": "online"
     },
+    "DeleteDataFlow": {
+      "document": "删除数据流动",
+      "input": "DeleteDataFlowRequest",
+      "name": "删除数据流动",
+      "output": "DeleteDataFlowResponse",
+      "status": "online"
+    },
+    "DeleteLifecyclePolicy": {
+      "document": "删除生命周期管理策略",
+      "input": "DeleteLifecyclePolicyRequest",
+      "name": "删除生命周期管理策略",
+      "output": "DeleteLifecyclePolicyResponse",
+      "status": "online"
+    },
     "DeleteMigrationTask": {
-      "document": "用于删除迁移任务。\n此接口需提交工单，开启白名单之后才能使用。",
+      "document": "用于删除迁移任务。不支持删除等待中、创建中、运行中、取消中、终止中状态的任务。",
       "input": "DeleteMigrationTaskRequest",
       "name": "删除迁移任务",
       "output": "DeleteMigrationTaskResponse",
@@ -127,7 +176,7 @@
       "status": "online"
     },
     "DescribeBucketList": {
-      "document": "用于获取数据源桶列表。\n此接口需提交工单，开启白名单之后才能使用。",
+      "document": "用于获取数据源桶列表。",
       "input": "DescribeBucketListRequest",
       "name": "获取对象存储桶列表",
       "output": "DescribeBucketListResponse",
@@ -182,6 +231,27 @@
       "output": "DescribeCfsSnapshotsResponse",
       "status": "online"
     },
+    "DescribeDataFlow": {
+      "document": "查询数据流动信息接口",
+      "input": "DescribeDataFlowRequest",
+      "name": "查询数据流动信息",
+      "output": "DescribeDataFlowResponse",
+      "status": "online"
+    },
+    "DescribeLifecycleDataTask": {
+      "document": "查询生命周期任务的接口",
+      "input": "DescribeLifecycleDataTaskRequest",
+      "name": "查询生命周期任务的接口",
+      "output": "DescribeLifecycleDataTaskResponse",
+      "status": "online"
+    },
+    "DescribeLifecyclePolicies": {
+      "document": "查询生命周期管理策略",
+      "input": "DescribeLifecyclePoliciesRequest",
+      "name": "查询生命周期管理策略",
+      "output": "DescribeLifecyclePoliciesResponse",
+      "status": "online"
+    },
     "DescribeMigrationTasks": {
       "document": "用于获取迁移任务列表。\n此接口需提交工单，开启白名单之后才能使用。",
       "input": "DescribeMigrationTasksRequest",
@@ -210,15 +280,36 @@
       "output": "DescribeUserQuotaResponse",
       "status": "online"
     },
+    "DoDirectoryOperation": {
+      "document": "文件系统目录操作接口",
+      "input": "DoDirectoryOperationRequest",
+      "name": "目录操作接口",
+      "output": "DoDirectoryOperationResponse",
+      "status": "online"
+    },
+    "ModifyDataFlow": {
+      "document": "修改数据流动相关参数",
+      "input": "ModifyDataFlowRequest",
+      "name": "修改数据流动相关参数",
+      "output": "ModifyDataFlowResponse",
+      "status": "online"
+    },
     "ModifyFileSystemAutoScaleUpRule": {
-      "document": "用来设置文件系统扩容策略",
+      "document": "用来设置文件系统扩容策略，该接口只支持turbo文件系统",
       "input": "ModifyFileSystemAutoScaleUpRuleRequest",
       "name": "更新文件系统自动扩容策略",
       "output": "ModifyFileSystemAutoScaleUpRuleResponse",
       "status": "online"
     },
+    "ModifyLifecyclePolicy": {
+      "document": "更新文件存储生命周期策略",
+      "input": "ModifyLifecyclePolicyRequest",
+      "name": "更新生命周期策略",
+      "output": "ModifyLifecyclePolicyResponse",
+      "status": "online"
+    },
     "ScaleUpFileSystem": {
-      "document": "该接口用于对turbo 文件系统扩容使用",
+      "document": "该接口用于对turbo 文件系统扩容使用,该接口只支持扩容不支持缩容。turbo标准型扩容步长是10240GIB，turbo性能型扩容步长是5120GIB",
       "input": "ScaleUpFileSystemRequest",
       "name": "文件系统存储量扩容",
       "output": "ScaleUpFileSystemResponse",
@@ -238,8 +329,15 @@
       "output": "SignUpCfsServiceResponse",
       "status": "online"
     },
+    "StopLifecycleDataTask": {
+      "document": "终止生命周期任务的接口",
+      "input": "StopLifecycleDataTaskRequest",
+      "name": "终止生命周期任务的接口",
+      "output": "StopLifecycleDataTaskResponse",
+      "status": "online"
+    },
     "StopMigrationTask": {
-      "document": "用于终止迁移任务。\n此接口需提交工单，开启白名单之后才能使用。",
+      "document": "用于终止迁移任务，可以终止等待中、运行中状态的任务。",
       "input": "StopMigrationTaskRequest",
       "name": "终止迁移任务",
       "output": "StopMigrationTaskResponse",
@@ -316,6 +414,52 @@
     "serviceShortName": "cfs"
   },
   "objects": {
+    "ApplyPathLifecyclePolicyRequest": {
+      "document": "ApplyPathLifecyclePolicy请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "生命周期管理策略ID",
+          "example": "policy-xxxxxx",
+          "member": "string",
+          "name": "LifecyclePolicyID",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "生命周期管理策略关联目录的绝对路径列表",
+          "example": "无",
+          "member": "PathInfo",
+          "name": "Paths",
+          "required": false,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "ApplyPathLifecyclePolicyResponse": {
+      "document": "ApplyPathLifecyclePolicy返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "有规则冲突时返回的已有冲突规则信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "无",
+          "member": "CheckResult",
+          "name": "CheckResults",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": true
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "AutoScaleUpRule": {
       "document": "自动扩容规则",
       "members": [
@@ -325,6 +469,7 @@
           "example": "open,close",
           "member": "string",
           "name": "Status",
+          "output_required": true,
           "required": false,
           "type": "string",
           "value_allowed_null": false
@@ -335,16 +480,18 @@
           "example": "80",
           "member": "uint64",
           "name": "ScaleThreshold",
+          "output_required": true,
           "required": false,
           "type": "int",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "扩容后使用量跟集群总量比例,范围[1-90]",
+          "document": "扩容后使用量跟集群总量比例,范围[10-90]",
           "example": "90",
           "member": "uint64",
           "name": "TargetThreshold",
+          "output_required": true,
           "required": false,
           "type": "int",
           "value_allowed_null": false
@@ -367,7 +514,7 @@
         },
         {
           "disabled": false,
-          "document": "快照策略ID",
+          "document": "快照策略名称",
           "example": "default",
           "member": "string",
           "name": "PolicyName",
@@ -437,8 +584,8 @@
         },
         {
           "disabled": false,
-          "document": "快照策略状态，1代表快照策略状态正常。这里只有一种状态",
-          "example": "1",
+          "document": "快照策略状态，available代表快照策略状态正常。这里只有一种状态",
+          "example": "available",
           "member": "string",
           "name": "Status",
           "output_required": true,
@@ -550,50 +697,50 @@
         {
           "disabled": false,
           "document": "区域名称，如“ap-beijing”",
-          "example": "",
+          "example": "ap-guangzhou",
           "member": "string",
           "name": "Region",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
           "document": "区域名称，如“bj”",
-          "example": "",
+          "example": "gz",
           "member": "string",
           "name": "RegionName",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
           "document": "区域可用情况，当区域内至少有一个可用区处于可售状态时，取值为AVAILABLE，否则为UNAVAILABLE",
-          "example": "",
+          "example": "AVAILABLE",
           "member": "string",
           "name": "RegionStatus",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
           "document": "可用区数组",
-          "example": "",
+          "example": "无",
           "member": "AvailableZone",
           "name": "Zones",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
         {
           "disabled": false,
           "document": "区域中文名称，如“广州”",
-          "example": "",
+          "example": "广州区",
           "member": "string",
           "name": "RegionCnName",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         }
@@ -697,7 +844,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "快照策略ID",
+          "document": "需要解绑的文件系统ID列表，用\",\" 分割，文件系统ID，通过查询文件系统列表获取；[DescribeCfsFileSystems](https://cloud.tencent.com/document/product/582/38170)",
           "example": "asp-xx",
           "member": "string",
           "name": "AutoSnapshotPolicyId",
@@ -706,7 +853,7 @@
         },
         {
           "disabled": false,
-          "document": "文件系统列表",
+          "document": "解绑的快照策略ID，可以通过[DescribeAutoSnapshotPolicies](https://cloud.tencent.com/document/api/582/80208) 查询获取",
           "example": "cfs-abc,cfs-bdc.",
           "member": "string",
           "name": "FileSystemIds",
@@ -725,6 +872,7 @@
           "example": "asp-xx",
           "member": "string",
           "name": "AutoSnapshotPolicyId",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -746,7 +894,7 @@
           "example": "name",
           "member": "string",
           "name": "Name",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -756,9 +904,65 @@
           "example": "region",
           "member": "string",
           "name": "Region",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
+        }
+      ],
+      "usage": "out"
+    },
+    "CheckResult": {
+      "document": "有规则冲突时返回的已有冲突规则信息列表",
+      "members": [
+        {
+          "disabled": false,
+          "document": "生命周期管理策略ID",
+          "example": "policy-ek8aw4id",
+          "member": "string",
+          "name": "LifecyclePolicyID",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文件系统ID",
+          "example": "cfs-4030acd30",
+          "member": "string",
+          "name": "FileSystemId",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "目录绝对路径",
+          "example": "/data/log1/",
+          "member": "string",
+          "name": "Path",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "生命周期管理策略关联的管理规则列表",
+          "example": "无",
+          "member": "LifecycleRule",
+          "name": "LifecycleRules",
+          "required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "目标路径",
+          "example": "/data/",
+          "member": "string",
+          "name": "TargetPath",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -768,8 +972,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "证书描述",
-          "example": "无",
+          "document": "证书描述，不超过64字符",
+          "example": "用于访问CFS的凭证",
           "member": "string",
           "name": "CertDesc",
           "required": true,
@@ -784,7 +988,7 @@
         {
           "disabled": false,
           "document": "凭证唯一标识",
-          "example": "无",
+          "example": "cfscert-8bajq3bj",
           "member": "string",
           "name": "CertId",
           "output_required": true,
@@ -805,8 +1009,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "快照重复时间点,0-23",
-          "example": "'1,3,5'",
+          "document": "快照重复时间点,0-23，小时",
+          "example": "1,3,5",
           "member": "string",
           "name": "Hour",
           "required": true,
@@ -814,7 +1018,7 @@
         },
         {
           "disabled": false,
-          "document": "策略名称",
+          "document": "策略名称,限制64个字符数量仅支持输入中文、字母、数字、_或-",
           "example": "cfs-policy",
           "member": "string",
           "name": "PolicyName",
@@ -823,8 +1027,8 @@
         },
         {
           "disabled": false,
-          "document": "快照重复日期，星期一到星期日。 1代表星期一、7代表星期天",
-          "example": "'2,3'",
+          "document": "快照重复日期，星期一到星期日。 1代表星期一、7代表星期天，与DayOfMonth，IntervalDays 三者选一",
+          "example": "2,3",
           "member": "string",
           "name": "DayOfWeek",
           "required": false,
@@ -832,7 +1036,7 @@
         },
         {
           "disabled": false,
-          "document": "快照保留时长，单位天",
+          "document": "快照保留时长，单位天，默认永久0",
           "example": "3",
           "member": "uint64",
           "name": "AliveDays",
@@ -841,7 +1045,7 @@
         },
         {
           "disabled": false,
-          "document": "快照按月重复，每月1-31号，选择一天，每月将在这一天自动创建快照。",
+          "document": "快照按月重复，每月1-31号，选择一天，每月将在这一天自动创建快照；例如1 代表1号；与DayOfWeek，IntervalDays 三者选一",
           "example": "1",
           "member": "string",
           "name": "DayOfMonth",
@@ -850,7 +1054,7 @@
         },
         {
           "disabled": false,
-          "document": "间隔天数",
+          "document": "间隔天数，与DayOfWeek，DayOfMonth 三者选一",
           "example": "10",
           "member": "uint64",
           "name": "IntervalDays",
@@ -905,7 +1109,7 @@
         },
         {
           "disabled": false,
-          "document": "权限组 ID",
+          "document": "权限组 ID,pgroupbasic 是默认权限组，通过控制查询权限组列表接口获取[DescribeCfsPGroups](https://cloud.tencent.com/document/product/582/38157)",
           "example": "pgroupbasic",
           "member": "string",
           "name": "PGroupId",
@@ -914,7 +1118,7 @@
         },
         {
           "disabled": false,
-          "document": "文件系统协议类型， 值为 NFS、CIFS、TURBO ; 若留空则默认为 NFS协议，turbo系列必须选择turbo，不支持NFS、CIFS",
+          "document": "文件系统协议类型， 值为 NFS、CIFS、TURBO ; 若留空则默认为 NFS协议，turbo系列必须选择TURBO，不支持NFS、CIFS",
           "example": "NFS",
           "member": "string",
           "name": "Protocol",
@@ -932,8 +1136,8 @@
         },
         {
           "disabled": false,
-          "document": "私有网络（VPC） ID，若网络类型选择的是VPC，该字段为必填。",
-          "example": "123",
+          "document": "私有网络（VPC） ID，若网络类型选择的是VPC，该字段为必填.通过查询私有网络接口获取，\n[DescribeVpcs](https://cloud.tencent.com/document/product/215/15778)",
+          "example": "vpc-abc123",
           "member": "string",
           "name": "VpcId",
           "required": false,
@@ -941,8 +1145,8 @@
         },
         {
           "disabled": false,
-          "document": "子网 ID，若网络类型选择的是VPC，该字段为必填。",
-          "example": "234",
+          "document": "子网 ID，若网络类型选择的是VPC，该字段为必填。通过查询子网接口获取，\n[DescribeSubnets](https://cloud.tencent.com/document/product/215/15784)",
+          "example": "subnet-abc234",
           "member": "string",
           "name": "SubnetId",
           "required": false,
@@ -986,8 +1190,8 @@
         },
         {
           "disabled": false,
-          "document": "云联网ID， 若网络类型选择的是CCN，该字段为必填",
-          "example": "ccn-12345",
+          "document": "云联网ID， 若网络类型选择的是CCN，该字段为必填;通过查询云联网列表接口获取，通过接口\n[DescribeCcns](https://cloud.tencent.com/document/product/215/19199)\n",
+          "example": "ccn-abc123",
           "member": "string",
           "name": "CcnId",
           "required": false,
@@ -1004,7 +1208,7 @@
         },
         {
           "disabled": false,
-          "document": "文件系统容量，turbo系列必填，单位为GiB。 turbo标准型单位GB，起售20TiB，即20480 GiB；扩容步长20TiB，即20480 GiB。turbo性能型起售10TiB，即10240 GiB；扩容步长10TiB，10240 GiB。",
+          "document": "文件系统容量，turbo系列必填，单位为GiB。 turbo标准型单位GB，起售20TiB，即20480 GiB；扩容步长10TiB，即10240 GiB。turbo性能型起售10TiB，即10240 GiB；扩容步长10TiB，10240 GiB。",
           "example": "40960",
           "member": "uint64",
           "name": "Capacity",
@@ -1013,8 +1217,8 @@
         },
         {
           "disabled": false,
-          "document": "文件系统快照ID",
-          "example": "snapcfs-xx",
+          "document": "文件系统快照ID，通过查询快照列表获取该参数，\n[DescribeCfsSnapshots](https://cloud.tencent.com/document/product/582/80206)",
+          "example": "snapcfs-abc1234",
           "member": "string",
           "name": "SnapshotId",
           "required": false,
@@ -1022,8 +1226,8 @@
         },
         {
           "disabled": false,
-          "document": "定期快照策略ID",
-          "example": "asp-xx",
+          "document": "定期快照策略ID，通过查询快照策略信息获取,\n[DescribeAutoSnapshotPolicies](https://cloud.tencent.com/document/product/582/38157)",
+          "example": "asp-abc1234",
           "member": "string",
           "name": "AutoSnapshotPolicyId",
           "required": false,
@@ -1031,12 +1235,30 @@
         },
         {
           "disabled": false,
-          "document": "是否开启默认扩容，仅Turbo类型文件存储支持",
-          "example": "False",
+          "document": "是否开启默认扩容，仅turbo类型文件存储支持",
+          "example": "false",
           "member": "bool",
           "name": "EnableAutoScaleUp",
           "required": false,
           "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "v1.5：创建普通版的通用文件系统；\nv3.1：创建增强版的通用文件系统\n说明：增强版的通用系统需要开通白名单才能使用，如有需要请提交工单与我们联系。",
+          "example": "v1.5",
+          "member": "string",
+          "name": "CfsVersion",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "turbo文件系统元数据属性\nbasic：创建标准型的元数据\nenhanced：创建增强型的元数据",
+          "example": "basic",
+          "member": "string",
+          "name": "MetaType",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -1224,7 +1446,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "权限组 ID",
+          "document": "权限组 ID，可通过[DescribeCfsPGroups接口](https://cloud.tencent.com/document/api/582/38157)获取",
           "example": "pgroup-12345",
           "member": "string",
           "name": "PGroupId",
@@ -1260,7 +1482,7 @@
         },
         {
           "disabled": false,
-          "document": "用户权限，值为 all_squash、no_all_squash、root_squash、no_root_squash。\nall_squash：所有访问用户（含 root 用户）都会被映射为匿名用户或用户组。\nno_all_squash：所有访问用户（含 root 用户）均保持原有的 UID/GID 信息。\nroot_squash：将来访的 root 用户映射为匿名用户或用户组，非 root 用户保持原有的 UID/GID 信息。\nno_root_squash：与 no_all_squash 效果一致，所有访问用户（含 root 用户）均保持原有的 UID/GID 信息\n",
+          "document": "用户权限，值为 all_squash、no_all_squash、root_squash、no_root_squash。默认值为root_squash\nall_squash：所有访问用户（含 root 用户）都会被映射为匿名用户或用户组。\nno_all_squash：所有访问用户（含 root 用户）均保持原有的 UID/GID 信息。\nroot_squash：将来访的 root 用户映射为匿名用户或用户组，非 root 用户保持原有的 UID/GID 信息。\nno_root_squash：与 no_all_squash 效果一致，所有访问用户（含 root 用户）均保持原有的 UID/GID 信息\n",
           "example": "root_squash",
           "member": "string",
           "name": "UserPermission",
@@ -1347,7 +1569,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统id",
+          "document": "文件系统ID，通过查询文件系统列表获取；[DescribeCfsFileSystems](https://cloud.tencent.com/document/product/582/38170)",
           "example": "cfs-gagaggag",
           "member": "string",
           "name": "FileSystemId",
@@ -1356,8 +1578,8 @@
         },
         {
           "disabled": false,
-          "document": "快照名称",
-          "example": "snapshot-xxx",
+          "document": "快照名称，支持不超过64字符长度，支持中文、数字、_、-",
+          "example": "CFS定期快照",
           "member": "string",
           "name": "SnapshotName",
           "required": false,
@@ -1397,6 +1619,271 @@
       ],
       "type": "object"
     },
+    "CreateDataFlowRequest": {
+      "document": "CreateDataFlow请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "文件系统 ID ，通过查询文件系统 [DescribeCfsFileSystems](https://cloud.tencent.com/document/product/582/38170) 获取",
+          "example": "cfs-4abkgaga",
+          "member": "string",
+          "name": "FileSystemId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "源端数据类型；包含S3_COS，S3_L5 ",
+          "example": "S3_COS",
+          "member": "string",
+          "name": "SourceStorageType",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "源端存储地址",
+          "example": "https://cfs-test-1251000014.cos.ap-shanghai.myqcloud.com",
+          "member": "string",
+          "name": "SourceStorageAddress",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "源端路径",
+          "example": "/cos/test",
+          "member": "string",
+          "name": "SourcePath",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "文件系统内目标路径",
+          "example": "/cfs/123",
+          "member": "string",
+          "name": "TargetPath",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "密钥 ID",
+          "example": "asafsafsa",
+          "member": "string",
+          "name": "SecretId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "密钥 key",
+          "example": "ssafsafas",
+          "member": "string",
+          "name": "SecretKey",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "数据流动名称；支持不超过64字符长度，支持中文、数字、_、-",
+          "example": "default",
+          "member": "string",
+          "name": "DataFlowName",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "CreateDataFlowResponse": {
+      "document": "CreateDataFlow返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "数据流动管理 ID",
+          "example": "cfs-dataflow-abcdefgh",
+          "member": "string",
+          "name": "DataFlowId",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "CreateLifecycleDataTaskRequest": {
+      "document": "CreateLifecycleDataTask请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "文件系统唯一 ID",
+          "example": "cfs-4agcdretg",
+          "member": "string",
+          "name": "FileSystemId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "生命周期任务类型；archive：沉降；restore：预热；release：数据释放；metaload：元数据加载",
+          "example": "archive",
+          "member": "string",
+          "name": "Type",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "需要沉降的路径或文件，仅支持传入1个路径，不允许为空。",
+          "example": "/cfs/data",
+          "member": "string",
+          "name": "TaskPath",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "任务名称",
+          "example": "dataarchive",
+          "member": "string",
+          "name": "TaskName",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "数据流动 ID ，该接口可以通过 DescribeDataFlow 查询",
+          "example": "cfs-dataflow-abcdefeg",
+          "member": "string",
+          "name": "DataFlowId",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "CreateLifecycleDataTaskResponse": {
+      "document": "CreateLifecycleDataTask返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务 ID",
+          "example": "task-20250101abcdef",
+          "member": "string",
+          "name": "TaskId",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "CreateLifecyclePolicyDownloadTaskRequest": {
+      "document": "CreateLifecyclePolicyDownloadTask请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务Id",
+          "example": "task-202311gafgagl",
+          "member": "string",
+          "name": "TaskId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "下载文件的类型，包含 FileSuccessList，FileTotalList，FileFailedList",
+          "example": "FileTotalList",
+          "member": "string",
+          "name": "Type",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "CreateLifecyclePolicyDownloadTaskResponse": {
+      "document": "CreateLifecyclePolicyDownloadTask返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "下载路径",
+          "example": "https://cfs-migrate-xxxxx.cos.ap-chongqing.myqcloud.com/cfs-migrate-results/cfsmigrate-3d2cf062",
+          "member": "string",
+          "name": "DownloadAddress",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "CreateLifecyclePolicyRequest": {
+      "document": "CreateLifecyclePolicy请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "生命周期管理策略名称，中文/英文/数字/下划线/中划线的组合，不超过64个字符",
+          "example": "大数据NAS存储01",
+          "member": "string",
+          "name": "LifecyclePolicyName",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "生命周期管理策略关联的管理规则列表",
+          "example": "无",
+          "member": "LifecycleRule",
+          "name": "LifecycleRules",
+          "required": true,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "CreateLifecyclePolicyResponse": {
+      "document": "CreateLifecyclePolicy返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "生命周期管理策略ID",
+          "example": "policy-ek8axxxx",
+          "member": "string",
+          "name": "LifecyclePolicyID",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "CreateMigrationTaskRequest": {
       "document": "CreateMigrationTask请求参数结构体",
       "members": [
@@ -1411,7 +1898,7 @@
         },
         {
           "disabled": false,
-          "document": "迁移方式标志位，默认为0。0: 桶迁移；1: 清单迁移",
+          "document": "迁移方式标志位，默认为0。0：桶迁移；1：清单迁移",
           "example": "0",
           "member": "uint64",
           "name": "MigrationType",
@@ -1429,8 +1916,8 @@
         },
         {
           "disabled": false,
-          "document": "数据源账号的SecretId",
-          "example": "agKID0FnEWgyGnEUbBAmtZ8Yt59B49dKdgc",
+          "document": "数据源账号的 SecretId",
+          "example": "secretid",
           "member": "string",
           "name": "SrcSecretId",
           "required": true,
@@ -1438,8 +1925,8 @@
         },
         {
           "disabled": false,
-          "document": "数据源账号的SecretKey",
-          "example": "bo2KVXSzpX9qPn4C9zBaq0DHBybtghadg",
+          "document": "数据源账号的 SecretKey",
+          "example": "secretkey",
           "member": "string",
           "name": "SrcSecretKey",
           "required": true,
@@ -1447,7 +1934,7 @@
         },
         {
           "disabled": false,
-          "document": "文件系统实例Id",
+          "document": "文件系统实例 ID，通过查询文件系统 [DescribeCfsFileSystems](https://cloud.tencent.com/document/product/582/38170) 获取",
           "example": "cfs-xxxxxx",
           "member": "string",
           "name": "FileSystemId",
@@ -1474,7 +1961,7 @@
         },
         {
           "disabled": false,
-          "document": "数据源服务商。COS: 腾讯云COS，OSS: 阿里云OSS，OBS:华为云OBS",
+          "document": "数据源服务商。COS：腾讯云COS，OSS：阿里云OSS，OBS：华为云OBS",
           "example": "OSS",
           "member": "string",
           "name": "SrcService",
@@ -1483,7 +1970,7 @@
         },
         {
           "disabled": false,
-          "document": "数据源桶名称，名称和地址至少有一个",
+          "document": "数据源桶名称；桶迁移时，BucketName 和 BucketAddress 必填其一，清单迁移时无需填写此参数",
           "example": "testbucket-125xxxxxxx",
           "member": "string",
           "name": "BucketName",
@@ -1501,7 +1988,7 @@
         },
         {
           "disabled": false,
-          "document": "数据源桶地址，名称和地址至少有一个",
+          "document": "数据源桶地址；桶迁移时，BucketName 和 BucketAddress 必填其一，清单迁移时无需填写此参数",
           "example": "https://testbucket-125xxxxxx.cos.ap-guangzhou.myqcloud.com",
           "member": "string",
           "name": "BucketAddress",
@@ -1528,7 +2015,7 @@
         },
         {
           "disabled": false,
-          "document": "源桶路径，默认为/",
+          "document": "源桶路径，默认为 /",
           "example": "cos/",
           "member": "string",
           "name": "BucketPath",
@@ -1537,7 +2024,7 @@
         },
         {
           "disabled": false,
-          "document": "迁移方向。0: 对象存储迁移至文件系统，1: 文件系统迁移至对象存储。默认 0",
+          "document": "迁移方向；0：对象存储迁移至文件系统，1：文件系统迁移至对象存储。默认为0",
           "example": "0",
           "member": "uint64",
           "name": "Direction",
@@ -1552,7 +2039,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "迁移任务Id",
+          "document": "迁移任务 ID",
           "example": "tasgagagagi",
           "member": "string",
           "name": "TaskId",
@@ -1569,13 +2056,109 @@
       ],
       "type": "object"
     },
+    "DataFlowInfo": {
+      "document": "数据流动信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "数据流动管理 ID",
+          "example": "dataflow-gagag",
+          "member": "string",
+          "name": "DataFlowId",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "数据流动名称",
+          "example": "default",
+          "member": "string",
+          "name": "DataFlowName",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "源端数据类型",
+          "example": "S3",
+          "member": "string",
+          "name": "SourceStorageType",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "源端存储地址",
+          "example": "https://cos.xx.xx.xx",
+          "member": "string",
+          "name": "SourceStorageAddress",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "源端路径",
+          "example": "/cos/test",
+          "member": "string",
+          "name": "SourcePath",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "目录路径",
+          "example": "/cfs/123",
+          "member": "string",
+          "name": "TargetPath",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "available：已生效\npending：配置中\nunavailable：失效\ndeleting：删除中",
+          "example": "available",
+          "member": "string",
+          "name": "Status",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "创建时间",
+          "example": "2024-10-30 12:43",
+          "member": "string",
+          "name": "CreationTime",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文件系统 ID",
+          "example": "cfs-4agagkkgal",
+          "member": "string",
+          "name": "FileSystemId",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
     "DeleteAutoSnapshotPolicyRequest": {
       "document": "DeleteAutoSnapshotPolicy请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "快照策略ID",
-          "example": "asp-xx",
+          "document": "快照策略ID，查询快照策略接口获取,[DescribeAutoSnapshotPolicies](https://cloud.tencent.com/document/api/582/80208)",
+          "example": "asp-123abc",
           "member": "string",
           "name": "AutoSnapshotPolicyId",
           "required": true,
@@ -1593,7 +2176,7 @@
           "example": "asp-xx",
           "member": "string",
           "name": "AutoSnapshotPolicyId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1611,7 +2194,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统 ID。说明，进行删除文件系统操作前需要先调用 DeleteMountTarget 接口删除该文件系统的挂载点，否则会删除失败。",
+          "document": "文件系统 ID，通过[查询文件系统接口](https://cloud.tencent.com/document/api/582/38170)获取。说明，进行删除文件系统操作前需要先调用 DeleteMountTarget 接口删除该文件系统的挂载点，否则会删除失败。",
           "example": "cfs-12345",
           "member": "string",
           "name": "FileSystemId",
@@ -1638,7 +2221,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "权限组 ID",
+          "document": "权限组 ID，可通过[DescribeCfsPGroups接口](https://cloud.tencent.com/document/api/582/38157)获取",
           "example": "pgroup-12345",
           "member": "string",
           "name": "PGroupId",
@@ -1657,7 +2240,7 @@
           "example": "pgroup-12345",
           "member": "string",
           "name": "PGroupId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1667,7 +2250,7 @@
           "example": "1250000000",
           "member": "int64",
           "name": "AppId",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -1685,7 +2268,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "权限组 ID",
+          "document": "权限组 ID，可通过[DescribeCfsPGroups接口](https://cloud.tencent.com/document/api/582/38157)获取",
           "example": "pgroup-12345",
           "member": "string",
           "name": "PGroupId",
@@ -1694,7 +2277,7 @@
         },
         {
           "disabled": false,
-          "document": "规则 ID",
+          "document": "规则 ID，可通过[DescribeCfsRules](https://cloud.tencent.com/document/api/582/38156)接口获取",
           "example": "rule-12345",
           "member": "string",
           "name": "RuleId",
@@ -1713,7 +2296,7 @@
           "example": "rule-12345",
           "member": "string",
           "name": "RuleId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1723,7 +2306,7 @@
           "example": "pgroup-12345",
           "member": "string",
           "name": "PGroupId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1741,8 +2324,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统快照id",
-          "example": "snapcfs-xx",
+          "document": "快照ID，可以通过[DescribeCfsSnapshots](https://cloud.tencent.com/document/api/582/80206) 查询获取",
+          "example": "snapcfs-1245abcd",
           "member": "string",
           "name": "SnapshotId",
           "required": false,
@@ -1750,7 +2333,7 @@
         },
         {
           "disabled": false,
-          "document": "需要删除的文件文件系统快照ID 列表，快照ID，跟ID列表至少填一项",
+          "document": "需要删除的文件系统快照ID 列表，快照ID，跟ID列表至少填一项\n快照ID，可以通过[DescribeCfsSnapshots](https://cloud.tencent.com/document/api/582/80206) 查询获取",
           "example": "[\"snapcfs-xx\",\"snapcfs-xx1\"]",
           "member": "string",
           "name": "SnapshotIds",
@@ -1769,10 +2352,73 @@
           "example": "snapcfs-xx",
           "member": "string",
           "name": "SnapshotId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DeleteDataFlowRequest": {
+      "document": "DeleteDataFlow请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "数据流动管理 ID",
+          "example": "cfs-dataflow-abcdefgh",
+          "member": "string",
+          "name": "DataFlowId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "文件系统 ID ，通过查询文件系统 [DescribeCfsFileSystems](https://cloud.tencent.com/document/product/582/38170) 获取",
+          "example": "cfs-4abcdefgh",
+          "member": "string",
+          "name": "FileSystemId",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DeleteDataFlowResponse": {
+      "document": "DeleteDataFlow返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DeleteLifecyclePolicyRequest": {
+      "document": "DeleteLifecyclePolicy请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "生命周期管理策略ID",
+          "example": "policy-ek8axxxx",
+          "member": "string",
+          "name": "LifecyclePolicyID",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DeleteLifecyclePolicyResponse": {
+      "document": "DeleteLifecyclePolicy返回参数结构体",
+      "members": [
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
@@ -1850,8 +2496,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统 ID",
-          "example": "cfs-12345",
+          "document": "文件系统ID，通过查询文件系统列表获取；[DescribeCfsFileSystems](https://cloud.tencent.com/document/product/582/38170)",
+          "example": "cfs-12345efg",
           "member": "string",
           "name": "FileSystemId",
           "required": true,
@@ -1859,7 +2505,7 @@
         },
         {
           "disabled": false,
-          "document": "指定配额类型，包括Uid、Gid、Dir",
+          "document": "指定配额类型，包括Uid（按用户ID限制）、Gid（按用户组ID限制）、Dir（按目录限制）",
           "example": "Uid",
           "member": "string",
           "name": "UserType",
@@ -1868,7 +2514,7 @@
         },
         {
           "disabled": false,
-          "document": "UID/GID信息",
+          "document": "UID/GID信息，和DirectoryPath参数，两者必须填写一个",
           "example": "1000",
           "member": "string",
           "name": "UserId",
@@ -1877,7 +2523,7 @@
         },
         {
           "disabled": false,
-          "document": "设置目录配额的目录的绝对路径",
+          "document": "设置目录配额的目录的绝对路径，和UserId参数，两者必须填写一个",
           "example": "/cfs/xx",
           "member": "string",
           "name": "DirectoryPath",
@@ -2032,8 +2678,8 @@
         },
         {
           "disabled": false,
-          "document": "数据源账号的SecretId\n",
-          "example": "AKIXXXXXXX",
+          "document": "数据源账号的SecretId",
+          "example": "secretid",
           "member": "string",
           "name": "SrcSecretId",
           "required": true,
@@ -2042,7 +2688,7 @@
         {
           "disabled": false,
           "document": "数据源账号的SecretKey",
-          "example": "02de6bxxxxxx",
+          "example": "secretkey",
           "member": "string",
           "name": "SrcSecretKey",
           "required": true,
@@ -2088,7 +2734,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统 ID。",
+          "document": "文件系统 ID，通过[查询文件系统接口](https://cloud.tencent.com/document/api/582/38170)获取",
           "example": "cfs-12345",
           "member": "string",
           "name": "FileSystemId",
@@ -2097,7 +2743,7 @@
         },
         {
           "disabled": false,
-          "document": "Offset 分页码",
+          "document": "Offset 分页码，默认为0",
           "example": "0",
           "member": "uint64",
           "name": "Offset",
@@ -2106,7 +2752,7 @@
         },
         {
           "disabled": false,
-          "document": "Limit 页面大小",
+          "document": "Limit 页面大小，默认为10，最大值为100",
           "example": "10",
           "member": "uint64",
           "name": "Limit",
@@ -2180,7 +2826,7 @@
         },
         {
           "disabled": false,
-          "document": "Offset 分页码",
+          "document": "Offset 分页码,默认0",
           "example": "10",
           "member": "uint64",
           "name": "Offset",
@@ -2189,7 +2835,7 @@
         },
         {
           "disabled": false,
-          "document": "Limit 页面大小",
+          "document": "Limit 页面大小，默认10",
           "example": "10",
           "member": "uint64",
           "name": "Limit",
@@ -2272,7 +2918,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "权限组 ID",
+          "document": "权限组 ID，可通过[DescribeCfsPGroups接口](https://cloud.tencent.com/document/api/582/38157)获取",
           "example": "pgroup-12345",
           "member": "string",
           "name": "PGroupId",
@@ -2291,7 +2937,7 @@
           "example": "无",
           "member": "PGroupRuleInfo",
           "name": "RuleList",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -2363,7 +3009,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统ID",
+          "document": "文件系统 ID，通过查询文件系统 [DescribeCfsFileSystems](https://cloud.tencent.com/document/product/582/38170) 获取",
           "example": "cfs-gagaggag",
           "member": "string",
           "name": "FileSystemId",
@@ -2372,7 +3018,7 @@
         },
         {
           "disabled": false,
-          "document": "快照ID",
+          "document": "快照 ID",
           "example": "snapcfs-xx",
           "member": "string",
           "name": "SnapshotId",
@@ -2399,7 +3045,7 @@
         },
         {
           "disabled": false,
-          "document": "过滤条件。\n<br>SnapshotId - Array of String - 是否必填：否 -（过滤条件）按快照ID过滤。\n<br>SnapshotName - Array of String - 是否必填：否 -（过滤条件）按照快照名称过滤。\n<br>FileSystemId - Array of String - 是否必填：否 -（过滤条件）按文件系统ID过滤。\n<br>FsName - Array of String - 是否必填：否 -（过滤条件）按文件系统名过滤。\n<br>Status - Array of String - 是否必填：否 -（过滤条件）按照快照状态过滤\n(creating：表示创建中 | available：表示可用。| rollbacking：表示回滚。| rollbacking_new：表示由快照创建新文件系统中）\n<br>tag-key - Array of String - 是否必填：否 -（过滤条件）按照标签键进行过滤。\n<br>tag:tag-key - Array of String - 是否必填：否 -（过滤条件）按照标签键值对进行过滤。 tag-key使用具体的标签键进行替换。",
+          "document": "过滤条件。\n<br>SnapshotId - Array of String - 是否必填：否 -（过滤条件）按快照ID过滤。\n<br>SnapshotName - Array of String - 是否必填：否 -（过滤条件）按照快照名称过滤。\n<br>FileSystemId - Array of String - 是否必填：否 -（过滤条件）按文件系统ID过滤。\n<br>FsName - Array of String - 是否必填：否 -（过滤条件）按文件系统名过滤。\n<br>Status - Array of String - 是否必填：否 -（过滤条件）按照快照状态过滤。状态分类：creating：创建中 | available：运行中 | deleting：删除中 | rollbacking_new：由快照创建新文件系统中 | create-failed：创建失败。\n<br>tag-key - Array of String - 是否必填：否 -（过滤条件）按照标签键进行过滤。\n<br>tag:tag-key - Array of String - 是否必填：否 -（过滤条件）按照标签键值对进行过滤。 tag-key 使用具体的标签键进行替换。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -2408,7 +3054,7 @@
         },
         {
           "disabled": false,
-          "document": "排序取值",
+          "document": "按创建时间排序取值",
           "example": "CreationTime",
           "member": "string",
           "name": "OrderField",
@@ -2417,7 +3063,7 @@
         },
         {
           "disabled": false,
-          "document": "排序 升序或者降序",
+          "document": "排序；升序或者降序",
           "example": "ASC，DESC",
           "member": "string",
           "name": "Order",
@@ -2469,6 +3115,284 @@
       ],
       "type": "object"
     },
+    "DescribeDataFlowRequest": {
+      "document": "DescribeDataFlow请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "文件系统 ID ，通过查询文件系统 [DescribeCfsFileSystems](https://cloud.tencent.com/document/product/582/38170) 获取",
+          "example": "cfs-4gagkckgl",
+          "member": "string",
+          "name": "FileSystemId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "数据流动 ID ，由创建数据流动返回",
+          "example": "cfs-dataflow-abcdefgh",
+          "member": "string",
+          "name": "DataFlowId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "每次查询返回值个数，默认20；最大100",
+          "example": "10",
+          "member": "uint64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "偏移量，默认为0",
+          "example": "1",
+          "member": "uint64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "文件系统版本；版本号：v1.5，v3.0，v3.1，v4.0",
+          "example": "v1.5",
+          "member": "string",
+          "name": "CfsVersion",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeDataFlowResponse": {
+      "document": "DescribeDataFlow返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "查询总数量",
+          "example": "10",
+          "member": "uint64",
+          "name": "TotalCount",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "无",
+          "example": "无",
+          "member": "DataFlowInfo",
+          "name": "DataFlows",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeLifecycleDataTaskRequest": {
+      "document": "DescribeLifecycleDataTask请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "开始时间",
+          "example": "2024-11-19 10:15:37",
+          "member": "string",
+          "name": "StartTime",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "结束时间",
+          "example": "2024-10-19 10:15:37",
+          "member": "string",
+          "name": "EndTime",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "\t任务ID",
+          "example": "c1a2b3f4",
+          "member": "string",
+          "name": "TaskId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "Offset 分页码\t",
+          "example": "10",
+          "member": "uint64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "Limit 页面大小\t",
+          "example": "10",
+          "member": "uint64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "过滤条件，TaskName，FileSystemId，Type",
+          "example": "无",
+          "member": "Filter",
+          "name": "Filters",
+          "required": false,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeLifecycleDataTaskResponse": {
+      "document": "DescribeLifecycleDataTask返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务数组",
+          "example": "无",
+          "member": "LifecycleDataTaskInfo",
+          "name": "LifecycleDataTask",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "查询结果总数",
+          "example": "10",
+          "member": "uint64",
+          "name": "TotalCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeLifecyclePoliciesRequest": {
+      "document": "DescribeLifecyclePolicies请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "生命周期管理策略名称",
+          "example": "大数据NAS存储01",
+          "member": "string",
+          "name": "LifecyclePolicyName",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "每个分页包含的生命周期管理策略个数",
+          "example": "10",
+          "member": "uint64",
+          "name": "PageSize",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "列表的分页页码",
+          "example": "1",
+          "member": "uint64",
+          "name": "PageNumber",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "文件系统ID",
+          "example": "cfs-xxxxxx",
+          "member": "string",
+          "name": "FileSystemId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "生命周期管理策略ID",
+          "example": "policy-hxd1xxxx",
+          "member": "string",
+          "name": "LifecyclePolicyID",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeLifecyclePoliciesResponse": {
+      "document": "DescribeLifecyclePolicies返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "列表的分页页码",
+          "example": "1",
+          "member": "uint64",
+          "name": "PageNumber",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "每个分页包含的生命周期管理策略个数",
+          "example": "10",
+          "member": "uint64",
+          "name": "PageSize",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "生命周期管理策略总数",
+          "example": "100",
+          "member": "uint64",
+          "name": "TotalCount",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "生命周期管理策略列表",
+          "example": "无",
+          "member": "LifecyclePolicy",
+          "name": "LifecyclePolicies",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "DescribeMigrationTasksRequest": {
       "document": "DescribeMigrationTasks请求参数结构体",
       "members": [
@@ -2492,7 +3416,7 @@
         },
         {
           "disabled": false,
-          "document": "<br><li> taskId\n\n按照【迁移任务id】进行过滤。\n类型：String\n\n必选：否\n\n<br><li> taskName\n\n按照【迁移任务名字】进行模糊搜索过滤。\n类型：String\n\n必选：否\n\n每次请求的Filters的上限为10，Filter.Values的上限为100。",
+          "document": "<br><li> taskId按照【迁移任务id】进行过滤。类型：String必选：否<br></li><br><li>  taskName按照【迁移任务名字】进行模糊搜索过滤。类型：String必选：否每次请求的Filters的上限为10，Filter.Values的上限为100。</li>",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -2507,7 +3431,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "迁移任务的数量",
+          "document": "迁移任务的总数量",
           "example": "0",
           "member": "int64",
           "name": "TotalCount",
@@ -2539,7 +3463,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统 ID",
+          "document": "文件系统 ID，[查询文件系统列表](https://cloud.tencent.com/document/api/582/38170)可以获得id",
           "example": "cfs-12345",
           "member": "string",
           "name": "FileSystemId",
@@ -2586,8 +3510,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统快照ID",
-          "example": "snapcfs-xx",
+          "document": "快照ID，可以通过[DescribeCfsSnapshots](https://cloud.tencent.com/document/api/582/80206) 查询获取",
+          "example": "snapcfs-123abcdd",
           "member": "string",
           "name": "SnapshotId",
           "required": true,
@@ -2595,8 +3519,8 @@
         },
         {
           "disabled": false,
-          "document": "起始时间",
-          "example": "2021-08-11 11:51:xx",
+          "document": "起始时间，格式“YYYY-MM-DD hh:mm:ss”",
+          "example": "2021-08-11 11:51:33",
           "member": "string",
           "name": "StartTime",
           "required": true,
@@ -2604,8 +3528,8 @@
         },
         {
           "disabled": false,
-          "document": "结束时间",
-          "example": "2021-08-11 11:51:xx",
+          "document": "结束时间，格式“YYYY-MM-DD hh:mm:ss”",
+          "example": "2021-08-11 11:51:33",
           "member": "string",
           "name": "EndTime",
           "required": true,
@@ -2651,8 +3575,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统 ID",
-          "example": "cfs-12345",
+          "document": "文件系统 ID,通过[查询文件系统列表](https://cloud.tencent.com/document/api/582/38170)获取",
+          "example": "cfs-abc12345",
           "member": "string",
           "name": "FileSystemId",
           "required": true,
@@ -2660,7 +3584,7 @@
         },
         {
           "disabled": false,
-          "document": "过滤条件。\nUserType - Array of String - 是否必填：否 -（过滤条件）按配额类型过滤。(Uid|Gid|Dir )\nUserId- Array of String - 是否必填：否 -（过滤条件）按id过滤。",
+          "document": "过滤条件。\nUserType - Array of String - 是否必填：否 -（过滤条件）按配额类型过滤。(Uid|Gid|Dir，分别对应用户，用户组，目录 )\nUserId- Array of String - 是否必填：否 -（过滤条件）按用户id过滤。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -2669,7 +3593,7 @@
         },
         {
           "disabled": false,
-          "document": "Offset 分页码",
+          "document": "Offset 分页码，默认值0",
           "example": "0",
           "member": "uint64",
           "name": "Offset",
@@ -2678,7 +3602,7 @@
         },
         {
           "disabled": false,
-          "document": "Limit 页面大小，可填范围为大于0的整数",
+          "document": "Limit 页面大小，可填范围为大于0的整数，默认值是10",
           "example": "10",
           "member": "uint64",
           "name": "Limit",
@@ -2719,6 +3643,105 @@
         }
       ],
       "type": "object"
+    },
+    "DoDirectoryOperationRequest": {
+      "document": "DoDirectoryOperation请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "文件系统Id",
+          "example": "cfs-5xxxyyyzz",
+          "member": "string",
+          "name": "FileSystemId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "create：创建目录，等同于mkdir。\ncheck：确认目录是否存在，等同于stat。\nmove：对文件/目录进行重命名，等同于mv。",
+          "example": "check",
+          "member": "string",
+          "name": "OpetationType",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "目录的绝对路径  默认递归创建（即如果目录中有子目录不存在，则先创建出对应子目录）",
+          "example": "/user1/dir2/",
+          "member": "string",
+          "name": "DirectoryPath",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "创建目录的权限，若不传，默认为0755  若Operation Type为check，此值无实际意义",
+          "example": "0777",
+          "member": "string",
+          "name": "Mode",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "mv操作的目标目录名称；如果是turbo文件系统必须以/cfs/开头",
+          "example": "/cfs/testa",
+          "member": "string",
+          "name": "DestPath",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DoDirectoryOperationResponse": {
+      "document": "DoDirectoryOperation返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "1:成功  0:失败  创建目录的操作，1表示创建成功，0表示创建失败。  确认目录是否存在的操作，1表示目录存在，0表示目录不存在。  说明：创建目录操作若目录已存在，也会返回创建成功。",
+          "example": "1",
+          "member": "int64",
+          "name": "Result",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "ExstraPerformanceInfo": {
+      "document": "购买完额外性能之后的值",
+      "members": [
+        {
+          "disabled": false,
+          "document": "fixed: 最终值固定",
+          "example": "fixed",
+          "member": "string",
+          "name": "Type",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "额外购买的CFS性能值，单位MB/s。",
+          "example": "300",
+          "member": "int64",
+          "name": "Performance",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
     },
     "FileSystemByPolicy": {
       "document": "绑定快照策略的文件系统信息",
@@ -2831,7 +3854,7 @@
         },
         {
           "disabled": false,
-          "document": "可用区名称，例如ap-beijing-1，请参考 概览文档中的地域与可用区列表",
+          "document": "可用区名称，例如ap-beijing-1，参考[简介](https://cloud.tencent.com/document/api/582/38144)文档中的地域与可用区列表",
           "example": "ap-guangzhou-1",
           "member": "string",
           "name": "Zone",
@@ -2948,7 +3971,7 @@
         {
           "disabled": false,
           "document": "文件系统协议类型, 支持 NFS,CIFS,TURBO",
-          "example": "SMB",
+          "example": "NFS",
           "member": "string",
           "name": "Protocol",
           "output_required": true,
@@ -3057,7 +4080,7 @@
         },
         {
           "disabled": false,
-          "document": "文件系统处理快照状态",
+          "document": "文件系统处理快照状态,snapping：快照中，normal：正常状态",
           "example": "snapping",
           "member": "string",
           "name": "SnapStatus",
@@ -3124,6 +4147,26 @@
           "output_required": false,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "额外性能信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "\"Type\": \"fixed\", \"Performance\": 300",
+          "member": "ExstraPerformanceInfo",
+          "name": "ExstraPerformanceInfo",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "basic：标准版元数据类型\nenhanced：增项版元数据类型",
+          "example": "basic",
+          "member": "string",
+          "name": "MetaType",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -3151,6 +4194,338 @@
         }
       ],
       "usage": "in"
+    },
+    "LifecycleDataTaskInfo": {
+      "document": "生命周期任务",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务id",
+          "example": "task-202411gatagah",
+          "member": "string",
+          "name": "TaskId",
+          "output_required": true,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务状态.\ninit：未执行\nrunning：执行中，finished：已完成\n,failed：失败\n,stopping：停止中,stopped：已停止",
+          "example": "init",
+          "member": "string",
+          "name": "TaskStatus",
+          "output_required": true,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务创建时间",
+          "example": "2024-10-30 12：43:44",
+          "member": "string",
+          "name": "CreationTime",
+          "output_required": true,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务结束时间",
+          "example": "2024-10-30 12：43:44",
+          "member": "string",
+          "name": "FinishTime",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文件总数",
+          "example": "20",
+          "member": "uint64",
+          "name": "FileTotalCount",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "处理成功文件数量",
+          "example": "10",
+          "member": "uint64",
+          "name": "FileSuccessedCount",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "当前已经失败的文件数",
+          "example": "30",
+          "member": "uint64",
+          "name": "FileFailedCount",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文件容量，单位Byte\n\n",
+          "example": "3000000",
+          "member": "uint64",
+          "name": "FileTotalSize",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "已处理完成的文件容量，单位Byte\n\n",
+          "example": "666666",
+          "member": "uint64",
+          "name": "FileSuccessedSize",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "已处理失败文件容量，单位Byte\n",
+          "example": "68788778",
+          "member": "uint64",
+          "name": "FileFailedSize",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "总文件列表",
+          "example": "https://cfs-migrate-xxxxx.cos.ap-chongqing.myqcloud.com/cfs-migrate-results/cfsmigrate-3d2cf062",
+          "member": "string",
+          "name": "FileTotalList",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "成功的文件列表",
+          "example": "https://cfs-migrate-xxxxx.cos.ap-chongqing.myqcloud.com/cfs-migrate-results/cfsmigrate-3d2cf062",
+          "member": "string",
+          "name": "FileSuccessedList",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "失败文件的列表",
+          "example": "https://cfs-migrate-xxxxx.cos.ap-chongqing.myqcloud.com/cfs-migrate-results/cfsmigrate-3d2cf062",
+          "member": "string",
+          "name": "FileFailedList",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "FileSystemId",
+          "example": "cfs-4gagagag",
+          "member": "string",
+          "name": "FileSystemId",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务名称",
+          "example": "agcg",
+          "member": "string",
+          "name": "TaskName",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务路径",
+          "example": "/cfs/abc",
+          "member": "string",
+          "name": "TaskPath",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务类型,archive:表示沉降任务，restore：表示拉取任务",
+          "example": "archive",
+          "member": "string",
+          "name": "Type",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "数据流动Id",
+          "example": "cfs-dataflow-e9ec49eb",
+          "member": "string",
+          "name": "DataFlowId",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
+    },
+    "LifecyclePolicy": {
+      "document": "生命周期管理策略信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "生命周期管理策略创建的时间",
+          "example": "2020-01-05 00:02:00",
+          "member": "string",
+          "name": "CreateTime",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "生命周期管理策略ID",
+          "example": "policy-ek8aw4id",
+          "member": "string",
+          "name": "LifecyclePolicyID",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "生命周期管理策略名称\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "test",
+          "member": "string",
+          "name": "LifecyclePolicyName",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "生命周期管理策略关联的管理规则列表\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "无",
+          "member": "LifecycleRule",
+          "name": "LifecycleRules",
+          "required": true,
+          "type": "list",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "生命周期管理策略关联目录的绝对路径列表\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "无",
+          "member": "PathInfo",
+          "name": "Paths",
+          "required": true,
+          "type": "list",
+          "value_allowed_null": true
+        }
+      ],
+      "usage": "out"
+    },
+    "LifecycleRule": {
+      "document": "生命周期管理策略关联的管理规则",
+      "members": [
+        {
+          "disabled": false,
+          "document": "数据转储后的存储类型",
+          "example": "InfrequentAccess",
+          "member": "string",
+          "name": "StorageType",
+          "output_required": true,
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "数据转储文件类型",
+          "example": "All",
+          "member": "string",
+          "name": "FileType",
+          "output_required": true,
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "数据转储行为",
+          "example": "Archive",
+          "member": "string",
+          "name": "Action",
+          "output_required": true,
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "数据转储触发时间\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "DEFAULT_ATIME_14",
+          "member": "string",
+          "name": "Interval",
+          "output_required": true,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "数据转储文件最大规格\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "1G",
+          "member": "string",
+          "name": "FileMaxSize",
+          "output_required": true,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "数据转储文件最小规格\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "1M",
+          "member": "string",
+          "name": "FileMinSize",
+          "output_required": true,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": true
+        }
+      ],
+      "usage": "both"
     },
     "MigrationTaskInfo": {
       "document": "CFS数据迁移任务信息",
@@ -3297,7 +4672,7 @@
         },
         {
           "disabled": false,
-          "document": "迁移状态。0: 已完成；1: 进行中；2: 已终止",
+          "document": "迁移状态。0: 已完成；1: 创建中；2: 运行中；3: 终止中；4: 已终止；5: 创建失败；6: 运行失败；7: 结束中；8: 删除中；9: 等待中",
           "example": "0",
           "member": "uint64",
           "name": "Status",
@@ -3418,13 +4793,86 @@
       ],
       "usage": "out"
     },
+    "ModifyDataFlowRequest": {
+      "document": "ModifyDataFlow请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "数据流动管理 ID ，通过查询数据流动接口获取",
+          "example": "cfs-dataflow-abc124",
+          "member": "string",
+          "name": "DataFlowId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "文件系统 ID ，通过查询文件系统 [DescribeCfsFileSystems](https://cloud.tencent.com/document/product/582/38170) 获取",
+          "example": "cfs-4gagcgaga",
+          "member": "string",
+          "name": "FileSystemId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "数据流动名称；支持不超过64字符长度，支持中文、数字、_、-",
+          "example": "default",
+          "member": "string",
+          "name": "DataFlowName",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "密钥 ID",
+          "example": "galgjagagagj",
+          "member": "string",
+          "name": "SecretId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "密钥 key",
+          "example": "thipsmyphjshsp",
+          "member": "string",
+          "name": "SecretKey",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "ModifyDataFlowResponse": {
+      "document": "ModifyDataFlow返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "数据流动管理 ID",
+          "example": "cfs-dataflow-agag124",
+          "member": "string",
+          "name": "DataFlowId",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "ModifyFileSystemAutoScaleUpRuleRequest": {
       "document": "ModifyFileSystemAutoScaleUpRule请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "文件系统id",
-          "example": "cfs-x",
+          "document": "文件系统 ID，通过查询文件系统列表获取；[DescribeCfsFileSystems](https://cloud.tencent.com/document/product/582/38170)",
+          "example": "cfs-4abc12343",
           "member": "string",
           "name": "FileSystemId",
           "required": true,
@@ -3441,7 +4889,7 @@
         },
         {
           "disabled": false,
-          "document": "扩容后目标阈值,范围[10-90],该值要小于ScaleUpThreshold",
+          "document": "扩容后目标阈值，范围[10-90]，该值要小于 ScaleUpThreshold",
           "example": "80",
           "member": "uint64",
           "name": "TargetThreshold",
@@ -3450,7 +4898,7 @@
         },
         {
           "disabled": false,
-          "document": "规则状态0:关闭，1 开启\n",
+          "document": "规则状态 0：关闭，1：开启；不传保留原状态",
           "example": "0",
           "member": "uint64",
           "name": "Status",
@@ -3465,7 +4913,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统id",
+          "document": "文件系统 ID",
           "example": "cfs-x",
           "member": "string",
           "name": "FileSystemId",
@@ -3475,7 +4923,7 @@
         },
         {
           "disabled": false,
-          "document": "规则状态0:关闭，1 开启",
+          "document": "规则状态 0：关闭，1：开启",
           "example": "0",
           "member": "uint64",
           "name": "Status",
@@ -3485,7 +4933,7 @@
         },
         {
           "disabled": false,
-          "document": "扩容阈值,范围[10-90]",
+          "document": "扩容阈值，范围[10-90]",
           "example": "85",
           "member": "uint64",
           "name": "ScaleUpThreshold",
@@ -3495,12 +4943,67 @@
         },
         {
           "disabled": false,
-          "document": "扩容后达到阈值,范围[10-90]",
+          "document": "扩容后达到阈值，范围[10-90]",
           "example": "75",
           "member": "uint64",
           "name": "TargetThreshold",
           "output_required": true,
           "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "ModifyLifecyclePolicyRequest": {
+      "document": "ModifyLifecyclePolicy请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "生命周期管理策略名称，中文/英文/数字/下划线/中划线的组合，不超过64个字符",
+          "example": "大数据NAS存储01",
+          "member": "string",
+          "name": "LifecyclePolicyName",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "生命周期管理策略关联的管理规则列表",
+          "example": "无",
+          "member": "LifecycleRule",
+          "name": "LifecycleRules",
+          "required": true,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "生命周期管理策略ID",
+          "example": "policy-ek8axxxx",
+          "member": "string",
+          "name": "LifecyclePolicyID",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "ModifyLifecyclePolicyResponse": {
+      "document": "ModifyLifecyclePolicy返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "生命周期管理策略ID",
+          "example": "policy-ek8axxxx",
+          "member": "string",
+          "name": "LifecyclePolicyID",
+          "output_required": true,
+          "type": "string",
           "value_allowed_null": false
         },
         {
@@ -3521,7 +5024,7 @@
           "example": "cfs-hge16re9",
           "member": "string",
           "name": "FileSystemId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -3531,7 +5034,7 @@
           "example": "mount-0ylt3o7o",
           "member": "string",
           "name": "MountTargetId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -3541,7 +5044,7 @@
           "example": "10.1.0.7",
           "member": "string",
           "name": "IpAddress",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -3551,27 +5054,27 @@
           "example": "fwsuvz0l",
           "member": "string",
           "name": "FSID",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "挂载点状态",
+          "document": "挂载点状态，包括creating：创建中；available：运行中；\ndeleting：删除中；\ncreate_failed： 创建失败",
           "example": "available",
           "member": "string",
           "name": "LifeCycleState",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "网络类型",
+          "document": "网络类型，包括VPC,CCN",
           "example": "VPC",
           "member": "string",
           "name": "NetworkInterface",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -3581,7 +5084,7 @@
           "example": "vpc-hq13cw04",
           "member": "string",
           "name": "VpcId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -3591,7 +5094,7 @@
           "example": "qcloudtest",
           "member": "string",
           "name": "VpcName",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -3601,7 +5104,7 @@
           "example": "subnet-jdl08no5",
           "member": "string",
           "name": "SubnetId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -3611,7 +5114,7 @@
           "example": "qcloudtest",
           "member": "string",
           "name": "SubnetName",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -3621,7 +5124,7 @@
           "example": "ccn-1xhbcp41",
           "member": "string",
           "name": "CcnID",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -3631,7 +5134,7 @@
           "example": "10.0.0.0/24",
           "member": "string",
           "name": "CidrBlock",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         }
@@ -3776,13 +5279,39 @@
       ],
       "usage": "out"
     },
+    "PathInfo": {
+      "document": "生命周期管理策略关联目录的绝对路径",
+      "members": [
+        {
+          "disabled": false,
+          "document": "文件系统ID",
+          "example": "cfs-4xxxxxx",
+          "member": "string",
+          "name": "FileSystemId",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "目录绝对路径",
+          "example": "/data/log/001/",
+          "member": "string",
+          "name": "Path",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
+    },
     "ScaleUpFileSystemRequest": {
       "document": "ScaleUpFileSystem请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "文件系统Id",
-          "example": "cfs-ailtest1",
+          "document": "文件系统Id,该参数通过查询文件系统列表接口获取",
+          "example": "cfs-4abc12345",
           "member": "string",
           "name": "FileSystemId",
           "required": true,
@@ -3791,7 +5320,7 @@
         {
           "disabled": false,
           "document": "扩容的目标容量（单位GiB）",
-          "example": "10240",
+          "example": "20480",
           "member": "uint64",
           "name": "TargetCapacity",
           "required": true,
@@ -3837,8 +5366,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统 ID",
-          "example": "cfs-12345",
+          "document": "文件系统 ID,通过[查询文件系统列表](https://cloud.tencent.com/document/api/582/38170)获取",
+          "example": "cfs-abc12345",
           "member": "string",
           "name": "FileSystemId",
           "required": true,
@@ -3895,6 +5424,16 @@
     "SetUserQuotaResponse": {
       "document": "SetUserQuota返回参数结构体",
       "members": [
+        {
+          "disabled": false,
+          "document": "UID/GID信息",
+          "example": "10000",
+          "member": "string",
+          "name": "UserId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
@@ -3957,7 +5496,7 @@
         {
           "disabled": false,
           "document": "快照ID",
-          "example": "snapcfs-xx",
+          "example": "snapcfs-123abcde",
           "member": "string",
           "name": "SnapshotId",
           "output_required": true,
@@ -3966,7 +5505,7 @@
         },
         {
           "disabled": false,
-          "document": "快照状态，createing-创建中；available-运行中；deleting-删除中；rollbacking-new 创建新文件系统中；create-failed 创建失败",
+          "document": "快照状态，creating-创建中；available-运行中；deleting-删除中；rollbacking-new 创建新文件系统中；create-failed 创建失败",
           "example": "available ",
           "member": "string",
           "name": "Status",
@@ -4016,7 +5555,7 @@
         },
         {
           "disabled": false,
-          "document": "快照进度百分比，1表示1%",
+          "document": "快照进度百分比，1表示1% 范围1-100",
           "example": "1",
           "member": "uint64",
           "name": "Percent",
@@ -4066,7 +5605,7 @@
         },
         {
           "disabled": false,
-          "document": "快照类型, general为通用系列快照，turbo为Turbo系列快照\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "快照类型，general为通用系列快照，turbo为Turbo系列快照\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "turbo",
           "member": "string",
           "name": "SnapshotType",
@@ -4076,7 +5615,7 @@
         },
         {
           "disabled": false,
-          "document": "实际快照时间，反应快照对应文件系统某个时刻的数据。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实际快照时间，反映快照对应文件系统某个时刻的数据。\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "2023-05-16 14:45:15",
           "member": "string",
           "name": "SnapshotTime",
@@ -4152,7 +5691,7 @@
           "example": "ap-guangzhou",
           "member": "string",
           "name": "Region",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -4162,29 +5701,56 @@
           "example": "2",
           "member": "uint64",
           "name": "SnapshotNumber",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "快照总容量",
+          "document": "快照总容量，单位是MiB",
           "example": "33",
           "member": "uint64",
           "name": "SnapshotSize",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         }
       ],
       "usage": "out"
     },
+    "StopLifecycleDataTaskRequest": {
+      "document": "StopLifecycleDataTask请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID",
+          "example": "gagtaga",
+          "member": "string",
+          "name": "TaskId",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "StopLifecycleDataTaskResponse": {
+      "document": "StopLifecycleDataTask返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "StopMigrationTaskRequest": {
       "document": "StopMigrationTask请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "迁移任务名称",
+          "document": "迁移任务Id",
           "example": "cfsmigrate-xxxxx",
           "member": "string",
           "name": "TaskId",
@@ -4200,7 +5766,7 @@
         {
           "disabled": false,
           "document": "迁移任务Id",
-          "example": "atagckgtl",
+          "example": "cfsmigrate-xxxxxxxx",
           "member": "string",
           "name": "TaskId",
           "output_required": true,
@@ -4209,8 +5775,8 @@
         },
         {
           "disabled": false,
-          "document": "迁移状态。0: 已完成；1: 进行中；2: 已终止",
-          "example": "2",
+          "document": "迁移状态。0: 已完成；1: 创建中；2: 运行中；3: 终止中；4: 已终止；5: 创建失败；6: 运行失败；7: 结束中；8: 删除中；9: 等待中",
+          "example": "3",
           "member": "uint64",
           "name": "Status",
           "output_required": true,
@@ -4287,7 +5853,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "需要解绑的文件系统ID列表，用\",\" 分割",
+          "document": "需要解绑的文件系统ID列表，用\",\" 分割，文件系统ID，通过查询文件系统列表获取；[DescribeCfsFileSystems](https://cloud.tencent.com/document/product/582/38170)",
           "example": "cfs-abc,cfs-dbc",
           "member": "string",
           "name": "FileSystemIds",
@@ -4296,8 +5862,8 @@
         },
         {
           "disabled": false,
-          "document": "解绑的快照ID",
-          "example": "asp-xx",
+          "document": "解绑的快照策略ID，可以通过[DescribeAutoSnapshotPolicies](https://cloud.tencent.com/document/api/582/80208) 查询获取",
+          "example": "asp-gagagacg",
           "member": "string",
           "name": "AutoSnapshotPolicyId",
           "required": true,
@@ -4312,10 +5878,10 @@
         {
           "disabled": false,
           "document": "快照策略ID",
-          "example": "asp-xx",
+          "example": "asp-gagagacg",
           "member": "string",
           "name": "AutoSnapshotPolicyId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -4333,8 +5899,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "快照策略ID",
-          "example": "asp-xx",
+          "document": "解绑的快照策略ID，可以通过[DescribeAutoSnapshotPolicies](https://cloud.tencent.com/document/api/582/80208) 查询获取",
+          "example": "asp-1234abcd",
           "member": "string",
           "name": "AutoSnapshotPolicyId",
           "required": true,
@@ -4342,7 +5908,7 @@
         },
         {
           "disabled": false,
-          "document": "快照策略名称",
+          "document": "快照策略名称，不超过64个字符",
           "example": "cfspolicygz",
           "member": "string",
           "name": "PolicyName",
@@ -4351,8 +5917,8 @@
         },
         {
           "disabled": false,
-          "document": "快照定期备份，按照星期一到星期日。 1代表星期一，7代表星期日",
-          "example": "'1,2'",
+          "document": "快照定期备份，按照星期一到星期日。 1代表星期一，7代表星期日，与DayOfMonth，IntervalDays 三者选一个",
+          "example": "1,2",
           "member": "string",
           "name": "DayOfWeek",
           "required": false,
@@ -4361,7 +5927,7 @@
         {
           "disabled": false,
           "document": "快照定期备份在一天的哪一小时",
-          "example": "'1,3,4'",
+          "example": "1,3,4",
           "member": "string",
           "name": "Hour",
           "required": false,
@@ -4369,7 +5935,7 @@
         },
         {
           "disabled": false,
-          "document": "快照保留日期",
+          "document": "快照保留天数",
           "example": "20",
           "member": "uint64",
           "name": "AliveDays",
@@ -4387,8 +5953,8 @@
         },
         {
           "disabled": false,
-          "document": "定期快照在每月的第几天创建快照，该参数与DayOfWeek互斥",
-          "example": "'1,3,4,10'",
+          "document": "定期快照在每月的第几天创建快照，该参数与DayOfWeek,IntervalDays 三者选一",
+          "example": "1,3,4,10",
           "member": "string",
           "name": "DayOfMonth",
           "required": false,
@@ -4396,7 +5962,7 @@
         },
         {
           "disabled": false,
-          "document": "间隔天数定期执行快照，该参数与DayOfWeek,DayOfMonth 互斥",
+          "document": "间隔天数定期执行快照，该参数与DayOfWeek,DayOfMonth 三者选一",
           "example": "1",
           "member": "uint64",
           "name": "IntervalDays",
@@ -4433,8 +5999,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统 ID",
-          "example": "cfs-12345",
+          "document": "文件系统 ID,通过[查询文件系统接口](https://cloud.tencent.com/document/api/582/38170)获取",
+          "example": "cfs-abc12345",
           "member": "string",
           "name": "FileSystemId",
           "required": true,
@@ -4442,7 +6008,7 @@
         },
         {
           "disabled": false,
-          "document": "用户自定义文件系统名称",
+          "document": "用户自定义文件系统名称，64字节内的中文字母数字或者 _,-,与CreationToken 至少填一个",
           "example": "fs_name",
           "member": "string",
           "name": "FsName",
@@ -4499,7 +6065,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "权限组 ID",
+          "document": "权限组 ID，可通过[DescribeCfsPGroups接口](https://cloud.tencent.com/document/api/582/38157)获取",
           "example": "pgroup-12345",
           "member": "string",
           "name": "PGroupId",
@@ -4508,7 +6074,7 @@
         },
         {
           "disabled": false,
-          "document": "文件系统 ID",
+          "document": "文件系统 ID，通过[查询文件系统接口](https://cloud.tencent.com/document/api/582/38170)获取",
           "example": "cfs-12345",
           "member": "string",
           "name": "FileSystemId",
@@ -4527,7 +6093,7 @@
           "example": "pgroup-12345",
           "member": "string",
           "name": "PGroupId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -4537,7 +6103,7 @@
           "example": "cfs-12345",
           "member": "string",
           "name": "FileSystemId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -4564,8 +6130,8 @@
         },
         {
           "disabled": false,
-          "document": "文件系统ID，目前仅支持标准型文件系统。",
-          "example": "cfs-12345",
+          "document": "文件系统ID，目前仅支持标准型文件系统。该参数通过查询文件系统列表获取",
+          "example": "cfs-abc12345",
           "member": "string",
           "name": "FileSystemId",
           "required": true,
@@ -4591,7 +6157,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "权限组 ID",
+          "document": "权限组 ID，可通过[DescribeCfsPGroups接口](https://cloud.tencent.com/document/api/582/38157)获取",
           "example": "pgroup-12345",
           "member": "string",
           "name": "PGroupId",
@@ -4666,7 +6232,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "权限组 ID",
+          "document": "权限组 ID，可通过[DescribeCfsPGroups接口](https://cloud.tencent.com/document/api/582/38157)获取",
           "example": "pgroup-12345",
           "member": "string",
           "name": "PGroupId",
@@ -4675,7 +6241,7 @@
         },
         {
           "disabled": false,
-          "document": "规则 ID",
+          "document": "规则 ID，可通过[DescribeCfsRules](https://cloud.tencent.com/document/api/582/38156)接口获取",
           "example": "rule-12345",
           "member": "string",
           "name": "RuleId",
@@ -4702,7 +6268,7 @@
         },
         {
           "disabled": false,
-          "document": "用户权限，值为all_squash、no_all_squash、root_squash、no_root_squash。\nall_squash：所有访问用户（含 root 用户）都会被映射为匿名用户或用户组。\nno_all_squash：所有访问用户（含 root 用户）均保持原有的 UID/GID 信息。\nroot_squash：将来访的 root 用户映射为匿名用户或用户组，非 root 用户保持原有的 UID/GID 信息。\nno_root_squash：与 no_all_squash 效果一致，所有访问用户（含 root 用户）均保持原有的 UID/GID 信息\n",
+          "document": "用户权限，值为all_squash、no_all_squash、root_squash、no_root_squash，默认值为root_squash\nall_squash：所有访问用户（含 root 用户）都会被映射为匿名用户或用户组。\nno_all_squash：所有访问用户（含 root 用户）均保持原有的 UID/GID 信息。\nroot_squash：将来访的 root 用户映射为匿名用户或用户组，非 root 用户保持原有的 UID/GID 信息。\nno_root_squash：与 no_all_squash 效果一致，所有访问用户（含 root 用户）均保持原有的 UID/GID 信息\n",
           "example": "no_root_squash",
           "member": "string",
           "name": "UserPermission",
@@ -4711,7 +6277,7 @@
         },
         {
           "disabled": false,
-          "document": "规则优先级，参数范围1-100。 其中 1 为最高，100为最低",
+          "document": "规则优先级，参数范围1-100。 其中 1 为最高，100为最低，默认值为100",
           "example": "7",
           "member": "int64",
           "name": "Priority",
@@ -4798,8 +6364,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统快照ID",
-          "example": "snapcfs-xx",
+          "document": "快照ID，可以通过[DescribeCfsSnapshots](https://cloud.tencent.com/document/api/582/80206) 查询获取",
+          "example": "snapcfs-4agklgllg",
           "member": "string",
           "name": "SnapshotId",
           "required": true,
@@ -4807,7 +6373,7 @@
         },
         {
           "disabled": false,
-          "document": "文件系统快照名称",
+          "document": "文件系统快照名称，与AliveDays 必须填一个，快照名称，支持不超过64字符长度，支持中文、数字、_、-",
           "example": "snapshot123",
           "member": "string",
           "name": "SnapshotName",
@@ -4816,7 +6382,7 @@
         },
         {
           "disabled": false,
-          "document": "文件系统快照保留天数",
+          "document": "文件系统快照保留天数，与SnapshotName必须填一个，如果原来是永久保留时间，不允许修改成短期有效期",
           "example": "7",
           "member": "uint64",
           "name": "AliveDays",
@@ -4853,7 +6419,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "文件系统 ID",
+          "document": "文件系统 ID,可通过[DescribeCfsFileSystems](https://cloud.tencent.com/document/api/582/38170)接口获取",
           "example": "cfs-abcd1234",
           "member": "string",
           "name": "FileSystemId",

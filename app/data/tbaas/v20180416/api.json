@@ -63,13 +63,6 @@
       "output": "GetInvokeTxResponse",
       "status": "online"
     },
-    "GetLatesdTransactionList": {
-      "document": "获取最新交易列表（已废弃）",
-      "input": "GetLatesdTransactionListRequest",
-      "name": "获取最新交易列表（已废弃）",
-      "output": "GetLatesdTransactionListResponse",
-      "status": "online"
-    },
     "GetLatestTransactionList": {
       "document": "获取fabric最新交易列表",
       "input": "GetLatestTransactionListRequest",
@@ -212,13 +205,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "成功生成的用户证书的base64编码字符串列表，与SignUserCsrList一一对应\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "请求的唯一",
+          "document": "成功生成的用户证书的base64编码字符串列表，与SignUserCsrList一一对应",
+          "example": "[\"Y2VydDE=\"]",
           "member": "string",
           "name": "SignUserCrtList",
-          "required": true,
+          "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -419,53 +412,53 @@
         },
         {
           "disabled": false,
-          "document": "交易结果码含义\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易结果码含义",
           "example": "Success",
           "member": "string",
           "name": "CodeMessage",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "交易ID\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易ID",
           "example": "9d3c4eabca704b04b9317583a194c5b7163aeb3c44e5418f98f79a4a319efb92",
           "member": "string",
           "name": "TxId",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Gas使用量\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Gas使用量",
           "example": "0",
           "member": "int64",
           "name": "GasUsed",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "合约返回消息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "合约返回消息",
           "example": "Success",
           "member": "string",
           "name": "Message",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "合约函数返回，base64编码\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "合约函数返回，base64编码",
           "example": "dGVzdHRlc3Q=",
           "member": "string",
           "name": "Result",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -485,73 +478,73 @@
         },
         {
           "disabled": false,
-          "document": "交易结果码含义\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易结果码含义",
           "example": "OK",
           "member": "string",
           "name": "CodeMessage",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "交易ID\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易ID",
           "example": "6ab24544b68643318dd06dc062525e682eeeb9f143294436998127d0f274164d",
           "member": "string",
           "name": "TxId",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Gas使用量\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Gas使用量",
           "example": "0",
           "member": "int64",
           "name": "GasUsed",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "区块高度\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "区块高度",
           "example": "1",
           "member": "int64",
           "name": "BlockHeight",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "合约执行结果\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "合约执行结果",
           "example": "[{\\\"contract_name\\\":\\\"ChainMakerDemo\\\",\\\"contract_version\\\":\\\"v1\\\"}]",
           "member": "string",
           "name": "ContractEvent",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "合约返回信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "合约返回信息",
           "example": "OK",
           "member": "string",
           "name": "Message",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "交易时间，单位是秒\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易时间，单位是秒",
           "example": "1709261981",
           "member": "int64",
           "name": "Timestamp",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -882,7 +875,7 @@
         {
           "disabled": true,
           "document": "证书内容",
-          "example": "-----BEGIN CERTIFICATE-----MIIC4DCCAoagAwIBAgIBBzAKBggqhkjOPQQDAjBpMQswCQYDVQQGEwJDTjERMA8GA1UECAwIU2hlblpoZW4xETAPBgNVBAcMCFNoZW5aaGVuMREwDwYDVQQKDAh5b3V0dU9yZzEhMB8GA1UEAwwYY2EueW91dHVvcmcuYmNrdW9iYzQxbXB1MB4XDTE5MTAxNjA2NDY0NVoXDTIyMDkzMDA2NDY0NVowgYUxCzAJBgNVBAYTAkNOMREwDwYDVQQIEwhTaGVuWmhlbjESMBAGA1UEBxMJNFNoZW5aaGVuMREwDwYDVQQKEwh5b3V0dU9yZzEPMA0GA1UECxMGY2xpZW50MSswKQYDVQQDFCJreWxvekB5b3V0dW9yZy5iY2t1b2JjNDFtcHVAY2xpZW50MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEwitZ4tmOK9tMvDLP4kx+ZmM8QnzHgfxr8KeoEjBwJomODlwyo6L5XIUeQIz1K/gwU6o8ArusTrab1cWzgHyF8qOCAQAwgf0wCQYDVR0TBAIwADARBglghkgBhvhCAQEEBAMCBkAwHQYDVR0OBBYEFNeW9zH7j/rxDklNBz4OB5aWVY66MIGbBgNVHSMEgZMwgZCAFDdP92WahmfoPabh45gYaozILIVooW2kazBpMQswCQYDVQQGEwJDTjERMA8GA1UECAwIU2hlblpoZW4xETAPBgNVBAcMCFNoZW5aaGVuMREwDwYDVQQKDAh5b3V0dU9yZzEhMB8GA1UEAwwYY2EueW91dHVvcmcuYmNrdW9iYzQxbXB1ggkA+Nat6MctlAowCwYDVR0PBAQDAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMBMAoGCCqGSM49BAMCA0gAMEUCIQDquRCXMx6T1QUi9YviE6cpGfQyIQIJ+SAp/6u5EhgzjgIgaf9eX823ZRWLG+S7CdWSk/oVVeSoelyUDYqTvYYqXtI=-----END CERTIFICATE-----",
+          "example": "-----BEGIN CERTIFICATE-----MIIC4DCCAoagAwIeX823ZRWLG+S7CdWSk/oVVeSoelyUDYqTvYYqXtI=-----END CERTIFICATE-----",
           "member": "string",
           "name": "CertCtx",
           "output_required": true,
@@ -892,7 +885,7 @@
         {
           "disabled": false,
           "document": "证书内容",
-          "example": "-----BEGIN CERTIFICATE-----MIIC4DCCAoagAwIBAgIBBzAKBggqhkjOPQQDAjBpMQswCQYDVQQGEwJDTjERMA8GA1UECAwIU2hlblpoZW4xETAPBgNVBAcMCFNoZW5aaGVuMREwDwYDVQQKDAh5b3V0dU9yZzEhMB8GA1UEAwwYY2EueW91dHVvcmcuYmNrdW9iYzQxbXB1MB4XDTE5MTAxNjA2NDY0NVoXDTIyMDkzMDA2NDY0NVowgYUxCzAJBgNVBAYTAkNOMREwDwYDVQQIEwhTaGVuWmhlbjESMBAGA1UEBxMJNFNoZW5aaGVuMREwDwYDVQQKEwh5b3V0dU9yZzEPMA0GA1UECxMGY2xpZW50MSswKQYDVQQDFCJreWxvekB5b3V0dW9yZy5iY2t1b2JjNDFtcHVAY2xpZW50MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEwitZ4tmOK9tMvDLP4kx+ZmM8QnzHgfxr8KeoEjBwJomODlwyo6L5XIUeQIz1K/gwU6o8ArusTrab1cWzgHyF8qOCAQAwgf0wCQYDVR0TBAIwADARBglghkgBhvhCAQEEBAMCBkAwHQYDVR0OBBYEFNeW9zH7j/rxDklNBz4OB5aWVY66MIGbBgNVHSMEgZMwgZCAFDdP92WahmfoPabh45gYaozILIVooW2kazBpMQswCQYDVQQGEwJDTjERMA8GA1UECAwIU2hlblpoZW4xETAPBgNVBAcMCFNoZW5aaGVuMREwDwYDVQQKDAh5b3V0dU9yZzEhMB8GA1UEAwwYY2EueW91dHVvcmcuYmNrdW9iYzQxbXB1ggkA+Nat6MctlAowCwYDVR0PBAQDAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMBMAoGCCqGSM49BAMCA0gAMEUCIQDquRCXMx6T1QUi9YviE6cpGfQyIQIJ+SAp/6u5EhgzjgIgaf9eX823ZRWLG+S7CdWSk/oVVeSoelyUDYqTvYYqXtI=-----END CERTIFICATE-----",
+          "example": "-----BEGIN CERTIFICATE-----MIIC4DCCAoagAwIBAgIMx6T1QUi9YviE6cpGfQyIQIJ+SAp/6u5EhgzjgIgaf9eX823ZRWLG+S7CdWSk/oVVeSoelyUDYqTvYYqXtI=-----END CERTIFICATE-----",
           "member": "string",
           "name": "Cert",
           "output_required": false,
@@ -1140,7 +1133,7 @@
           "example": "1",
           "member": "uint64",
           "name": "TotalCount",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -1150,7 +1143,7 @@
           "example": "无",
           "member": "TransactionItem",
           "name": "TransactionList",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -1463,7 +1456,7 @@
           "example": "0",
           "member": "int64",
           "name": "TxValidationCode",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -1473,7 +1466,7 @@
           "example": "VALID",
           "member": "string",
           "name": "TxValidationMsg",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1483,134 +1476,8 @@
           "example": "6",
           "member": "int64",
           "name": "BlockId",
-          "required": true,
+          "output_required": true,
           "type": "int",
-          "value_allowed_null": false
-        },
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "GetLatesdTransactionListRequest": {
-      "document": "GetLatesdTransactionList请求参数结构体",
-      "members": [
-        {
-          "disabled": false,
-          "document": "模块名称，固定字段：transaction",
-          "example": "transaction",
-          "member": "string",
-          "name": "Module",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "操作名称，固定字段：latest_transaction_list",
-          "example": "latest_transaction_list",
-          "member": "string",
-          "name": "Operation",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "组织ID，固定字段：0",
-          "example": "0",
-          "member": "uint64",
-          "name": "GroupId",
-          "required": true,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "通道ID，固定字段：0",
-          "example": "0",
-          "member": "uint64",
-          "name": "ChannelId",
-          "required": true,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "获取的最新交易的区块数量，取值范围1~5",
-          "example": "5",
-          "member": "uint64",
-          "name": "LatestBlockNumber",
-          "required": true,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "调用接口的组织名称，可以在组织管理列表中获取当前组织的名称",
-          "example": "liulanOrg",
-          "member": "string",
-          "name": "GroupName",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "需要查询的通道名称，可在通道详情或列表中获取",
-          "example": "kylotst",
-          "member": "string",
-          "name": "ChannelName",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "区块链网络ID，可在区块链网络详情或列表中获取",
-          "example": "251005746bc0f03q8u93j",
-          "member": "string",
-          "name": "ClusterId",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "需要获取的起始交易偏移",
-          "example": "0",
-          "member": "uint64",
-          "name": "Offset",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "需要获取的交易数量",
-          "example": "10",
-          "member": "uint64",
-          "name": "Limit",
-          "required": false,
-          "type": "int"
-        }
-      ],
-      "type": "object"
-    },
-    "GetLatesdTransactionListResponse": {
-      "document": "GetLatesdTransactionList返回参数结构体",
-      "members": [
-        {
-          "disabled": false,
-          "document": "交易总数量",
-          "example": "5",
-          "member": "uint64",
-          "name": "TotalCount",
-          "type": "int",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "交易列表",
-          "example": "无",
-          "member": "TransactionItem",
-          "name": "TransactionList",
-          "type": "list",
           "value_allowed_null": false
         },
         {
@@ -1965,7 +1832,7 @@
         {
           "disabled": false,
           "document": "网络ID，可在区块链网络详情或列表中获取",
-          "example": "251005746bc987bojjue8",
+          "example": "chainmaker-j1juwsmndn",
           "member": "string",
           "name": "ClusterId",
           "required": true,
@@ -1974,7 +1841,7 @@
         {
           "disabled": false,
           "document": "业务链ID，可在网络概览页获取",
-          "example": "chain-test",
+          "example": "chain_dcwtt",
           "member": "string",
           "name": "ChainId",
           "required": true,
@@ -1992,7 +1859,7 @@
         {
           "disabled": false,
           "document": "合约方法名",
-          "example": "send",
+          "example": "save",
           "member": "string",
           "name": "FuncName",
           "required": true,
@@ -2001,7 +1868,7 @@
         {
           "disabled": false,
           "document": "合约方法入参，json格式字符串，key/value都是string类型的map",
-          "example": "{\\\"name\\\":\\\"test\\\"}",
+          "example": "{\\\"time\\\":\\\"7908\\\",\\\"file_hash\\\":\\\"file\\\",\\\"file_name\\\":\\\"file\\\"}",
           "member": "string",
           "name": "FuncParam",
           "required": false,
@@ -2010,7 +1877,7 @@
         {
           "disabled": false,
           "document": "是否异步执行，1为是，否则为0；如果异步执行，可使用返回值中的交易TxID查询执行结果",
-          "example": "1",
+          "example": "0",
           "member": "int64",
           "name": "AsyncFlag",
           "required": false,
@@ -2024,13 +1891,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "交易结果\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易结果",
           "example": "无",
           "member": "ChainMakerContractResult",
           "name": "Result",
           "output_required": true,
           "type": "object",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -2056,7 +1923,7 @@
         {
           "disabled": false,
           "document": "业务链ID，可在网络概览页获取",
-          "example": "chain_test",
+          "example": "chain_demo",
           "member": "string",
           "name": "ChainId",
           "required": true,
@@ -2065,7 +1932,7 @@
         {
           "disabled": false,
           "document": "合约名称，可在合约管理中获取",
-          "example": "fact",
+          "example": "ChainMakerDemo",
           "member": "string",
           "name": "ContractName",
           "required": true,
@@ -2073,8 +1940,8 @@
         },
         {
           "disabled": false,
-          "document": "合约方法名",
-          "example": "send",
+          "document": "合约方法名，由合约代码定义，可以参考合约详情中的合约调用定义",
+          "example": "save",
           "member": "string",
           "name": "FuncName",
           "required": true,
@@ -2082,8 +1949,8 @@
         },
         {
           "disabled": false,
-          "document": "合约方法入参，json格式字符串，key/value都是string类型的map",
-          "example": "{\\\"name\\\":\\\"test\\\"}",
+          "document": "合约方法入参，json格式字符串，key/value都是string类型的map，由合约代码定义，可以参考合约详情中的合约调用定义",
+          "example": "{\"key\":\"key1\",\"field\":\"field1\",\"value\":\"value1\"}",
           "member": "string",
           "name": "FuncParam",
           "required": false,
@@ -2092,7 +1959,7 @@
         {
           "disabled": false,
           "document": "是否异步执行，1为是，否则为0；如果异步执行，可使用返回值中的交易TxID查询执行结果",
-          "example": "1",
+          "example": "0",
           "member": "int64",
           "name": "AsyncFlag",
           "required": false,
@@ -2106,13 +1973,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "交易结果\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易结果",
           "example": "无",
           "member": "ChainMakerContractResult",
           "name": "Result",
           "output_required": true,
           "type": "object",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -2425,12 +2292,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "区块交易\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "[]",
+          "document": "区块交易",
+          "example": "无",
           "member": "ChainMakerTransactionResult",
           "name": "Result",
+          "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -2438,17 +2306,19 @@
           "example": "1",
           "member": "int64",
           "name": "BlockHeight",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "交易数量\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易数量",
           "example": "1",
           "member": "int64",
           "name": "TxCount",
+          "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -2456,6 +2326,7 @@
           "example": "1625572262",
           "member": "int64",
           "name": "BlockTimestamp",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -2474,7 +2345,7 @@
         {
           "disabled": false,
           "document": "网络ID，可在区块链网络详情或列表中获取",
-          "example": "251005746bc987bojjue8",
+          "example": "chainmaker-j1juwsmndn",
           "member": "string",
           "name": "ClusterId",
           "required": true,
@@ -2483,7 +2354,7 @@
         {
           "disabled": false,
           "document": "业务链ID，可在网络概览页获取",
-          "example": "chain-test",
+          "example": "chain_dcwtt",
           "member": "string",
           "name": "ChainId",
           "required": true,
@@ -2500,8 +2371,8 @@
         },
         {
           "disabled": false,
-          "document": "合约方法名",
-          "example": "send",
+          "document": "合约方法名，由合约代码定义",
+          "example": "find_by_file_hash",
           "member": "string",
           "name": "FuncName",
           "required": true,
@@ -2509,8 +2380,8 @@
         },
         {
           "disabled": false,
-          "document": "合约方法入参，json格式字符串，key/value都是string类型的map",
-          "example": "{\\\"name\\\":\\\"test\\\"}",
+          "document": "合约方法入参，json格式字符串，key/value都是string类型的map，由合约代码定义",
+          "example": "{\\\"file_hash\\\":\\\"test\\\"}",
           "member": "string",
           "name": "FuncParam",
           "required": false,
@@ -2524,13 +2395,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "交易结果\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易结果",
           "example": "无",
           "member": "ChainMakerContractResult",
           "name": "Result",
           "output_required": true,
           "type": "object",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -2556,7 +2427,7 @@
         {
           "disabled": false,
           "document": "业务链ID，可在网络概览页获取",
-          "example": "chain_test",
+          "example": "chain_demo",
           "member": "string",
           "name": "ChainId",
           "required": true,
@@ -2579,12 +2450,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "区块交易\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "[]",
+          "document": "区块交易",
+          "example": "无",
           "member": "ChainMakerTransactionResult",
           "name": "Result",
+          "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -2592,17 +2464,19 @@
           "example": "1",
           "member": "int64",
           "name": "BlockHeight",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "交易数量\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易数量",
           "example": "1",
           "member": "int64",
           "name": "TxCount",
+          "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -2610,6 +2484,7 @@
           "example": "1625572262",
           "member": "int64",
           "name": "BlockTimestamp",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -2637,7 +2512,7 @@
         {
           "disabled": false,
           "document": "业务链ID，可在网络概览页获取",
-          "example": "chain_test",
+          "example": "chain_demo",
           "member": "string",
           "name": "ChainId",
           "required": true,
@@ -2646,7 +2521,7 @@
         {
           "disabled": false,
           "document": "合约名称，可在合约管理中获取",
-          "example": "fact",
+          "example": "ChainMakerDemo",
           "member": "string",
           "name": "ContractName",
           "required": true,
@@ -2654,8 +2529,8 @@
         },
         {
           "disabled": false,
-          "document": "合约方法名",
-          "example": "send",
+          "document": "合约方法名，由合约代码定义，可以参考合约详情中的合约调用定义",
+          "example": "get",
           "member": "string",
           "name": "FuncName",
           "required": true,
@@ -2663,8 +2538,8 @@
         },
         {
           "disabled": false,
-          "document": "合约方法入参，json格式字符串，key/value都是string类型的map",
-          "example": "{\\\"name\\\":\\\"test\\\"}",
+          "document": "合约方法入参，json格式字符串，key/value都是string类型的map，由合约代码定义，可以参考合约详情中的合约调用定义",
+          "example": "{\"key\":\"key1\",\"field\":\"field1\"}",
           "member": "string",
           "name": "FuncParam",
           "required": false,
@@ -2678,13 +2553,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "交易结果\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易结果",
           "example": "无",
           "member": "ChainMakerContractResult",
           "name": "Result",
           "output_required": true,
           "type": "object",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -2710,7 +2585,7 @@
         {
           "disabled": false,
           "document": "业务链ID，可在网络概览页获取",
-          "example": "chain_test",
+          "example": "chain_demo",
           "member": "string",
           "name": "ChainId",
           "required": true,
@@ -2719,7 +2594,7 @@
         {
           "disabled": false,
           "document": "交易ID，通过调用合约的返回值获取",
-          "example": "HHHHHHHHHHHHHH",
+          "example": "f6cf450f9b0b496f9ee6d332e739b8b182fe1e3b34ed446ab068a151f1ee8cbe",
           "member": "string",
           "name": "TxID",
           "required": true,
@@ -2733,12 +2608,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "交易结果\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "xx",
+          "document": "交易结果",
+          "example": "无",
           "member": "ChainMakerTransactionResult",
           "name": "Result",
+          "output_required": true,
           "type": "object",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -2755,7 +2631,7 @@
         {
           "disabled": false,
           "document": "网络ID，可在区块链网络详情或列表中获取",
-          "example": "251005746bc987bojjue8",
+          "example": "chainmaker-j1juwsmndn",
           "member": "string",
           "name": "ClusterId",
           "required": true,
@@ -2764,7 +2640,7 @@
         {
           "disabled": false,
           "document": "业务链ID，可在网络概览页获取",
-          "example": "chain-test",
+          "example": "chain_dcwtt",
           "member": "string",
           "name": "ChainId",
           "required": true,
@@ -2773,7 +2649,7 @@
         {
           "disabled": false,
           "document": "交易ID，通过调用合约的返回值获取",
-          "example": "HHHHHHHHHHHHHH",
+          "example": "f6cf450f9b0b496f9ee6d332e739b8b182fe1e3b34ed446ab068a151f1ee8cbe",
           "member": "string",
           "name": "TxID",
           "required": true,
@@ -2787,12 +2663,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "交易结果\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "xx",
+          "document": "交易结果",
+          "example": "无",
           "member": "ChainMakerTransactionResult",
           "name": "Result",
+          "output_required": true,
           "type": "object",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -2992,7 +2869,7 @@
           "example": "{\\\"make\\\":\\\"Chevy\\\",\\\"model\\\":\\\"Volt\\\",\\\"colour\\\":\\\"Black\\\",\\\"ow",
           "member": "string",
           "name": "Data",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -3109,63 +2986,63 @@
       "members": [
         {
           "disabled": false,
-          "document": "交易ID\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易ID",
           "example": "af5b8ec2e660461f9a32ec3c9ec151688a1c83e6ebb94815a21e84fbc29cf7c2",
           "member": "string",
           "name": "TxId",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "合约名称\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "合约名称",
           "example": "save",
           "member": "string",
           "name": "ChaincodeName",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "交易发送者\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易发送者",
           "example": "zhangsan",
           "member": "string",
           "name": "Sender",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "交易创建时间\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易创建时间",
           "example": "2023-07-07 10:10:10",
           "member": "string",
           "name": "CreateTime",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "交易所在区块高度\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易所在区块高度",
           "example": "1024",
           "member": "int64",
           "name": "BlockHeight",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "交易在区块中的序号\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "交易在区块中的序号",
           "example": "0",
           "member": "int64",
           "name": "TxIndex",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"

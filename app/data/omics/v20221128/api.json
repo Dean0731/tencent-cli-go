@@ -143,7 +143,7 @@
   },
   "metadata": {
     "apiVersion": "2022-11-28",
-    "api_brief": "腾讯健康组学平台API",
+    "api_brief": "# API简介",
     "serviceNameCN": "腾讯健康组学平台",
     "serviceShortName": "omics"
   },
@@ -373,6 +373,33 @@
           "name": "LimitRange",
           "required": false,
           "type": "object"
+        },
+        {
+          "disabled": false,
+          "document": "系统节点池实例规格。",
+          "example": "SA3.MEDIUM4",
+          "member": "string",
+          "name": "SystemNodeInstanceType",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "系统节点池实例数量。",
+          "example": "2",
+          "member": "uint64",
+          "name": "SystemNodeCount",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "纳管环境自动升配",
+          "example": "false",
+          "member": "bool",
+          "name": "AutoUpgradeClusterLevel",
+          "required": false,
+          "type": "bool"
         }
       ],
       "usage": "in"
@@ -546,6 +573,24 @@
           "name": "Capacity",
           "required": false,
           "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "是否开启默认扩容，仅turbo类型文件存储支持",
+          "example": "false",
+          "member": "bool",
+          "name": "EnableAutoScaleUp",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "turbo文件系统元数据属性，basic：标准型元数据；enhanced：增强型元数据",
+          "example": "basic",
+          "member": "string",
+          "name": "MetaType",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -1842,6 +1887,42 @@
       ],
       "usage": "both"
     },
+    "NotificationType": {
+      "document": "通知类型",
+      "members": [
+        {
+          "disabled": false,
+          "document": "腾讯健康组学平台站点信息。",
+          "example": "true",
+          "member": "bool",
+          "name": "StationMessage",
+          "output_required": false,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "邮箱列表。",
+          "example": "[\"test@tencent.com\"]",
+          "member": "string",
+          "name": "Email",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "当前用户邮箱。",
+          "example": "false",
+          "member": "bool",
+          "name": "CurrentUserEmail",
+          "output_required": false,
+          "type": "bool",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
     "ResourceIds": {
       "document": "云资源ID。",
       "members": [
@@ -1921,6 +2002,26 @@
           "example": "cls-9j9zh13o",
           "member": "string",
           "name": "EKSId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "TKE容器集群ID。",
+          "example": "cls-8ceobc28",
+          "member": "string",
+          "name": "TKEId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "TKE系统节点池ID。",
+          "example": "np-2ecoev9q",
+          "member": "string",
+          "name": "TKESystemNodePoolId",
           "output_required": false,
           "type": "string",
           "value_allowed_null": false
@@ -2311,7 +2412,7 @@
         {
           "disabled": false,
           "document": "WDL运行选项。",
-          "example": "{\"FailureMode\": \"NoNewCalls\",\"UseCallCache\": true,\"UseErrorOnHold\": true}",
+          "example": "无",
           "member": "RunOption",
           "name": "Option",
           "required": false,
@@ -2320,7 +2421,7 @@
         {
           "disabled": false,
           "document": "Nextflow运行选项。",
-          "example": "{}",
+          "example": "无",
           "member": "NFOption",
           "name": "NFOption",
           "required": false,
@@ -2350,6 +2451,42 @@
           "example": "[\"vol-cis92d14\"]",
           "member": "string",
           "name": "VolumeIds",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "是否开启结果通知。",
+          "example": "false",
+          "member": "bool",
+          "name": "ResultNotification",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "是否开启超时通知。",
+          "example": "false",
+          "member": "bool",
+          "name": "TimeoutNotification",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "任务超时通知时间（单位：分钟），支持5到2880分钟。",
+          "example": "10",
+          "member": "uint64",
+          "name": "TimeoutNotificationMinutes",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "接受通知邮件地址列表。",
+          "example": "[\"test@tencent.com\"]",
+          "member": "string",
+          "name": "EmailForNotification",
           "required": false,
           "type": "list"
         }
@@ -2444,7 +2581,7 @@
         {
           "disabled": false,
           "document": "应用版本。",
-          "example": "{\"Type\": \"HISTORY\",\"ApplicationVersionId\": \"26\",\"Name\": \"\",\"Description\": \"\",\"Entrypoint\": \"ExomeGermlineSingleSample.wdl\",\"CreateTime\": \"2024-06-06 14:49:06\",\"CreatorName\": \"manager\",\"CreatorId\": \"df8c0fbfd4b94490aed913753473ebed\",\"GitSource\": null,\"CosSource\": null}",
+          "example": "无",
           "member": "ApplicationVersion",
           "name": "ApplicationVersion",
           "output_required": false,
@@ -2573,7 +2710,7 @@
         },
         {
           "disabled": false,
-          "document": "输入模版ID。",
+          "document": "输入模板ID。",
           "example": "in-slim-yellow-coorgi-672677",
           "member": "string",
           "name": "InputTemplateId",
@@ -2584,7 +2721,7 @@
         {
           "disabled": false,
           "document": "WDL运行选项。",
-          "example": "{\"FailureMode\": \"NoNewCalls\",\"UseCallCache\": true,\"UseErrorOnHold\": false,\"FinalWorkflowOutputsDir\": \"cos://omics-test-data-1252949230/mazeppafan\",\"UseRelativeOutputPaths\": false,\"AddRunInfoToOutputDir\": null,\"RunGroupName\": null}",
+          "example": "无",
           "member": "RunOption",
           "name": "Option",
           "output_required": true,
@@ -2594,7 +2731,7 @@
         {
           "disabled": false,
           "document": "Nextflow运行选项。",
-          "example": "{\"InputFileKeys\": null,\"OutputFileKeys\": null,\"Config\": \"\",\"NFVersion\": \"\",\"Report\": false,\"Profile\": \"\",\"Resume\": false,\"LaunchDir\": \"\"}",
+          "example": "无",
           "member": "NFOption",
           "name": "NFOption",
           "output_required": false,
@@ -2604,7 +2741,7 @@
         {
           "disabled": false,
           "document": "使用的缓存卷。",
-          "example": "[{\"VolumeId\": \"vol-8w7rfq4b\",\"Name\": \"默认缓存卷（menv-ry46eloh）\",\"MountPath\": \"/vol-8w7rfq4b\"}]",
+          "example": "无",
           "member": "VolumeInfo",
           "name": "Volumes",
           "output_required": false,
@@ -2624,7 +2761,7 @@
         {
           "disabled": false,
           "document": "各状态任务的数量。",
-          "example": "[{\"Status\": \"CANCELED\",\"Count\": 30}]",
+          "example": "无",
           "member": "RunStatusCount",
           "name": "RunStatusCounts",
           "output_required": true,
@@ -2634,7 +2771,7 @@
         {
           "disabled": false,
           "document": "执行时间。",
-          "example": "{\"SubmitTime\": \"2024-06-06T16:30:14+08:00\",\"StartTime\": \"2024-06-06T16:32:16+08:00\",\"EndTime\": \"2024-06-06T16:42:52+08:00\"}",
+          "example": "无",
           "member": "ExecutionTime",
           "name": "ExecutionTime",
           "output_required": true,
@@ -2644,7 +2781,7 @@
         {
           "disabled": false,
           "document": "错误信息。",
-          "example": "[{\"causedBy\": [{\"causedBy\": [{\"causedBy\": [{\"causedBy\": [],\"message\": \":\\nDisk strings should be of the format 'local-disk SIZE TYPE' or '/mount/point SIZE TYPE' but got: '50 GB'\"}],\"message\": \"Runtime attribute validation failed\"}],\"message\": \"TesAsyncBackendJobExecutionActor failed and didn't catch its exception. This condition has been handled and the job will be marked as failed.\"}],\"message\": \"Workflow failed\"}]",
+          "example": "[{\"causedBy\": [{\"message\": \"The compute backend terminated the job.\", \"causedBy\": []}], \"message\": \"Workflow failed\"}]",
           "member": "string",
           "name": "ErrorMessage",
           "output_required": true,
@@ -2653,12 +2790,12 @@
         },
         {
           "disabled": false,
-          "document": "运行结果通知方式。",
-          "example": "StationMessage",
-          "member": "string",
-          "name": "ResultNotify",
+          "document": "任务批次通知。",
+          "example": "无",
+          "member": "RunGroupNotification",
+          "name": "Notification",
           "output_required": false,
-          "type": "string",
+          "type": "object",
           "value_allowed_null": false
         },
         {
@@ -2699,6 +2836,84 @@
           "name": "CreatorId",
           "output_required": false,
           "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运行结果通知方式。",
+          "example": "StationMessage",
+          "member": "string",
+          "name": "ResultNotify",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "RunGroupNotification": {
+      "document": "任务批次通知。",
+      "members": [
+        {
+          "disabled": false,
+          "document": "结果通知。",
+          "example": "无",
+          "member": "RunGroupResultNotification",
+          "name": "ResultNotification",
+          "output_required": false,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "超时通知。",
+          "example": "无",
+          "member": "RunGroupTimeoutNotification",
+          "name": "TimeoutNotification",
+          "output_required": false,
+          "type": "object",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "RunGroupResultNotification": {
+      "document": "任务批次结果通知",
+      "members": [
+        {
+          "disabled": false,
+          "document": "通知类型。",
+          "example": "无",
+          "member": "NotificationType",
+          "name": "NotificationType",
+          "output_required": false,
+          "type": "object",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "RunGroupTimeoutNotification": {
+      "document": "任务批次超时通知。",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务批次超时时间，单位分钟。",
+          "example": "10",
+          "member": "uint64",
+          "name": "TimeoutMinutes",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "通知类型。",
+          "example": "无",
+          "member": "NotificationType",
+          "name": "NotificationType",
+          "output_required": false,
+          "type": "object",
           "value_allowed_null": false
         }
       ],
@@ -3198,8 +3413,7 @@
           "member": "string",
           "name": "StorageType",
           "required": true,
-          "type": "string",
-          "value_allowed_null": true
+          "type": "string"
         },
         {
           "disabled": false,
@@ -3208,8 +3422,7 @@
           "member": "string",
           "name": "Zone",
           "required": true,
-          "type": "string",
-          "value_allowed_null": true
+          "type": "string"
         },
         {
           "disabled": false,
@@ -3218,8 +3431,25 @@
           "member": "uint64",
           "name": "Capacity",
           "required": false,
-          "type": "int",
-          "value_allowed_null": true
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "是否开启默认扩容，仅turbo类型文件存储支持",
+          "example": "false",
+          "member": "bool",
+          "name": "EnableAutoScaleUp",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "turbo文件系统元数据属性，basic：标准型元数据；enhanced：增强型元数据",
+          "example": "basic",
+          "member": "string",
+          "name": "MetaType",
+          "required": false,
+          "type": "string"
         }
       ],
       "usage": "in"
@@ -3570,6 +3800,72 @@
           "name": "Status",
           "output_required": false,
           "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "turbo自动扩容策略",
+          "example": "无",
+          "member": "VolumeAutoScaleUpRule",
+          "name": "AutoScaleUpRule",
+          "output_required": false,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "turbo元数据属性",
+          "example": "basic",
+          "member": "string",
+          "name": "MetaType",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "可用区",
+          "example": "ap-guangzhou-6",
+          "member": "string",
+          "name": "Zone",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "VolumeAutoScaleUpRule": {
+      "document": "缓存卷自动扩容策略",
+      "members": [
+        {
+          "disabled": false,
+          "document": "自动扩容策略开启，关闭\n示例值：open,close",
+          "example": "open",
+          "member": "string",
+          "name": "Status",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "集群用量占比，到达这个值后开始扩容,范围[10-90]",
+          "example": "85",
+          "member": "int64",
+          "name": "ScaleThreshold",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "扩容后使用量跟集群总量比例,范围[10-90]",
+          "example": "70",
+          "member": "int64",
+          "name": "TargetThreshold",
+          "output_required": false,
+          "type": "int",
           "value_allowed_null": false
         }
       ],

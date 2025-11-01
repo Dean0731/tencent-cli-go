@@ -14,13 +14,6 @@
       "output": "CreateComputeEnvResponse",
       "status": "online"
     },
-    "CreateCpmComputeEnv": {
-      "document": "创建黑石计算环境",
-      "input": "CreateCpmComputeEnvRequest",
-      "name": "创建黑石计算环境",
-      "output": "CreateCpmComputeEnvResponse",
-      "status": "online"
-    },
     "CreateTaskTemplate": {
       "document": "用于创建任务模板",
       "input": "CreateTaskTemplateRequest",
@@ -91,13 +84,6 @@
       "output": "DescribeComputeEnvsResponse",
       "status": "online"
     },
-    "DescribeCpmOsInfo": {
-      "document": "创建黑石计算环境时，查询批量计算环境支持的黑石操作系统信息",
-      "input": "DescribeCpmOsInfoRequest",
-      "name": "查询批量计算黑石操作系统信息",
-      "output": "DescribeCpmOsInfoResponse",
-      "status": "online"
-    },
     "DescribeCvmZoneInstanceConfigInfos": {
       "document": "获取批量计算可用区机型配置信息",
       "input": "DescribeCvmZoneInstanceConfigInfosRequest",
@@ -117,6 +103,13 @@
       "input": "DescribeJobRequest",
       "name": "查看作业详情",
       "output": "DescribeJobResponse",
+      "status": "online"
+    },
+    "DescribeJobMonitorData": {
+      "document": "查询作业任务实例的资源使用监控信息。当前只支持查询弹性节点任务并且Job未删除；暂不支持计算环境类任务；该接口只支持查询作业实例时间范围之内的资源使用情况。",
+      "input": "DescribeJobMonitorDataRequest",
+      "name": "查询作业任务实例的资源监控信息",
+      "output": "DescribeJobMonitorDataResponse",
       "status": "online"
     },
     "DescribeJobSubmitInfo": {
@@ -176,7 +169,7 @@
       "status": "online"
     },
     "RetryJobs": {
-      "document": "用于重试作业中失败的任务实例。\n当且仅当作业处于“FAILED”状态，支持重试操作。重试操作成功后，作业会按照“DAG”中指定的任务依赖关系，依次重试各个任务中失败的任务实例。任务实例的历史信息将被重置，如同首次运行一样，参与后续的调度和执行。",
+      "document": "用于重试作业中失败的任务实例。\n仅当作业处于“FAILED”状态，支持重试操作。重试操作成功后，作业会按照有向无环图中指定的任务依赖关系，依次重试各个任务中失败的任务实例。任务实例的历史信息将被重置，如同首次运行一样，参与后续的调度和执行。",
       "input": "RetryJobsRequest",
       "name": "重试作业",
       "output": "RetryJobsResponse",
@@ -204,14 +197,14 @@
       "status": "online"
     },
     "TerminateJob": {
-      "document": "用于终止作业。\n当作业处于“SUBMITTED”状态时，禁止终止操作；当作业处于“SUCCEED”状态时，终止操作不会生效。\n终止作业是一个异步过程。整个终止过程的耗时和任务总数成正比。终止的效果相当于所含的所有任务实例进行TerminateTaskInstance操作。具体效果和用法可参考TerminateTaskInstance。",
+      "document": "用于终止作业。\n当作业处于“SUBMITTED”状态时，禁止终止操作；当作业处于“SUCCEED”状态时，终止操作不会生效。\n终止作业是一个异步过程。整个终止过程的耗时和任务总数成正比。终止的效果相当于所含的所有任务实例进行[TerminateTaskInstance](https://cloud.tencent.com/document/product/599/15908)操作。具体效果和用法可参考[TerminateTaskInstance](https://cloud.tencent.com/document/product/599/15908)。",
       "input": "TerminateJobRequest",
       "name": "终止作业",
       "output": "TerminateJobResponse",
       "status": "online"
     },
     "TerminateTaskInstance": {
-      "document": "用于终止任务实例。\n对于状态已经为“SUCCEED”和“FAILED”的任务实例，不做处理。\n对于状态为“SUBMITTED”、“PENDING”、“RUNNABLE”的任务实例，状态将置为“FAILED”状态。\n对于状态为“STARTING”、“RUNNING”、“FAILED_INTERRUPTED”的任务实例，分区两种情况：如果未显示指定计算环境，会先销毁CVM服务器，然后将状态置为“FAILED”，具有一定耗时；如果指定了计算环境EnvId，任务实例状态置为“FAILED”，并重启执行该任务的CVM服务器，具有一定的耗时。\n对于状态为“FAILED_INTERRUPTED”的任务实例，终止操作实际成功之后，相关资源和配额才会释放。",
+      "document": "用于终止任务实例。\n对于状态已经为“SUCCEED”和“FAILED”的任务实例，不做处理。\n对于状态为“SUBMITTED”、“PENDING”、“RUNNABLE”的任务实例，状态将置为“FAILED”状态。\n对于状态为“STARTING”、“RUNNING”、“FAILED_INTERRUPTED”的任务实例，区分两种情况：如果未显示指定计算环境，会先销毁CVM服务器，然后将状态置为“FAILED”，具有一定耗时；如果指定了计算环境EnvId，任务实例状态置为“FAILED”，并重启执行该任务的CVM服务器，具有一定的耗时。\n对于状态为“FAILED_INTERRUPTED”的任务实例，终止操作实际成功之后，相关资源和配额才会释放。",
       "input": "TerminateTaskInstanceRequest",
       "name": "终止任务实例",
       "output": "TerminateTaskInstanceResponse",
@@ -280,7 +273,7 @@
         },
         {
           "disabled": false,
-          "document": "活动状态",
+          "document": "活动状态。取值范围：<br><li>SUBMITTED：已提交</li><li>PROCESSING：处理中</li><li>SUCCEED：成功</li><li>FAILED：失败</li>",
           "example": "SUCCEED",
           "member": "string",
           "name": "ActivityState",
@@ -301,7 +294,7 @@
         {
           "disabled": false,
           "document": "活动开始时间",
-          "example": "2021-10-04 22:47:06",
+          "example": "2021-10-04T22:47:06Z",
           "member": "string",
           "name": "StartTime",
           "output_required": true,
@@ -310,23 +303,23 @@
         },
         {
           "disabled": false,
-          "document": "活动结束时间\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "2021-10-05 01:02:14",
+          "document": "活动结束时间",
+          "example": "2021-10-05T01:02:14Z",
           "member": "string",
           "name": "EndTime",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "云服务器实例ID\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "云服务器实例ID",
           "example": "ins-qgks4wwf",
           "member": "string",
           "name": "InstanceId",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -336,36 +329,36 @@
       "members": [
         {
           "disabled": false,
-          "document": "场景类型，支持WINDOWS\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "场景类型，支持WINDOWS",
           "example": "WINDOWS",
           "member": "string",
           "name": "Scene",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "运行Agent的User\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "运行Agent的User",
           "example": "12348349197419",
           "member": "string",
           "name": "User",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "运行Agent的Session\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "运行Agent的Session",
           "example": "95af4dd1-c6cd-4294-9439-f55028895c62",
           "member": "string",
           "name": "Session",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -379,7 +372,7 @@
           "example": "MANAGED",
           "member": "string",
           "name": "EnvType",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "string",
           "value_allowed_null": false
@@ -390,7 +383,7 @@
           "example": "无",
           "member": "EnvData",
           "name": "EnvData",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "object",
           "value_allowed_null": false
@@ -401,7 +394,7 @@
           "example": "无",
           "member": "MountDataDisk",
           "name": "MountDataDisks",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "list",
           "value_allowed_null": false
@@ -412,7 +405,7 @@
           "example": "无",
           "member": "AgentRunningMode",
           "name": "AgentRunningMode",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "object",
           "value_allowed_null": false
@@ -425,58 +418,58 @@
       "members": [
         {
           "disabled": false,
-          "document": "应用程序的交付方式，包括PACKAGE、LOCAL 两种取值，分别指远程存储的软件包、计算环境本地。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "应用程序的交付方式，包括PACKAGE、LOCAL 两种取值，分别指远程存储的软件包、计算环境本地。",
           "example": "LOCAL",
           "member": "string",
           "name": "DeliveryForm",
           "output_required": false,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "任务执行命令。与Commands不能同时指定。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "松耦合任务执行命令。与Commands不能同时指定，一般使用Command字段提交任务。",
           "example": "sleep 10",
           "member": "string",
           "name": "Command",
           "output_required": false,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "应用程序软件包的远程存储路径\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "/tmp",
+          "document": "应用程序软件包的远程存储路径",
+          "example": "cos://kelvin-test-1251762227.cos.ap-nanjing.myqcloud.com/batch_test/demon_job.tar.gz",
           "member": "string",
           "name": "PackagePath",
           "output_required": false,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "应用使用Docker的相关配置。在使用Docker配置的情况下，DeliveryForm 为 LOCAL 表示直接使用Docker镜像内部的应用软件，通过Docker方式运行；DeliveryForm 为 PACKAGE，表示将远程应用包注入到Docker镜像后，通过Docker方式运行。为避免Docker不同版本的兼容性问题，Docker安装包及相关依赖由Batch统一负责，对于已安装Docker的自定义镜像，请卸载后再使用Docker特性。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "应用使用Docker的相关配置。在使用Docker配置的情况下，DeliveryForm 为 LOCAL 表示直接使用Docker镜像内部的应用软件，通过Docker方式运行；DeliveryForm 为 PACKAGE，表示将远程应用包注入到Docker镜像后，通过Docker方式运行。为避免Docker不同版本的兼容性问题，Docker安装包及相关依赖由Batch统一负责，对于已安装Docker的自定义镜像，请卸载后再使用Docker特性。",
           "example": "无",
           "member": "Docker",
           "name": "Docker",
           "output_required": false,
           "required": false,
           "type": "object",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "任务执行命令信息。与Command不能同时指定。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "紧耦合任务执行命令信息。与Command不能同时指定。Command和Commands必须指定一个。",
           "example": "无",
           "member": "CommandLine",
           "name": "Commands",
           "output_required": false,
           "required": false,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -486,7 +479,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "计算环境ID",
+          "document": "计算环境ID，环境ID通过调用接口 [DescribeComputeEnvs](https://cloud.tencent.com/document/api/599/15893)获取。",
           "example": "env-nuydksjj",
           "member": "string",
           "name": "EnvId",
@@ -495,7 +488,7 @@
         },
         {
           "disabled": false,
-          "document": "加入计算环境实例列表",
+          "document": "加入计算环境实例列表，每次请求的实例的上限为100。",
           "example": "无",
           "member": "Instance",
           "name": "Instances",
@@ -522,36 +515,36 @@
       "members": [
         {
           "disabled": false,
-          "document": "授权场景，例如COS\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "授权场景，例如COS",
           "example": "COS",
           "member": "string",
           "name": "Scene",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "SecretId\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "SecretId",
           "example": "AKIDUdi16HNjSuTl027Q9ThAzpuXIjNx",
           "member": "string",
           "name": "SecretId",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "SecretKey\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "SecretKey",
           "example": "Udi16HNjSuTl027Q9ThAzpuXIjN",
           "member": "string",
           "name": "SecretKey",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -561,14 +554,14 @@
       "members": [
         {
           "disabled": false,
-          "document": "任务执行命令。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "任务执行命令。",
           "example": "echo hello world",
           "member": "string",
           "name": "Command",
           "output_required": false,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -588,23 +581,23 @@
         },
         {
           "disabled": false,
-          "document": "计算环境名称\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "计算环境名称",
           "example": "demo",
           "member": "string",
           "name": "EnvName",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "计算环境描述\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "计算环境描述",
           "example": "it is a first job",
           "member": "string",
           "name": "EnvDescription",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -628,43 +621,43 @@
         },
         {
           "disabled": false,
-          "document": "数据盘挂载选项\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "数据盘挂载选项",
           "example": "无",
           "member": "MountDataDisk",
           "name": "MountDataDisks",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "输入映射\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "输入映射",
           "example": "无",
           "member": "InputMapping",
           "name": "InputMappings",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "授权信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "授权信息",
           "example": "无",
           "member": "Authentication",
           "name": "Authentications",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "通知信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "通知信息",
           "example": "无",
           "member": "Notification",
           "name": "Notifications",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -678,13 +671,13 @@
         },
         {
           "disabled": false,
-          "document": "计算环境标签列表\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "计算环境标签列表",
           "example": "无",
           "member": "Tag",
           "name": "Tags",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -845,7 +838,7 @@
         },
         {
           "disabled": false,
-          "document": "计算节点状态",
+          "document": "计算节点状态。取值范围：<br><li>PENDING：表示创建中</li><li>SUBMITTED：表示已提交创建</li><li>CREATING：表示创建中</li><li>CREATED：表示创建完成</li><li>CREATION_FAILED：表示创建失败。</li><li>RUNNING：表示运行中。</li><li>ABNORMAL：表示节点异常。</li><li>DELETING：表示删除中。</li>",
           "example": "RUNNING",
           "member": "string",
           "name": "ComputeNodeState",
@@ -876,7 +869,7 @@
         {
           "disabled": false,
           "document": "资源创建完成时间",
-          "example": "2022-12-20 09:11:15",
+          "example": "2022-12-20T09:11:15Z",
           "member": "string",
           "name": "ResourceCreatedTime",
           "output_required": true,
@@ -1022,30 +1015,6 @@
       ],
       "usage": "out"
     },
-    "CpmVirtualPrivateCloud": {
-      "document": "黑石私有网络",
-      "members": [
-        {
-          "disabled": false,
-          "document": "黑石私有网络ID",
-          "example": "vpc-oq2tyq8w",
-          "member": "string",
-          "name": "VpcId",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "黑石子网ID",
-          "example": "subnet-dsca232",
-          "member": "string",
-          "name": "SubnetId",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "usage": "in"
-    },
     "CreateComputeEnvRequest": {
       "document": "CreateComputeEnv请求参数结构体",
       "members": [
@@ -1101,67 +1070,12 @@
       ],
       "type": "object"
     },
-    "CreateCpmComputeEnvRequest": {
-      "document": "CreateCpmComputeEnv请求参数结构体",
-      "members": [
-        {
-          "disabled": false,
-          "document": "计算环境信息",
-          "example": "无",
-          "member": "NamedCpmComputeEnv",
-          "name": "ComputeEnv",
-          "required": true,
-          "type": "object"
-        },
-        {
-          "disabled": false,
-          "document": "位置信息",
-          "example": "无",
-          "member": "Placement",
-          "name": "Placement",
-          "required": false,
-          "type": "object"
-        },
-        {
-          "disabled": false,
-          "document": "用于保证请求幂等性的字符串。该字符串由用户生成，需保证不同请求之间唯一，最大值不超过64个ASCII字符。若不指定该参数，则无法保证请求的幂等性。",
-          "example": "无",
-          "member": "string",
-          "name": "ClientToken",
-          "required": false,
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "CreateCpmComputeEnvResponse": {
-      "document": "CreateCpmComputeEnv返回参数结构体",
-      "members": [
-        {
-          "disabled": false,
-          "document": "计算环境ID",
-          "example": "无",
-          "member": "string",
-          "name": "EnvId",
-          "required": true,
-          "type": "string",
-          "value_allowed_null": false
-        },
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
     "CreateTaskTemplateRequest": {
       "document": "CreateTaskTemplate请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "任务模板名称",
+          "document": "任务模板名称，最大长度限制60个字符。",
           "example": "job1",
           "member": "string",
           "name": "TaskTemplateName",
@@ -1179,7 +1093,7 @@
         },
         {
           "disabled": false,
-          "document": "任务模板描述",
+          "document": "任务模板描述，最大长度限制200个字符。",
           "example": "test template",
           "member": "string",
           "name": "TaskTemplateDescription",
@@ -1225,7 +1139,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "数据盘大小，单位：GB。最小调整步长为10G，不同数据盘类型取值范围不同，具体限制详见：[存储概述](https://cloud.tencent.com/document/product/213/4952)。默认值为0，表示不购买数据盘。更多限制详见产品文档。",
+          "document": "数据盘大小，单位：GiB。最小调整步长为10GiB，不同数据盘类型取值范围不同，具体限制详见：[存储概述](https://cloud.tencent.com/document/product/213/4952)。默认值为0，表示不购买数据盘。更多限制详见产品文档。",
           "example": "50",
           "member": "int64",
           "name": "DiskSize",
@@ -1236,7 +1150,7 @@
         },
         {
           "disabled": false,
-          "document": "数据盘类型。数据盘类型限制详见[存储概述](https://cloud.tencent.com/document/product/213/4952)。取值范围：<br /><li>LOCAL_BASIC：本地硬盘<br /> <li>LOCAL_SSD：本地SSD硬盘<br /><li>LOCAL_NVME：本地NVME硬盘，与InstanceType强相关，不支持指定<br /><li>LOCAL_PRO：本地HDD硬盘，与InstanceType强相关，不支持指定<br /><li>CLOUD_BASIC：普通云硬盘<br /><li> CLOUD_PREMIUM：高性能云硬盘<br /><li>CLOUD_SSD：SSD云硬盘<br /><li> CLOUD_HSSD：增强型SSD云硬盘<br /> <li>CLOUD_TSSD：极速型SSD云硬盘<br /><li>CLOUD_BSSD：通用型SSD云硬盘<br /><br />默认取值：LOCAL_BASIC。<br /><br />该参数对`ResizeInstanceDisk`接口无效。</li></li></li> </li> </li></li></li></li></li></li>",
+          "document": "数据盘类型。数据盘类型限制详见[存储概述](https://cloud.tencent.com/document/product/213/4952)。取值范围：<br /><li>LOCAL_BASIC：本地硬盘 </li> <li>LOCAL_SSD：本地SSD硬盘</li><li>LOCAL_NVME：本地NVME硬盘，与InstanceType强相关，不支持指定</li><li>LOCAL_PRO：本地HDD硬盘，与InstanceType强相关，不支持指定</li><li>CLOUD_BASIC：普通云硬盘</li><li> CLOUD_PREMIUM：高性能云硬盘</li><li>CLOUD_SSD：SSD云硬盘</li><li> CLOUD_HSSD：增强型SSD云硬盘</li> <li>CLOUD_TSSD：极速型SSD云硬盘</li><li>CLOUD_BSSD：通用型SSD云硬盘</li><br />默认取值：LOCAL_BASIC<br/><br />该参数对`ResizeInstanceDisk`接口无效。",
           "example": "CLOUD_SSD",
           "member": "string",
           "name": "DiskType",
@@ -1251,43 +1165,43 @@
           "example": "disk-ciezoimt",
           "member": "string",
           "name": "DiskId",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "数据盘是否随子机销毁。取值范围：\n<li>true：子机销毁时，销毁数据盘，只支持按小时后付费云盘</li>\n<li>\n  false：子机销毁时，保留数据盘<br />\n  默认取值：true<br />\n  该参数目前仅用于 `RunInstances` 接口。\n</li>\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "数据盘是否随子机销毁。取值范围：<li>true：子机销毁时，销毁数据盘，只支持按小时后付费云盘</li><li>false：子机销毁时，保留数据盘</li><br/>默认取值：true <br/>该参数目前仅用于 `RunInstances` 接口。",
           "example": "true",
           "member": "bool",
           "name": "DeleteWithInstance",
           "output_required": true,
           "required": false,
           "type": "bool",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "数据盘快照ID。选择的数据盘快照大小需小于数据盘大小。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "数据盘快照ID。选择的数据盘快照大小需小于数据盘大小。",
           "example": "snap-6yczrj8x",
           "member": "string",
           "name": "SnapshotId",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "数据盘是加密。取值范围：\n<li>true：加密</li>\n<li>\n  false：不加密<br />\n  默认取值：false<br />\n  该参数目前仅用于 `RunInstances` 接口。\n</li>\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "数据盘是否加密。取值范围：<li>true：加密</li><li>false：不加密</li><br/>默认取值：false<br/>该参数目前仅用于 `RunInstances` 接口。",
           "example": "false",
           "member": "bool",
           "name": "Encrypt",
           "output_required": true,
           "required": false,
           "type": "bool",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -1302,11 +1216,11 @@
         },
         {
           "disabled": false,
-          "document": "云硬盘性能，单位：MB/s\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "云硬盘性能，单位：MiB/s。使用此参数可给云硬盘购买额外的性能。\n当前仅支持极速型云盘（CLOUD_TSSD）和增强型SSD云硬盘（CLOUD_HSSD）\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "20",
           "member": "int64",
           "name": "ThroughputPerformance",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "int",
           "value_allowed_null": true
@@ -1317,25 +1231,25 @@
           "example": "cdc-1648zauv",
           "member": "string",
           "name": "CdcId",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "string",
           "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "突发性能\n\n <b>注：内测中。</b>\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "突发性能\n <b>注：内测中。</b>",
           "example": "false",
           "member": "bool",
           "name": "BurstPerformance",
           "output_required": false,
           "required": false,
           "type": "bool",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "磁盘名称，长度不超过128 个字符。\n\n该参数正在邀测中，暂未开放使用。",
+          "document": "磁盘名称，长度不超过128 个字符。",
           "example": "MyDiskName",
           "member": "string",
           "name": "DiskName",
@@ -1347,12 +1261,38 @@
       ],
       "usage": "both"
     },
+    "DataPointView": {
+      "document": "监控采集的数据。",
+      "members": [
+        {
+          "disabled": false,
+          "document": "监控数据采集的时间\n",
+          "example": "[1749696420, 1749696430]",
+          "member": "int64",
+          "name": "Timestamps",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "监控指标数据; 如果涉及到多个实例的监控数据的间隙时间，取值会为null\n",
+          "example": "[0.1, 0.2]",
+          "member": "float",
+          "name": "Values",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
     "DeleteComputeEnvRequest": {
       "document": "DeleteComputeEnv请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "计算环境ID",
+          "document": "计算环境ID，环境ID通过调用接口 [DescribeComputeEnvs](https://cloud.tencent.com/document/api/599/15893)获取，不能对状态处于删除中或者存在计算实例未销毁的环境发起删除动作。",
           "example": "env-3dhmblr3",
           "member": "string",
           "name": "EnvId",
@@ -1379,7 +1319,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "作业ID",
+          "document": "作业ID；JobId详见[作业列表](https://cloud.tencent.com/document/product/599/15909)",
           "example": "job-f5da1edl",
           "member": "string",
           "name": "JobId",
@@ -1406,8 +1346,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "用于删除任务模板信息",
-          "example": "[\"task-tmpl-7vtx96n2\\r\\n\"]",
+          "document": "用于删除任务模板信息，最大数量上限100，环境模版ID通过调用接口 [DescribeTaskTemplates](https://cloud.tencent.com/document/api/599/15902)获取。",
+          "example": "[\"task-tmpl-7vtx96n2\"]",
           "member": "string",
           "name": "TaskTemplateIds",
           "required": true,
@@ -1433,25 +1373,25 @@
       "members": [
         {
           "disabled": false,
-          "document": "依赖关系的起点任务名称\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "依赖关系的起点任务名称",
           "example": "TaskA",
           "member": "string",
           "name": "StartTask",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "依赖关系的终点任务名称\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "依赖关系的终点任务名称",
           "example": "TaskB",
           "member": "string",
           "name": "EndTask",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -1461,7 +1401,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "过滤条件。\n<li> zone - String - 是否必填：否 -（过滤条件）按照可用区过滤。</li>\n<li> instance-family String - 是否必填：否 -（过滤条件）按照机型系列过滤。实例机型系列形如：S1、I1、M1等。</li>",
+          "document": "过滤条件。\n<li> zone - String - 是否必填：否 -（过滤条件）按照[可用区](https://cloud.tencent.com/document/product/213/15707)过滤。</li>\n<li> instance-family String - 是否必填：否 -（过滤条件）按照[机型系列](https://cloud.tencent.com/document/product/213/15748)过滤。实例机型系列形如：S1、I1、M1等。</li>",
           "example": "\t[{\"Name\":\"zone\",\"Values\":[\"ap-guangzhou-1\"]}]",
           "member": "Filter",
           "name": "Filters",
@@ -1498,7 +1438,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "计算环境ID",
+          "document": "计算环境ID，环境ID通过调用接口 [DescribeComputeEnvs](https://cloud.tencent.com/document/api/599/15893)获取。",
           "example": "env-lcpcej85",
           "member": "string",
           "name": "EnvId",
@@ -1507,7 +1447,7 @@
         },
         {
           "disabled": false,
-          "document": "偏移量",
+          "document": "偏移量，默认为0.",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -1516,7 +1456,7 @@
         },
         {
           "disabled": false,
-          "document": "返回数量",
+          "document": "返回数量，默认值20，最大值100.",
           "example": "100",
           "member": "int64",
           "name": "Limit",
@@ -1525,7 +1465,7 @@
         },
         {
           "disabled": false,
-          "document": "过滤条件\n<li> compute-node-id - String - 是否必填：否 -（过滤条件）按照计算节点ID过滤。</li>",
+          "document": "过滤条件<li> compute-node-id - String - 是否必填：否 -（过滤条件）按照计算节点ID过滤，节点ID通过调用接口 [DescribeComputeEnv](https://cloud.tencent.com/document/api/599/15892)获取。</li>",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -1544,7 +1484,7 @@
           "example": "无",
           "member": "Activity",
           "name": "ActivitySet",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -1554,7 +1494,7 @@
           "example": "2",
           "member": "uint64",
           "name": "TotalCount",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -1572,7 +1512,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "计算环境ID",
+          "document": "计算环境ID，环境ID通过调用接口 [DescribeComputeEnvs](https://cloud.tencent.com/document/api/599/15893)获取。",
           "example": "env-lcpcej85",
           "member": "string",
           "name": "EnvId",
@@ -1591,7 +1531,7 @@
           "example": "env-qleawxzt",
           "member": "string",
           "name": "EnvId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1601,19 +1541,19 @@
           "example": "test compute env",
           "member": "string",
           "name": "EnvName",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "计算环境描述\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "计算环境描述",
           "example": "test compute env",
           "member": "string",
           "name": "EnvDescription",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -1621,7 +1561,7 @@
           "example": "MANAGED",
           "member": "string",
           "name": "EnvType",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1631,7 +1571,7 @@
           "example": "无",
           "member": "EnvData",
           "name": "EnvData",
-          "required": true,
+          "output_required": true,
           "type": "object",
           "value_allowed_null": false
         },
@@ -1641,7 +1581,7 @@
           "example": "无",
           "member": "MountDataDisk",
           "name": "MountDataDisks",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -1651,7 +1591,7 @@
           "example": "无",
           "member": "InputMapping",
           "name": "InputMappings",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -1661,7 +1601,7 @@
           "example": "无",
           "member": "Authentication",
           "name": "Authentications",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -1671,7 +1611,7 @@
           "example": "无",
           "member": "Notification",
           "name": "Notifications",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -1681,7 +1621,7 @@
           "example": "2",
           "member": "int64",
           "name": "DesiredComputeNodeCount",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -1691,7 +1631,7 @@
           "example": "无",
           "member": "Tag",
           "name": "Tags",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": true
         },
@@ -1709,7 +1649,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "计算环境ID列表，与Filters参数不能同时指定。",
+          "document": "计算环境ID列表，与Filters参数不能同时指定，最大限制100，环境ID通过调用接口 [DescribeComputeEnvs](https://cloud.tencent.com/document/api/599/15893)获取。",
           "example": "[\"env-5o4gphir\"]",
           "member": "string",
           "name": "EnvIds",
@@ -1718,7 +1658,7 @@
         },
         {
           "disabled": false,
-          "document": "过滤条件\n<li> zone - String - 是否必填：否 -（过滤条件）按照可用区过滤。</li>\n<li> env-id - String - 是否必填：否 -（过滤条件）按照计算环境ID过滤。</li>\n<li> env-name - String - 是否必填：否 -（过滤条件）按照计算环境名称过滤。</li>\n与EnvIds参数不能同时指定。",
+          "document": "过滤条件<li> zone - String - 是否必填：否 -（过滤条件）按照可用区过滤，可用区通过调用接口 [DescribeZones](https://cloud.tencent.com/document/api/213/15707)获取。</li><li> env-id - String - 是否必填：否 -（过滤条件）按照计算环境ID过滤。</li><li> env-name - String - 是否必填：否 -（过滤条件）按照计算环境名称过滤。</li>与EnvIds参数不能同时指定。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -1736,7 +1676,7 @@
         },
         {
           "disabled": false,
-          "document": "返回数量",
+          "document": "返回数量，默认值20，最大值100。",
           "example": "100",
           "member": "uint64",
           "name": "Limit",
@@ -1783,7 +1723,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "计算环境ID",
+          "document": "计算环境ID，环境ID通过调用接口 [DescribeComputeEnvs](https://cloud.tencent.com/document/api/599/15893)获取。",
           "example": "env-lcpcej85",
           "member": "string",
           "name": "EnvId",
@@ -1798,7 +1738,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "计算环境ID",
+          "document": "计算环境ID，环境ID通过调用接口 [DescribeComputeEnv](https://cloud.tencent.com/document/api/599/15892)获取。",
           "example": "env-lcpcej85",
           "member": "string",
           "name": "EnvId",
@@ -1868,7 +1808,7 @@
         },
         {
           "disabled": false,
-          "document": "计算环境类型",
+          "document": "计算环境管理类型，枚举如下： MANAGED: 由客户在Batch平台主动创建； THPC_QUEUE: 由thpc平台创建，关联thpc平台集群队列。",
           "example": "MANAGED",
           "member": "string",
           "name": "EnvType",
@@ -1888,7 +1828,7 @@
         },
         {
           "disabled": false,
-          "document": "下一步动作",
+          "document": "下一步的动作，枚举如下： DELETING: 删除中",
           "example": "DELETING",
           "member": "string",
           "name": "NextAction",
@@ -1930,8 +1870,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "计算环境ID列表，与Filters参数不能同时指定。",
-          "example": "[\"env-lcx7qbbr\\n\"]",
+          "document": "计算环境ID列表，与Filters参数不能同时指定。最大数量上限100。",
+          "example": "[\"env-lcx7qbbr\"]",
           "member": "string",
           "name": "EnvIds",
           "required": false,
@@ -1939,7 +1879,7 @@
         },
         {
           "disabled": false,
-          "document": "过滤条件\n<li> zone - String - 是否必填：否 -（过滤条件）按照可用区过滤。</li>\n<li> env-id - String - 是否必填：否 -（过滤条件）按照计算环境ID过滤。</li>\n<li> env-name - String - 是否必填：否 -（过滤条件）按照计算环境名称过滤。</li>\n<li> resource-type - String - 是否必填：否 -（过滤条件）按照计算资源类型过滤，取值CVM或者CPM(黑石)。</li>\n<li> tag-key - String - 是否必填：否 -（过滤条件）按照标签键进行过滤。</li>\n<li>tag-value - String - 是否必填：否 -（过滤条件）按照标签值进行过滤。</li>\n<li>tag:tag-key - String - 是否必填：否 -（过滤条件）按照标签键值对进行过滤。 tag-key使用具体的标签键进行替换。</li>\n与EnvIds参数不能同时指定。",
+          "document": "过滤条件<li> zone - String - 是否必填：否 -（过滤条件）按照可用区过滤，可用区通过调用接口 [DescribeZones](https://cloud.tencent.com/document/api/213/15707)获取。</li><li> env-id - String - 是否必填：否 -（过滤条件）按照计算环境ID过滤。</li><li> env-name - String - 是否必填：否 -（过滤条件）按照计算环境名称过滤。</li><li> resource-type - String - 是否必填：否 -（过滤条件）按照计算资源类型过滤，取值CVM或者CPM(黑石)。</li><li> tag-key - String - 是否必填：否 -（过滤条件）按照标签键进行过滤。</li><li>tag-value - String - 是否必填：否 -（过滤条件）按照标签值进行过滤。</li><li>tag:tag-key - String - 是否必填：否 -（过滤条件）按照标签键值对进行过滤。 tag-key使用具体的标签键进行替换。</li>与EnvIds参数不能同时指定。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -1957,7 +1897,7 @@
         },
         {
           "disabled": false,
-          "document": "返回数量",
+          "document": "返回数量，默认值20，最大值100。",
           "example": "20",
           "member": "uint64",
           "name": "Limit",
@@ -1976,7 +1916,7 @@
           "example": "无",
           "member": "ComputeEnvView",
           "name": "ComputeEnvSet",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -1986,45 +1926,8 @@
           "example": "1",
           "member": "int64",
           "name": "TotalCount",
-          "required": true,
+          "output_required": true,
           "type": "int",
-          "value_allowed_null": false
-        },
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "DescribeCpmOsInfoRequest": {
-      "document": "DescribeCpmOsInfo请求参数结构体",
-      "members": [
-        {
-          "disabled": false,
-          "document": "黑石设备类型代号。 可以从[DescribeDeviceClass](https://cloud.tencent.com/document/api/386/32911)查询设备类型列表。",
-          "example": "无",
-          "member": "string",
-          "name": "DeviceClassCode",
-          "required": false,
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "DescribeCpmOsInfoResponse": {
-      "document": "DescribeCpmOsInfo返回参数结构体",
-      "members": [
-        {
-          "disabled": false,
-          "document": "操作系统信息列表。",
-          "example": "无",
-          "member": "OsInfo",
-          "name": "OsInfoSet",
-          "required": true,
-          "type": "list",
           "value_allowed_null": false
         },
         {
@@ -2041,7 +1944,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "过滤条件。\n<li> zone - String - 是否必填：否 -（过滤条件）按照可用区过滤。</li>\n<li> instance-family String - 是否必填：否 -（过滤条件）按照机型系列过滤。实例机型系列形如：S1、I1、M1等。</li>\n<li> instance-type - String - 是否必填：否 - （过滤条件）按照机型过滤。</li>\n<li> instance-charge-type - String - 是否必填：否 -（过滤条件）按照实例计费模式过滤。 ( POSTPAID_BY_HOUR：表示后付费，即按量计费机型 | SPOTPAID：表示竞价付费机型。 )  </li>",
+          "document": "过滤条件。\n<li> zone - String - 是否必填：否 -（过滤条件）按照[可用区](https://cloud.tencent.com/document/product/213/15707)过滤。</li>\n<li> instance-family String - 是否必填：否 -（过滤条件）按照[机型系列](https://cloud.tencent.com/document/product/213/15748)过滤。实例机型系列形如：S1、I1、M1等。</li>\n<li> instance-type - String - 是否必填：否 - （过滤条件）按照[机型](https://cloud.tencent.com/document/product/213/15749)过滤。实例机型形如：：S5.12XLARGE128、S5.12XLARGE96等。</li>\n<li> instance-charge-type - String - 是否必填：否 -（过滤条件）按照实例计费模式过滤。 ( POSTPAID_BY_HOUR：表示后付费，即按量计费机型 | SPOTPAID：表示竞价付费机型。 )  </li>",
           "example": "[{\"Name\":\"zone\",\"Values\":[\"ap-guangzhou-1\"]}]",
           "member": "Filter",
           "name": "Filters",
@@ -2084,11 +1987,112 @@
         {
           "disabled": false,
           "document": "CVM实例分类列表",
-          "example": "[{\"InstanceFamilySet\": [\"C3\",\"CN3\"],\"InstanceCategory\": \"COMPUTE_3\"}",
+          "example": "[{\"InstanceFamilySet\": [\"C3\",\"CN3\"],\"InstanceCategory\": \"COMPUTE_3\"}]",
           "member": "InstanceCategoryItem",
           "name": "InstanceCategorySet",
           "output_required": true,
           "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeJobMonitorDataRequest": {
+      "document": "DescribeJobMonitorData请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "作业ID；JobId详见[作业列表](https://cloud.tencent.com/document/product/599/15909)",
+          "example": "job-97zcl3wt",
+          "member": "string",
+          "name": "JobId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "作业的Task名称，详见[作业详情](https://cloud.tencent.com/document/product/599/15904)。",
+          "example": "demo-1",
+          "member": "string",
+          "name": "TaskName",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "作业任务实例的序号，详见[任务详情](https://cloud.tencent.com/document/product/599/15905)",
+          "example": "0",
+          "member": "int64",
+          "name": "TaskInstanceIndex",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "支持查询的指标；当前支持查询的任务指标；\n\n- CpuUsage：cpu利用率，单位：%\n- MemUsage：内存利用率，单位：%\n- LanOuttraffic：内网出带宽，单位：Bytes/s\n- LanIntraffic：内网入带宽，单位：Bytes/s\n- MaxDiskUsage：所有磁盘中的使用率最高的磁盘使用率，单位：%\n- TargetDiskUsage：指定磁盘的使用率，单位：%；配合Dimensions参数使用",
+          "example": "CpuUsage",
+          "member": "string",
+          "name": "MetricName",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询任务实例的起始时间；如果未传入查询起始时间或传入的时间小于任务实例的创建时间（任务实例创建时间详见[任务详情](https://cloud.tencent.com/document/product/599/15905)），会自动将查询时间调整到任务实例的创建时间。传入时间格式只支持零时区格式。",
+          "example": "2025-06-11T21:12:50Z",
+          "member": "datetime_iso",
+          "name": "StartTime",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询任务实例的终止时间；如果未传入查询终止时间或传入的时间大于任务实例的终止时间（任务实例终止时间详见[任务详情](https://cloud.tencent.com/document/product/599/15905)），并且任务实例已经结束，会自动将查询终止时间调整到任务实例的终止时间；如果任务实例未结束，会自动将查询终止时间调整到当前时间。传入时间格式只支持零时区格式。",
+          "example": "2025-06-11T22:12:50Z",
+          "member": "datetime_iso",
+          "name": "EndTime",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询指标的扩展参数；当前只支持TargetDiskUsage;\n\n- TargetDiskUsage\n    -支持的查询维度diskname, 维度值为磁盘挂载名，例如vdb；如果不传此参数，默认查询vdb磁盘的使用率。\n    样例：[{\"Name\":\"diskname\", \"Value\":\"vdb\"}]",
+          "example": "无",
+          "member": "Dimension",
+          "name": "Dimensions",
+          "required": false,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeJobMonitorDataResponse": {
+      "document": "DescribeJobMonitorData返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "监控数据粒度，单位:秒；时间粒度随着查询的时间范围变化，查询时间范围越小，时间粒度越小。",
+          "example": "10",
+          "member": "int64",
+          "name": "Period",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "监控采集的数据。时间戳和对应的值一一对应；如果查询的任务重试，采集时间段涉及多个实例的话，某些时间段内的值为null, 表示对应时间点没有实例存在，也不存在对应的监控数据；相邻监控时间段之间的空值数量最多为10。",
+          "example": "无",
+          "member": "DataPointView",
+          "name": "DataPoints",
+          "output_required": true,
+          "type": "object",
           "value_allowed_null": false
         },
         {
@@ -2105,7 +2109,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "作业标识",
+          "document": "作业ID；JobId详见[作业列表](https://cloud.tencent.com/document/product/599/15909)",
           "example": "job-97zcl3wt",
           "member": "string",
           "name": "JobId",
@@ -2141,7 +2145,7 @@
         {
           "disabled": false,
           "document": "可用区信息",
-          "example": "ap-guangzhou-2",
+          "example": "ap-guangzhou-6",
           "member": "string",
           "name": "Zone",
           "output_required": true,
@@ -2170,7 +2174,7 @@
         },
         {
           "disabled": false,
-          "document": "创建时间",
+          "document": "创建时间。按照ISO8601标准表示，并且使用UTC时间。格式为：YYYY-MM-DDThh:mm:ssZ。",
           "example": "2018-02-07T09:29:09Z",
           "member": "string",
           "name": "CreateTime",
@@ -2180,7 +2184,7 @@
         },
         {
           "disabled": false,
-          "document": "结束时间",
+          "document": "结束时间。按照ISO8601标准表示，并且使用UTC时间。格式为：YYYY-MM-DDThh:mm:ssZ。",
           "example": "2018-02-07T09:33:01Z",
           "member": "string",
           "name": "EndTime",
@@ -2250,13 +2254,13 @@
         },
         {
           "disabled": false,
-          "document": "下一步动作\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "下一步动作",
           "example": "TERMINATING",
           "member": "string",
           "name": "NextAction",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -2272,7 +2276,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "作业ID",
+          "document": "作业ID；JobId详见[作业列表](https://cloud.tencent.com/document/product/599/15909)",
           "example": "job-97zcl3wt",
           "member": "string",
           "name": "JobId",
@@ -2291,27 +2295,27 @@
           "example": "job-97zcl3wt",
           "member": "string",
           "name": "JobId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
           "document": "作业名称",
-          "example": "test job",
+          "example": "demo job",
           "member": "string",
           "name": "JobName",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
           "document": "作业描述",
-          "example": "xxx",
+          "example": "demo-1",
           "member": "string",
           "name": "JobDescription",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -2321,7 +2325,7 @@
           "example": "1",
           "member": "int64",
           "name": "Priority",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -2331,7 +2335,7 @@
           "example": "无",
           "member": "Task",
           "name": "Tasks",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -2341,7 +2345,7 @@
           "example": "无",
           "member": "Dependence",
           "name": "Dependences",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -2351,7 +2355,7 @@
           "example": "无",
           "member": "Tag",
           "name": "Tags",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": true
         },
@@ -2378,7 +2382,7 @@
         },
         {
           "disabled": false,
-          "document": "过滤条件\n<li> job-id - String - 是否必填：否 -（过滤条件）按照作业ID过滤。</li>\n<li> job-name - String - 是否必填：否 -（过滤条件）按照作业名称过滤。</li>\n<li> job-state - String - 是否必填：否 -（过滤条件）按照作业状态过滤。</li>\n<li> zone - String - 是否必填：否 -（过滤条件）按照可用区过滤。</li>\n<li> tag-key - String - 是否必填：否 -（过滤条件）按照标签键进行过滤。</li>\n<li> tag-value - String - 是否必填：否 -（过滤条件）按照标签值进行过滤。</li>\n<li> tag:tag-key - String - 是否必填：否 -（过滤条件）按照标签键值对进行过滤。 tag-key使用具体的标签键进行替换。</li>\n与JobIds参数不能同时指定。",
+          "document": "过滤条件\n<li> job-id - String - 是否必填：否 -（过滤条件）按照作业ID过滤。</li>\n<li> job-name - String - 是否必填：否 -（过滤条件）按照作业名称过滤。</li>\n<li> job-state - String - 是否必填：否 -（过滤条件）按照作业状态过滤。</li>\n\n    - SUBMITTED：已提交；\n    - PENDING：等待中；\n    - RUNNABLE：可运行；\n    - STARTING：启动中；\n    - RUNNING：运行中；\n    - SUCCEED：成功；\n    - FAILED：失败；\n    - FAILED_INTERRUPTED：失败后保留实例。\n\n<li> zone - String - 是否必填：否 -（过滤条件）按照[可用区](https://cloud.tencent.com/document/product/213/15707)过滤。</li>\n<li> tag-key - String - 是否必填：否 -（过滤条件）按照标签键进行过滤。</li>\n<li> tag-value - String - 是否必填：否 -（过滤条件）按照标签值进行过滤。</li>\n<li> tag:tag-key - String - 是否必填：否 -（过滤条件）按照标签键值对进行过滤。 tag-key使用具体的标签键进行替换。</li>\n与JobIds参数不能同时指定。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -2396,7 +2400,7 @@
         },
         {
           "disabled": false,
-          "document": "返回数量",
+          "document": "返回job数量限制，最大值: 100，默认值: 20.",
           "example": "100",
           "member": "int64",
           "name": "Limit",
@@ -2443,7 +2447,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "作业ID",
+          "document": "作业ID。JobId详见[作业列表](https://cloud.tencent.com/document/product/599/15909)。",
           "example": "job-mawzp3ja",
           "member": "string",
           "name": "JobId",
@@ -2461,8 +2465,8 @@
         },
         {
           "disabled": false,
-          "document": "任务实例集合",
-          "example": "[\"0\\r\\n\",\"1\\r\\n\"]",
+          "document": "任务实例集合；与Offset不能同时指定。",
+          "example": "[0, 1]",
           "member": "uint64",
           "name": "TaskInstanceIndexes",
           "required": false,
@@ -2470,7 +2474,7 @@
         },
         {
           "disabled": false,
-          "document": "起始任务实例",
+          "document": "起始任务实例。与TaskInstanceIndexes参数不能同时指定。",
           "example": "0",
           "member": "uint64",
           "name": "Offset",
@@ -2479,8 +2483,8 @@
         },
         {
           "disabled": false,
-          "document": "最大任务实例数",
-          "example": "100",
+          "document": "最大任务实例数；默认值为5， 最大值为10。",
+          "example": "10",
           "member": "uint64",
           "name": "Limit",
           "required": false,
@@ -2498,7 +2502,7 @@
           "example": "1",
           "member": "uint64",
           "name": "TotalCount",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -2508,7 +2512,7 @@
           "example": "无",
           "member": "TaskInstanceLog",
           "name": "TaskInstanceLogSet",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -2526,7 +2530,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "作业ID",
+          "document": "作业ID；JobId详见[作业列表](https://cloud.tencent.com/document/product/599/15909)",
           "example": "job-97zcl3wt",
           "member": "string",
           "name": "JobId",
@@ -2562,7 +2566,7 @@
         },
         {
           "disabled": false,
-          "document": "过滤条件，详情如下：\n<li> task-instance-type - String - 是否必填： 否 - 按照任务实例状态进行过滤（SUBMITTED：已提交；PENDING：等待中；RUNNABLE：可运行；STARTING：启动中；RUNNING：运行中；SUCCEED：成功；FAILED：失败；FAILED_INTERRUPTED：失败后保留实例）。</li>",
+          "document": "过滤条件，详情如下：\ntask-instance-state     - String - 是否必填： 否 - 按照任务实例状态进行过滤（\n\n- SUBMITTED：已提交；\n- PENDING：等待中；\n- RUNNABLE：可运行；\n- STARTING：启动中；\n- RUNNING：运行中；\n- SUCCEED：成功；\n- FAILED：失败；\n- FAILED_INTERRUPTED：失败后保留实例）。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -2669,8 +2673,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "任务模板ID列表，与Filters参数不能同时指定。",
-          "example": "[\"task-tmpl-pq24rq1e\\n\",\"task-tmpl-606i415o\\n\"]",
+          "document": "任务模板ID列表，与Filters参数不能同时指定。模版ID最大限制100.",
+          "example": "[\"task-tmpl-pq24rq1e\",\"task-tmpl-606i415o\"]",
           "member": "string",
           "name": "TaskTemplateIds",
           "required": false,
@@ -2696,7 +2700,7 @@
         },
         {
           "disabled": false,
-          "document": "返回数量",
+          "document": "返回数量; 可选范围[1-100]；默认值为20。",
           "example": "10",
           "member": "int64",
           "name": "Limit",
@@ -2715,7 +2719,7 @@
           "example": "无",
           "member": "TaskTemplateView",
           "name": "TaskTemplateSet",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -2725,7 +2729,7 @@
           "example": "2",
           "member": "int64",
           "name": "TotalCount",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -2743,7 +2747,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "计算环境ID",
+          "document": "计算环境ID，环境ID通过调用接口 [DescribeComputeEnvs](https://cloud.tencent.com/document/api/599/15893)获取。",
           "example": "env-1mekuyxs",
           "member": "string",
           "name": "EnvId",
@@ -2752,8 +2756,8 @@
         },
         {
           "disabled": false,
-          "document": "实例ID列表",
-          "example": "[\"ins-kjoossv5\\r\\n\"]",
+          "document": "实例ID列表，实例ID通过调用接口 [DescribeInstances](https://cloud.tencent.com/document/api/213/15728)获取。",
+          "example": "[\"ins-kjoossv5\"]",
           "member": "string",
           "name": "InstanceIds",
           "required": true,
@@ -2773,6 +2777,30 @@
         }
       ],
       "type": "object"
+    },
+    "Dimension": {
+      "document": "Job资源监控查询维度",
+      "members": [
+        {
+          "disabled": false,
+          "document": "查询指标的维度名称",
+          "example": "diskname",
+          "member": "string",
+          "name": "Name",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询指标的维度值",
+          "example": "vdb",
+          "member": "string",
+          "name": "Value",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "usage": "in"
     },
     "Docker": {
       "document": "Docker容器信息",
@@ -2845,14 +2873,14 @@
         },
         {
           "disabled": false,
-          "document": "Docker命令运行参数。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Docker命令运行参数。",
           "example": "-u root",
           "member": "string",
           "name": "DockerRunOption",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -2905,7 +2933,7 @@
           "example": "SA5.MEDIUM2",
           "member": "string",
           "name": "InstanceType",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "string",
           "value_allowed_null": false
@@ -2916,7 +2944,7 @@
           "example": "img-jsdt6r36",
           "member": "string",
           "name": "ImageId",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "string",
           "value_allowed_null": false
@@ -2927,7 +2955,7 @@
           "example": "无",
           "member": "SystemDisk",
           "name": "SystemDisk",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "object",
           "value_allowed_null": false
@@ -2938,7 +2966,7 @@
           "example": "无",
           "member": "DataDisk",
           "name": "DataDisks",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "list",
           "value_allowed_null": false
@@ -2949,7 +2977,7 @@
           "example": "无",
           "member": "VirtualPrivateCloud",
           "name": "VirtualPrivateCloud",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "object",
           "value_allowed_null": false
@@ -2960,7 +2988,7 @@
           "example": "无",
           "member": "InternetAccessible",
           "name": "InternetAccessible",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "object",
           "value_allowed_null": false
@@ -2971,7 +2999,7 @@
           "example": "demo",
           "member": "string",
           "name": "InstanceName",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "string",
           "value_allowed_null": false
@@ -2982,7 +3010,7 @@
           "example": "无",
           "member": "LoginSettings",
           "name": "LoginSettings",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "object",
           "value_allowed_null": false
@@ -2993,7 +3021,7 @@
           "example": "[\"sg-dec9tgiy\"]",
           "member": "string",
           "name": "SecurityGroupIds",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "list",
           "value_allowed_null": false
@@ -3004,7 +3032,7 @@
           "example": "无",
           "member": "EnhancedService",
           "name": "EnhancedService",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "object",
           "value_allowed_null": false
@@ -3015,7 +3043,7 @@
           "example": "POSTPAID_BY_HOUR",
           "member": "string",
           "name": "InstanceChargeType",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "string",
           "value_allowed_null": false
@@ -3026,7 +3054,7 @@
           "example": "无",
           "member": "InstanceMarketOptionsRequest",
           "name": "InstanceMarketOptions",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "object",
           "value_allowed_null": false
@@ -3037,7 +3065,7 @@
           "example": "[\"SA5.MEDIUM2\"]",
           "member": "string",
           "name": "InstanceTypes",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "list",
           "value_allowed_null": false
@@ -3048,7 +3076,7 @@
           "example": "无",
           "member": "InstanceTypeOptions",
           "name": "InstanceTypeOptions",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "object",
           "value_allowed_null": false
@@ -3059,7 +3087,7 @@
           "example": "[\"ap-guangzhou-2\"]",
           "member": "string",
           "name": "Zones",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "list",
           "value_allowed_null": false
@@ -3070,7 +3098,7 @@
           "example": "无",
           "member": "VirtualPrivateCloud",
           "name": "VirtualPrivateClouds",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "list",
           "value_allowed_null": false
@@ -3078,225 +3106,30 @@
       ],
       "usage": "both"
     },
-    "EnvDataCpm": {
-      "document": "黑石计算环境数据",
-      "members": [
-        {
-          "disabled": false,
-          "document": "黑石可用区名称列表。如ap-guangzhou-bls-1, 可通过黑石接口[DescribeRegions]( https://cloud.tencent.com/document/api/386/33564)接口获取。不是Batch可用区名称。目前仅支持一个可用区名称。",
-          "example": "[\"ap-chongqing-bls-1\"]",
-          "member": "string",
-          "name": "Zones",
-          "required": true,
-          "type": "list"
-        },
-        {
-          "disabled": false,
-          "document": "购买的机型ID。通过黑石接口[DescribeDeviceClass]( https://cloud.tencent.com/document/api/386/32911)查询设备型号，获取机型信息。",
-          "example": "[\"PI100v2\"]",
-          "member": "string",
-          "name": "InstanceTypes",
-          "required": true,
-          "type": "list"
-        },
-        {
-          "disabled": false,
-          "document": "购买时长单位，取值：m(月)。",
-          "example": "m",
-          "member": "string",
-          "name": "TimeUnit",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "购买时长。",
-          "example": "1",
-          "member": "uint64",
-          "name": "TimeSpan",
-          "required": true,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "RAID类型ID。通过黑石接口[DescribeDeviceClassPartition]( https://cloud.tencent.com/document/api/386/32910)查询机型RAID方式以及系统盘大小，获取RAID信息。",
-          "example": "3",
-          "member": "int64",
-          "name": "RaidId",
-          "required": true,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "部署服务器的操作系统ID。通过批量计算接口DescribeCpmOsInfo查询操作系统信息。",
-          "example": "125",
-          "member": "int64",
-          "name": "OsTypeId",
-          "required": true,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "黑石VPC列表，目前仅支持一个VPC。",
-          "example": "无",
-          "member": "CpmVirtualPrivateCloud",
-          "name": "VirtualPrivateClouds",
-          "required": true,
-          "type": "list"
-        },
-        {
-          "disabled": false,
-          "document": "是否安装安全Agent，取值：1(安装) 0(不安装)，默认取值0。",
-          "example": "1",
-          "member": "int64",
-          "name": "NeedSecurityAgent",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "是否安装监控Agent，取值：1(安装) 0(不安装)，默认取值0。",
-          "example": "1",
-          "member": "int64",
-          "name": "NeedMonitorAgent",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "自动续费标志位，取值：1(自动续费) 0(不自动续费)，默认取值0。",
-          "example": "1",
-          "member": "int64",
-          "name": "AutoRenewFlag",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "数据盘是否格式化，取值：1(格式化) 0(不格式化)，默认取值为1。",
-          "example": "1",
-          "member": "int64",
-          "name": "IsZoning",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "指定数据盘的文件系统格式，当前支持 ext4和xfs选项， 默认为ext4。 参数适用于数据盘和Linux， 且在IsZoning为1时生效。",
-          "example": "ext4",
-          "member": "string",
-          "name": "FileSystem",
-          "required": false,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "设置Linux root或Windows Administrator的密码。若不设置此参数，默认情况下会随机生成密码，并以站内信方式通知到用户。",
-          "example": "acds23r@#",
-          "member": "string",
-          "name": "Password",
-          "required": false,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "是否分配弹性公网IP，取值：1(分配) 0(不分配)，默认取值0。",
-          "example": "1",
-          "member": "int64",
-          "name": "ApplyEip",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "弹性公网IP计费模式，取值：flow(按流量计费) bandwidth(按带宽计费)，默认取值flow。",
-          "example": "flow",
-          "member": "string",
-          "name": "EipPayMode",
-          "required": false,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "弹性公网IP带宽限制，单位Mb。",
-          "example": "10",
-          "member": "int64",
-          "name": "EipBandwidth",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "自定义镜像ID，取值生效时用自定义镜像部署物理机。",
-          "example": "img-i91njcmx",
-          "member": "string",
-          "name": "ImageId",
-          "required": false,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "系统盘根分区大小，单位为G，默认取值10G。通过黑石接口[DescribeDeviceClassPartition]( https://cloud.tencent.com/document/api/386/32910)查询机型RAID方式以及系统盘大小，获取根分区信息。",
-          "example": "10",
-          "member": "int64",
-          "name": "SysRootSpace",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "/data分区大小，单位为G。如果系统盘还有剩余大小，会分配给/data分区。（特殊情况：如果剩余空间不足10G，并且没有指定/data分区，则剩余空间会分配给Root分区）。",
-          "example": "10",
-          "member": "int64",
-          "name": "SysDataSpace",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "是否开启超线程，取值：1(开启) 0(关闭)，默认取值1。",
-          "example": "1",
-          "member": "int64",
-          "name": "HyperThreading",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "指定的内网IP列表，不指定时自动分配。",
-          "example": "10.1.1.2",
-          "member": "string",
-          "name": "LanIps",
-          "required": false,
-          "type": "list"
-        }
-      ],
-      "usage": "in"
-    },
     "EnvVar": {
       "document": "环境变量",
       "members": [
         {
           "disabled": false,
-          "document": "环境变量名称\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "环境变量名称",
           "example": "batch_demo",
           "member": "string",
           "name": "Name",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "环境变量取值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "环境变量取值",
           "example": "first_demo",
           "member": "string",
           "name": "Value",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -3334,25 +3167,25 @@
       "members": [
         {
           "disabled": false,
-          "document": "自定义键\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "自定义键",
           "example": "batch_demo",
           "member": "string",
           "name": "Name",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "自定义值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "自定义值",
           "example": "first-demo",
           "member": "string",
           "name": "Value",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -3397,7 +3230,7 @@
       "usage": "both"
     },
     "Filter": {
-      "document": ">描述键值对过滤器，用于条件过滤查询。例如过滤ID、名称、状态等\n> * 若存在多个`Filter`时，`Filter`间的关系为逻辑与（`AND`）关系。\n> * 若同一个`Filter`存在多个`Values`，同一`Filter`下`Values`间的关系为逻辑或（`OR`）关系。\n>\n> 以[DescribeInstances](https://cloud.tencent.com/document/api/213/15728)接口的`Filter`为例。若我们需要查询可用区（`zone`）为广州一区 ***并且*** 实例计费模式（`instance-charge-type`）为包年包月 ***或者*** 按量计费的实例时，可如下实现：\n```\nFilters.0.Name=zone\n&Filters.0.Values.0=ap-guangzhou-1\n&Filters.1.Name=instance-charge-type\n&Filters.1.Values.0=PREPAID\n&Filters.1.Values.1=POSTPAID_BY_HOUR\n```",
+      "document": ">描述键值对过滤器，用于条件过滤查询。例如过滤ID、名称、状态等\n> * 若存在多个`Filter`时，`Filter`间的关系为逻辑与（`AND`）关系。\n> * 若同一个`Filter`存在多个`Values`，同一`Filter`下`Values`间的关系为逻辑或（`OR`）关系。\n>\n> 以[DescribeInstances](https://cloud.tencent.com/document/api/213/15728)接口的`Filter`为例。若我们需要查询可用区（`zone`）为广州六区 ***并且*** 实例计费模式（`instance-charge-type`）为包年包月 ***或者*** 按量计费的实例时，可如下实现：\n```\nFilters.0.Name=zone\n&Filters.0.Values.0=ap-guangzhou-6\n&Filters.1.Name=instance-charge-type\n&Filters.1.Values.0=PREPAID\n&Filters.1.Values.1=POSTPAID_BY_HOUR\n```",
       "members": [
         {
           "disabled": false,
@@ -3411,7 +3244,7 @@
         {
           "disabled": false,
           "document": "字段的过滤值。",
-          "example": "[\"ap-guangzhou-2\"]",
+          "example": "[\"ap-guangzhou-6\"]",
           "member": "string",
           "name": "Values",
           "required": true,
@@ -3425,36 +3258,36 @@
       "members": [
         {
           "disabled": false,
-          "document": "源端路径\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "源端路径",
           "example": "cos://kelvin-test-1251762227.cos.ap-nanjing.myqcloud.com/batch_test/",
           "member": "string",
           "name": "SourcePath",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "目的端路径\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "目的端路径",
           "example": "/home/input/",
           "member": "string",
           "name": "DestinationPath",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "挂载配置项参数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "挂载配置项参数",
           "example": "-odbglevel=info",
           "member": "string",
           "name": "MountOptionParameter",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -3464,7 +3297,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例ID",
+          "document": "实例ID，可通过调用接口[DescribeInstances](https://cloud.tencent.com/document/product/213/15728)获取。",
           "example": "ins-makv4qr2",
           "member": "string",
           "name": "InstanceId",
@@ -3473,7 +3306,7 @@
         },
         {
           "disabled": false,
-          "document": "镜像ID",
+          "document": "镜像ID，可通过调用接口[DescribeImages](https://cloud.tencent.com/document/product/213/15715)获取。",
           "example": "img-fy8cew7d",
           "member": "string",
           "name": "ImageId",
@@ -3498,7 +3331,7 @@
         {
           "disabled": false,
           "document": "实例类型名",
-          "example": "[\"C3\", \"CN3\"]",
+          "example": "COMPUTE_3",
           "member": "string",
           "name": "InstanceCategory",
           "output_required": true,
@@ -3508,7 +3341,7 @@
         {
           "disabled": false,
           "document": "实例族列表",
-          "example": "COMPUTE_3",
+          "example": "[\"C3\", \"CN3\"]",
           "member": "string",
           "name": "InstanceFamilySet",
           "output_required": true,
@@ -3523,25 +3356,25 @@
       "members": [
         {
           "disabled": false,
-          "document": "竞价相关选项\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "竞价相关选项",
           "example": "0.12",
           "member": "SpotMarketOptions",
           "name": "SpotOptions",
           "output_required": true,
           "required": true,
           "type": "object",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "市场选项类型，当前只支持取值：spot\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "市场选项类型，当前只支持取值：spot",
           "example": "spot",
           "member": "string",
           "name": "MarketType",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -3647,7 +3480,7 @@
         {
           "disabled": false,
           "document": "可用区。",
-          "example": "ap-guangzhou-2",
+          "example": "ap-guangzhou-6",
           "member": "string",
           "name": "Zone",
           "output_required": true,
@@ -3666,7 +3499,7 @@
         },
         {
           "disabled": false,
-          "document": "实例计费模式。取值范围： <br><li>PREPAID：表示预付费，即包年包月<br></li>POSTPAID_BY_HOUR：表示后付费，即按量计费<br><li>CDHPAID：表示[专用宿主机](https://cloud.tencent.com/document/product/416)付费，即只对`专用宿主机`计费，不对`专用宿主机`上的实例计费。<br></li>`SPOTPAID`：表示竞价实例付费。",
+          "document": "实例计费模式。取值范围： <br><li>PREPAID：表示预付费，即包年包月<br></li><li>POSTPAID_BY_HOUR：表示后付费，即按量计费</li><li>CDHPAID：表示[专用宿主机](https://cloud.tencent.com/document/product/416)付费，即只对`专用宿主机`计费，不对`专用宿主机`上的实例计费。<br></li><li>SPOTPAID：表示竞价实例付费。</li>",
           "example": "PREPAID",
           "member": "string",
           "name": "InstanceChargeType",
@@ -3746,7 +3579,7 @@
         },
         {
           "disabled": false,
-          "document": "实例是否售卖。取值范围： <br><li>SELL：表示实例可购买<br></li>SOLD_OUT：表示实例已售罄。",
+          "document": "实例是否售卖。取值范围： <br><li>SELL：表示实例可购买<br></li><li>SOLD_OUT：表示实例已售罄。</li>",
           "example": "SELL",
           "member": "string",
           "name": "Status",
@@ -3866,7 +3699,7 @@
         },
         {
           "disabled": false,
-          "document": "描述库存情况。取值范围：\n<li> EnoughStock：表示对应库存非常充足</li> \n<li>NormalStock：表示对应库存供应有保障</li>\n<li> UnderStock：表示对应库存即将售罄</li> \n<li>WithoutStock：表示对应库存已经售罄</li>",
+          "document": "描述库存情况。取值范围：\n<li> EnoughStock：表示对应库存非常充足</li> <li>NormalStock：表示对应库存供应有保障</li><li> UnderStock：表示对应库存即将售罄</li> <li>WithoutStock：表示对应库存已经售罄</li>",
           "example": "EnoughStock",
           "member": "string",
           "name": "StatusCategory",
@@ -3915,10 +3748,54 @@
         },
         {
           "disabled": false,
-          "document": "带宽包ID。可通过[`DescribeBandwidthPackages`](https://cloud.tencent.com/document/api/215/19209)接口返回值中的`BandwidthPackageId`获取。该参数仅在RunInstances接口中作为入参使用。",
+          "document": "带宽包ID。可通过[ DescribeBandwidthPackages ](https://cloud.tencent.com/document/api/215/19209)接口返回值中的`BandwidthPackageId`获取。该参数仅在RunInstances接口中作为入参使用。",
           "example": "bwp-h1ro",
           "member": "string",
           "name": "BandwidthPackageId",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "线路类型。各种线路类型及支持地区详情可参考：[EIP 的 IP 地址类型](https://cloud.tencent.com/document/product/1199/41646)。默认值：BGP。\n<li>BGP：常规 BGP 线路</li>\n已开通静态单线IP白名单的用户，可选值：\n<li>CMCC：中国移动</li>\n<li>CTCC：中国电信</li>\n<li>CUCC：中国联通</li>\n注意：仅部分地域支持静态单线IP。\n",
+          "example": "BGP",
+          "member": "string",
+          "name": "InternetServiceProvider",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "公网 IP 类型。\n\n<li> WanIP：普通公网IP。</li>\n<li> HighQualityEIP：精品 IP。仅新加坡和中国香港支持精品IP。</li>\n<li> AntiDDoSEIP：高防 IP。仅部分地域支持高防IP，详情可见[弹性公网IP产品概述](https://cloud.tencent.com/document/product/1199/41646)。</li>\n如需为资源分配公网IPv4地址，请指定公网IPv4地址类型。\n\n此功能仅部分地区灰度开放，如需使用[请提交工单咨询](https://console.cloud.tencent.com/workorder/category)",
+          "example": "WanIP",
+          "member": "string",
+          "name": "IPv4AddressType",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "弹性公网 IPv6 类型。\n<li> EIPv6：弹性公网 IPv6。</li>\n<li> HighQualityEIPv6：精品 IPv6。仅中国香港支持精品IPv6。</li>\n如需为资源分配IPv6地址，请指定弹性公网IPv6类型。\n\n此功能仅部分地区灰度开放，如需使用[请提交工单咨询](https://console.cloud.tencent.com/workorder/category)",
+          "example": "EIPv6",
+          "member": "string",
+          "name": "IPv6AddressType",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "高防包唯一ID，申请高防IP时，该字段必传。\n",
+          "example": "bgp-00000000",
+          "member": "string",
+          "name": "AntiDDoSPackageId",
           "output_required": false,
           "required": false,
           "type": "string",
@@ -4133,38 +4010,34 @@
           "member": "Task",
           "name": "Tasks",
           "required": true,
-          "type": "list",
-          "value_allowed_null": false
+          "type": "list"
         },
         {
           "disabled": false,
-          "document": "作业名称",
+          "document": "作业名称; 字符串长度限制60.",
           "example": "test-job",
           "member": "string",
           "name": "JobName",
           "required": false,
-          "type": "string",
-          "value_allowed_null": false
+          "type": "string"
         },
         {
           "disabled": false,
-          "document": "作业描述",
+          "document": "作业描述；字符串长度限制200.",
           "example": "test-job",
           "member": "string",
           "name": "JobDescription",
           "required": false,
-          "type": "string",
-          "value_allowed_null": false
+          "type": "string"
         },
         {
           "disabled": false,
-          "document": "作业优先级，任务（Task）和任务实例（TaskInstance）会继承作业优先级",
+          "document": "作业优先级，任务（Task）和任务实例（TaskInstance）会继承作业优先级；范围0～100，数值越大，优先级越高。",
           "example": "1",
           "member": "uint64",
           "name": "Priority",
           "required": false,
-          "type": "int",
-          "value_allowed_null": false
+          "type": "int"
         },
         {
           "disabled": false,
@@ -4173,8 +4046,7 @@
           "member": "Dependence",
           "name": "Dependences",
           "required": false,
-          "type": "list",
-          "value_allowed_null": false
+          "type": "list"
         },
         {
           "disabled": false,
@@ -4183,8 +4055,7 @@
           "member": "Notification",
           "name": "Notifications",
           "required": false,
-          "type": "list",
-          "value_allowed_null": false
+          "type": "list"
         },
         {
           "disabled": false,
@@ -4193,8 +4064,7 @@
           "member": "string",
           "name": "TaskExecutionDependOn",
           "required": false,
-          "type": "string",
-          "value_allowed_null": false
+          "type": "string"
         },
         {
           "disabled": false,
@@ -4203,8 +4073,7 @@
           "member": "string",
           "name": "StateIfCreateCvmFailed",
           "required": false,
-          "type": "string",
-          "value_allowed_null": false
+          "type": "string"
         },
         {
           "disabled": false,
@@ -4213,8 +4082,7 @@
           "member": "Tag",
           "name": "Tags",
           "required": false,
-          "type": "list",
-          "value_allowed_null": false
+          "type": "list"
         },
         {
           "disabled": false,
@@ -4223,8 +4091,7 @@
           "member": "string",
           "name": "NotificationTarget",
           "required": false,
-          "type": "string",
-          "value_allowed_null": false
+          "type": "string"
         }
       ],
       "usage": "in"
@@ -4234,7 +4101,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "作业ID",
+          "document": "作业ID；JobId详见[作业列表](https://cloud.tencent.com/document/product/599/15909)",
           "example": "job-f4llnqoz",
           "member": "string",
           "name": "JobId",
@@ -4254,7 +4121,7 @@
         },
         {
           "disabled": false,
-          "document": "作业状态",
+          "document": "作业状态:\n- SUBMITTED：已提交；\n- PENDING：等待中；\n- RUNNABLE：可运行；\n- STARTING：启动中；\n- RUNNING：运行中；\n- SUCCEED：成功；\n- FAILED：失败；\n- FAILED_INTERRUPTED：失败后保留实例。",
           "example": "RUNNING",
           "member": "string",
           "name": "JobState",
@@ -4274,18 +4141,18 @@
         },
         {
           "disabled": false,
-          "document": "位置信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "位置信息",
           "example": "无",
           "member": "Placement",
           "name": "Placement",
           "output_required": true,
           "type": "object",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "创建时间",
-          "example": "2024-12-19 14:40:37",
+          "document": "创建时间。按照ISO8601标准表示，并且使用UTC时间。格式为：YYYY-MM-DDThh:mm:ssZ",
+          "example": "2021-05-07T04:19:49Z",
           "member": "string",
           "name": "CreateTime",
           "output_required": true,
@@ -4294,13 +4161,13 @@
         },
         {
           "disabled": false,
-          "document": "结束时间\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "2024-12-19 14:40:37",
+          "document": "结束时间。按照ISO8601标准表示，并且使用UTC时间。格式为：YYYY-MM-DDThh:mm:ssZ",
+          "example": "2021-05-07T04:22:06Z",
           "member": "string",
           "name": "EndTime",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -4314,13 +4181,13 @@
         },
         {
           "disabled": false,
-          "document": "作业绑定的标签列表。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "作业绑定的标签列表。",
           "example": "无",
           "member": "Tag",
           "name": "Tags",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -4419,7 +4286,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "计算环境ID",
+          "document": "计算环境ID，环境ID通过调用接口 [DescribeComputeEnvs](https://cloud.tencent.com/document/api/599/15893)获取。",
           "example": "env-lcpcej85",
           "member": "string",
           "name": "EnvId",
@@ -4428,7 +4295,7 @@
         },
         {
           "disabled": false,
-          "document": "计算节点期望个数",
+          "document": "计算节点期望个数，最大上限2000。",
           "example": "2",
           "member": "int64",
           "name": "DesiredComputeNodeCount",
@@ -4482,7 +4349,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "任务模板ID",
+          "document": "任务模板ID; 详见[任务模版](https://cloud.tencent.com/document/product/599/15902)。",
           "example": "task-tmpl-606i415o",
           "member": "string",
           "name": "TaskTemplateId",
@@ -4491,7 +4358,7 @@
         },
         {
           "disabled": false,
-          "document": "任务模板名称",
+          "document": "任务模板名称；字节长度限制60。",
           "example": "A",
           "member": "string",
           "name": "TaskTemplateName",
@@ -4500,7 +4367,7 @@
         },
         {
           "disabled": false,
-          "document": "任务模板描述",
+          "document": "任务模板描述；字节长度限制200。",
           "example": "first template",
           "member": "string",
           "name": "TaskTemplateDescription",
@@ -4536,25 +4403,25 @@
       "members": [
         {
           "disabled": false,
-          "document": "挂载点，Linux系统合法路径，或Windows系统盘符,比如\"H:\\\\\"\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "挂载点，Linux系统合法路径，或Windows系统盘符,比如\"H:\\\\\"",
           "example": "/data/tmp",
           "member": "string",
           "name": "LocalPath",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "文件系统类型，Linux系统下支持\"EXT3\"和\"EXT4\"两种，默认\"EXT3\"；Windows系统下仅支持\"NTFS\"\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "文件系统类型，Linux系统下支持\"EXT3\"和\"EXT4\"两种，默认\"EXT3\"；Windows系统下仅支持\"NTFS\"",
           "example": "EXT3",
           "member": "string",
           "name": "FileSystemType",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -4569,18 +4436,16 @@
           "member": "string",
           "name": "EnvName",
           "required": true,
-          "type": "string",
-          "value_allowed_null": false
+          "type": "string"
         },
         {
           "disabled": false,
-          "document": "计算节点期望个数",
+          "document": "计算节点期望个数，最大上限2000.",
           "example": "1",
           "member": "int64",
           "name": "DesiredComputeNodeCount",
           "required": true,
-          "type": "int",
-          "value_allowed_null": false
+          "type": "int"
         },
         {
           "disabled": false,
@@ -4589,18 +4454,16 @@
           "member": "string",
           "name": "EnvDescription",
           "required": false,
-          "type": "string",
-          "value_allowed_null": false
+          "type": "string"
         },
         {
           "disabled": false,
-          "document": "计算环境管理类型",
+          "document": "计算环境管理类型，枚举如下：\nMANAGED: 由客户在Batch平台主动创建；\nTHPC_QUEUE: 由THPC平台创建，关联THPC平台的集群队列。",
           "example": "MANAGED",
           "member": "string",
           "name": "EnvType",
           "required": false,
-          "type": "string",
-          "value_allowed_null": false
+          "type": "string"
         },
         {
           "disabled": false,
@@ -4609,8 +4472,7 @@
           "member": "EnvData",
           "name": "EnvData",
           "required": false,
-          "type": "object",
-          "value_allowed_null": false
+          "type": "object"
         },
         {
           "disabled": false,
@@ -4619,8 +4481,7 @@
           "member": "MountDataDisk",
           "name": "MountDataDisks",
           "required": false,
-          "type": "list",
-          "value_allowed_null": false
+          "type": "list"
         },
         {
           "disabled": false,
@@ -4629,8 +4490,7 @@
           "member": "Authentication",
           "name": "Authentications",
           "required": false,
-          "type": "list",
-          "value_allowed_null": false
+          "type": "list"
         },
         {
           "disabled": false,
@@ -4639,8 +4499,7 @@
           "member": "InputMapping",
           "name": "InputMappings",
           "required": false,
-          "type": "list",
-          "value_allowed_null": false
+          "type": "list"
         },
         {
           "disabled": false,
@@ -4649,8 +4508,7 @@
           "member": "AgentRunningMode",
           "name": "AgentRunningMode",
           "required": false,
-          "type": "object",
-          "value_allowed_null": false
+          "type": "object"
         },
         {
           "disabled": false,
@@ -4659,8 +4517,7 @@
           "member": "Notification",
           "name": "Notifications",
           "required": false,
-          "type": "list",
-          "value_allowed_null": false
+          "type": "list"
         },
         {
           "disabled": false,
@@ -4669,8 +4526,7 @@
           "member": "string",
           "name": "ActionIfComputeNodeInactive",
           "required": false,
-          "type": "string",
-          "value_allowed_null": false
+          "type": "string"
         },
         {
           "disabled": false,
@@ -4679,8 +4535,7 @@
           "member": "int64",
           "name": "ResourceMaxRetryCount",
           "required": false,
-          "type": "int",
-          "value_allowed_null": false
+          "type": "int"
         },
         {
           "disabled": false,
@@ -4689,8 +4544,7 @@
           "member": "Tag",
           "name": "Tags",
           "required": false,
-          "type": "list",
-          "value_allowed_null": false
+          "type": "list"
         },
         {
           "disabled": false,
@@ -4699,134 +4553,7 @@
           "member": "string",
           "name": "NotificationTarget",
           "required": false,
-          "type": "string",
-          "value_allowed_null": false
-        }
-      ],
-      "usage": "in"
-    },
-    "NamedCpmComputeEnv": {
-      "document": "黑石计算环境",
-      "members": [
-        {
-          "disabled": false,
-          "document": "计算环境名称",
-          "example": "test-env",
-          "member": "string",
-          "name": "EnvName",
-          "required": true,
-          "type": "string",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "计算环境具体参数",
-          "example": "无",
-          "member": "EnvDataCpm",
-          "name": "EnvData",
-          "required": true,
-          "type": "object",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "计算节点期望个数",
-          "example": "1",
-          "member": "int64",
-          "name": "DesiredComputeNodeCount",
-          "required": true,
-          "type": "int",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "计算环境描述",
-          "example": "test-env",
-          "member": "string",
-          "name": "EnvDescription",
-          "required": false,
-          "type": "string",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "计算环境管理类型， 取值MANAGED。",
-          "example": "MANAGED",
-          "member": "string",
-          "name": "EnvType",
-          "required": false,
-          "type": "string",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "授权信息",
-          "example": "无",
-          "member": "Authentication",
-          "name": "Authentications",
-          "required": false,
-          "type": "list",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "输入映射信息",
-          "example": "无",
-          "member": "InputMapping",
-          "name": "InputMappings",
-          "required": false,
-          "type": "list",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "通知信息",
-          "example": "无",
-          "member": "Notification",
-          "name": "Notifications",
-          "required": false,
-          "type": "object",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "非活跃节点处理策略，默认“RECREATE”，即对于实例创建失败或异常退还的计算节点，定期重新创建实例资源。",
-          "example": "RECREATE",
-          "member": "string",
-          "name": "ActionIfComputeNodeInactive",
-          "required": false,
-          "type": "string",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "对于实例创建失败或异常退还的计算节点，定期重新创建实例资源的最大重试次数，最大值100，如果不设置的话，系统会设置一个默认值，当前为7。",
-          "example": "1",
-          "member": "int64",
-          "name": "ResourceMaxRetryCount",
-          "required": false,
-          "type": "int",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "标签列表。通过指定该参数可以支持绑定标签到黑石计算环境。每个黑石计算环境最多绑定10个标签。",
-          "example": "无",
-          "member": "Tag",
-          "name": "Tags",
-          "required": false,
-          "type": "list",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "表示通知信息的通知目标类型。\n取值范围：CMQ，TDMQ_CMQ。\nCMQ:表示向腾讯云CMQ发送消息。\nTDMQ_CMQ：表示向腾讯云TDMQ_CMQ发送消息。<br/>默认值为CMQ。<br/>注：腾讯云计划于2022年6月前正式下线消息队列 CMQ，建议使用TDMQ_CMQ。参考文档：[CMQ迁移到TDMQ_CMQ](https://cloud.tencent.com/document/product/406/60860)",
-          "example": "TDMQ_CMQ",
-          "member": "string",
-          "name": "NotificationTarget",
-          "required": false,
-          "type": "string",
-          "value_allowed_null": false
+          "type": "string"
         }
       ],
       "usage": "in"
@@ -4836,104 +4563,28 @@
       "members": [
         {
           "disabled": false,
-          "document": "CMQ主题名字，要求主题名有效且关联订阅\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "CMQ主题名字，要求主题名有效且关联订阅",
           "example": "demo",
           "member": "string",
           "name": "TopicName",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "事件配置\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "事件配置",
           "example": "无",
           "member": "EventConfig",
           "name": "EventConfigs",
           "output_required": true,
           "required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
-    },
-    "OsInfo": {
-      "document": "操作系统类型",
-      "members": [
-        {
-          "disabled": false,
-          "document": "操作系统ID。",
-          "example": "1",
-          "member": "uint64",
-          "name": "OsTypeId",
-          "output_required": true,
-          "type": "int",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "操作系统名称。",
-          "example": "BM-ubuntu14",
-          "member": "string",
-          "name": "OsName",
-          "output_required": true,
-          "type": "string",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "操作系统名称描述。",
-          "example": "ubuntu 14 64bit",
-          "member": "string",
-          "name": "OsDescription",
-          "output_required": true,
-          "type": "string",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "操作系统英文名称。",
-          "example": "ubuntu 14 64bit",
-          "member": "string",
-          "name": "OsEnglishDescription",
-          "output_required": true,
-          "type": "string",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "操作系统的分类，如CentOs Debian。",
-          "example": "Ubuntu",
-          "member": "string",
-          "name": "OsClass",
-          "output_required": true,
-          "type": "string",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "标识镜像分类。public:公共镜像; private: 专属镜像。",
-          "example": "public",
-          "member": "string",
-          "name": "ImageTag",
-          "output_required": true,
-          "type": "string",
-          "value_allowed_null": false
-        },
-        {
-          "disabled": false,
-          "document": "操作系统，ext4文件下所支持的最大的磁盘大小。单位为T。",
-          "example": "1000000",
-          "member": "uint64",
-          "name": "MaxPartitionSize",
-          "output_required": true,
-          "type": "int",
-          "value_allowed_null": false
-        }
-      ],
-      "usage": "out"
     },
     "OutputMapping": {
       "document": "输出映射",
@@ -4941,7 +4592,7 @@
         {
           "disabled": false,
           "document": "源端路径",
-          "example": "cos://kelvin-test-125176278734.cos.ap-nanjing.myqcloud.com/batch_test/",
+          "example": "/home/output/",
           "member": "string",
           "name": "SourcePath",
           "output_required": true,
@@ -4952,7 +4603,7 @@
         {
           "disabled": false,
           "document": "目的端路径",
-          "example": "/home/output/",
+          "example": "cos://kelvin-test-125176278734.cos.ap-nanjing.myqcloud.com/batch_test/",
           "member": "string",
           "name": "DestinationPath",
           "output_required": true,
@@ -4962,14 +4613,14 @@
         },
         {
           "disabled": false,
-          "document": "输出映射选项\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "输出映射选项",
           "example": "无",
           "member": "OutputMappingOption",
           "name": "OutputMappingOption",
           "output_required": true,
           "required": false,
           "type": "object",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -5018,13 +4669,14 @@
       "members": [
         {
           "disabled": false,
-          "document": "容器场景下,输出选项从实例映射到容器内的实例侧的工作空间。\nBATCH_WORKSPACE: 工作空间为BATCH在实例内定义的工作空间，BATCH侧保证作业之间的隔离。（默认）\nGLOBAL_WORKSPACE: 工作空间为实例操作系统空间。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "容器场景下,输出选项从实例映射到容器内的实例侧的工作空间。\nBATCH_WORKSPACE: 工作空间为BATCH在实例内定义的工作空间，BATCH侧保证作业之间的隔离。（默认）\nGLOBAL_WORKSPACE: 工作空间为实例操作系统空间。",
           "example": "BATCH_WORKSPACE",
           "member": "string",
           "name": "Workspace",
+          "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -5045,7 +4697,7 @@
         },
         {
           "disabled": false,
-          "document": "实例所属项目ID。该参数可以通过调用 [DescribeProject](https://cloud.tencent.com/document/api/651/78725) 的返回值中的 projectId 字段来获取。不填为默认项目。",
+          "document": "实例所属项目ID。该参数可以通过调用 [DescribeProject](https://cloud.tencent.com/document/api/651/78725) 的返回值中的 `ProjectId` 字段来获取。默认取值0，表示默认项目。",
           "example": "0",
           "member": "int64",
           "name": "ProjectId",
@@ -5056,7 +4708,7 @@
         },
         {
           "disabled": false,
-          "document": "实例所属的专用宿主机ID列表，仅用于入参。如果您有购买专用宿主机并且指定了该参数，则您购买的实例就会随机的部署在这些专用宿主机上。",
+          "document": "实例所属的专用宿主机ID列表，仅用于入参。如果您有购买专用宿主机并且指定了该参数，则您购买的实例就会随机的部署在这些专用宿主机上。该参数可以通过调用 [DescribeHosts](https://cloud.tencent.com/document/api/213/16474) 的返回值中的 `HostId` 字段来获取。",
           "example": "[\"host-o5i742go\"]",
           "member": "string",
           "name": "HostIds",
@@ -5084,47 +4736,47 @@
       "members": [
         {
           "disabled": false,
-          "document": "标准输出重定向路径; \n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准输出重定向路径; ",
           "example": "cos://kelvin-test-1351762227.cos.ap-nanjing.myqcloud.com/batch_test/",
           "member": "string",
           "name": "StdoutRedirectPath",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标准错误重定向路径\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准错误重定向路径",
           "example": "cos://kelvin-test-1351762227.cos.ap-nanjing.myqcloud.com/batch_test/",
           "member": "string",
           "name": "StderrRedirectPath",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标准输出重定向文件名，支持三个占位符${BATCH_JOB_ID}、${BATCH_TASK_NAME}、${BATCH_TASK_INSTANCE_INDEX}\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准输出重定向文件名，支持三个占位符${BATCH_JOB_ID}、${BATCH_TASK_NAME}、${BATCH_TASK_INSTANCE_INDEX}",
           "example": "demo_stdout.log",
           "member": "string",
           "name": "StdoutRedirectFileName",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标准错误重定向文件名，支持三个占位符${BATCH_JOB_ID}、${BATCH_TASK_NAME}、${BATCH_TASK_INSTANCE_INDEX}\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准错误重定向文件名，支持三个占位符${BATCH_JOB_ID}、${BATCH_TASK_NAME}、${BATCH_TASK_INSTANCE_INDEX}",
           "example": "demo_stderr.log",
           "member": "string",
           "name": "StderrRedirectFileName",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -5134,47 +4786,47 @@
       "members": [
         {
           "disabled": false,
-          "document": "标准输出重定向本地路径\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准输出重定向本地路径",
           "example": "/tmp/log/",
           "member": "string",
           "name": "StdoutLocalPath",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标准错误重定向本地路径\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准错误重定向本地路径",
           "example": "/tmp/log/",
           "member": "string",
           "name": "StderrLocalPath",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标准输出重定向本地文件名，支持三个占位符${BATCH_JOB_ID}、${BATCH_TASK_NAME}、${BATCH_TASK_INSTANCE_INDEX}\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准输出重定向本地文件名，支持三个占位符${BATCH_JOB_ID}、${BATCH_TASK_NAME}、${BATCH_TASK_INSTANCE_INDEX}",
           "example": "job-5ewdqncb-stdout.log",
           "member": "string",
           "name": "StdoutLocalFileName",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标准错误重定向本地文件名，支持三个占位符${BATCH_JOB_ID}、${BATCH_TASK_NAME}、${BATCH_TASK_INSTANCE_INDEX}\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准错误重定向本地文件名，支持三个占位符${BATCH_JOB_ID}、${BATCH_TASK_NAME}、${BATCH_TASK_INSTANCE_INDEX}",
           "example": "job-5ewdqncb-stderr.log",
           "member": "string",
           "name": "StderrLocalFileName",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -5184,8 +4836,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "作业ID列表。",
-          "example": "[\"job-rybewp57\\r\\n\",\"job-97zcl3wt\\r\\n\"]",
+          "document": "作业ID列表。最大重试作业数100；JobId详见[作业列表](https://cloud.tencent.com/document/product/599/15909)。",
+          "example": "[\"job-rybewp57\",\"job-97zcl3wt\"]",
           "member": "string",
           "name": "JobIds",
           "required": true,
@@ -5228,14 +4880,14 @@
       "members": [
         {
           "disabled": false,
-          "document": "是否开启[云监控](/document/product/248)服务。取值范围：<br><li>true：表示开启云监控服务<br><li>false：表示不开启云监控服务<br><br>默认取值：true。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "是否开启[云监控](/document/product/248)服务。取值范围：<br><li>true：表示开启云监控服务</li><li>false：表示不开启云监控服务</li><br>默认取值：true。",
           "example": "true",
           "member": "bool",
           "name": "Enabled",
           "output_required": true,
           "required": false,
           "type": "bool",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -5262,25 +4914,25 @@
       "members": [
         {
           "disabled": false,
-          "document": "竞价出价\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "竞价出价",
           "example": "0.01",
           "member": "string",
           "name": "MaxPrice",
           "output_required": false,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "竞价请求类型，当前仅支持类型：one-time\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "竞价请求类型，当前仅支持类型：one-time",
           "example": "one-time",
           "member": "string",
           "name": "SpotInstanceType",
           "output_required": false,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -5301,7 +4953,7 @@
         },
         {
           "disabled": false,
-          "document": "HDD本地存储的最小容量",
+          "document": "HDD本地存储的最小容量。单位：GiB。",
           "example": "100",
           "member": "int64",
           "name": "MinSize",
@@ -5312,7 +4964,7 @@
         },
         {
           "disabled": false,
-          "document": "HDD本地存储的最大容量",
+          "document": "HDD本地存储的最大容量。单位：GiB。",
           "example": "200",
           "member": "int64",
           "name": "MaxSize",
@@ -5395,18 +5047,18 @@
         },
         {
           "disabled": false,
-          "document": "系统盘ID。\n该参数目前仅用于`DescribeInstances`等查询类接口的返回参数，不可用于`RunInstances`等写接口的入参。",
-          "example": "disk-xyzw1234",
+          "document": "系统盘ID。\n该参数目前仅用于 [DescribeInstances](https://cloud.tencent.com/document/product/213/15728) 等查询类接口的返回参数，不可用于 [RunInstances](https://cloud.tencent.com/document/product/213/15730) 等写接口的入参。",
+          "example": "disk-xyzw1a3x",
           "member": "string",
           "name": "DiskId",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "系统盘大小，单位：GB。默认值为 50",
+          "document": "系统盘大小，单位：GiB。默认值为 50",
           "example": "50",
           "member": "int64",
           "name": "DiskSize",
@@ -5417,18 +5069,18 @@
         },
         {
           "disabled": false,
-          "document": "所属的独享集群ID。",
+          "document": "所属的独享集群ID。\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "cdc-xxxxxx",
           "member": "string",
           "name": "CdcId",
           "output_required": false,
           "required": false,
           "type": "string",
-          "value_allowed_null": false
+          "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "磁盘名称，长度不超过128 个字符。\n\n该参数正在邀测中，暂未开放使用。",
+          "document": "磁盘名称，长度不超过128 个字符。",
           "example": "name",
           "member": "string",
           "name": "DiskName",
@@ -5445,25 +5097,25 @@
       "members": [
         {
           "disabled": false,
-          "document": "标签键。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标签键。",
           "example": "batch_tag",
           "member": "string",
           "name": "Key",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标签值。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标签值。",
           "example": "batch-demo",
           "member": "string",
           "name": "Value",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -5510,7 +5162,7 @@
           "example": "无",
           "member": "AnonymousComputeEnv",
           "name": "ComputeEnv",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "object",
           "value_allowed_null": false
@@ -5521,7 +5173,7 @@
           "example": "env_238swek2",
           "member": "string",
           "name": "EnvId",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "string",
           "value_allowed_null": false
@@ -5532,7 +5184,7 @@
           "example": "无",
           "member": "RedirectInfo",
           "name": "RedirectInfo",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "object",
           "value_allowed_null": false
@@ -5543,7 +5195,7 @@
           "example": "无",
           "member": "RedirectLocalInfo",
           "name": "RedirectLocalInfo",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "object",
           "value_allowed_null": false
@@ -5554,7 +5206,7 @@
           "example": "无",
           "member": "InputMapping",
           "name": "InputMappings",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "list",
           "value_allowed_null": false
@@ -5565,7 +5217,7 @@
           "example": "无",
           "member": "OutputMapping",
           "name": "OutputMappings",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "list",
           "value_allowed_null": false
@@ -5576,7 +5228,7 @@
           "example": "无",
           "member": "OutputMappingConfig",
           "name": "OutputMappingConfigs",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "list",
           "value_allowed_null": false
@@ -5587,7 +5239,7 @@
           "example": "无",
           "member": "EnvVar",
           "name": "EnvVars",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "list",
           "value_allowed_null": false
@@ -5598,18 +5250,18 @@
           "example": "无",
           "member": "Authentication",
           "name": "Authentications",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "list",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "TaskInstance失败后处理方式，取值包括TERMINATE（默认）、INTERRUPT、FAST_INTERRUPT。",
+          "document": "TaskInstance失败后处理方式，取值包括\n\n- TERMINATE：销毁计算实例（默认）、\n- INTERRUPT：中断任务，保留计算实例、\n- FAST_INTERRUPT： 快速中断任务， 保留计算实例。",
           "example": "TERMINATE",
           "member": "string",
           "name": "FailedAction",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "string",
           "value_allowed_null": false
@@ -5620,7 +5272,7 @@
           "example": "0",
           "member": "uint64",
           "name": "MaxRetryCount",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "int",
           "value_allowed_null": false
@@ -5631,7 +5283,7 @@
           "example": "86400",
           "member": "uint64",
           "name": "Timeout",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "int",
           "value_allowed_null": false
@@ -5642,7 +5294,7 @@
           "example": "100",
           "member": "uint64",
           "name": "MaxConcurrentNum",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "int",
           "value_allowed_null": false
@@ -5653,7 +5305,7 @@
           "example": "false",
           "member": "bool",
           "name": "RestartComputeNode",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "bool",
           "value_allowed_null": false
@@ -5664,7 +5316,7 @@
           "example": "1",
           "member": "uint64",
           "name": "ResourceMaxRetryCount",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "int",
           "value_allowed_null": false
@@ -5687,63 +5339,63 @@
         },
         {
           "disabled": false,
-          "document": "标准输出日志（Base64编码，解码后最大日志长度2048字节）\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准输出日志（Base64编码，解码后最大日志长度2048字节）",
           "example": "MApWTV8zMl80X2NlbnRvcwo",
           "member": "string",
           "name": "StdoutLog",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标准错误日志（Base64编码，解码后最大日志长度2048字节）\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准错误日志（Base64编码，解码后最大日志长度2048字节）",
           "example": "MApWTV8zMl80X2NlbnRvcwo",
           "member": "string",
           "name": "StderrLog",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标准输出重定向路径\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准输出重定向路径",
           "example": "cos://batch-test-11762227.cos.ap-shanghai.myqcloud.com/batch_test/",
           "member": "string",
           "name": "StdoutRedirectPath",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标准错误重定向路径\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准错误重定向路径",
           "example": "cos://batch-test-11762227.cos.ap-shanghai.myqcloud.com/batch_test/",
           "member": "string",
           "name": "StderrRedirectPath",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标准输出重定向文件名\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准输出重定向文件名",
           "example": "stdout.log",
           "member": "string",
           "name": "StdoutRedirectFileName",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标准错误重定向文件名\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标准错误重定向文件名",
           "example": "stderr.log",
           "member": "string",
           "name": "StderrRedirectFileName",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -5753,83 +5405,83 @@
       "members": [
         {
           "disabled": false,
-          "document": "Submitted个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Submitted个数",
           "example": "1",
           "member": "int64",
           "name": "SubmittedCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Pending个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Pending个数",
           "example": "1",
           "member": "int64",
           "name": "PendingCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Runnable个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Runnable个数",
           "example": "1",
           "member": "int64",
           "name": "RunnableCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Starting个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Starting个数",
           "example": "1",
           "member": "int64",
           "name": "StartingCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Running个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Running个数",
           "example": "1",
           "member": "int64",
           "name": "RunningCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Succeed个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Succeed个数",
           "example": "1",
           "member": "int64",
           "name": "SucceedCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "FailedInterrupted个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "FailedInterrupted个数",
           "example": "1",
           "member": "int64",
           "name": "FailedInterruptedCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Failed个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Failed个数",
           "example": "1",
           "member": "int64",
           "name": "FailedCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -5849,7 +5501,7 @@
         },
         {
           "disabled": false,
-          "document": "任务实例状态",
+          "document": "任务实例状态: \n- PENDING：等待中；\n- RUNNABLE：可运行；\n- STARTING：启动中；\n- RUNNING：运行中；\n- SUCCEED：成功；\n- FAILED：失败；\n- FAILED_INTERRUPTED：失败后保留实例。",
           "example": "RUNNING",
           "member": "string",
           "name": "TaskInstanceState",
@@ -5859,13 +5511,13 @@
         },
         {
           "disabled": false,
-          "document": "应用程序执行结束的exit code\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "应用程序执行结束的exit code",
           "example": "1",
           "member": "int64",
           "name": "ExitCode",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -5879,18 +5531,18 @@
         },
         {
           "disabled": false,
-          "document": "任务实例运行时所在计算节点（例如CVM）的InstanceId。任务实例未运行或者完结时，本字段为空。任务实例重试时，本字段会随之变化\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "任务实例运行时所在计算节点（例如CVM）的InstanceId。任务实例未运行或者完结时，本字段为空。任务实例重试时，本字段会随之变化",
           "example": "ins-g9mp0ppm",
           "member": "string",
           "name": "ComputeNodeInstanceId",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "创建时间",
-          "example": "2024-12-19 14:43:20",
+          "document": "创建时间。按照ISO8601标准表示，并且使用UTC时间。格式为：YYYY-MM-DDThh:mm:ssZ。",
+          "example": "2018-02-07T09:29:09Z",
           "member": "string",
           "name": "CreateTime",
           "output_required": true,
@@ -5899,33 +5551,33 @@
         },
         {
           "disabled": false,
-          "document": "启动时间\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "2024-12-19 14:43:49",
+          "document": "启动时间。按照ISO8601标准表示，并且使用UTC时间。格式为：YYYY-MM-DDThh:mm:ssZ。",
+          "example": "2018-02-07T09:29:09Z",
           "member": "string",
           "name": "LaunchTime",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "开始运行时间\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "2024-12-19 14:46:49",
+          "document": "开始运行时间。按照ISO8601标准表示，并且使用UTC时间。格式为：YYYY-MM-DDThh:mm:ssZ。",
+          "example": "2018-02-07T09:29:09Z",
           "member": "string",
           "name": "RunningTime",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "结束时间\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "2024-12-19 14:48:17",
+          "document": "结束时间。按照ISO8601标准表示，并且使用UTC时间。格式为：YYYY-MM-DDThh:mm:ssZ。",
+          "example": "2018-02-07T09:29:09Z",
           "member": "string",
           "name": "EndTime",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -5955,83 +5607,83 @@
       "members": [
         {
           "disabled": false,
-          "document": "Submitted个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Submitted个数",
           "example": "1",
           "member": "int64",
           "name": "SubmittedCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Pending个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Pending个数",
           "example": "1",
           "member": "int64",
           "name": "PendingCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Runnable个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Runnable个数",
           "example": "1",
           "member": "int64",
           "name": "RunnableCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Starting个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Starting个数",
           "example": "1",
           "member": "int64",
           "name": "StartingCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Running个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Running个数",
           "example": "1",
           "member": "int64",
           "name": "RunningCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Succeed个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Succeed个数",
           "example": "1",
           "member": "int64",
           "name": "SucceedCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "FailedInterrupted个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "FailedInterrupted个数",
           "example": "1",
           "member": "int64",
           "name": "FailedInterruptedCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "Failed个数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "Failed个数",
           "example": "1",
           "member": "int64",
           "name": "FailedCount",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -6117,7 +5769,7 @@
         },
         {
           "disabled": false,
-          "document": "任务状态",
+          "document": "任务状态:\n- PENDING：等待中；\n- RUNNABLE：可运行；\n- STARTING：启动中；\n- RUNNING：运行中；\n- SUCCEED：成功；\n- FAILED：失败；\n- FAILED_INTERRUPTED：失败后保留实例。",
           "example": "FAILED",
           "member": "string",
           "name": "TaskState",
@@ -6127,8 +5779,8 @@
         },
         {
           "disabled": false,
-          "document": "开始时间",
-          "example": "2017-08-01 22:41:36",
+          "document": "开始时间。按照ISO8601标准表示，并且使用UTC时间。格式为：YYYY-MM-DDThh:mm:ssZ。",
+          "example": "2018-02-07T09:29:09Z",
           "member": "string",
           "name": "CreateTime",
           "output_required": true,
@@ -6137,8 +5789,8 @@
         },
         {
           "disabled": false,
-          "document": "结束时间\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "2017-08-01 23:41:36",
+          "document": "结束时间。按照ISO8601标准表示，并且使用UTC时间。格式为：YYYY-MM-DDThh:mm:ssZ。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "2018-02-07T09:29:09Z",
           "member": "string",
           "name": "EndTime",
           "output_required": true,
@@ -6153,7 +5805,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "计算环境ID",
+          "document": "计算环境ID，环境ID通过调用接口 [DescribeComputeEnvs](https://cloud.tencent.com/document/api/599/15893)获取。",
           "example": "env-lcx7qbbr",
           "member": "string",
           "name": "EnvId",
@@ -6162,7 +5814,7 @@
         },
         {
           "disabled": false,
-          "document": "计算节点ID",
+          "document": "计算节点ID，节点ID通过调用接口 [DescribeComputeEnv](https://cloud.tencent.com/document/api/599/15892)获取。",
           "example": "node-lcpcej85",
           "member": "string",
           "name": "ComputeNodeId",
@@ -6189,7 +5841,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "计算环境ID",
+          "document": "计算环境ID，环境ID通过调用接口 [DescribeComputeEnv](https://cloud.tencent.com/document/api/599/15892)获取。",
           "example": "env-lcx7qbbr",
           "member": "string",
           "name": "EnvId",
@@ -6198,7 +5850,7 @@
         },
         {
           "disabled": false,
-          "document": "计算节点ID列表",
+          "document": "计算节点ID列表，最大数量上限100，节点ID通过调用接口 [DescribeComputeEnv](https://cloud.tencent.com/document/api/599/15892)获取。",
           "example": "[\"node-k9fwel23\"]",
           "member": "string",
           "name": "ComputeNodeIds",
@@ -6225,7 +5877,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "作业ID",
+          "document": "作业ID；JobId详见[作业列表](https://cloud.tencent.com/document/product/599/15909)",
           "example": "job-rybewp57",
           "member": "string",
           "name": "JobId",
@@ -6252,7 +5904,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "作业ID",
+          "document": "作业ID；详见[作业列表](https://cloud.tencent.com/document/product/599/15909)。",
           "example": "job-rybewp57",
           "member": "string",
           "name": "JobId",
@@ -6261,7 +5913,7 @@
         },
         {
           "disabled": false,
-          "document": "任务名称",
+          "document": "任务名称；详见[作业提交信息](https://cloud.tencent.com/document/product/599/15910)",
           "example": "A",
           "member": "string",
           "name": "TaskName",
@@ -6297,7 +5949,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "私有网络ID，形如`vpc-xxx`。有效的VpcId可通过登录[控制台](https://console.cloud.tencent.com/vpc/vpc?rid=1)查询；也可以调用接口 [DescribeVpcEx](/document/api/215/1372) ，从接口返回中的`unVpcId`字段获取。若在创建子机时VpcId与SubnetId同时传入`DEFAULT`，则强制使用默认vpc网络。",
+          "document": "私有网络ID，形如`vpc-xxx`。有效的VpcId可通过登录[控制台](https://console.cloud.tencent.com/vpc/vpc?rid=1)查询；也可以调用接口 [DescribeVpcs](https://cloud.tencent.com/document/product/215/15778) ，从接口返回中的`VpcId `字段获取。若在创建子机时VpcId与SubnetId同时传入`DEFAULT`，则强制使用默认vpc网络。",
           "example": "vpc-2ij",
           "member": "string",
           "name": "VpcId",
@@ -6308,7 +5960,7 @@
         },
         {
           "disabled": false,
-          "document": "私有网络子网ID，形如`subnet-xxx`。有效的私有网络子网ID可通过登录[控制台](https://console.cloud.tencent.com/vpc/subnet?rid=1)查询；也可以调用接口  [DescribeSubnets](/document/api/215/15784) ，从接口返回中的`unSubnetId`字段获取。若在创建子机时SubnetId与VpcId同时传入`DEFAULT`，则强制使用默认vpc网络。",
+          "document": "私有网络子网ID，形如`subnet-xxx`。有效的私有网络子网ID可通过登录[控制台](https://console.cloud.tencent.com/vpc/subnet?rid=1)查询；也可以调用接口  [DescribeSubnets](https://cloud.tencent.com/document/product/215/15784) ，从接口返回中的`SubnetId `字段获取。若在创建子机时SubnetId与VpcId同时传入`DEFAULT`，则强制使用默认vpc网络。",
           "example": "subnet-2ks",
           "member": "string",
           "name": "SubnetId",
@@ -6334,7 +5986,7 @@
           "example": "[\"10.0.0.1\"]",
           "member": "string",
           "name": "PrivateIpAddresses",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "list",
           "value_allowed_null": false
@@ -6345,7 +5997,7 @@
           "example": "1",
           "member": "uint64",
           "name": "Ipv6AddressCount",
-          "output_required": true,
+          "output_required": false,
           "required": false,
           "type": "int",
           "value_allowed_null": false

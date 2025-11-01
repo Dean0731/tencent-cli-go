@@ -296,7 +296,7 @@
         },
         {
           "disabled": false,
-          "document": "队列名称。不指定则为默认队列。<li>SLURM默认队列为：compute。</li><li>SGE默认队列为：all.q。</li>",
+          "document": "队列名称。不指定则为默认队列。<li>SLURM默认队列为：compute。</li>",
           "example": "compute",
           "member": "string",
           "name": "QueueName",
@@ -617,13 +617,13 @@
         },
         {
           "disabled": false,
-          "document": "集群活动状态码。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "集群活动状态码。",
           "example": "ActivitySuccess",
           "member": "string",
           "name": "ActivityStatusCode",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -667,23 +667,23 @@
         },
         {
           "disabled": false,
-          "document": "集群活动开始时间。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "集群活动开始时间。",
           "example": "2021-11-01T02:17:20Z\t",
           "member": "datetime_iso",
           "name": "StartTime",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "集群活动结束时间。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "集群活动结束时间。",
           "example": "2021-11-01T02:17:38Z\t",
           "member": "datetime_iso",
           "name": "EndTime",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -744,7 +744,7 @@
         {
           "disabled": false,
           "document": "集群调度器。",
-          "example": "SGE",
+          "example": "SLURM",
           "member": "string",
           "name": "SchedulerType",
           "output_required": true,
@@ -898,13 +898,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "计算节点ID。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "计算节点ID。",
           "example": "ins-jfhc307q",
           "member": "string",
           "name": "NodeId",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -959,8 +959,8 @@
         },
         {
           "disabled": false,
-          "document": "调度器类型。默认取值：SLURM。<br><li>SGE：SGE调度器。</li><br><li>SLURM：SLURM调度器。</li>",
-          "example": "SGE",
+          "document": "调度器类型。默认取值：SLURM。<br><li>SLURM：SLURM调度器。</li>",
+          "example": "SLURM",
           "member": "string",
           "name": "SchedulerType",
           "required": false,
@@ -1091,13 +1091,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "集群ID。",
           "example": "hpc-5lyv94lq",
           "member": "string",
           "name": "ClusterId",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -2104,13 +2104,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "管控节点ID。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "管控节点ID。",
           "example": "ins-jfhc307q",
           "member": "string",
           "name": "NodeId",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -2421,13 +2421,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "队列名称。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "队列名称。",
           "example": "compute",
           "member": "string",
           "name": "QueueName",
-          "required": false,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"

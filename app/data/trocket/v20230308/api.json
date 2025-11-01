@@ -1,5 +1,12 @@
 {
   "actions": {
+    "ChangeMigratingTopicToNextStage": {
+      "document": "修改迁移中的Topic状态进入下一步",
+      "input": "ChangeMigratingTopicToNextStageRequest",
+      "name": "平滑迁移：修改迁移中的Topic状态进入下一步",
+      "output": "ChangeMigratingTopicToNextStageResponse",
+      "status": "online"
+    },
     "CreateConsumerGroup": {
       "document": "创建消费组",
       "input": "CreateConsumerGroupRequest",
@@ -57,14 +64,14 @@
       "status": "online"
     },
     "DeleteConsumerGroup": {
-      "document": "删除消费组",
+      "document": "删除消费组。消费者组删除后，消费者组的所有配置和相关数据都会被清空，且无法找回。删除后，在线的消费者客户端会出现报错，建议您提前下线客户端。",
       "input": "DeleteConsumerGroupRequest",
       "name": "删除消费组",
       "output": "DeleteConsumerGroupResponse",
       "status": "online"
     },
     "DeleteInstance": {
-      "document": "删除 RocketMQ 5.x 集群。",
+      "document": "删除 RocketMQ 5.x 集群，删除前请先删除正在使用的主题、消费组和角色信息。",
       "input": "DeleteInstanceRequest",
       "name": "删除集群",
       "output": "DeleteInstanceResponse",
@@ -99,14 +106,21 @@
       "status": "online"
     },
     "DeleteRole": {
-      "document": "删除角色",
+      "document": "删除角色。请确保该角色相关信息不在当前代码中被使用。删除角色后，原先使用该角色进行生产或消费消息的密钥（AccessKey 和 SecretKey）将立即失效。",
       "input": "DeleteRoleRequest",
       "name": "删除角色",
       "output": "DeleteRoleResponse",
       "status": "online"
     },
+    "DeleteSmoothMigrationTask": {
+      "document": "删除平滑迁移任务，只有被取消的任务才可删除",
+      "input": "DeleteSmoothMigrationTaskRequest",
+      "name": "删除平滑迁移任务",
+      "output": "DeleteSmoothMigrationTaskResponse",
+      "status": "online"
+    },
     "DeleteTopic": {
-      "document": "删除主题",
+      "document": "删除主题。主题删除后，主题的所有配置和相关数据都会被清空，且无法找回。",
       "input": "DeleteTopicRequest",
       "name": "删除主题",
       "output": "DeleteTopicResponse",
@@ -119,6 +133,13 @@
       "output": "DescribeConsumerClientResponse",
       "status": "online"
     },
+    "DescribeConsumerClientList": {
+      "document": "查询消费组下的客户端连接列表。",
+      "input": "DescribeConsumerClientListRequest",
+      "name": "查询消费组下的客户端连接列表",
+      "output": "DescribeConsumerClientListResponse",
+      "status": "online"
+    },
     "DescribeConsumerGroup": {
       "document": "查询消费组详情",
       "input": "DescribeConsumerGroupRequest",
@@ -127,7 +148,7 @@
       "status": "online"
     },
     "DescribeConsumerGroupList": {
-      "document": "获取消费组列表，Filter参数使用说明如下：\n\n1. ConsumerGroupName，名称模糊查询\n2. ConsumeMessageOrderly，投递顺序性。\"true\":顺序投递；\"false\":并发投递",
+      "document": "获取消费组列表，Filter参数使用说明如下：\n\n- ConsumerGroupName 消费组名称，支持模糊查询，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。\n- ConsumeMessageOrderly，投递顺序性，枚举值如下：\n    - true 顺序投递\n    - false 并发投递\n\nFilters示例： \n[{ \"Name\": \"ConsumeMessageOrderly\", \"Values\": [\"true\"] }]",
       "input": "DescribeConsumerGroupListRequest",
       "name": "查询消费组列表",
       "output": "DescribeConsumerGroupListResponse",
@@ -141,7 +162,7 @@
       "status": "online"
     },
     "DescribeFusionInstanceList": {
-      "document": "查询集群列表，支持 4.x 和 5.x 集群，其中 Filters 参数使用说明如下：\n1. InstanceName, 名称模糊查询\n2. InstanceId，集群ID查询\n3. InstanceType, 集群类型查询，支持多选\n4. Version，集群版本查询\n当使用TagFilters查询时，Filters参数失效。",
+      "document": "查询集群列表，支持 4.x 和 5.x 集群，其中 Filters 参数使用说明如下：\n\n- InstanceName 集群名称，支持模糊查询，从本接口返回值或控制台获得\n- InstanceId 集群ID，精确查询，从当前接口或控制台获得\n- InstanceType 集群类型，可参考 [InstanceItem](https://cloud.tencent.com/document/api/1493/96031#InstanceItem) 数据结构，支持多选\n- Version 集群版本，枚举值如下：\n    - 4 RocketMQ 4.x 集群\n    - 5 RocketMQ 5.x 集群\n\nFilters示例：\n [{ \"Name\": \"InstanceId\", \"Values\": [\"rmq-72mo3a9o\"] }]",
       "input": "DescribeFusionInstanceListRequest",
       "name": "查询集群列表",
       "output": "DescribeFusionInstanceListResponse",
@@ -155,7 +176,7 @@
       "status": "online"
     },
     "DescribeInstanceList": {
-      "document": "查询集群列表，仅支持 5.x 集群。Filters参数使用说明如下：\n1. InstanceName, 名称模糊查询\n2. InstanceId，集群ID查询\n3. InstanceType, 集群类型查询，支持多选\n3. InstanceStatus，集群状态查询，支持多选\n\n当使用TagFilters查询时，Filters参数失效。",
+      "document": "查询集群列表，仅支持 5.x 集群。Filters参数使用说明如下：\n\n- InstanceName 集群名称，支持模糊搜索\n- InstanceId 腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得\n- InstanceType 集群类型，可参考 [InstanceItem](https://cloud.tencent.com/document/api/1493/96031#InstanceItem) 数据结构，支持多选\n- InstanceStatus 集群状态，可参考 [InstanceItem](https://cloud.tencent.com/document/api/1493/96031#InstanceItem) 数据结构，支持多选\n\nFilters示例：\n[{\n    \"Name\": \"InstanceId\",\n    \"Values\": [\"rmq-72mo3a9o\"]\n}]",
       "input": "DescribeInstanceListRequest",
       "name": "查询 5.X 集群列表",
       "output": "DescribeInstanceListResponse",
@@ -266,6 +287,41 @@
       "output": "DescribeMessageTraceResponse",
       "status": "online"
     },
+    "DescribeMigratingGroupStats": {
+      "document": "查看迁移消费组的实时信息",
+      "input": "DescribeMigratingGroupStatsRequest",
+      "name": "查看迁移消费组的实时数据",
+      "output": "DescribeMigratingGroupStatsResponse",
+      "status": "online"
+    },
+    "DescribeMigratingTopicList": {
+      "document": "查询Topic迁移状态列表。\n\nFilters字段为查询过滤器，支持以下条件：\n* TopicName 主题名称，支持模糊查询\n* MigrationStatus 迁移状态，可参考[MigratingTopic](https://cloud.tencent.com/document/api/1493/96031#MigratingTopic)数据结构\n* Namespace 命名空间，仅4.x集群有效\n\nFilters示例：\n[{\n    \"Name\": \"TopicName\",\n    \"Values\": [\"topic-a\"]\n}]",
+      "input": "DescribeMigratingTopicListRequest",
+      "name": "平滑迁移：查询Topic迁移状态列表",
+      "output": "DescribeMigratingTopicListResponse",
+      "status": "online"
+    },
+    "DescribeMigratingTopicStats": {
+      "document": "用于查询迁移主题的实时数据",
+      "input": "DescribeMigratingTopicStatsRequest",
+      "name": "查询迁移主题的实时数据",
+      "output": "DescribeMigratingTopicStatsResponse",
+      "status": "online"
+    },
+    "DescribeMigrationTaskList": {
+      "document": "获取数据迁移任务列表，Filter参数使用说明如下：\n\nTaskId，根据任务ID精确查找\nInstanceId，根据实例ID精确查找\nType，根据任务类型精确查找",
+      "input": "DescribeMigrationTaskListRequest",
+      "name": "获取数据迁移任务列表",
+      "output": "DescribeMigrationTaskListResponse",
+      "status": "online"
+    },
+    "DescribeProducerList": {
+      "document": "查询主题关联的生产者列表信息，Filters支持以下筛选条件：\n- ClientIP，客户端IP\n- ClientID，客户端ID",
+      "input": "DescribeProducerListRequest",
+      "name": "查询生产者信息列表",
+      "output": "DescribeProducerListResponse",
+      "status": "online"
+    },
     "DescribeProductSKUs": {
       "document": "查询产品售卖规格，针对 RocketMQ 5.x 集群。",
       "input": "DescribeProductSKUsRequest",
@@ -274,44 +330,65 @@
       "status": "online"
     },
     "DescribeRoleList": {
-      "document": "查询角色列表，Filter参数使用说明如下：\n\n1. RoleName，角色名称模糊搜索\n2. AccessKey，AccessKey模糊搜索",
+      "document": "查询角色列表，Filter参数使用说明如下：\n\n- RoleName 角色名称，支持模糊搜索，从本接口返回值或控制台获得\n- AccessKey AccessKey，支持模糊搜索，从本接口返回值或控制台获得\n\nFilters示例： \n[{ \"Name\": \"RoleName\", \"Values\": [\"test_role\"] }]",
       "input": "DescribeRoleListRequest",
       "name": "查询角色列表",
       "output": "DescribeRoleListResponse",
       "status": "online"
     },
+    "DescribeSmoothMigrationTaskList": {
+      "document": "用于查询平滑迁移任务列表。\n\n查询参数Filters， 支持的字段如下：\n* TaskStatus, 任务状态，支持多选 \n* ConnectionType，网络连接类型，支持多选，参考[SmoothMigrationTaskItem](https://cloud.tencent.com/document/api/1493/96031#SmoothMigrationTaskItem)的说明\n* InstanceId，实例ID，精确搜索 \n* TaskName，任务名称，支持模糊搜索\n\nFilters示例：\n[{\n    \"Name\": \"InstanceId\",\n    \"Values\": [\"rmq-1gzecldfg\"]\n}]",
+      "input": "DescribeSmoothMigrationTaskListRequest",
+      "name": "查询平滑迁移任务列表",
+      "output": "DescribeSmoothMigrationTaskListResponse",
+      "status": "online"
+    },
+    "DescribeSourceClusterGroupList": {
+      "document": "平滑迁移过程获取源集群group列表接口。\n\nFilters字段为查询过滤器，支持以下字段：\n* GroupName，消费组名称，支持模糊搜索\n* Imported，是否已导入\n* ImportStatus，导入状态，参考[SourceClusterGroupConfig](https://cloud.tencent.com/document/api/1493/96031#SourceClusterGroupConfig)的说明\n* Namespace，命名空间，仅4.x集群有效\n\nFilters示例：\n[{\n    \"Name\": \"GroupName\",\n    \"Values\": [\"group-a\"]\n}]",
+      "input": "DescribeSourceClusterGroupListRequest",
+      "name": "平滑迁移：获取源集群的group列表",
+      "output": "DescribeSourceClusterGroupListResponse",
+      "status": "online"
+    },
     "DescribeTopic": {
-      "document": "查询主题详情，Offset和Limit参数是指订阅该主题的消费组查询分页参数，Filter参数使用说明如下：\n\nConsumerGroup，消费组名称过滤",
+      "document": "查询主题详情，Offset和Limit参数是指订阅该主题的消费组查询分页参数，Filter参数使用说明如下：\n\n- ConsumerGroup 消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。\n\nFilters示例： \n[{ \"Name\": \"ConsumerGroup\", \"Values\": [\"test_group\"] }]",
       "input": "DescribeTopicRequest",
       "name": "查询主题详情",
       "output": "DescribeTopicResponse",
       "status": "online"
     },
     "DescribeTopicList": {
-      "document": "获取主题列表，Filter参数使用说明如下：\n\n1. TopicName，主题名称模糊搜索\n2. TopicType，主题类型查询，支持多选，可选值：Normal,Order,Transaction,DelayScheduled",
+      "document": "获取主题列表，Filter参数使用说明如下：\n\n- TopicName 主题名称，支持模糊搜索，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得\n- TopicType 主题类型查询，支持多选，参考 [DescribeTopic](https://cloud.tencent.com/document/api/1493/97945) 接口 TopicType 字段\n\nFilters示例：\n [{ \"Name\": \"TopicName\", \"Values\": [\"test_topic\"] }]",
       "input": "DescribeTopicListRequest",
       "name": "查询主题列表",
       "output": "DescribeTopicListResponse",
       "status": "online"
     },
     "DescribeTopicListByGroup": {
-      "document": "根据消费组获取主题列表，Filter参数使用说明如下：\n\nTopicName，主题名称过滤",
+      "document": "根据消费组获取主题列表，Filter参数使用说明如下：\n\n- TopicName 主题名称，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得。\n\nFilters示例： \n[{ \"Name\": \"TopicName\", \"Values\": [\"test_topic\"] }]",
       "input": "DescribeTopicListByGroupRequest",
       "name": "查询消费组订阅的主题列表",
       "output": "DescribeTopicListByGroupResponse",
       "status": "online"
     },
+    "DoHealthCheckOnMigratingTopic": {
+      "document": "检查迁移中的主题是否处于正常状态，只有处于正常状态的主题，才可以进入下一个迁移阶段",
+      "input": "DoHealthCheckOnMigratingTopicRequest",
+      "name": "迁移主题健康检查",
+      "output": "DoHealthCheckOnMigratingTopicResponse",
+      "status": "online"
+    },
     "ImportSourceClusterConsumerGroups": {
       "document": "导入消费者组列表",
       "input": "ImportSourceClusterConsumerGroupsRequest",
-      "name": "导入 Group 元数据",
+      "name": "平滑迁移任务导入 Group 元数据",
       "output": "ImportSourceClusterConsumerGroupsResponse",
       "status": "online"
     },
     "ImportSourceClusterTopics": {
       "document": "导入topic列表",
       "input": "ImportSourceClusterTopicsRequest",
-      "name": "导入 Topic 元数据",
+      "name": "平滑迁移任务导入 Topic 元数据",
       "output": "ImportSourceClusterTopicsResponse",
       "status": "online"
     },
@@ -323,14 +400,14 @@
       "status": "online"
     },
     "ModifyInstance": {
-      "document": "修改 RocketMQ 5.x 集群属性。",
+      "document": "修改 RocketMQ 5.x 集群属性，仅支持修改运行中的集群。",
       "input": "ModifyInstanceRequest",
       "name": "修改集群属性",
       "output": "ModifyInstanceResponse",
       "status": "online"
     },
     "ModifyInstanceEndpoint": {
-      "document": "修改 RocketMQ 5.x 集群接入点。",
+      "document": "修改 RocketMQ 5.x 集群接入点，操作前请先确认接入点已存在。",
       "input": "ModifyInstanceEndpointRequest",
       "name": "修改集群接入点",
       "output": "ModifyInstanceEndpointResponse",
@@ -385,11 +462,32 @@
       "output": "ModifyTopicResponse",
       "status": "online"
     },
+    "RemoveMigratingTopic": {
+      "document": "从迁移列表中移除主题，仅当主题处于初始状态时有效",
+      "input": "RemoveMigratingTopicRequest",
+      "name": "移除正在平滑迁移的主题",
+      "output": "RemoveMigratingTopicResponse",
+      "status": "online"
+    },
     "ResendDeadLetterMessage": {
       "document": "重新发送死信消息",
       "input": "ResendDeadLetterMessageRequest",
       "name": "重新发送死信消息",
       "output": "ResendDeadLetterMessageResponse",
+      "status": "online"
+    },
+    "ResetConsumerGroupOffset": {
+      "document": "重置消费位点",
+      "input": "ResetConsumerGroupOffsetRequest",
+      "name": "重置消费位点",
+      "output": "ResetConsumerGroupOffsetResponse",
+      "status": "online"
+    },
+    "RollbackMigratingTopicStage": {
+      "document": "回滚正在迁移的主题至前一个阶段",
+      "input": "RollbackMigratingTopicStageRequest",
+      "name": "回滚主题迁移进度至上一阶段",
+      "output": "RollbackMigratingTopicStageResponse",
       "status": "online"
     }
   },
@@ -400,6 +498,117 @@
     "serviceShortName": "trocket"
   },
   "objects": {
+    "ChangeMigratingTopicToNextStageRequest": {
+      "document": "ChangeMigratingTopicToNextStage请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID，可在[DescribeSmoothMigrationTaskList](https://cloud.tencent.com/document/api/1493/119997)接口返回的[SmoothMigrationTaskItem](https://cloud.tencent.com/document/api/1493/96031#SmoothMigrationTaskItem)或控制台中获得。\n",
+          "example": "02f6c31a-9707-4244-8dd3-35ad868ef92a",
+          "member": "string",
+          "name": "TaskId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "主题名称列表，主题名称可在[DescribeMigratingTopicList](https://cloud.tencent.com/document/api/1493/118007)接口返回的[MigratingTopic](https://cloud.tencent.com/document/api/1493/96031#MigratingTopic)数据结构中获得。\n",
+          "example": "[\"Topic-A\"]",
+          "member": "string",
+          "name": "TopicNameList",
+          "required": true,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "命名空间列表，仅4.x集群有效，与TopicNameList一一对应，可在[DescribeMigratingTopicList](https://cloud.tencent.com/document/api/1493/118007)接口返回的[MigratingTopic](https://cloud.tencent.com/document/api/1493/96031#MigratingTopic)数据结构中获得。",
+          "example": "[\"tdmq-default\"]",
+          "member": "string",
+          "name": "NamespaceList",
+          "required": false,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "ChangeMigratingTopicToNextStageResponse": {
+      "document": "ChangeMigratingTopicToNextStage返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "迁移主题状态修改的结果列表",
+          "example": "无",
+          "member": "TopicStageChangeResult",
+          "name": "Results",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "ClientSubscriptionInfo": {
+      "document": "客户端订阅详情，可用于辅助判断哪些客户端订阅关系不一致",
+      "members": [
+        {
+          "disabled": false,
+          "document": "客户端ID",
+          "example": "local@67841",
+          "member": "string",
+          "name": "ClientId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "客户端地址",
+          "example": "111.206.96.149:8083",
+          "member": "string",
+          "name": "ClientAddr",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "订阅主题",
+          "example": "test_topic",
+          "member": "string",
+          "name": "Topic",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "订阅表达式",
+          "example": "test_tag",
+          "member": "string",
+          "name": "SubString",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "订阅方式",
+          "example": "TAG",
+          "member": "string",
+          "name": "ExpressionType",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
     "ConsumeGroupItem": {
       "document": "消费组信息",
       "members": [
@@ -512,6 +721,28 @@
           "required": false,
           "type": "string",
           "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "订阅的主题个数",
+          "example": "10",
+          "member": "int64",
+          "name": "SubscribeTopicNum",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "1753153590\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "创建时间",
+          "member": "int64",
+          "name": "CreateTime",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": true
         }
       ],
       "usage": "both"
@@ -532,7 +763,7 @@
         {
           "disabled": false,
           "document": "客户端地址",
-          "example": "11.139.244.248",
+          "example": "11.139.244.248:5888",
           "member": "string",
           "name": "ClientAddr",
           "output_required": true,
@@ -568,6 +799,16 @@
           "output_required": true,
           "type": "int",
           "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "消费者客户端类型，枚举值如下：\n\n- grpc：GRPC协议\n- remoting：Remoting协议\n- http：HTTP协议\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "remoting",
+          "member": "string",
+          "name": "ChannelProtocol",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": true
         }
       ],
       "usage": "out"
@@ -577,7 +818,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -586,7 +827,7 @@
         },
         {
           "disabled": false,
-          "document": "最大重试次数",
+          "document": "最大重试次数，取值范围0～1000",
           "example": "16",
           "member": "int64",
           "name": "MaxRetryTimes",
@@ -613,7 +854,7 @@
         },
         {
           "disabled": false,
-          "document": "消费组名称",
+          "document": "消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。",
           "example": "test_group",
           "member": "string",
           "name": "ConsumerGroup",
@@ -622,12 +863,21 @@
         },
         {
           "disabled": false,
-          "document": "备注",
-          "example": "测试消费组",
+          "document": "备注信息，最多 128 个字符",
+          "example": "test remark info.",
           "member": "string",
           "name": "Remark",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "标签列表",
+          "example": "无",
+          "member": "Tag",
+          "name": "TagList",
+          "required": false,
+          "type": "list"
         }
       ],
       "type": "object"
@@ -669,7 +919,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例类型，\nEXPERIMENT 体验版\nBASIC 基础版\nPRO  专业版\nPLATINUM 铂金版",
+          "document": "实例类型，枚举值如下：\n\n- EXPERIMENT：体验版\n\n- BASIC：基础版\n\n- PRO：专业版\n\n- PLATINUM：铂金版",
           "example": "BASIC",
           "member": "string",
           "name": "InstanceType",
@@ -678,7 +928,7 @@
         },
         {
           "disabled": false,
-          "document": "集群名称",
+          "document": "集群名称，不能为空， 3-64个字符，只能包含数字、字母、“-”和“_”",
           "example": "test_name",
           "member": "string",
           "name": "Name",
@@ -687,12 +937,21 @@
         },
         {
           "disabled": false,
-          "document": "商品规格，可用规格如下：experiment_500, basic_1k, basic_2k, basic_3k, basic_4k, basic_5k, basic_6k, basic_7k, basic_8k, basic_9k, basic_10k, pro_4k, pro_6k, pro_8k, pro_1w, pro_15k, pro_2w, pro_25k, pro_3w, pro_35k, pro_4w, pro_45k, pro_5w, pro_55k, pro_60k, pro_65k, pro_70k, pro_75k, pro_80k, pro_85k, pro_90k, pro_95k, pro_100k, platinum_1w, platinum_2w, platinum_3w, platinum_4w, platinum_5w, platinum_6w, platinum_7w, platinum_8w, platinum_9w, platinum_10w, platinum_12w, platinum_14w, platinum_16w, platinum_18w, platinum_20w, platinum_25w, platinum_30w, platinum_35w, platinum_40w, platinum_45w, platinum_50w, platinum_60w, platinum_70w, platinum_80w, platinum_90w, platinum_100w",
+          "document": "商品规格，从 [DescribeProductSKUs](https://cloud.tencent.com/document/api/1493/107676) 接口中的 [ProductSKU](https://cloud.tencent.com/document/api/1493/96031#ProductSKU) 出参获得。",
           "example": "basic_1k",
           "member": "string",
           "name": "SkuCode",
           "required": true,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "集群绑定的VPC信息",
+          "example": "无",
+          "member": "VpcInfo",
+          "name": "VpcList",
+          "required": true,
+          "type": "list"
         },
         {
           "disabled": false,
@@ -706,18 +965,9 @@
         {
           "disabled": false,
           "document": "标签列表",
-          "example": "[]",
+          "example": "无",
           "member": "Tag",
           "name": "TagList",
-          "required": false,
-          "type": "list"
-        },
-        {
-          "disabled": false,
-          "document": "集群绑定的VPC信息，必填",
-          "example": "[]",
-          "member": "VpcInfo",
-          "name": "VpcList",
           "required": false,
           "type": "list"
         },
@@ -750,8 +1000,8 @@
         },
         {
           "disabled": false,
-          "document": "公网访问白名单",
-          "example": "[]",
+          "document": "公网访问白名单，不填表示拒绝所有 IP 访问",
+          "example": "无",
           "member": "IpRule",
           "name": "IpRules",
           "required": false,
@@ -759,7 +1009,7 @@
         },
         {
           "disabled": false,
-          "document": "消息保留时长（单位：小时）",
+          "document": "消息保留时长（单位：小时），取值范围参考 [DescribeProductSKUs](https://cloud.tencent.com/document/api/1493/107676) 接口中的 [ProductSKU](https://cloud.tencent.com/document/api/1493/96031#ProductSKU) 出参：\n\n- 默认值：DefaultRetention 参数\n- 最小值：RetentionLowerLimit 参数\n- 最大值：RetentionUpperLimit 参数",
           "example": "72",
           "member": "int64",
           "name": "MessageRetention",
@@ -777,7 +1027,7 @@
         },
         {
           "disabled": false,
-          "document": "是否自动续费（0: 不自动续费；1: 自动续费），默认值为0",
+          "document": "预付费集群是否自动续费（0: 不自动续费；1: 自动续费），默认值为0",
           "example": "1",
           "member": "int64",
           "name": "RenewFlag",
@@ -786,7 +1036,7 @@
         },
         {
           "disabled": false,
-          "document": "购买时长（单位：月），默认值为1",
+          "document": "预付费集群的购买时长（单位：月），取值范围为1～60，默认值为1",
           "example": "1",
           "member": "int64",
           "name": "TimeSpan",
@@ -795,7 +1045,7 @@
         },
         {
           "disabled": false,
-          "document": "最大可创建主题数",
+          "document": "最大可创建主题数，从 [DescribeProductSKUs](https://cloud.tencent.com/document/api/1493/107676) 接口中的 [ProductSKU](https://cloud.tencent.com/document/api/1493/96031#ProductSKU) 出参：\n\n- 默认值和最小值：TopicNumLimit 参数\n- 最大值：TopicNumUpperLimit 参数",
           "example": "50",
           "member": "int64",
           "name": "MaxTopicNum",
@@ -804,7 +1054,7 @@
         },
         {
           "disabled": false,
-          "document": "部署可用区列表",
+          "document": "部署可用区列表，从 [DescribeZones](https://cloud.tencent.com/document/product/1596/77929) 接口返回中的 [ZoneInfo](https://cloud.tencent.com/document/api/1596/77932#ZoneInfo) 数据结构中获得。",
           "example": "[10001,10002]",
           "member": "int64",
           "name": "ZoneIds",
@@ -1150,7 +1400,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -1159,7 +1409,7 @@
         },
         {
           "disabled": false,
-          "document": "角色名称",
+          "document": "角色名称，不能为空，只支持数字 大小写字母 分隔符(\"_\",\"-\")，不能超过 32 个字符",
           "example": "test_role_name",
           "member": "string",
           "name": "Role",
@@ -1204,7 +1454,7 @@
         },
         {
           "disabled": false,
-          "document": "Topic&Group维度权限配置",
+          "document": "Topic&Group维度权限配置，权限类型为 TopicAndGroup 时必填",
           "example": "无",
           "member": "DetailedRolePerm",
           "name": "DetailedPerms",
@@ -1241,7 +1491,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -1250,7 +1500,7 @@
         },
         {
           "disabled": false,
-          "document": "主题名称",
+          "document": "主题名称，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得。",
           "example": "test_topic",
           "member": "string",
           "name": "Topic",
@@ -1259,7 +1509,7 @@
         },
         {
           "disabled": false,
-          "document": "主题类型\nUNSPECIFIED:未指定,\nNORMAL:普通消息,\nFIFO:顺序消息,\nDELAY:延时消息,\nTRANSACTION:事务消息",
+          "document": "主题类型，枚举值如下：\n\n- NORMAL: 普通消息\n- FIFO: 顺序消息\n- DELAY: 延时消息\n- TRANSACTION: 事务消息",
           "example": "NORMAL",
           "member": "string",
           "name": "TopicType",
@@ -1268,7 +1518,7 @@
         },
         {
           "disabled": false,
-          "document": "队列数量",
+          "document": "队列数量，取值范围3～16",
           "example": "3",
           "member": "int64",
           "name": "QueueNum",
@@ -1277,7 +1527,7 @@
         },
         {
           "disabled": false,
-          "document": "备注",
+          "document": "备注信息，最多 128 个字符",
           "example": "测试主题",
           "member": "string",
           "name": "Remark",
@@ -1286,12 +1536,21 @@
         },
         {
           "disabled": false,
-          "document": "消息保留时长",
+          "document": "消息保留时长（单位：小时）",
           "example": "72",
           "member": "int64",
           "name": "MsgTTL",
           "required": false,
           "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "标签列表",
+          "example": "无",
+          "member": "Tag",
+          "name": "TagList",
+          "required": false,
+          "type": "list"
         }
       ],
       "type": "object"
@@ -1361,7 +1620,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -1370,7 +1629,7 @@
         },
         {
           "disabled": false,
-          "document": "消费组名称",
+          "document": "消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。",
           "example": "test_group",
           "member": "string",
           "name": "ConsumerGroup",
@@ -1397,7 +1656,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -1550,7 +1809,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -1559,7 +1818,7 @@
         },
         {
           "disabled": false,
-          "document": "角色名称",
+          "document": "角色名称，从 [DescribeRoleList](https://cloud.tencent.com/document/api/1493/98862) 接口响应中的 [RoleItem](https://cloud.tencent.com/document/api/1493/96031#RoleItem) 或控制台获得。",
           "example": "test_role_name",
           "member": "string",
           "name": "Role",
@@ -1581,12 +1840,39 @@
       ],
       "type": "object"
     },
+    "DeleteSmoothMigrationTaskRequest": {
+      "document": "DeleteSmoothMigrationTask请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID，可在[DescribeSmoothMigrationTaskList](https://cloud.tencent.com/document/api/1493/119997)接口返回的[SmoothMigrationTaskItem](https://cloud.tencent.com/document/api/1493/96031#SmoothMigrationTaskItem)或控制台中获得。\n",
+          "example": "02f6c31a-9707-4244-8dd3-35ad868ef92a",
+          "member": "string",
+          "name": "TaskId",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DeleteSmoothMigrationTaskResponse": {
+      "document": "DeleteSmoothMigrationTask返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "DeleteTopicRequest": {
       "document": "DeleteTopic请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -1595,7 +1881,7 @@
         },
         {
           "disabled": false,
-          "document": "主题名称",
+          "document": "主题名称，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得。",
           "example": "test_topic",
           "member": "string",
           "name": "Topic",
@@ -1617,12 +1903,12 @@
       ],
       "type": "object"
     },
-    "DescribeConsumerClientRequest": {
-      "document": "DescribeConsumerClient请求参数结构体",
+    "DescribeConsumerClientListRequest": {
+      "document": "DescribeConsumerClientList请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -1631,16 +1917,16 @@
         },
         {
           "disabled": false,
-          "document": "客户端ID",
-          "example": "11.139.244.247@75043#6734858812769343",
+          "document": "消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。",
+          "example": "test_group",
           "member": "string",
-          "name": "ClientId",
-          "required": true,
+          "name": "ConsumerGroup",
+          "required": false,
           "type": "string"
         },
         {
           "disabled": false,
-          "document": "查询条件列表",
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -1649,7 +1935,7 @@
         },
         {
           "disabled": false,
-          "document": "查询起始位置",
+          "document": "查询起始位置，默认为0。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -1658,7 +1944,90 @@
         },
         {
           "disabled": false,
-          "document": "查询结果限制数量",
+          "document": "查询结果限制数量，默认20。",
+          "example": "20",
+          "member": "int64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeConsumerClientListResponse": {
+      "document": "DescribeConsumerClientList返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "查询总数",
+          "example": "10",
+          "member": "int64",
+          "name": "TotalCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "消费客户端",
+          "example": "无",
+          "member": "ConsumerClient",
+          "name": "Data",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeConsumerClientRequest": {
+      "document": "DescribeConsumerClient请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
+          "example": "rmq-72mo3a9o",
+          "member": "string",
+          "name": "InstanceId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "客户端ID，从 [DescribeConsumerClientList](https://cloud.tencent.com/document/api/1493/120140) 接口中的 [ConsumerClient](https://cloud.tencent.com/document/api/1493/96031#ConsumerClient) 出参中获得。",
+          "example": "11.139.244.247@75043#6734858812769343",
+          "member": "string",
+          "name": "ClientId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
+          "example": "无",
+          "member": "Filter",
+          "name": "Filters",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "查询起始位置，默认为0。",
+          "example": "0",
+          "member": "int64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "查询结果限制数量，默认20。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
@@ -1667,7 +2036,7 @@
         },
         {
           "disabled": false,
-          "document": "消费组名称",
+          "document": "消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。",
           "example": "test_group",
           "member": "string",
           "name": "ConsumerGroup",
@@ -1714,7 +2083,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -1723,7 +2092,7 @@
         },
         {
           "disabled": false,
-          "document": "查询条件列表",
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -1732,7 +2101,7 @@
         },
         {
           "disabled": false,
-          "document": "查询起始位置",
+          "document": "查询起始位置，默认为0。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -1741,7 +2110,7 @@
         },
         {
           "disabled": false,
-          "document": "查询结果限制数量",
+          "document": "查询结果限制数量，默认20。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
@@ -1756,6 +2125,24 @@
           "name": "FromTopic",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "按照指定字段排序，枚举值如下：\n- subscribeNum：订阅 Topic 个数",
+          "example": "subscribeNum",
+          "member": "string",
+          "name": "SortedBy",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "按升序或降序排列，枚举值如下：\n\n- asc：升序\n- desc：降序",
+          "example": "asc",
+          "member": "string",
+          "name": "SortOrder",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -1765,18 +2152,18 @@
       "members": [
         {
           "disabled": false,
-          "document": "查询总数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "查询总数",
           "example": "10",
           "member": "int64",
           "name": "TotalCount",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
           "document": "消费组列表",
-          "example": "[]",
+          "example": "无",
           "member": "ConsumeGroupItem",
           "name": "Data",
           "output_required": true,
@@ -1797,7 +2184,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -1806,7 +2193,7 @@
         },
         {
           "disabled": false,
-          "document": "消费组名称",
+          "document": "消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。",
           "example": "test_group",
           "member": "string",
           "name": "ConsumerGroup",
@@ -1851,7 +2238,7 @@
         },
         {
           "disabled": false,
-          "document": "消费者类型",
+          "document": "消费类型，枚举值如下：\n\n- PULL：PULL 消费类型\n- PUSH：PUSH 消费类型\n- POP：POP 消费类型",
           "example": "PUSH",
           "member": "string",
           "name": "ConsumeType",
@@ -1861,7 +2248,7 @@
         },
         {
           "disabled": false,
-          "document": "创建时间，秒为单位",
+          "document": "创建时间，**Unix时间戳（毫秒）**",
           "example": "1683613488000",
           "member": "int64",
           "name": "CreatedTime",
@@ -1933,7 +2320,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -1942,7 +2329,7 @@
         },
         {
           "disabled": false,
-          "document": "消费组名称",
+          "document": "消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。",
           "example": "test_group",
           "member": "string",
           "name": "ConsumerGroup",
@@ -1951,7 +2338,7 @@
         },
         {
           "disabled": false,
-          "document": "命名空间，4.x集群必填",
+          "document": "命名空间，4.x集群必填，从 [DescribeRocketMQNamespaces](https://cloud.tencent.com/document/api/1179/63419) 接口返回的 [RocketMQNamespace](https://cloud.tencent.com/document/api/1179/46089#RocketMQNamespace) 或控制台获得。",
           "example": "namespace_test",
           "member": "string",
           "name": "Namespace",
@@ -1960,7 +2347,7 @@
         },
         {
           "disabled": false,
-          "document": "订阅主题，不为空则查询订阅了该主题的消费组的堆积",
+          "document": "订阅主题，不为空则查询订阅了该主题的消费组的堆积，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得。",
           "example": "topic_test",
           "member": "string",
           "name": "SubscribeTopic",
@@ -1997,7 +2384,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "查询起始位置",
+          "document": "查询起始位置，默认为0。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -2006,7 +2393,7 @@
         },
         {
           "disabled": false,
-          "document": "查询结果限制数量",
+          "document": "查询结果限制数量，默认20。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
@@ -2015,7 +2402,7 @@
         },
         {
           "disabled": false,
-          "document": "查询条件列表",
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -2039,13 +2426,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "查询总数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "查询总数",
           "example": "10",
           "member": "int64",
           "name": "TotalCount",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -2071,7 +2458,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "查询条件列表",
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -2089,7 +2476,7 @@
         },
         {
           "disabled": false,
-          "document": "查询起始位置",
+          "document": "查询起始位置，默认为0。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -2098,7 +2485,7 @@
         },
         {
           "disabled": false,
-          "document": "查询结果限制数量",
+          "document": "查询结果限制数量，默认20。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
@@ -2113,13 +2500,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "查询总数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "查询总数",
           "example": "10",
           "member": "int64",
           "name": "TotalCount",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -2145,7 +2532,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -2290,7 +2677,7 @@
         },
         {
           "disabled": false,
-          "document": "创建时间，秒为单位",
+          "document": "创建时间，**Unix时间戳（毫秒）**",
           "example": "1695803467000",
           "member": "int64",
           "name": "CreatedTime",
@@ -2311,7 +2698,7 @@
         {
           "disabled": false,
           "document": "标签\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "[]",
+          "example": "无",
           "member": "Tag",
           "name": "TagList",
           "output_required": true,
@@ -2321,7 +2708,7 @@
         {
           "disabled": false,
           "document": "接入点列表\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "[]",
+          "example": "无",
           "member": "Endpoint",
           "name": "EndpointList",
           "output_required": true,
@@ -2360,7 +2747,7 @@
         },
         {
           "disabled": false,
-          "document": "实例状态",
+          "document": "实例状态，枚举值如下：\n\n- RUNNING：运行中\n- ABNORMAL：异常\n- OVERDUE：隔离中\n- DESTROYED：已销毁\n- CREATING：创建中\n- MODIFYING：变配中\n- CREATE_FAILURE：创建失败\n- MODIFY_FAILURE：变配失败\n- DELETING：删除中",
           "example": "RUNNING",
           "member": "string",
           "name": "InstanceStatus",
@@ -2380,7 +2767,7 @@
         },
         {
           "disabled": false,
-          "document": "计费模式",
+          "document": "计费模式，枚举值如下：\n\n- POSTPAID：后付费按量计费\n- PREPAID：预付费包年包月",
           "example": "POSTPAID",
           "member": "string",
           "name": "PayMode",
@@ -2400,7 +2787,7 @@
         },
         {
           "disabled": false,
-          "document": "是否自动续费",
+          "document": "预付费集群是否自动续费，枚举值如下：\n\n- 0: 不自动续费\n- 1: 自动续费",
           "example": "1",
           "member": "int64",
           "name": "RenewFlag",
@@ -2410,7 +2797,7 @@
         },
         {
           "disabled": false,
-          "document": "到期时间",
+          "document": "到期时间，**Unix时间戳（毫秒）**",
           "example": "1695803467000",
           "member": "int64",
           "name": "ExpiryTime",
@@ -2460,7 +2847,7 @@
         },
         {
           "disabled": false,
-          "document": "可用区列表",
+          "document": "所属可用区列表，参考 [DescribeZones](https://cloud.tencent.com/document/product/1596/77929) 接口返回中的 [ZoneInfo](https://cloud.tencent.com/document/api/1596/77932#ZoneInfo) 数据结构。",
           "example": "[100001,100002]",
           "member": "int64",
           "name": "ZoneIds",
@@ -3507,7 +3894,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -3516,7 +3903,7 @@
         },
         {
           "disabled": false,
-          "document": "主题名称",
+          "document": "主题名称，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得。",
           "example": "test_topic",
           "member": "string",
           "name": "Topic",
@@ -3525,7 +3912,7 @@
         },
         {
           "disabled": false,
-          "document": "开始时间",
+          "document": "要查询消息的开始时间，**Unix时间戳（毫秒）**",
           "example": "1672502400000",
           "member": "int64",
           "name": "StartTime",
@@ -3534,7 +3921,7 @@
         },
         {
           "disabled": false,
-          "document": "结束时间",
+          "document": "要查询消息的结束时间，**Unix时间戳（毫秒）**",
           "example": "1672504200000",
           "member": "int64",
           "name": "EndTime",
@@ -3543,7 +3930,7 @@
         },
         {
           "disabled": false,
-          "document": "一次查询标识",
+          "document": "一次查询标识。第一次查询可传空字符串，当查询结果涉及分页，请求下一页数据时该入参的值取上一次请求响应中的出参TaskRequestId 值即可。",
           "example": "901a6956-1ab9-7fb7-3bf5-9f02b7aa2a7d",
           "member": "string",
           "name": "TaskRequestId",
@@ -3552,7 +3939,7 @@
         },
         {
           "disabled": false,
-          "document": "查询起始位置",
+          "document": "查询起始位置，默认为0。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -3561,7 +3948,7 @@
         },
         {
           "disabled": false,
-          "document": "查询结果限制数量",
+          "document": "查询结果限制数量，默认20。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
@@ -3570,7 +3957,7 @@
         },
         {
           "disabled": false,
-          "document": "消费组名称",
+          "document": "消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。",
           "example": "test_group",
           "member": "string",
           "name": "ConsumerGroup",
@@ -3579,7 +3966,7 @@
         },
         {
           "disabled": false,
-          "document": "消息 ID",
+          "document": "消息 ID，从 [DescribeMessageList](https://cloud.tencent.com/document/api/1493/114593) 接口返回的 [MessageItem](https://cloud.tencent.com/document/api/1493/96031#MessageItem) 或业务日志中获得。",
           "example": "01963F0B14BAF09F27077D244F00000000",
           "member": "string",
           "name": "MsgId",
@@ -3588,7 +3975,7 @@
         },
         {
           "disabled": false,
-          "document": "消息 Key",
+          "document": "消息 Key，从 [DescribeMessageList](https://cloud.tencent.com/document/api/1493/114593) 接口返回的 [MessageItem](https://cloud.tencent.com/document/api/1493/96031#MessageItem) 或业务日志中获得。",
           "example": "test_key",
           "member": "string",
           "name": "MsgKey",
@@ -3606,7 +3993,7 @@
         },
         {
           "disabled": false,
-          "document": "是否查询死信消息",
+          "document": "是否查询死信消息，默认为false",
           "example": "false",
           "member": "bool",
           "name": "QueryDeadLetterMessage",
@@ -3615,7 +4002,7 @@
         },
         {
           "disabled": false,
-          "document": "消息 Tag",
+          "document": "消息 Tag，从 [DescribeMessageList](https://cloud.tencent.com/document/api/1493/114593) 接口返回的 [MessageItem](https://cloud.tencent.com/document/api/1493/96031#MessageItem) 或业务日志中获得。",
           "example": "test_tag",
           "member": "string",
           "name": "Tag",
@@ -3630,13 +4017,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "查询总数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "查询总数",
           "example": "10",
           "member": "int64",
           "name": "TotalCount",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -3672,7 +4059,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -3681,7 +4068,7 @@
         },
         {
           "disabled": false,
-          "document": "主题名称",
+          "document": "主题名称，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得。",
           "example": "test_topic",
           "member": "string",
           "name": "Topic",
@@ -3690,7 +4077,7 @@
         },
         {
           "disabled": false,
-          "document": "消息ID",
+          "document": "消息 ID，从 [DescribeMessageList](https://cloud.tencent.com/document/api/1493/114593) 接口或业务日志中获得。",
           "example": "01963F0B14BAF09F27077D244F00000000",
           "member": "string",
           "name": "MsgId",
@@ -3699,7 +4086,7 @@
         },
         {
           "disabled": false,
-          "document": "查询起始位置",
+          "document": "查询起始位置，默认为0。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -3708,7 +4095,7 @@
         },
         {
           "disabled": false,
-          "document": "查询结果限制数量",
+          "document": "查询结果限制数量，默认20。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
@@ -3717,7 +4104,7 @@
         },
         {
           "disabled": false,
-          "document": "是否是死信消息",
+          "document": "是否是死信消息，默认为false",
           "example": "false",
           "member": "bool",
           "name": "QueryDeadLetterMessage",
@@ -3726,7 +4113,7 @@
         },
         {
           "disabled": false,
-          "document": "是否是延时消息",
+          "document": "是否是延时消息，默认为false",
           "example": "false",
           "member": "bool",
           "name": "QueryDelayMessage",
@@ -3801,7 +4188,7 @@
         },
         {
           "disabled": false,
-          "document": "Topic",
+          "document": "主题名称",
           "example": "test_topic",
           "member": "string",
           "name": "ShowTopicName",
@@ -3833,7 +4220,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -3842,7 +4229,7 @@
         },
         {
           "disabled": false,
-          "document": "主题名称",
+          "document": "主题名称，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得。",
           "example": "test_topic",
           "member": "string",
           "name": "Topic",
@@ -3851,7 +4238,7 @@
         },
         {
           "disabled": false,
-          "document": "消息ID",
+          "document": "消息 ID，从 [DescribeMessageList](https://cloud.tencent.com/document/api/1493/114593) 接口返回的 [MessageItem](https://cloud.tencent.com/document/api/1493/96031#MessageItem) 或业务日志中获得。",
           "example": "1EAE3915000721B8D17C2C5BB31638D1",
           "member": "string",
           "name": "MsgId",
@@ -3860,7 +4247,7 @@
         },
         {
           "disabled": false,
-          "document": "是否是死信消息",
+          "document": "是否是死信消息，默认为false",
           "example": "false",
           "member": "bool",
           "name": "QueryDeadLetterMessage",
@@ -3869,7 +4256,7 @@
         },
         {
           "disabled": false,
-          "document": "是否是延时消息",
+          "document": "是否是延时消息，默认为false",
           "example": "false",
           "member": "bool",
           "name": "QueryDelayMessage",
@@ -3884,7 +4271,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "展示Topic名",
+          "document": "主题名称",
           "example": "test_topic",
           "member": "string",
           "name": "ShowTopicName",
@@ -3901,6 +4288,398 @@
           "output_required": true,
           "type": "list",
           "value_allowed_null": true
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeMigratingGroupStatsRequest": {
+      "document": "DescribeMigratingGroupStats请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID，可在[DescribeSmoothMigrationTaskList](https://cloud.tencent.com/document/api/1493/119997)接口返回的[SmoothMigrationTaskItem](https://cloud.tencent.com/document/api/1493/96031#SmoothMigrationTaskItem)或控制台中获得。",
+          "example": "02f6c31a-9707-4244-8dd3-35ad868ef92a",
+          "member": "string",
+          "name": "TaskId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "消费组名称，可在[DescribeSourceClusterGroupList](https://cloud.tencent.com/document/api/1493/118006)接口返回的[SourceClusterGroupConfig](https://cloud.tencent.com/document/api/1493/96031#SourceClusterGroupConfig)或控制台中获取。\n",
+          "example": "group-a",
+          "member": "string",
+          "name": "GroupName",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "命名空间，仅迁移至4.x集群有效，可在[DescribeSourceClusterGroupList](https://cloud.tencent.com/document/api/1493/118006)接口返回的[SourceClusterGroupConfig](https://cloud.tencent.com/document/api/1493/96031#SourceClusterGroupConfig)或控制台中获取。",
+          "example": "tdmq-default",
+          "member": "string",
+          "name": "Namespace",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeMigratingGroupStatsResponse": {
+      "document": "DescribeMigratingGroupStats返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "源集群消费组堆积",
+          "example": "1",
+          "member": "int64",
+          "name": "SourceConsumeLag",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "目标集群消费组堆积",
+          "example": "1",
+          "member": "int64",
+          "name": "TargetConsumeLag",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "源集群连接客户端列表",
+          "example": "无",
+          "member": "ConsumerClient",
+          "name": "SourceConsumerClients",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "目标集群连接客户端列表",
+          "example": "无",
+          "member": "ConsumerClient",
+          "name": "TargetConsumerClients",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeMigratingTopicListRequest": {
+      "document": "DescribeMigratingTopicList请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID，可在[DescribeSmoothMigrationTaskList](https://cloud.tencent.com/document/api/1493/119997)接口返回的[SmoothMigrationTaskItem](https://cloud.tencent.com/document/api/1493/96031#SmoothMigrationTaskItem)或控制台中获得。\n",
+          "example": "02f6c31a-9707-4244-8dd3-35ad868ef92a",
+          "member": "string",
+          "name": "TaskId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询结果限制数量，默认20。",
+          "example": "20",
+          "member": "int64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "查询起始位置，默认为0。",
+          "example": "0",
+          "member": "int64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
+          "example": "无",
+          "member": "Filter",
+          "name": "Filters",
+          "required": false,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeMigratingTopicListResponse": {
+      "document": "DescribeMigratingTopicList返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "查询总数",
+          "example": "10",
+          "member": "int64",
+          "name": "TotalCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "主题列表",
+          "example": "无",
+          "member": "MigratingTopic",
+          "name": "MigrateTopics",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeMigratingTopicStatsRequest": {
+      "document": "DescribeMigratingTopicStats请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID，可在[DescribeSmoothMigrationTaskList](https://cloud.tencent.com/document/api/1493/119997)接口返回的[SmoothMigrationTaskItem](https://cloud.tencent.com/document/api/1493/96031#SmoothMigrationTaskItem)或控制台中获得。\n",
+          "example": "4f9864ae-26ac-4662-9ede-1942b20d7a04",
+          "member": "string",
+          "name": "TaskId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "主题名称，可在[DescribeMigratingTopicList](https://cloud.tencent.com/document/api/1493/118007)接口返回的[MigratingTopic](https://cloud.tencent.com/document/api/1493/96031#MigratingTopic)数据结构中获得。\n",
+          "example": "topic-a",
+          "member": "string",
+          "name": "TopicName",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "命名空间，仅迁移至4.x集群有效，可在[DescribeMigratingTopicList](https://cloud.tencent.com/document/api/1493/118007)接口返回的[MigratingTopic](https://cloud.tencent.com/document/api/1493/96031#MigratingTopic)数据结构中获得。",
+          "example": "tdmq-default",
+          "member": "string",
+          "name": "Namespace",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeMigratingTopicStatsResponse": {
+      "document": "DescribeMigratingTopicStats返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "源集群的消费者数量",
+          "example": "1",
+          "member": "int64",
+          "name": "SourceClusterConsumerCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "目标集群的消费者数量",
+          "example": "1",
+          "member": "int64",
+          "name": "TargetClusterConsumerCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "源集群消费组列表",
+          "example": "[\"Group-A\"]",
+          "member": "string",
+          "name": "SourceClusterConsumerGroups",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "目标集群消费组列表",
+          "example": "[\"GROUP_B\"]",
+          "member": "string",
+          "name": "TargetClusterConsumerGroups",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeMigrationTaskListRequest": {
+      "document": "DescribeMigrationTaskList请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "查询条件列表",
+          "example": "无",
+          "member": "Filter",
+          "name": "Filters",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "查询起始位置",
+          "example": "0",
+          "member": "int64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "查询结果限制数量",
+          "example": "20",
+          "member": "int64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeMigrationTaskListResponse": {
+      "document": "DescribeMigrationTaskList返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "查询总数",
+          "example": "10",
+          "member": "int64",
+          "name": "TotalCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "迁移任务列表\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "无",
+          "member": "MigrationTaskItem",
+          "name": "Tasks",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": true
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeProducerListRequest": {
+      "document": "DescribeProducerList请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
+          "example": "rmq-72mo3a9o",
+          "member": "string",
+          "name": "InstanceId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "主题名称，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得。",
+          "example": "test_topic",
+          "member": "string",
+          "name": "Topic",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
+          "example": "无",
+          "member": "Filter",
+          "name": "Filters",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "查询结果限制数量，默认20。",
+          "example": "20",
+          "member": "int64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "查询起始位置，默认为0。",
+          "example": "0",
+          "member": "int64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeProducerListResponse": {
+      "document": "DescribeProducerList返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "查询总数",
+          "example": "10",
+          "member": "int64",
+          "name": "TotalCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "生产者信息列表",
+          "example": "无",
+          "member": "ProducerInfo",
+          "name": "ProducerList",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -3943,7 +4722,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -3952,7 +4731,7 @@
         },
         {
           "disabled": false,
-          "document": "查询起始位置",
+          "document": "查询起始位置，默认为0。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -3961,7 +4740,7 @@
         },
         {
           "disabled": false,
-          "document": "查询结果限制数量",
+          "document": "查询结果限制数量，默认20。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
@@ -3970,7 +4749,7 @@
         },
         {
           "disabled": false,
-          "document": "查询条件列表",
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -3985,13 +4764,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "查询总数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "查询总数",
           "example": "10",
           "member": "int64",
           "name": "TotalCount",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -4012,30 +4791,12 @@
       ],
       "type": "object"
     },
-    "DescribeTopicListByGroupRequest": {
-      "document": "DescribeTopicListByGroup请求参数结构体",
+    "DescribeSmoothMigrationTaskListRequest": {
+      "document": "DescribeSmoothMigrationTaskList请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
-          "example": "rmq-72mo3a9o",
-          "member": "string",
-          "name": "InstanceId",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "disabled": false,
-          "document": "查询起始位置",
-          "example": "0",
-          "member": "int64",
-          "name": "Offset",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "查询结果限制数量",
+          "document": "查询结果限制数量，默认20。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
@@ -4044,7 +4805,164 @@
         },
         {
           "disabled": false,
-          "document": "消费组名称",
+          "document": "查询起始位置，默认为0。",
+          "example": "0",
+          "member": "int64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
+          "example": "无",
+          "member": "Filter",
+          "name": "Filters",
+          "required": false,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeSmoothMigrationTaskListResponse": {
+      "document": "DescribeSmoothMigrationTaskList返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "查询总数",
+          "example": "10",
+          "member": "int64",
+          "name": "TotalCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务列表\t\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "无",
+          "member": "SmoothMigrationTaskItem",
+          "name": "Data",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": true
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeSourceClusterGroupListRequest": {
+      "document": "DescribeSourceClusterGroupList请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID，可在[DescribeSmoothMigrationTaskList](https://cloud.tencent.com/document/api/1493/119997)接口返回的[SmoothMigrationTaskItem](https://cloud.tencent.com/document/api/1493/96031#SmoothMigrationTaskItem)或控制台上获得。\n",
+          "example": "02f6c31a-9707-4244-8dd3-35ad868ef92a",
+          "member": "string",
+          "name": "TaskId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询结果限制数量，默认20。",
+          "example": "20",
+          "member": "int64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "查询起始位置，默认为0。",
+          "example": "0",
+          "member": "int64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
+          "example": "无",
+          "member": "Filter",
+          "name": "Filters",
+          "required": false,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeSourceClusterGroupListResponse": {
+      "document": "DescribeSourceClusterGroupList返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "查询总数",
+          "example": "10",
+          "member": "int64",
+          "name": "TotalCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "消费组配置列表",
+          "example": "无",
+          "member": "SourceClusterGroupConfig",
+          "name": "Groups",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeTopicListByGroupRequest": {
+      "document": "DescribeTopicListByGroup请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
+          "example": "rmq-72mo3a9o",
+          "member": "string",
+          "name": "InstanceId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询起始位置，默认为0。",
+          "example": "0",
+          "member": "int64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "查询结果限制数量，默认20。",
+          "example": "20",
+          "member": "int64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。",
           "example": "test_group",
           "member": "string",
           "name": "ConsumerGroup",
@@ -4053,7 +4971,7 @@
         },
         {
           "disabled": false,
-          "document": "查询条件列表",
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -4068,13 +4986,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "查询总数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "查询总数",
           "example": "10",
           "member": "int64",
           "name": "TotalCount",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -4100,7 +5018,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -4109,7 +5027,7 @@
         },
         {
           "disabled": false,
-          "document": "查询条件列表",
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -4118,7 +5036,7 @@
         },
         {
           "disabled": false,
-          "document": "查询起始位置",
+          "document": "查询起始位置，默认为0。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -4127,12 +5045,21 @@
         },
         {
           "disabled": false,
-          "document": "查询结果限制数量",
+          "document": "查询结果限制数量，默认20。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
           "required": false,
           "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "按照消费组查询订阅的主题",
+          "example": "test_group",
+          "member": "string",
+          "name": "FromGroup",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -4142,13 +5069,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "查询总数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "查询总数",
           "example": "10",
           "member": "int64",
           "name": "TotalCount",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -4174,7 +5101,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -4183,7 +5110,7 @@
         },
         {
           "disabled": false,
-          "document": "主题名称",
+          "document": "主题名称，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得。",
           "example": "test_topic",
           "member": "string",
           "name": "Topic",
@@ -4192,7 +5119,7 @@
         },
         {
           "disabled": false,
-          "document": "查询条件列表",
+          "document": "过滤查询条件列表，请在引用此参数的API说明中了解使用方法。",
           "example": "无",
           "member": "Filter",
           "name": "Filters",
@@ -4201,7 +5128,7 @@
         },
         {
           "disabled": false,
-          "document": "查询起始位置",
+          "document": "查询起始位置，默认为0。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -4210,7 +5137,7 @@
         },
         {
           "disabled": false,
-          "document": "查询结果限制数量",
+          "document": "查询结果限制数量，默认20。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
@@ -4256,7 +5183,7 @@
         {
           "disabled": false,
           "document": "备注",
-          "example": "测试主题",
+          "example": "test remark info.",
           "member": "string",
           "name": "Remark",
           "output_required": true,
@@ -4265,7 +5192,7 @@
         },
         {
           "disabled": false,
-          "document": "创建时间，秒为单位",
+          "document": "创建时间，**Unix时间戳（毫秒）**",
           "example": "1712729699",
           "member": "int64",
           "name": "CreatedTime",
@@ -4275,7 +5202,7 @@
         },
         {
           "disabled": false,
-          "document": "最后写入时间，秒为单位",
+          "document": "最后写入时间，**Unix时间戳（毫秒）**",
           "example": "1712729699",
           "member": "int64",
           "name": "LastUpdateTime",
@@ -4296,7 +5223,7 @@
         {
           "disabled": false,
           "document": "订阅关系列表",
-          "example": "[]",
+          "example": "无",
           "member": "SubscriptionData",
           "name": "SubscriptionData",
           "output_required": true,
@@ -4305,7 +5232,7 @@
         },
         {
           "disabled": false,
-          "document": "消息保留时长",
+          "document": "消息保留时长，单位：小时",
           "example": "72",
           "member": "int64",
           "name": "MsgTTL",
@@ -4327,7 +5254,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "权限对应的资源",
+          "document": "权限对应的资源\n可以是主题名称，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得。\n可以是消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。",
           "example": "test_topic",
           "member": "string",
           "name": "Resource",
@@ -4383,12 +5310,96 @@
       ],
       "usage": "both"
     },
+    "DoHealthCheckOnMigratingTopicRequest": {
+      "document": "DoHealthCheckOnMigratingTopic请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID，可在[DescribeSmoothMigrationTaskList](https://cloud.tencent.com/document/api/1493/119997)接口返回的[SmoothMigrationTaskItem](https://cloud.tencent.com/document/api/1493/96031#SmoothMigrationTaskItem)或控制台中获得。\n",
+          "example": "02f6c31a-9707-4244-8dd3-35ad868ef92a",
+          "member": "string",
+          "name": "TaskId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "主题名称，可在[DescribeMigratingTopicList](https://cloud.tencent.com/document/api/1493/118007)接口返回的[MigratingTopic](https://cloud.tencent.com/document/api/1493/96031#MigratingTopic)数据结构中获得。\n",
+          "example": "topic-a",
+          "member": "string",
+          "name": "TopicName",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否忽略当前检查",
+          "example": "true",
+          "member": "bool",
+          "name": "IgnoreCheck",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "命名空间，仅迁移至4.x集群有效，可在[DescribeMigratingTopicList](https://cloud.tencent.com/document/api/1493/118007)接口返回的[MigratingTopic](https://cloud.tencent.com/document/api/1493/96031#MigratingTopic)数据结构中获得。",
+          "example": "ns1",
+          "member": "string",
+          "name": "Namespace",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DoHealthCheckOnMigratingTopicResponse": {
+      "document": "DoHealthCheckOnMigratingTopic返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "是否通过\t",
+          "example": "true",
+          "member": "bool",
+          "name": "Passed",
+          "output_required": false,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "健康检查返回的错误信息\nNotChecked 未执行检查， \nUnknown 未知错误, \nTopicNotImported 主题未导入,\nTopicNotExistsInSourceCluster 主题在源集群中不存在, \nTopicNotExistsInTargetCluster 主题在目标集群中不存在, \nConsumerConnectedOnTarget 目标集群上存在消费者连接, \nSourceTopicHasNewMessagesIn5Minutes 源集群主题前5分钟内有新消息写入, \nTargetTopicHasNewMessagesIn5Minutes 目标集群主题前5分钟内有新消息写入, \nSourceTopicHasNoMessagesIn5Minutes 源集群前5分钟内没有新消息写入, \nTargetTopicHasNoMessagesIn5Minutes 源集群前5分钟内没有新消息写入, \nConsumerGroupCountNotMatch 订阅组数量不一致, \nSourceTopicHasUnconsumedMessages 源集群主题存在未消费消息。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "TopicNotExistsInTargetCluster",
+          "member": "string",
+          "name": "Reason",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "健康检查返回的错误信息列表\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "[\"Failed\"]",
+          "member": "string",
+          "name": "ReasonList",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": true
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "Endpoint": {
       "document": "接入点信息",
       "members": [
         {
           "disabled": false,
-          "document": "接入点类型，枚举值如下\nVPC: VPC;\nPUBLIC: 公网;\nINTERNAL: 支撑网;",
+          "document": "接入点类型，枚举值如下：\n\n- VPC：VPC 网络\n\n- PUBLIC：公网\n\n- INTERNAL：支撑网",
           "example": "VPC",
           "member": "string",
           "name": "Type",
@@ -4419,7 +5430,7 @@
         {
           "disabled": false,
           "document": "接入点地址\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "127.0.0.1",
+          "example": "rmq-72mo3a9o.rocketmq.xx.qcloud.tencenttdmq.com:8080",
           "member": "string",
           "name": "EndpointUrl",
           "output_required": true,
@@ -4578,8 +5589,8 @@
         },
         {
           "disabled": false,
-          "document": "计费模式，\nPOSTPAID，按量计费\nPREPAID，包年包月",
-          "example": "0",
+          "document": "计费模式，枚举值如下：\n\n- POSTPAID：按量计费\n\n- PREPAID：包年包月",
+          "example": "POSTPAID",
           "member": "string",
           "name": "PayMode",
           "output_required": true,
@@ -4588,7 +5599,7 @@
         },
         {
           "disabled": false,
-          "document": "到期时间，秒为单位\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "到期时间，**Unix时间戳（毫秒）**\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "100000",
           "member": "int64",
           "name": "ExpiryTime",
@@ -4658,48 +5669,48 @@
         },
         {
           "disabled": false,
-          "document": "弹性TPS限流值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "弹性TPS限流值",
           "example": "500",
           "member": "int64",
           "name": "ScaledTpsLimit",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "消息保留时间，小时为单位\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "消息保留时间，小时为单位",
           "example": "72",
           "member": "int64",
           "name": "MessageRetention",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "延迟消息最大时长，小时为单位\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "延迟消息最大时长，小时为单位",
           "example": "960",
           "member": "int64",
           "name": "MaxMessageDelay",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "是否自动续费\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "预付费集群是否自动续费，枚举值如下：\n\n- 0: 不自动续费\n- 1: 自动续费",
           "example": "1",
           "member": "int64",
           "name": "RenewFlag",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
           "document": "4.x独有数据\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "{                     \"IsVip\": true,                     \"InstanceStatus\": 1,                     \"VipInstanceStatus\": 1,                     \"MaxBandWidth\": 80,                     \"NodeCount\": 2,                     \"MaxStorage\": 200,                     \"SpecName\": \"rocket-vip-basic-0\",                     \"MaxRetention\": 168,                     \"MinRetention\": 24                 }",
+          "example": "无",
           "member": "InstanceItemExtraInfo",
           "name": "InstanceItemExtraInfo",
           "output_required": false,
@@ -4708,13 +5719,33 @@
         },
         {
           "disabled": false,
-          "document": "预销毁时间\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "预销毁时间，**Unix时间戳（毫秒）**\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "1730710586538",
           "member": "int64",
           "name": "DestroyTime",
           "output_required": false,
           "type": "int",
           "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "所属可用区列表，参考 [DescribeZones](https://cloud.tencent.com/document/product/1596/77929) 接口返回中的 [ZoneInfo](https://cloud.tencent.com/document/api/1596/77932#ZoneInfo) 数据结构。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "[10001,10002]",
+          "member": "int64",
+          "name": "ZoneIds",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "是否开启删除保护",
+          "example": "false",
+          "member": "bool",
+          "name": "EnableDeletionProtection",
+          "output_required": false,
+          "type": "bool",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -4724,7 +5755,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "任务ID",
+          "document": "任务ID，可在[DescribeSmoothMigrationTaskList](https://cloud.tencent.com/document/api/1493/119997)接口返回的[SmoothMigrationTaskItem](https://cloud.tencent.com/document/api/1493/96031#SmoothMigrationTaskItem)或控制台中获得。\n",
           "example": "n4zk7nv4-d596886f",
           "member": "string",
           "name": "TaskId",
@@ -4734,7 +5765,7 @@
         {
           "disabled": false,
           "document": "待导入的消费组列表",
-          "example": "[]",
+          "example": "[\"GroupName\": \"group-a\", \"Remark\": \"备注\"]",
           "member": "SourceClusterGroupConfig",
           "name": "GroupList",
           "required": true,
@@ -4760,7 +5791,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "任务ID",
+          "document": "任务ID，可在[DescribeSmoothMigrationTaskList](https://cloud.tencent.com/document/api/1493/119997)接口返回的[SmoothMigrationTaskItem](https://cloud.tencent.com/document/api/1493/96031#SmoothMigrationTaskItem)或控制台中获得。\n",
           "example": "fe391925-2ed6-43ea-8a53-8a9c1d04a319",
           "member": "string",
           "name": "TaskId",
@@ -4866,8 +5897,8 @@
         },
         {
           "disabled": false,
-          "document": "计费模式，\nPOSTPAID，按量计费\nPREPAID，包年包月",
-          "example": "0",
+          "document": "计费模式，枚举值如下：\n\n- POSTPAID：按量计费\n\n- PREPAID：包年包月",
+          "example": "POSTPAID",
           "member": "string",
           "name": "PayMode",
           "output_required": true,
@@ -4876,8 +5907,8 @@
         },
         {
           "disabled": false,
-          "document": "到期时间，秒为单位\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "100000",
+          "document": "到期时间戳，**Unix时间戳（毫秒）**\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "1700664148419",
           "member": "int64",
           "name": "ExpiryTime",
           "output_required": true,
@@ -4936,53 +5967,53 @@
         },
         {
           "disabled": false,
-          "document": "TPS限流值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "TPS限流值",
           "example": "1000",
           "member": "int64",
           "name": "TpsLimit",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "弹性TPS限流值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "弹性TPS限流值",
           "example": "1000",
           "member": "int64",
           "name": "ScaledTpsLimit",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "消息保留时间，小时为单位\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "消息保留时间，小时为单位",
           "example": "72",
           "member": "int64",
           "name": "MessageRetention",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "延迟消息最大时长，小时为单位\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "延迟消息最大时长，小时为单位",
           "example": "960",
           "member": "int64",
           "name": "MaxMessageDelay",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "是否自动续费\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "是否自动续费，仅针对预付费集群（0: 不自动续费；1:自动续费）",
           "example": "1",
           "member": "int64",
           "name": "RenewFlag",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -5079,6 +6110,16 @@
           "output_required": false,
           "type": "int",
           "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "是否已冻结",
+          "example": "0",
+          "member": "bool",
+          "name": "IsFrozen",
+          "output_required": false,
+          "type": "bool",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -5099,7 +6140,7 @@
         },
         {
           "disabled": false,
-          "document": "是否允许放行",
+          "document": "是否允许放行，默认为false表示拒绝",
           "example": "true",
           "member": "bool",
           "name": "Allow",
@@ -5110,14 +6151,14 @@
         },
         {
           "disabled": false,
-          "document": "备注信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "备注信息",
           "example": "remark1",
           "member": "string",
           "name": "Remark",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -5762,8 +6803,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "步骤\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "{     \"MsgId\": \"1EAE3915000721B8D17C2C5BB31638D1\",     \"Status\": 0, }",
+          "document": "消息处理阶段，枚举值如下：\n\n- produce：消息生产\n\n- persist：消息存储\n\n- consume：消息消费\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "persist",
           "member": "string",
           "name": "Stage",
           "output_required": true,
@@ -5773,7 +6814,7 @@
         {
           "disabled": false,
           "document": "轨迹详情\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "produce",
+          "example": "{\\\"MsgId\\\":\\\"1EAE3915000721B8D17C2C5BB31638D1\\\",\\\"Status\\\":0,\\\"PersistTime\\\":\\\"2023-05-09 14:43:27,184\\\"}",
           "member": "string",
           "name": "Data",
           "output_required": true,
@@ -5829,12 +6870,184 @@
       ],
       "usage": "out"
     },
+    "MigratingTopic": {
+      "document": "迁移中的主题",
+      "members": [
+        {
+          "disabled": false,
+          "document": "主题名称",
+          "example": "topic-a",
+          "member": "string",
+          "name": "TopicName",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "迁移状态 \nS_RW_D_NA 源集群读写，\nS_RW_D_R 源集群读写目标集群读，\nS_RW_D_RW 源集群读写目标集群读写，\nS_R_D_RW 源集群读目标集群读写，\nS_NA_D_RW 目标集群读写",
+          "example": "S_RW_D_NA",
+          "member": "string",
+          "name": "MigrationStatus",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否完成健康检查\t",
+          "example": "true",
+          "member": "bool",
+          "name": "HealthCheckPassed",
+          "output_required": true,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "上次健康检查返回的错误信息，仅在HealthCheckPassed为false时有效。 NotChecked 未执行检查， Unknown 未知错误, TopicNotImported 主题未导入, TopicNotExistsInSourceCluster 主题在源集群中不存在, TopicNotExistsInTargetCluster 主题在目标集群中不存在, ConsumerConnectedOnTarget 目标集群上存在消费者连接, SourceTopicHasNewMessagesIn5Minutes 源集群主题前5分钟内有新消息写入, TargetTopicHasNewMessagesIn5Minutes 目标集群主题前5分钟内有新消息写入, SourceTopicHasNoMessagesIn5Minutes 源集群前5分钟内没有新消息写入, TargetTopicHasNoMessagesIn5Minutes 源集群前5分钟内没有新消息写入, ConsumerGroupCountNotMatch 订阅组数量不一致, SourceTopicHasUnconsumedMessages 源集群主题存在未消费消息,",
+          "example": "TopicNotExistsInSourceCluster ",
+          "member": "string",
+          "name": "HealthCheckError",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "命名空间，仅4.x集群有效",
+          "example": "tdmq-default",
+          "member": "string",
+          "name": "Namespace",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "4.x的命名空间\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "tdmq-default",
+          "member": "string",
+          "name": "NamespaceV4",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "4.x的主题名称\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "topic-a",
+          "member": "string",
+          "name": "TopicNameV4",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "4.x的完整命名空间\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "tdmq-default",
+          "member": "string",
+          "name": "FullNamespaceV4",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "上次健康检查返回的错误列表",
+          "example": "[\"TopicNotExistsInSourceCluster\"]",
+          "member": "string",
+          "name": "HealthCheckErrorList",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "MigrationTaskItem": {
+      "document": "迁移任务信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID",
+          "example": "88cce1ff-b043-404f-8dc5-2cfea60bfd31",
+          "member": "string",
+          "name": "TaskId",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "实例ID",
+          "example": "rmq-1rgrxm9a8",
+          "member": "string",
+          "name": "InstanceId",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "0 - 未指定（存量）\n1 - 元数据导入",
+          "example": "1",
+          "member": "int64",
+          "name": "Type",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "主题总数",
+          "example": "10",
+          "member": "int64",
+          "name": "TopicNum",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "消费组总数",
+          "example": "10",
+          "member": "int64",
+          "name": "GroupNum",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务状态： 0，迁移中 1，迁移成功 2，迁移完成，只有部分数据完成迁移",
+          "example": "1",
+          "member": "int64",
+          "name": "Status",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "创建时间",
+          "example": "1758510006847",
+          "member": "int64",
+          "name": "CreateTime",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
     "ModifyConsumerGroupRequest": {
       "document": "ModifyConsumerGroup请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -5843,7 +7056,7 @@
         },
         {
           "disabled": false,
-          "document": "消费组名称",
+          "document": "消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。",
           "example": "test_group",
           "member": "string",
           "name": "ConsumerGroup",
@@ -5870,7 +7083,7 @@
         },
         {
           "disabled": false,
-          "document": "最大重试次数",
+          "document": "最大重试次数，取值范围0～1000",
           "example": "3",
           "member": "int64",
           "name": "MaxRetryTimes",
@@ -5879,7 +7092,7 @@
         },
         {
           "disabled": false,
-          "document": "备注",
+          "document": "备注信息，最多 128 个字符",
           "example": "测试修改",
           "member": "string",
           "name": "Remark",
@@ -5906,7 +7119,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -5969,7 +7182,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -5978,7 +7191,7 @@
         },
         {
           "disabled": false,
-          "document": "实例名称",
+          "document": "实例名称，不能为空, 3-64个字符，只能包含数字、字母、“-”和“_”",
           "example": "instance1",
           "member": "string",
           "name": "Name",
@@ -5987,7 +7200,7 @@
         },
         {
           "disabled": false,
-          "document": "备注信息",
+          "document": "备注信息，最多 128 个字符",
           "example": "测试修改",
           "member": "string",
           "name": "Remark",
@@ -6005,7 +7218,7 @@
         },
         {
           "disabled": false,
-          "document": "调整实例规格的商品代号",
+          "document": "商品规格，从 [DescribeProductSKUs](https://cloud.tencent.com/document/api/1493/107676) 接口中的 [ProductSKU](https://cloud.tencent.com/document/api/1493/96031#ProductSKU) 出参获得。",
           "example": "basic_1k",
           "member": "string",
           "name": "SkuCode",
@@ -6014,7 +7227,7 @@
         },
         {
           "disabled": false,
-          "document": "消息保留时长，小时为单位",
+          "document": "消息保留时长（单位：小时），取值范围参考 [DescribeProductSKUs](https://cloud.tencent.com/document/api/1493/107676) 接口中的 [ProductSKU](https://cloud.tencent.com/document/api/1493/96031#ProductSKU) 出参：\n\n- 默认值：DefaultRetention 参数\n- 最小值：RetentionLowerLimit 参数\n- 最大值：RetentionUpperLimit 参数",
           "example": "72",
           "member": "int64",
           "name": "MessageRetention",
@@ -6041,7 +7254,7 @@
         },
         {
           "disabled": false,
-          "document": "最大可创建主题数",
+          "document": "最大可创建主题数，取值范围参考 [DescribeProductSKUs](https://cloud.tencent.com/document/api/1493/107676) 接口中的 [ProductSKU](https://cloud.tencent.com/document/api/1493/96031#ProductSKU) 出参：\n\n- 最小值和默认值：TopicNumLimit 参数\n- 最大值：TopicNumUpperLimit 参数",
           "example": "100",
           "member": "int64",
           "name": "MaxTopicNum",
@@ -6050,12 +7263,21 @@
         },
         {
           "disabled": false,
-          "document": "免费额度之外的主题个数",
+          "document": "免费额度之外的主题个数，免费额度参考 [DescribeProductSKUs](https://cloud.tencent.com/document/api/1493/107676) 接口中的 [ProductSKU](https://cloud.tencent.com/document/api/1493/96031#ProductSKU) 出参中的 TopicNumLimit 参数。",
           "example": "50",
           "member": "string",
           "name": "ExtraTopicNum",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否开启删除保护",
+          "example": "false",
+          "member": "bool",
+          "name": "EnableDeletionProtection",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -6320,7 +7542,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -6329,7 +7551,7 @@
         },
         {
           "disabled": false,
-          "document": "角色名称",
+          "document": "角色名称，从 [DescribeRoleList](https://cloud.tencent.com/document/api/1493/98862) 接口中返回的 [RoleItem](https://cloud.tencent.com/document/api/1493/96031#RoleItem) 或控制台获得。",
           "example": "test_role_name",
           "member": "string",
           "name": "Role",
@@ -6374,7 +7596,7 @@
         },
         {
           "disabled": false,
-          "document": "Topic&Group维度权限配置",
+          "document": "Topic&Group维度权限配置，权限类型为 TopicAndGroup 时必填",
           "example": "无",
           "member": "DetailedRolePerm",
           "name": "DetailedPerms",
@@ -6401,7 +7623,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -6410,7 +7632,7 @@
         },
         {
           "disabled": false,
-          "document": "主题名称",
+          "document": "主题名称，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得。",
           "example": "test_topic",
           "member": "string",
           "name": "Topic",
@@ -6419,7 +7641,7 @@
         },
         {
           "disabled": false,
-          "document": "队列数量",
+          "document": "队列数量，取值范围3～16",
           "example": "6",
           "member": "int64",
           "name": "QueueNum",
@@ -6428,7 +7650,7 @@
         },
         {
           "disabled": false,
-          "document": "备注信息",
+          "document": "备注信息，最多 128 个字符",
           "example": "测试修改",
           "member": "string",
           "name": "Remark",
@@ -6437,7 +7659,7 @@
         },
         {
           "disabled": false,
-          "document": "消息保留时长",
+          "document": "消息保留时长（单位：小时）",
           "example": "72",
           "member": "int64",
           "name": "MsgTTL",
@@ -6496,11 +7718,11 @@
       "usage": "out"
     },
     "PriceTag": {
-      "document": "价格标签信息",
+      "document": "价格标签信息，一个完整的价格标签包含计价类别和计费项标签。",
       "members": [
         {
           "disabled": false,
-          "document": "计价名称",
+          "document": "计价名称（枚举值：tps：TPS基础价；stepTps：TPS步长）",
           "example": "tps",
           "member": "string",
           "name": "Name",
@@ -6510,12 +7732,78 @@
         },
         {
           "disabled": false,
-          "document": "步长\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "计费项对应的步长数\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "1",
           "member": "int64",
           "name": "Step",
           "output_required": false,
           "type": "int",
+          "value_allowed_null": true
+        }
+      ],
+      "usage": "out"
+    },
+    "ProducerInfo": {
+      "document": "生产者信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "客户端ID\t\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "169.254.165.243@a3c02f03-5b27-425f-8632-83d1e9f7010b",
+          "member": "string",
+          "name": "ClientId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "客户端IP\t\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "10.0.0.1",
+          "member": "string",
+          "name": "ClientIp",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "客户端语言 \n- JAVA((byte) 0)\n- CPP((byte) 1) \n- DOTNET((byte) 2) \n- PYTHON((byte) 3)\n- DELPHI((byte) 4)\n- ERLANG((byte) 5)\n- RUBY((byte) 6)\n- OTHER((byte) 7)\n- HTTP((byte) 8)\n- GO((byte) 9)\n- PHP((byte) 10)\n- OMS((byte) 11)\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "JAVA",
+          "member": "string",
+          "name": "Language",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "客户端版本\t\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "5",
+          "member": "string",
+          "name": "Version",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "最后生产时间，**Unix时间戳（秒）**\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "1602032034",
+          "member": "uint64",
+          "name": "LastUpdateTimestamp",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "生产者客户端协议类型，枚举如下：\n\n- grpc：GRpc协议\n- remoting：Remoting协议\n- http：HTTP协议\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "remoting",
+          "member": "string",
+          "name": "ChannelProtocol",
+          "output_required": false,
+          "type": "string",
           "value_allowed_null": true
         }
       ],
@@ -6546,83 +7834,83 @@
         },
         {
           "disabled": false,
-          "document": "TPS上限\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "TPS上限",
           "example": "500",
           "member": "int64",
           "name": "TpsLimit",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "弹性TPS上限\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "弹性TPS上限",
           "example": "0",
           "member": "int64",
           "name": "ScaledTpsLimit",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "主题数量上限默认值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "主题数量上限默认值",
           "example": "50",
           "member": "int64",
           "name": "TopicNumLimit",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "消费组数量上限\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "消费组数量上限",
           "example": "500",
           "member": "int64",
           "name": "GroupNumLimit",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "默认消息保留时间，小时为单位\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "默认消息保留时间，小时为单位",
           "example": "72",
           "member": "int64",
           "name": "DefaultRetention",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "可调整消息保留时间上限，小时为单位\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "可调整消息保留时间上限，小时为单位",
           "example": "72",
           "member": "int64",
           "name": "RetentionUpperLimit",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "可调整消息保留时间下限，小时为单位\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "可调整消息保留时间下限，小时为单位",
           "example": "24",
           "member": "int64",
           "name": "RetentionLowerLimit",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "延时消息最大时长，小时为单位\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "延时消息最大时长，小时为单位",
           "example": "168",
           "member": "int64",
           "name": "MaxMessageDelay",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -6637,7 +7925,7 @@
         {
           "disabled": false,
           "document": "计费项信息",
-          "example": "[ { \"Name\": \"tps\", \"Code\": \"sv_tdmq_instance_specification_test_500\", \"Category\": \"v_tdmq_instance_specification\", \"Step\": 1 } ]",
+          "example": "无",
           "member": "PriceTag",
           "name": "PriceTags",
           "output_required": true,
@@ -6646,13 +7934,13 @@
         },
         {
           "disabled": false,
-          "document": "主题数量上限默认最大值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "主题数量上限默认最大值",
           "example": "99",
           "member": "int64",
           "name": "TopicNumUpperLimit",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -6696,12 +7984,57 @@
       ],
       "usage": "both"
     },
+    "RemoveMigratingTopicRequest": {
+      "document": "RemoveMigratingTopic请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID，可在[DescribeSmoothMigrationTaskList](https://cloud.tencent.com/document/api/1493/119997)接口返回的[SmoothMigrationTaskItem](https://cloud.tencent.com/document/api/1493/96031#SmoothMigrationTaskItem)或控制台中获得。",
+          "example": "02f6c31a-9707-4244-8dd3-35ad868ef92a",
+          "member": "string",
+          "name": "TaskId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "主题名称，可在[DescribeMigratingTopicList](https://cloud.tencent.com/document/api/1493/118007)接口返回的[MigratingTopic](https://cloud.tencent.com/document/api/1493/96031#MigratingTopic)数据结构中获得。\n",
+          "example": "topic-a",
+          "member": "string",
+          "name": "TopicName",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "命名空间，仅迁移至4.x集群有效，可在[DescribeMigratingTopicList](https://cloud.tencent.com/document/api/1493/118007)接口返回的[MigratingTopic](https://cloud.tencent.com/document/api/1493/96031#MigratingTopic)数据结构中获得。",
+          "example": "tdmq-default",
+          "member": "string",
+          "name": "Namespace",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "RemoveMigratingTopicResponse": {
+      "document": "RemoveMigratingTopic返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "ResendDeadLetterMessageRequest": {
       "document": "ResendDeadLetterMessage请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "集群ID",
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
           "example": "rmq-72mo3a9o",
           "member": "string",
           "name": "InstanceId",
@@ -6719,7 +8052,7 @@
         },
         {
           "disabled": false,
-          "document": "消费组名称",
+          "document": "消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。",
           "example": "test_group",
           "member": "string",
           "name": "ConsumerGroup",
@@ -6742,6 +8075,60 @@
           "type": "bool",
           "value_allowed_null": true
         },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "ResetConsumerGroupOffsetRequest": {
+      "document": "ResetConsumerGroupOffset请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "腾讯云 RocketMQ 实例 ID，从 [DescribeFusionInstanceList](https://cloud.tencent.com/document/api/1493/106745) 接口或控制台获得。",
+          "example": "rmq-72mo3a9o",
+          "member": "string",
+          "name": "InstanceId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "主题名称，从 [DescribeTopicList](https://cloud.tencent.com/document/api/1493/96030) 接口返回的 [TopicItem](https://cloud.tencent.com/document/api/1493/96031#TopicItem) 或控制台获得。",
+          "example": "test_topic",
+          "member": "string",
+          "name": "Topic",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "重置位点的时间戳（单位：毫秒），指定为 -1 时表示重置到最新位点",
+          "example": "-1",
+          "member": "int64",
+          "name": "ResetTimestamp",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "消费组名称，从 [DescribeConsumerGroupList](https://cloud.tencent.com/document/api/1493/101535) 接口返回的 [ConsumeGroupItem](https://cloud.tencent.com/document/api/1493/96031#ConsumeGroupItem) 或控制台获得。",
+          "example": "test_group",
+          "member": "string",
+          "name": "ConsumerGroup",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "ResetConsumerGroupOffsetResponse": {
+      "document": "ResetConsumerGroupOffset返回参数结构体",
+      "members": [
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
@@ -6790,7 +8177,7 @@
         {
           "disabled": false,
           "document": "Access Key",
-          "example": "ak54jmdkpmao909550a62asd",
+          "example": "ak0000aaaa",
           "member": "string",
           "name": "AccessKey",
           "output_required": true,
@@ -6801,7 +8188,7 @@
         {
           "disabled": false,
           "document": "Secret Key",
-          "example": "skc955042d5a678asd",
+          "example": "sk0000aaaa",
           "member": "string",
           "name": "SecretKey",
           "output_required": true,
@@ -6822,7 +8209,7 @@
         },
         {
           "disabled": false,
-          "document": "创建时间，秒为单位",
+          "document": "角色的创建时间，**Unix时间戳（毫秒）**",
           "example": "1683615280000",
           "member": "int64",
           "name": "CreatedTime",
@@ -6833,7 +8220,7 @@
         },
         {
           "disabled": false,
-          "document": "修改时间，秒为单位",
+          "document": "角色的更新时间，**Unix时间戳（毫秒）**",
           "example": "1683615280000",
           "member": "int64",
           "name": "ModifiedTime",
@@ -6867,12 +8254,143 @@
       ],
       "usage": "both"
     },
+    "RollbackMigratingTopicStageRequest": {
+      "document": "RollbackMigratingTopicStage请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID，可在[DescribeSmoothMigrationTaskList](https://cloud.tencent.com/document/api/1493/119997)接口返回的[SmoothMigrationTaskItem](https://cloud.tencent.com/document/api/1493/96031#SmoothMigrationTaskItem)或控制台中获得。\n",
+          "example": "02f6c31a-9707-4244-8dd3-35ad868ef92a",
+          "member": "string",
+          "name": "TaskId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "主题名称，可在[DescribeMigratingTopicList](https://cloud.tencent.com/document/api/1493/118007)接口返回的[MigratingTopic](https://cloud.tencent.com/document/api/1493/96031#MigratingTopic)数据结构中获得。\n",
+          "example": "topic-a",
+          "member": "string",
+          "name": "TopicName",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "命名空间，仅迁移至4.x集群有效，可在[DescribeMigratingTopicList](https://cloud.tencent.com/document/api/1493/118007)接口返回的[MigratingTopic](https://cloud.tencent.com/document/api/1493/96031#MigratingTopic)数据结构中获得。",
+          "example": "tdmq-default",
+          "member": "string",
+          "name": "Namespace",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "RollbackMigratingTopicStageResponse": {
+      "document": "RollbackMigratingTopicStage返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "SmoothMigrationTaskItem": {
+      "document": "平滑迁移任务",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "9b299610-7402-47d3-91d1-f012faf13929",
+          "member": "string",
+          "name": "TaskId",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "任务名称\t\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "test-migration",
+          "member": "string",
+          "name": "TaskName",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "源集群名称\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "source-cluster",
+          "member": "string",
+          "name": "SourceClusterName",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "目标集群实例ID\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "rmq-1gz33dsf",
+          "member": "string",
+          "name": "InstanceId",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "网络连接类型， \nPUBLIC 公网 \nVPC 私有网络 \nOTHER 其他\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "VPC",
+          "member": "string",
+          "name": "ConnectionType",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "源集群NameServer地址\t\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "1.1.1.1:9876",
+          "member": "string",
+          "name": "SourceNameServer",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "任务状态:\nConfiguration 迁移配置,\nSourceConnecting 连接源集群中,\n MetaDataImport 元数据导入,\nEndpointSetup 切换接入点,\nServiceMigration 切流中,\nCompleted 已完成,\nCancelled 已取消\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "Configuration",
+          "member": "string",
+          "name": "TaskStatus",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "目标集群实例版本，\n4 表示4.x版本\n5 表示5.x版本\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "5",
+          "member": "string",
+          "name": "InstanceVersion",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": true
+        }
+      ],
+      "usage": "out"
+    },
     "SourceClusterGroupConfig": {
       "document": "消费组配置信息",
       "members": [
         {
           "disabled": false,
-          "document": "消费组名称\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "消费组名称，可在[DescribeSourceClusterGroupList](https://cloud.tencent.com/document/api/1493/118006)接口返回的[SourceClusterGroupConfig](https://cloud.tencent.com/document/api/1493/96031#SourceClusterGroupConfig)数据中获取。\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "group1",
           "member": "string",
           "name": "GroupName",
@@ -6916,7 +8434,7 @@
         },
         {
           "disabled": false,
-          "document": "导入状态\nUnknown 未知\nSuccess 成功\nFailure 失败\nAlreadyExists 已存在\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "导入状态\nUnknown 未知\nSuccess 成功\nFailure 失败\nAlreadyExists 已存在\n\n仅作为出参时使用\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "Success",
           "member": "string",
           "name": "ImportStatus",
@@ -6977,113 +8495,113 @@
       "members": [
         {
           "disabled": false,
-          "document": "主题名称\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "主题名称，可在[DescribeMigratingTopicList](https://cloud.tencent.com/document/api/1493/118007)接口返回的[MigratingTopic](https://cloud.tencent.com/document/api/1493/96031#MigratingTopic)数据结构中获得。",
           "example": "topic1",
           "member": "string",
           "name": "TopicName",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "主题类型，\n5.x版本\nUNSPECIFIED 未指定\nNORMAL 普通消息\nFIFO 顺序消息\nDELAY 延迟消息\nTRANSACTION 事务消息\n\n4.x版本\nNormal 普通消息\nPartitionedOrder 分区顺序消息\nTransaction 事务消息\nDelayScheduled 延时消息\n\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "主题类型，\n5.x版本\nUNSPECIFIED 未指定\nNORMAL 普通消息\nFIFO 顺序消息\nDELAY 延迟消息\nTRANSACTION 事务消息\n\n4.x版本\nNormal 普通消息\nPartitionedOrder 分区顺序消息\nTransaction 事务消息\nDelayScheduled 延时消息\n",
           "example": "FIFO",
           "member": "string",
           "name": "TopicType",
           "output_required": true,
           "required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "队列数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "队列数",
           "example": "3",
           "member": "int64",
           "name": "QueueNum",
           "output_required": true,
           "required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "备注信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "备注信息",
           "example": "remark",
           "member": "string",
           "name": "Remark",
           "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "是否已导入，作为入参时无效\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "是否已导入，作为入参时无效",
           "example": "true",
           "member": "bool",
           "name": "Imported",
           "output_required": true,
           "required": false,
           "type": "bool",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "命名空间，仅4.x集群有效\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "命名空间，仅4.x集群有效",
           "example": "namespace1",
           "member": "string",
           "name": "Namespace",
           "output_required": false,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "导入状态，\nUnknown 未知，\nAlreadyExists 已存在，\nSuccess 成功，\nFailure 失败\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "导入状态，\nUnknown 未知，\nAlreadyExists 已存在，\nSuccess 成功，\nFailure 失败\n\n仅作为出参可用",
           "example": "Unknown",
           "member": "string",
           "name": "ImportStatus",
           "output_required": false,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "4.x的命名空间，出参使用\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "4.x的命名空间，出参使用",
           "example": "namespace1",
           "member": "string",
           "name": "NamespaceV4",
           "output_required": false,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "4.x的主题名，出参使用\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "4.x的主题名，出参使用",
           "example": "topic1",
           "member": "string",
           "name": "TopicNameV4",
           "output_required": false,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "4.x的完整命名空间，出参使用\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "4.x的完整命名空间，出参使用",
           "example": "namespace1",
           "member": "string",
           "name": "FullNamespaceV4",
           "output_required": false,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -7179,7 +8697,7 @@
         },
         {
           "disabled": false,
-          "document": "消费类型\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "消费类型，枚举值如下：\n\n- PULL：PULL 消费类型\n- PUSH：PUSH 消费类型\n- POP：POP 消费类型\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "PULL",
           "member": "string",
           "name": "ConsumeType",
@@ -7209,8 +8727,8 @@
         },
         {
           "disabled": false,
-          "document": "订阅一致性\n注意：此字段可能返回 null，表示取不到有效值。",
-          "example": "false",
+          "document": "订阅一致性，枚举如下：\n\n- 0: 订阅一致\n- 1: 订阅不一致\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "1",
           "member": "int64",
           "name": "Consistency",
           "output_required": true,
@@ -7229,7 +8747,7 @@
         },
         {
           "disabled": false,
-          "document": "最后消费进度更新时间，秒为单位\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "最后消费进度更新时间，**Unix时间戳（毫秒）**\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "1713164969433",
           "member": "int64",
           "name": "LastUpdateTime",
@@ -7265,6 +8783,16 @@
           "name": "MessageModel",
           "output_required": false,
           "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "订阅不一致的客户端列表\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "无",
+          "member": "ClientSubscriptionInfo",
+          "name": "ClientSubscriptionInfos",
+          "output_required": false,
+          "type": "list",
           "value_allowed_null": true
         }
       ],
@@ -7337,7 +8865,7 @@
         },
         {
           "disabled": false,
-          "document": "主题类型",
+          "document": "主题类型，枚举值如下：\n\n- UNSPECIFIED：未指定\n- NORMAL：普通消息\n- FIFO：顺序消息\n- DELAY：延时消息\n- TRANSACTION：事务消息",
           "example": "NORMAL",
           "member": "string",
           "name": "TopicType",
@@ -7367,7 +8895,7 @@
         },
         {
           "disabled": false,
-          "document": "订阅规则",
+          "document": "订阅规则，`*`表示订阅全部TAG",
           "example": "test_tag",
           "member": "string",
           "name": "SubString",
@@ -7377,13 +8905,13 @@
         },
         {
           "disabled": false,
-          "document": "最后消费进度更新时间\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "最后消费进度更新时间，**Unix时间戳（毫秒）**",
           "example": "1736050534095",
           "member": "int64",
           "name": "LastUpdateTime",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -7437,7 +8965,7 @@
         },
         {
           "disabled": false,
-          "document": "描述",
+          "document": "备注信息",
           "example": "test_remark",
           "member": "string",
           "name": "Remark",
@@ -7492,17 +9020,53 @@
         },
         {
           "disabled": false,
-          "document": "消息保留时长\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "消息保留时长",
           "example": "72",
           "member": "int64",
           "name": "MsgTTL",
           "output_required": false,
           "required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
+    },
+    "TopicStageChangeResult": {
+      "document": "迁移主题修改状态后的结果",
+      "members": [
+        {
+          "disabled": false,
+          "document": "主题名称",
+          "example": "topic-a",
+          "member": "string",
+          "name": "TopicName",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否成功",
+          "example": "true",
+          "member": "bool",
+          "name": "Success",
+          "output_required": true,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "命名空间，仅4.x有效",
+          "example": "tdmq-default",
+          "member": "string",
+          "name": "Namespace",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
     },
     "VpcInfo": {
       "document": "VPC信息",

@@ -381,7 +381,7 @@
   },
   "metadata": {
     "apiVersion": "2021-06-22",
-    "api_brief": "介绍如何使用API对应用观测进行操作，包括查询监控数据、创建应用实例等。",
+    "api_brief": "介绍如何使用API对前端性能监控进行操作，包括查询监控数据、创建应用实例等。",
     "serviceNameCN": "前端性能监控",
     "serviceShortName": "rum"
   },
@@ -696,6 +696,24 @@
           "example": "1",
           "member": "int64",
           "name": "InstanceType",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "自动续费类型",
+          "example": "0",
+          "member": "int64",
+          "name": "AutoRenewalType",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "自动续费阈值",
+          "example": "10",
+          "member": "int64",
+          "name": "AutoRenewalThreshold",
           "required": false,
           "type": "int"
         }
@@ -1025,7 +1043,7 @@
         {
           "disabled": false,
           "document": "查询指标 fields",
-          "example": "[[\\\"as\\\",[\\\"if\\\",[\\\"equals\\\",\\\"launch_cnt\\\",[\\\"toInt64\\\",0]],0,[",
+          "example": "\"[[\\\"as\\\",\\\"device_id\\\",\\\"device_id\\\"],\\\"entrance_time\\\",[\\\"as\\\",\\\"feature_md5\\\",\\\"feature_md5\\\"],[\\\"as\\\",\\\"version\\\",\\\"version\\\"],[\\\"as\\\",\\\"id\\\",\\\"id\\\"],[\\\"as\\\",\\\"user_id\\\",\\\"user_id\\\"]]\"",
           "member": "string",
           "name": "Fields",
           "required": true,
@@ -1034,7 +1052,7 @@
         {
           "disabled": false,
           "document": "查询的过滤条件",
-          "example": "[\\\"or\\\",[\\\"and\\\",[\\\"equals\\\",\\\"category\\\",\\\"'PERF_CRASH'\\\"],[\\\"i",
+          "example": "\"{\\\"category__in\\\":[\\\"PERF_CRASH\\\"]}\"",
           "member": "string",
           "name": "Filter",
           "required": true,
@@ -1043,7 +1061,7 @@
         {
           "disabled": false,
           "document": "查询简单过滤条件",
-          "example": "{\\\"category__in\\\":[\\\"PERF_CRASH\\\",\\\"APP_LAUNCH\\\",\\\"PERF_MASTER_T",
+          "example": "{\\\"category__in\\\":[\\\"PERF_CRASH\\\",\\\"APP_LAUNCH\\\"]}",
           "member": "string",
           "name": "FilterSimple",
           "required": false,
@@ -1103,7 +1121,7 @@
         {
           "disabled": false,
           "document": "查询数据返回",
-          "example": "{\\n    \\\"status\\\": \\\"ok\\\",\\n    \\\"code\\\": 10000,\\n    \\\"msg\\\": \\",
+          "example": "{\\\"status\\\":\\\"ok\\\",\\\"code\\\":10000,\\\"msg\\\":\\\"ok\\\",\\\"data\\\":[]}",
           "member": "string",
           "name": "Data",
           "output_required": true,
@@ -1143,7 +1161,7 @@
         {
           "disabled": false,
           "document": "查询指标 field",
-          "example": "[[\\\"as\\\",[\\\"if\\\",[\\\"equals\\\",\\\"launch_cnt\\\",[\\\"toInt64\\\",0]],0,[",
+          "example": "\"[[\\\"as\\\",\\\"device_id\\\",\\\"device_id\\\"],\\\"entrance_time\\\",[\\\"as\\\",\\\"feature_md5\\\",\\\"feature_md5\\\"],[\\\"as\\\",\\\"version\\\",\\\"version\\\"],[\\\"as\\\",\\\"id\\\",\\\"id\\\"],[\\\"as\\\",\\\"user_id\\\",\\\"user_id\\\"]]\"",
           "member": "string",
           "name": "Fields",
           "required": true,
@@ -1152,7 +1170,7 @@
         {
           "disabled": false,
           "document": "查询的过滤条件",
-          "example": "[\\\"or\\\",[\\\"and\\\",[\\\"equals\\\",\\\"category\\\",\\\"'PERF_CRASH'\\\"],[\\\"i",
+          "example": "\"{\\\"category__in\\\":[\\\"PERF_CRASH\\\"]}\"",
           "member": "string",
           "name": "Filter",
           "required": true,
@@ -1161,7 +1179,7 @@
         {
           "disabled": false,
           "document": "查询简单过滤条件",
-          "example": "{\\\"category__in\\\":[\\\"PERF_CRASH\\\",\\\"APP_LAUNCH\\\",\\\"PERF_MASTER_T",
+          "example": "{\\\"category__in\\\":[\\\"PERF_CRASH\\\",\\\"APP_LAUNCH\\\"]}",
           "member": "string",
           "name": "FilterSimple",
           "required": false,
@@ -1221,7 +1239,7 @@
         {
           "disabled": false,
           "document": "查询数据返回",
-          "example": "{\\n    \\\"status\\\": \\\"ok\\\",\\n    \\\"code\\\": 10000,\\n    \\\"msg\\\": \\",
+          "example": "{\\\"status\\\":\\\"ok\\\",\\\"code\\\":10000,\\\"msg\\\":\\\"ok\\\",\\\"data\\\":[]}",
           "member": "string",
           "name": "Data",
           "output_required": true,
@@ -1270,7 +1288,7 @@
         {
           "disabled": false,
           "document": "查询的过滤条件",
-          "example": "\"{\"category__in\\\":[\\\"PERF_CRASH\\\"]}\"",
+          "example": "\"{\\\"category__in\\\":[\\\"PERF_CRASH\\\"]}\"",
           "member": "string",
           "name": "Filter",
           "required": true,
@@ -1279,7 +1297,7 @@
         {
           "disabled": false,
           "document": "查询简单过滤条件",
-          "example": "{\\\"category__in\\\":[\\\"PERF_CRASH\\\",\\\"APP_LAUNCH\\\",\\\"PERF_MASTER_T",
+          "example": "{\\\"category__in\\\":[\\\"PERF_CRASH\\\",\\\"APP_LAUNCH\\\"]}",
           "member": "string",
           "name": "FilterSimple",
           "required": false,
@@ -1330,7 +1348,7 @@
         {
           "disabled": false,
           "document": "查询数据返回",
-          "example": "{\\n    \\\"status\\\": \\\"ok\\\",\\n    \\\"code\\\": 10000,\\n    \\\"msg\\\": \\",
+          "example": "{\\\"status\\\":\\\"ok\\\",\\\"code\\\":10000,\\\"msg\\\":\\\"ok\\\",\\\"data\\\":[]}",
           "member": "string",
           "name": "Data",
           "output_required": true,
@@ -1370,7 +1388,7 @@
         {
           "disabled": false,
           "document": "查询指标 field",
-          "example": "[[\\\"as\\\",[\\\"if\\\",[\\\"equals\\\",\\\"launch_cnt\\\",[\\\"toInt64\\\",0]],0,[",
+          "example": "\"[[\\\"as\\\",\\\"device_id\\\",\\\"device_id\\\"],\\\"entrance_time\\\",[\\\"as\\\",\\\"feature_md5\\\",\\\"feature_md5\\\"],[\\\"as\\\",\\\"version\\\",\\\"version\\\"],[\\\"as\\\",\\\"id\\\",\\\"id\\\"],[\\\"as\\\",\\\"user_id\\\",\\\"user_id\\\"]]\"",
           "member": "string",
           "name": "Fields",
           "required": true,
@@ -1379,7 +1397,7 @@
         {
           "disabled": false,
           "document": "查询的过滤条件",
-          "example": "[\\\"or\\\",[\\\"and\\\",[\\\"equals\\\",\\\"category\\\",\\\"'PERF_CRASH'\\\"],[\\\"i",
+          "example": "\"{\\\"category__in\\\":[\\\"PERF_CRASH\\\"]}\"",
           "member": "string",
           "name": "Filter",
           "required": true,
@@ -1388,7 +1406,7 @@
         {
           "disabled": false,
           "document": "查询简单过滤条件",
-          "example": "{\\\"category__in\\\":[\\\"PERF_CRASH\\\",\\\"APP_LAUNCH\\\",\\\"PERF_MASTER_T",
+          "example": "{\\\"category__in\\\":[\\\"PERF_CRASH\\\",\\\"APP_LAUNCH\\\"]}",
           "member": "string",
           "name": "FilterSimple",
           "required": false,
@@ -1439,7 +1457,7 @@
         {
           "disabled": false,
           "document": "查询数据返回",
-          "example": "{\\n    \\\"status\\\": \\\"ok\\\",\\n    \\\"code\\\": 10000,\\n    \\\"msg\\\": \\",
+          "example": "{\\\"status\\\":\\\"ok\\\",\\\"code\\\":10000,\\\"msg\\\":\\\"ok\\\",\\\"data\\\":[]}",
           "member": "string",
           "name": "Data",
           "output_required": true,
@@ -2931,7 +2949,7 @@
         {
           "disabled": false,
           "document": "返回值",
-          "example": "\"{\\\"request_id\\\":\\\"4d50a7e7-cb3a-47af-a4ff-f545bfd54880\\\",\\\"results\\\":[{\\\"statement_id\\\":1,\\\"series\\\":[{\\\"name\\\":\\\"log_url_statistics\\\",\\\"columns\\\":[\\\"time\\\",\\\"allCount\\\"],\\\"values\\\":[],\\\"total\\\":1,\\\"offset\\\":\\\"\\\"}\"",
+          "example": "\"{\\\"request_id\\\":\\\"dc0ca023-0c87-4ab2-aee2-fde2aa196e9e\\\",\\\"results\\\":[{\\\"statement_id\\\":0,\\\"total\\\":0,\\\"offset\\\":\\\"\\\"},{\\\"statement_id\\\":1,\\\"total\\\":0,\\\"offset\\\":\\\"\\\"}]}\"",
           "member": "string",
           "name": "Result",
           "output_required": true,
@@ -3156,6 +3174,15 @@
           "name": "NetStatus",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否返回webvitals数据",
+          "example": "true",
+          "member": "bool",
+          "name": "WebVitals",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -3691,7 +3718,7 @@
         {
           "disabled": false,
           "document": "返回值",
-          "example": "\"{\\\"request_id\\\":\\\"4d50a7e7-cb3a-47af-a4ff-f545bfd54880\\\",\\\"results\\\":[{\\\"statement_id\\\":1,\\\"series\\\":[{\\\"name\\\":\\\"log_url_statistics\\\",\\\"columns\\\":[\\\"time\\\",\\\"allCount\\\"],\\\"values\\\":[],\\\"total\\\":1,\\\"offset\\\":\\\"\\\"}\"",
+          "example": "\"{\\\"request_id\\\":\\\"dc0ca023-0c87-4ab2-aee2-fde2aa196e9e\\\",\\\"results\\\":[{\\\"statement_id\\\":0,\\\"total\\\":0,\\\"offset\\\":\\\"\\\"},{\\\"statement_id\\\":1,\\\"total\\\":0,\\\"offset\\\":\\\"\\\"}]}\"",
           "member": "string",
           "name": "Result",
           "output_required": true,
@@ -5183,7 +5210,7 @@
         },
         {
           "disabled": false,
-          "document": "获取临时签名的bucket是国内站还是国际站（1表示国际站，其它表示国内站）",
+          "document": "获取临时签名的bucket是境内还是境外（1表示境外，其它表示境内）",
           "example": "0",
           "member": "int64",
           "name": "Site",
@@ -5540,7 +5567,7 @@
         {
           "disabled": false,
           "document": "返回字符串",
-          "example": "\"{\"code\":0,\"data\":{\"page\\\":1,\"pageSize\":999,\"totalCount\":1}\"",
+          "example": "\"{\\\"code\\\":0,\\\"data\\\":{\\\"page\\\":1,\\\"pageSize\\\":999,\\\"totalCount\\\":1}}\"",
           "member": "string",
           "name": "Result",
           "output_required": true,
@@ -6400,6 +6427,78 @@
           "name": "Desc",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "启动kafka配置",
+          "example": "1",
+          "member": "uint64",
+          "name": "EnableKafka",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "kafka_host",
+          "example": "9.134.190.4:9092",
+          "member": "string",
+          "name": "KafkaHost",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "topic",
+          "example": "topic",
+          "member": "string",
+          "name": "KafkaTopic",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "kafka_version",
+          "example": "1.0.0",
+          "member": "string",
+          "name": "KafkaVersion",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "kafka_username",
+          "example": "hawchen",
+          "member": "string",
+          "name": "SaslUserName",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "kafka_pwd",
+          "example": "password",
+          "member": "string",
+          "name": "SaslPassword",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "SaslMechanism",
+          "example": "plan",
+          "member": "string",
+          "name": "SaslMechanism",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "sink_id，日知汇算子id",
+          "example": "1025",
+          "member": "uint64",
+          "name": "SinkId",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -6569,6 +6668,15 @@
           "name": "InstanceId",
           "required": true,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "修改是否包括白名单",
+          "example": "true",
+          "member": "bool",
+          "name": "IsModifyAll",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -7299,6 +7407,15 @@
           "name": "InstanceId",
           "required": true,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "修改是否包括白名单",
+          "example": "true",
+          "member": "bool",
+          "name": "IsModifyAll",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
