@@ -35,7 +35,7 @@ jobs:
             BINARY_NAME="tencent_cli_go"
           fi
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} \
-          go build -ldflags="-s -w" -o "$BINARY_NAME" .
+          go build -ldflags='-s -w -X main.VERSION=${{ github.ref_name }}' -o "$BINARY_NAME" .
 
       # ========== 打包 ==========
       - name: Package ${{ matrix.goos }}/${{ matrix.goarch }}
@@ -56,7 +56,7 @@ jobs:
           fi
           
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} \
-          go build -ldflags="-s -w" -o "$BINARY_NAME" .
+          go build -ldflags='-s -w -X main.VERSION=${{ github.ref_name }}' -o "$BINARY_NAME" .
 
           # 检查是否编译成功
           if [ ! -f "$BINARY_NAME" ]; then
@@ -67,8 +67,9 @@ jobs:
 
           # 复制到 PKG_DIR
           cp "$BINARY_NAME" "$PKG_DIR/"
-          cp README.md "$PKG_DIR/" || echo "⚠️ README.md not found"
+          cp readme.md "$PKG_DIR/" || echo "⚠️ README.md not found"
           cp LICENSE "$PKG_DIR/" || echo "⚠️ LICENSE not found"
+          cp CHANGELOG.md "$PKG_DIR/" || echo "⚠️ CHANGELOG.md not found"
 
           # 压缩
           if [ "${{ matrix.goos }}" = "windows" ]; then

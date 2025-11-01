@@ -280,6 +280,13 @@
       "output": "DescribeFlowResponse",
       "status": "online"
     },
+    "DescribeInstanceSSLAttributes": {
+      "document": "本接口（DescribeInstanceSSLAttributes）用于拉取实例SSL认证属性",
+      "input": "DescribeInstanceSSLAttributesRequest",
+      "name": "拉取实例SSL认证功能属性",
+      "output": "DescribeInstanceSSLAttributesResponse",
+      "status": "online"
+    },
     "DescribeLogFileRetentionPeriod": {
       "document": "本接口(DescribeLogFileRetentionPeriod)用于查看数据库备份日志的备份天数的设置情况。",
       "input": "DescribeLogFileRetentionPeriodRequest",
@@ -299,6 +306,13 @@
       "input": "DescribeOrdersRequest",
       "name": "查询订单信息",
       "output": "DescribeOrdersResponse",
+      "status": "online"
+    },
+    "DescribeProcessList": {
+      "document": "本接口 (DescribeProcessList) 用于查询当前正在运行的线程（连接/查询）信息。\n\n- 可以根据客户端IP，DB，执行时间等信息来查询实例正在运行的线程信息。过滤信息详细请见过滤器Filter。\n- 如果参数为空，返回当前用户一定数量（Limit所指定的数量，默认为20）的线程信息。",
+      "input": "DescribeProcessListRequest",
+      "name": "查询数据库会话列表",
+      "output": "DescribeProcessListResponse",
       "status": "online"
     },
     "DescribeProjectSecurityGroups": {
@@ -474,6 +488,20 @@
       "input": "ModifyInstanceNetworkRequest",
       "name": "修改实例所属网络",
       "output": "ModifyInstanceNetworkResponse",
+      "status": "online"
+    },
+    "ModifyInstanceProtectedProperty": {
+      "document": "该接口用于修改实例的保护属性",
+      "input": "ModifyInstanceProtectedPropertyRequest",
+      "name": "修改实例的保护属性",
+      "output": "ModifyInstanceProtectedPropertyResponse",
+      "status": "online"
+    },
+    "ModifyInstanceSSLAttributes": {
+      "document": "本接口  （ModifyInstanceSSLAttributes）用于修改实例SSL认证功能属性",
+      "input": "ModifyInstanceSSLAttributesRequest",
+      "name": "修改实例SSL认证功能属性",
+      "output": "ModifyInstanceSSLAttributesResponse",
       "status": "online"
     },
     "ModifyInstanceVip": {
@@ -808,6 +836,16 @@
           "example": "shard-ffj8mqzn",
           "member": "string",
           "name": "ShardId",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "节点所在可用区",
+          "example": "ap-guangzhou-2",
+          "member": "string",
+          "name": "Zone",
           "output_required": true,
           "type": "string",
           "value_allowed_null": false
@@ -1548,6 +1586,15 @@
           "name": "DcnSyncMode",
           "required": false,
           "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "Cpu类型，如：英特尔：Intel/AMD，海光：Hygon，默认Intel/AMD",
+          "example": "Intel/AMD",
+          "member": "string",
+          "name": "CpuType",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -1567,13 +1614,13 @@
         },
         {
           "disabled": false,
-          "document": "订单对应的实例 ID 列表，如果此处没有返回实例 ID，可以通过订单查询接口获取。还可通过实例查询接口查询实例是否创建完成。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "订单对应的实例 ID 列表，如果此处没有返回实例 ID，可以通过订单查询接口获取。还可通过实例查询接口查询实例是否创建完成。",
           "example": "[\"dcdbt-avw0207d\"]",
           "member": "string",
           "name": "InstanceIds",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -2092,6 +2139,15 @@
           "name": "DcnSyncMode",
           "required": false,
           "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "Cpu类型，如：英特尔：Intel/AMD，海光：Hygon，默认Intel/AMD",
+          "example": "Intel/AMD",
+          "member": "string",
+          "name": "CpuType",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -2636,7 +2692,7 @@
         {
           "disabled": false,
           "document": "分片详情",
-          "example": "[{\"Cpu\":1,\"Createtime\":\"2024-11-07 14:53:53\",\"Memory\":2,\"NodeCount\":2,\"Pid\":1001670,\"ShardId\":12984,\"ShardInstanceId\":\"shard-4cw33xnp\",\"ShardSerialId\":\"set_1693557415_1\",\"Status\":2,\"Storage\":300},{\"Cpu\":1,\"Createtime\":\"2024-11-07 14:53:53\",\"Memory\":2,\"NodeCount\":2,\"Pid\":1001670,\"ShardId\":12985,\"ShardInstanceId\":\"shard-nw0u76x9\",\"ShardSerialId\":\"set_1693557529_3\",\"Status\":2,\"Storage\":300},{\"Cpu\":1,\"Createtime\":\"2024-11-07 14:53:53\",\"Memory\":2,\"NodeCount\":2,\"Pid\":1001670,\"ShardId\":12987,\"ShardInstanceId\":\"shard-wsfe8s7e\",\"ShardSerialId\":\"set_1693558023_5\",\"Status\":2,\"Storage\":300},{\"Cpu\":1,\"Createtime\":\"2024-11-07 14:53:53\",\"Memory\":2,\"NodeCount\":2,\"Pid\":1001670,\"ShardId\":12988,\"ShardInstanceId\":\"shard-jwud46a9\",\"ShardSerialId\":\"set_1693558125_7\",\"Status\":2,\"Storage\":300}]",
+          "example": "详见ShardInfo复杂结构",
           "member": "ShardInfo",
           "name": "ShardDetail",
           "output_required": true,
@@ -2785,13 +2841,13 @@
         },
         {
           "disabled": false,
-          "document": "实例处于异步任务状态时，表示异步任务流程ID\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例处于异步任务状态时，表示异步任务流程ID",
           "example": "0",
           "member": "int64",
           "name": "Locker",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -2825,113 +2881,123 @@
         },
         {
           "disabled": false,
-          "document": "实例IPv6标志\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例IPv6标志",
           "example": "1",
           "member": "uint64",
           "name": "Ipv6Flag",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "内网IPv6\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "内网IPv6",
           "example": "240d:c000:f05f:b200:f200:b20f",
           "member": "string",
           "name": "Vipv6",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "外网IPv6\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "外网IPv6",
           "example": "140f:c010:*",
           "member": "string",
           "name": "WanVipv6",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "外网IPv6端口\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "外网IPv6端口",
           "example": "24450",
           "member": "uint64",
           "name": "WanPortIpv6",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "外网IPv6状态\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "外网IPv6状态",
           "example": "1",
           "member": "uint64",
           "name": "WanStatusIpv6",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "DCN标志，0-无，1-主实例，2-灾备实例\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "DCN标志，0-无，1-主实例，2-灾备实例",
           "example": "1",
           "member": "int64",
           "name": "DcnFlag",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "DCN状态，0-无，1-创建中，2-同步中，3-已断开\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "DCN状态，0-无，1-创建中，2-同步中，3-已断开",
           "example": "2",
           "member": "int64",
           "name": "DcnStatus",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "DCN灾备实例数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "DCN灾备实例数",
           "example": "2",
           "member": "int64",
           "name": "DcnDstNum",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "1： 主实例（独享型）, 2: 主实例, 3： 灾备实例, 4： 灾备实例（独享型）\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "1： 主实例（独享型）, 2: 主实例, 3： 灾备实例, 4： 灾备实例（独享型）",
           "example": "2",
           "member": "int64",
           "name": "InstanceType",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例标签信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例标签信息",
           "example": "[{\"TagKey\":\"qta_tdsql54\",\"TagValue\":\"other54\"},{\"TagKey\":\"qta_tdsql50\",\"TagValue\":\"other50\"}]",
           "member": "ResourceTag",
           "name": "ResourceTags",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "数据库引擎版本\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "数据库引擎版本",
           "example": "8.0",
           "member": "string",
           "name": "DbVersionId",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "实例删除保护标签，1: 已开启删除保护，0: 未开启删除保护",
+          "example": "1",
+          "member": "int64",
+          "name": "ProtectedProperty",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -3141,33 +3207,33 @@
         },
         {
           "disabled": false,
-          "document": "付费模型\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "付费模型",
           "example": "postpaid",
           "member": "string",
           "name": "Paymode",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "分片的主可用区\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "分片的主可用区",
           "example": "ap-guangzhou-2",
           "member": "string",
           "name": "ShardMasterZone",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "分片的从可用区列表\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "分片的从可用区列表",
           "example": "ap-guangzhou-2",
           "member": "string",
           "name": "ShardSlaveZones",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -3934,19 +4000,19 @@
           "example": "dcdbt-fdpjf5zh",
           "member": "string",
           "name": "InstanceId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例用户列表。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例用户列表。",
           "example": "无",
           "member": "DBAccount",
           "name": "Users",
-          "required": true,
+          "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -4147,7 +4213,7 @@
         {
           "disabled": false,
           "document": "备份文件列表",
-          "example": "[{\"BackupType\":\"Data\",\"EndTime\":\"2024-12-20 16:29:07\",\"FileName\":\"cos_xtrabackup+1734683337+20241220+162857+1507806831+xbstream.lz4\",\"FilePath\":\"cos_backup/tdsql/group_1734680376_202786203/set_1734681147_5/xtrabackup/2024-12-20/cos_xtrabackup+1734683337+20241220+162857+1507806831+xbstream.lz4\",\"FileSize\":13930740,\"InstanceId\":\"tdsqlshard-02badqa3\",\"InstanceName\":\"QT4syxfv8.0\",\"InstanceStatus\":2,\"ManualBackup\":0,\"ShardId\":\"shard-fqj08u7f\",\"StartTime\":\"2024-12-20 16:28:57\",\"StorageClass\":\"STANDARD\",\"Url\":\"\"}]",
+          "example": "无",
           "member": "InstanceBackupFileItem",
           "name": "Files",
           "output_required": true,
@@ -4162,6 +4228,16 @@
           "name": "TotalCount",
           "output_required": true,
           "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "下载链接前缀",
+          "example": "http://newdtsdev-1301792469.cos.ap-guangzhou.myqcloud.com",
+          "member": "string",
+          "name": "UrlPrefix",
+          "output_required": true,
+          "type": "string",
           "value_allowed_null": false
         },
         {
@@ -4431,23 +4507,23 @@
         },
         {
           "disabled": false,
-          "document": "实例VIP\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例VIP",
           "example": "172.16.0.11",
           "member": "string",
           "name": "VIP",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例端口\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例端口",
           "example": "3306",
           "member": "string",
           "name": "VPort",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -4734,7 +4810,7 @@
           "example": "2019-01-01 10:00:00",
           "member": "datetime",
           "name": "StartTime",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -4744,7 +4820,7 @@
           "example": "2019-01-01 12:00:00",
           "member": "datetime",
           "name": "EndTime",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -5097,83 +5173,83 @@
         },
         {
           "disabled": false,
-          "document": "内网IPv6\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "内网IPv6",
           "example": "2402:5e00:1011:2d01:1:90cb:55fa:e4f4",
           "member": "string",
           "name": "Vip6",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例Cpu核数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例Cpu核数",
           "example": "1",
           "member": "int64",
           "name": "Cpu",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例QPS\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例QPS",
           "example": "4000",
           "member": "int64",
           "name": "Qps",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "DB引擎\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "DB引擎",
           "example": "Mysql",
           "member": "string",
           "name": "DbEngine",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "是否支持IPv6\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "是否支持IPv6",
           "example": "0",
           "member": "int64",
           "name": "Ipv6Flag",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "外网IPv6地址，公网可访问\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "外网IPv6地址，公网可访问",
           "example": "2402:4e00:1012:2c01:1:90cb:55fa:e4d2",
           "member": "string",
           "name": "WanVipv6",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "外网状态，0-未开通；1-已开通；2-关闭；3-开通中；4-关闭中\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "外网状态，0-未开通；1-已开通；2-关闭；3-开通中；4-关闭中",
           "example": "0",
           "member": "int64",
           "name": "WanStatusIpv6",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "外网IPv6端口\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "外网IPv6端口",
           "example": "0",
           "member": "int64",
           "name": "WanPortIpv6",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -5187,93 +5263,93 @@
         },
         {
           "disabled": false,
-          "document": "DCN标志，0-无，1-主实例，2-灾备实例\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "DCN标志，0-无，1-主实例，2-灾备实例",
           "example": "0",
           "member": "int64",
           "name": "DcnFlag",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "DCN状态，0-无，1-创建中，2-同步中，3-已断开\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "DCN状态，0-无，1-创建中，2-同步中，3-已断开",
           "example": "0",
           "member": "int64",
           "name": "DcnStatus",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "DCN灾备实例数\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "DCN灾备实例数",
           "example": "0",
           "member": "int64",
           "name": "DcnDstNum",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "1： 主实例（独享型）, 2: 主实例, 3： 灾备实例, 4： 灾备实例（独享型）\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "1： 主实例（独享型）, 2: 主实例, 3： 灾备实例, 4： 灾备实例（独享型）",
           "example": "2",
           "member": "int64",
           "name": "InstanceType",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例是否支持设置用户连接数限制，内核为10.1暂不支持。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例是否支持设置用户连接数限制，内核为10.1暂不支持。",
           "example": "true",
           "member": "bool",
           "name": "IsMaxUserConnectionsSupported",
           "output_required": true,
           "type": "bool",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "对外显示的数据库版本\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "对外显示的数据库版本",
           "example": "5.7",
           "member": "string",
           "name": "DbVersionId",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "加密状态, 0-未开启，1-已开启\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "加密状态, 0-未开启，1-已开启",
           "example": "0",
           "member": "int64",
           "name": "EncryptStatus",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "独享集群类型，0:公有云, 1:金融围笼, 2:CDC集群\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "独享集群类型，0:公有云, 1:金融围笼, 2:CDC集群",
           "example": "0",
           "member": "int64",
           "name": "ExclusterType",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "VPC就近访问\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "VPC就近访问",
           "example": "0",
           "member": "int64",
           "name": "RsAccessStrategy",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -5311,6 +5387,26 @@
           "example": "1",
           "member": "int64",
           "name": "IsDcnSwitchSupported",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "cpu类型，英特尔：Intel/AMD，海光：Hygon，默认Intel/AMD\t",
+          "example": "Intel/AMD",
+          "member": "string",
+          "name": "CpuType",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "实例删除保护标签，1: 已开启删除保护，0: 未开启删除保护",
+          "example": "1",
+          "member": "int64",
+          "name": "ProtectedProperty",
           "output_required": true,
           "type": "int",
           "value_allowed_null": false
@@ -5681,6 +5777,15 @@
           "name": "AmountUnit",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "Cpu类型，如：英特尔：Intel/AMD，海光：Hygon，默认Intel/AMD",
+          "example": "Intel/AMD",
+          "member": "string",
+          "name": "CpuType",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -5694,7 +5799,7 @@
           "example": "42240",
           "member": "int64",
           "name": "OriginalPrice",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -5704,7 +5809,7 @@
           "example": "42240",
           "member": "int64",
           "name": "Price",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -5894,13 +5999,13 @@
         },
         {
           "disabled": false,
-          "document": "灾备标志，0-无，1-主实例，2-灾备实例\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "灾备标志，0-无，1-主实例，2-灾备实例",
           "example": "0",
           "member": "int64",
           "name": "DcnFlag",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -6369,6 +6474,43 @@
       ],
       "type": "object"
     },
+    "DescribeInstanceSSLAttributesRequest": {
+      "document": "DescribeInstanceSSLAttributes请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "实例ID",
+          "example": "tdsqlshard-xxx",
+          "member": "string",
+          "name": "InstanceId",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeInstanceSSLAttributesResponse": {
+      "document": "DescribeInstanceSSLAttributes返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "实例SSL认证功能当前状态。1-开启中；2-已开启；3-已关闭；4-关闭中",
+          "example": "2",
+          "member": "int64",
+          "name": "Status",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "DescribeLogFileRetentionPeriodRequest": {
       "document": "DescribeLogFileRetentionPeriod请求参数结构体",
       "members": [
@@ -6539,6 +6681,97 @@
       ],
       "type": "object"
     },
+    "DescribeProcessListRequest": {
+      "document": "DescribeProcessList请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "实例ID。",
+          "example": "tdsqlshard-2gk4nxyz",
+          "member": "string",
+          "name": "InstanceId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "节点ID。",
+          "example": "681390887981",
+          "member": "string",
+          "name": "NodeId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "分片ID，与ShardSerialId设置一个。",
+          "example": "shard-ljilb4st",
+          "member": "string",
+          "name": "ShardId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "分片序列ID，与ShardId设置一个。",
+          "example": "set_1468379419_1",
+          "member": "string",
+          "name": "ShardSerialId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "<li><strong>id</strong></li>\n    <p style=\"padding-left: 30px;\">按照【<strong>会话ID</strong>】进行过滤。会话ID例如：125700。</p>\n    <p style=\"padding-left: 30px;\">类型：String</p>\n    <p style=\"padding-left: 30px;\">必选：否</p>\n    <p style=\"padding-left: 30px;\">匹配类型：精确匹配</p>\n\n<li><strong>user</strong></li>\n    <p style=\"padding-left: 30px;\">按照【<strong>用户名</strong>】进行过滤。用户名例如：root。</p>\n    <p style=\"padding-left: 30px;\">类型：String</p>\n    <p style=\"padding-left: 30px;\">必选：否</p>\n    <p style=\"padding-left: 30px;\">匹配类型：精确匹配</p>\n<li><strong>host</strong></li>\n    <p style=\"padding-left: 30px;\">按照【<strong>客户端Host</strong>】进行过滤。客户端Host例如：127.0.0.1:46295。</p>\n    <p style=\"padding-left: 30px;\">类型：String</p>\n    <p style=\"padding-left: 30px;\">必选：否</p>\n    <p style=\"padding-left: 30px;\">匹配类型：前缀匹配，例如可以查询客户端IP不加端口：127.0.0.1。</p>\n<li><strong>state</strong></li>\n    <p style=\"padding-left: 30px;\">按照【<strong>线程状态</strong>】进行过滤。线程状态例如：Updating。</p>\n    <p style=\"padding-left: 30px;\">类型：String</p>\n    <p style=\"padding-left: 30px;\">必选：否</p>\n    <p style=\"padding-left: 30px;\">匹配类型：精确匹配</p>\n<li><strong>db</strong></li>\n    <p style=\"padding-left: 30px;\">按照【<strong>数据库名称</strong>】进行过滤。数据库名称例如：mysql。</p>\n    <p style=\"padding-left: 30px;\">类型：String</p>\n    <p style=\"padding-left: 30px;\">必选：否</p>\n    <p style=\"padding-left: 30px;\">匹配类型：精确匹配</p>\n<li><strong>command</strong></li>\n    <p style=\"padding-left: 30px;\">按照【<strong>命令类型</strong>】进行过滤。命令类型例如：Query。</p>\n    <p style=\"padding-left: 30px;\">类型：String</p>\n    <p style=\"padding-left: 30px;\">必选：否</p>\n    <p style=\"padding-left: 30px;\">匹配类型：精确匹配</p>\n<li><strong>info</strong></li>\n    <p style=\"padding-left: 30px;\">按照【<strong>执行语句</strong>】进行过滤。执行语句例如：select id, name from demo.table1 where id > 10。</p>\n    <p style=\"padding-left: 30px;\">类型：String</p>\n    <p style=\"padding-left: 30px;\">必选：否</p>\n    <p style=\"padding-left: 30px;\">匹配类型：前缀匹配，例如SQL较长，可以输入SQL前缀：select  id, name from demo.table1。</p>\n<li><strong>time</strong></li>\n    <p style=\"padding-left: 30px;\">按照【<strong>执行时间大于多少（秒）</strong>】进行过滤。例如：10，表示查询执行时间超过10秒的会话。</p>\n    <p style=\"padding-left: 30px;\">类型：Integer</p>\n    <p style=\"padding-left: 30px;\">必选：否</p>\n    <p style=\"padding-left: 30px;\">匹配类型：范围匹配，Values值只支持输入1个。</p>\n每次请求的`Filters`的上限为10，`Filter.Values`的上限为50。",
+          "example": "[{\"Name\": \"user\", \"Values\": [\"root\"]}]",
+          "member": "Filter",
+          "name": "Filters",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "偏移量，默认为0。",
+          "example": "0",
+          "member": "int64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "返回数量，默认为20，最大值为100。",
+          "example": "20",
+          "member": "int64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeProcessListResponse": {
+      "document": "DescribeProcessList返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "当前正在运行的线程（连接/查询）信息列表。",
+          "example": "无",
+          "member": "Process",
+          "name": "ProcessList",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "DescribeProjectSecurityGroupsRequest": {
       "document": "DescribeProjectSecurityGroups请求参数结构体",
       "members": [
@@ -6624,7 +6857,17 @@
     },
     "DescribeShardSpecRequest": {
       "document": "DescribeShardSpec请求参数结构体",
-      "members": [],
+      "members": [
+        {
+          "disabled": false,
+          "document": "Cpu类型，如：英特尔：Intel/AMD，海光：Hygon，默认Intel/AMD",
+          "example": "Intel/AMD",
+          "member": "string",
+          "name": "CpuType",
+          "required": false,
+          "type": "string"
+        }
+      ],
       "type": "object"
     },
     "DescribeShardSpecResponse": {
@@ -6636,7 +6879,7 @@
           "example": "无",
           "member": "SpecConfig",
           "name": "SpecConfig",
-          "required": true,
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -6936,6 +7179,30 @@
           "required": false,
           "type": "int",
           "value_allowed_null": false
+        }
+      ],
+      "usage": "in"
+    },
+    "Filter": {
+      "document": "描述键值对过滤器，用于条件过滤查询。例如过滤ID、名称、状态等\n\n若存在多个Filter时，Filter间的关系为逻辑与（AND）关系。\n若同一个Filter存在多个Values，同一Filter下Values间的关系为逻辑或（OR）关系。",
+      "members": [
+        {
+          "disabled": false,
+          "document": "需要过滤的字段。",
+          "example": "zone",
+          "member": "string",
+          "name": "Name",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "字段的过滤值。",
+          "example": "[\"ap-guangzhou-2\"]",
+          "member": "string",
+          "name": "Values",
+          "required": true,
+          "type": "list"
         }
       ],
       "usage": "in"
@@ -7398,6 +7665,15 @@
           "name": "ShardSerialId",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "节点ID，可指定主节点或者备节点进行kill。可选参数，不传默认为主节点。",
+          "example": "681390887981",
+          "member": "string",
+          "name": "NodeId",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -7855,8 +8131,8 @@
         },
         {
           "disabled": false,
-          "document": "要修改的安全组 ID 列表，一个或者多个安全组 ID 组成的数组。",
-          "example": "[\"sg-ajr1jzgj\\n\"]",
+          "document": "要修改的安全组 ID 列表，一个或者多个安全组 ID 组成的数组。<br>注意：该入参会全量替换存量已有安全组集合，并非增量更新。修改需传入全量的预期集合。",
+          "example": "[\"sg-ajr1jzgj\"]",
           "member": "string",
           "name": "SecurityGroupIds",
           "required": true,
@@ -8097,6 +8373,78 @@
       ],
       "type": "object"
     },
+    "ModifyInstanceProtectedPropertyRequest": {
+      "document": "ModifyInstanceProtectedProperty请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "实例Id",
+          "example": "tdsqlshard-qoep98ai",
+          "member": "string",
+          "name": "InstanceId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "0-允许删除，无销毁保护，1-禁止删除，有销毁保护",
+          "example": "1",
+          "member": "int64",
+          "name": "ProtectedProperty",
+          "required": true,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "ModifyInstanceProtectedPropertyResponse": {
+      "document": "ModifyInstanceProtectedProperty返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "ModifyInstanceSSLAttributesRequest": {
+      "document": "ModifyInstanceSSLAttributes请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "实例ID",
+          "example": "无",
+          "member": "string",
+          "name": "InstanceId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否开启实例的SSL认证。0-关闭；1-开启",
+          "example": "无",
+          "member": "int64",
+          "name": "SSLEnabled",
+          "required": true,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "ModifyInstanceSSLAttributesResponse": {
+      "document": "ModifyInstanceSSLAttributes返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "ModifyInstanceVipRequest": {
       "document": "ModifyInstanceVip请求参数结构体",
       "members": [
@@ -8167,7 +8515,7 @@
         {
           "disabled": false,
           "document": "实例ID",
-          "example": "tdsql-xxx",
+          "example": "tdsqlshard-xxx",
           "member": "string",
           "name": "InstanceId",
           "required": true,
@@ -8315,6 +8663,16 @@
           "output_required": true,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "节点所在的可用区",
+          "example": "ap-guangzhou-2",
+          "member": "string",
+          "name": "Zone",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -8436,13 +8794,13 @@
         },
         {
           "disabled": false,
-          "document": "设置过的值，参数生效后，该值和value一样。未设置过就不返回该字段。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "设置过的值，参数生效后，该值和value一样。未设置过就不返回该字段。",
           "example": "2",
           "member": "string",
           "name": "SetValue",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -8508,6 +8866,102 @@
           "name": "Code",
           "output_required": true,
           "type": "int",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "Process": {
+      "document": "用于显示当前正在运行的线程（连接/查询）信息，数据源来自系统表：information_schema.processlist。",
+      "members": [
+        {
+          "disabled": false,
+          "document": "线程ID​​：唯一标识当前连接/线程的整数。",
+          "example": "125700",
+          "member": "int64",
+          "name": "Id",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "用户名​​：发起连接的 MySQL 用户。",
+          "example": "root",
+          "member": "string",
+          "name": "User",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "客户端地址​​：发起连接的客户端主机名及端口（格式：host:port）。",
+          "example": "127.0.0.1:46295",
+          "member": "string",
+          "name": "Host",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "当前数据库​​：线程正在使用的数据库名（未选择数据库时为 空串）。",
+          "example": "mysql",
+          "member": "string",
+          "name": "Db",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "命令类型​​：线程正在执行的命令类型。常见值：\n\n- Sleep：空闲等待状态（等待新查询）。\n- Query：正在执行查询或 SQL 语句。\n- Binlog Dump：主服务器线程向从服务器发送二进制日志。\n- Connect：客户端正在连接。\n- Killed：线程被终止但未完全退出。",
+          "example": "Query",
+          "member": "string",
+          "name": "Command",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "执行时间（秒）​​：线程在当前状态持续的秒数。",
+          "example": "10",
+          "member": "int64",
+          "name": "Time",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "执行开始时间（秒）​​：线程在当前状态开始执行的时间。",
+          "example": "2025-06-24 11:27:26",
+          "member": "string",
+          "name": "ProcessStartTime",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "​​状态描述​​：线程当前的详细操作状态。常见值：\n\n- Sending data：正在处理/发送数据。\n- Locked：等待表锁释放（例如 MyISAM 表级锁）。\n- Sorting result：排序查询结果。\n- Updating：更新表中数据。\n- 当为NULL返回空串：无明确状态（如 Sleep 时）。",
+          "example": "User sleep",
+          "member": "string",
+          "name": "State",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "执行语句​​：正在执行的 SQL 语句（前 1024 字符）。",
+          "example": "select * from information_schema.processlist",
+          "member": "string",
+          "name": "Info",
+          "output_required": false,
+          "type": "string",
           "value_allowed_null": false
         }
       ],
@@ -8675,11 +9129,31 @@
         {
           "disabled": false,
           "document": "可选择的主可用区和从可用区",
-          "example": "[{ \"MasterZone\":{ \"Zone\":\"ap-guangzhou-1\", \"ZoneId\":100001, \"ZoneName\":\"广州一区\", \"OnSale\":true }, \"SlaveZones\":[{ \"Zone\":\"ap-guangzhou-1\", \"ZoneId\":100001, \"ZoneName\":\"广州一区\", \"OnSale\":true }, { \"Zone\":\"ap-guangzhou-2\", \"ZoneId\":100002, \"ZoneName\":\"广州二区\", \"OnSale\":true }] }, { \"MasterZone\":{ \"Zone\":\"ap-guangzhou-2\", \"ZoneId\":100002, \"ZoneName\":\"广州二区\", \"OnSale\":true }, \"SlaveZones\":[{ \"Zone\":\"ap-guangzhou-1\", \"ZoneId\":100001, \"ZoneName\":\"广州一区\", \"OnSale\":true }, { \"Zone\":\"ap-guangzhou-2\", \"ZoneId\":100002, \"ZoneName\":\"广州二区\", \"OnSale\":true }] }]",
+          "example": "无",
           "member": "ShardZoneChooseInfo",
           "name": "AvailableChoice",
           "output_required": true,
           "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "主机类型，如：物理机：Machine，容器：Container。",
+          "example": "Machine",
+          "member": "string",
+          "name": "HostType",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "Cpu类型，如：英特尔：Intel/AMD，海光：Hygon",
+          "example": "Intel/AMD",
+          "member": "string",
+          "name": "CpuType",
+          "output_required": false,
+          "type": "string",
           "value_allowed_null": false
         }
       ],
@@ -9163,13 +9637,13 @@
         },
         {
           "disabled": false,
-          "document": "DB节点信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "DB节点信息",
           "example": "[{\"NodeId\": \"4ddc0ea18433\", \"Role\": \"master\"}, { \"NodeId\": \"5d51cf1f018c\",\"Role\": \"slave\" }]",
           "member": "NodeInfo",
           "name": "NodesInfo",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -9481,23 +9955,23 @@
         },
         {
           "disabled": false,
-          "document": "样例Sql\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "样例Sql",
           "example": "select id, f1, sleep(1) from t1 where id % 2 = 1",
           "member": "string",
           "name": "ExampleSql",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "账户的域名\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "账户的域名",
           "example": "%",
           "member": "string",
           "name": "Host",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -9674,7 +10148,7 @@
         },
         {
           "disabled": false,
-          "document": "切换的目标区域，会自动选择该可用区中延迟最低的节点。",
+          "document": "指定可用区标识符，具体含义由zoneMode参数决定。 \n\n- 当zoneMode为target时表示目标可用区 \n\n- 当zoneMode为avoid时表示需避开的故障可用区",
           "example": "ap-guangzhou-3",
           "member": "string",
           "name": "Zone",
@@ -9689,6 +10163,15 @@
           "name": "ShardInstanceIds",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "可用区模式选择器，定义zone参数的语义类型。  - 默认值：target  - 可选值：target, avoid",
+          "example": "target, avoid",
+          "member": "string",
+          "name": "ZoneMode",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -9840,153 +10323,153 @@
       "members": [
         {
           "disabled": false,
-          "document": "应用ID\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "应用ID",
           "example": "128007987",
           "member": "int64",
           "name": "AppId",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "创建时间\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "创建时间",
           "example": "2024-10-11 10:00:11",
           "member": "datetime",
           "name": "CreateTime",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例备注\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例备注",
           "example": "tdsqlshard-fortdsql-tst",
           "member": "string",
           "name": "InstanceRemark",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "0:非临时实例 ,1:无效临时实例, 2:回档成功的有效临时实例\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "0:非临时实例 ,1:无效临时实例, 2:回档成功的有效临时实例",
           "example": "0",
           "member": "int64",
           "name": "TempType",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例状态,0:待初始化,1:流程处理中,2:有效状态,-1:已隔离，-2：已下线\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例状态,0:待初始化,1:流程处理中,2:有效状态,-1:已隔离，-2：已下线",
           "example": "2",
           "member": "int64",
           "name": "Status",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例 ID，形如：tdsql-ow728lmc。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例 ID，形如：tdsql-ow728lmc。",
           "example": "tdsqlshard-fortdsql",
           "member": "string",
           "name": "InstanceId",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例虚IP\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例虚IP",
           "example": "10.1.0.1",
           "member": "string",
           "name": "Vip",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例虚端口\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例虚端口",
           "example": "3306",
           "member": "int64",
           "name": "Vport",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "有效期结束时间\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "有效期结束时间",
           "example": "2024-12-11 10:00:11",
           "member": "datetime",
           "name": "PeriodEndTime",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "源实例 ID，形如：tdsql-ow728lmc。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "源实例 ID，形如：tdsql-ow728lmc。",
           "example": "tdsql-srctdsql",
           "member": "string",
           "name": "SrcInstanceId",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例状态描述\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例状态描述",
           "example": "2",
           "member": "string",
           "name": "StatusDesc",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例所在地域\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例所在地域",
           "example": "ap-guangzhou",
           "member": "string",
           "name": "Region",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例所在可用区\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例所在可用区",
           "example": "ap-guangzhou-3",
           "member": "string",
           "name": "Zone",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例虚IPv6\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例虚IPv6",
           "example": "2402:4e00:*",
           "member": "string",
           "name": "Vipv6",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例IPv6标志\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例IPv6标志",
           "example": "1",
           "member": "uint64",
           "name": "Ipv6Flag",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"

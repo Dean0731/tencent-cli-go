@@ -9,6 +9,7 @@ import (
 func main() {
 	rootCmd := app.GetRootCmd()
 	config.BindFlags(rootCmd)
+	rootCmd.AddCommand(VERSIONCMD)
 	defer func() {
 		if err := recover(); err != nil {
 			log.Println(err)

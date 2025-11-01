@@ -1,7 +1,7 @@
 {
   "actions": {
     "AssumeRole": {
-      "document": "申请扮演角色临时访问凭证。\n\n1、角色策略组成\n\n（1）角色信任策略：指定谁可以扮演该角色；\n\n（2）角色权限策略：指定扮演角色后可以执行哪些操作。\n\n\n2、角色可扮演条件\n\n（1）给用户绑定允许调用AssumeRole的策略 ；\n\n（2）将用户添加为角色信任策略中的主体。",
+      "document": "**使用说明**\n\n1. 申请扮演某个角色的临时访问凭证，返回临时身份的token和能够扮演该角色的临时密钥；\n2. 角色策略组成  \n（1）角色载体：指定谁可以扮演该角色；  \n（2）角色权限：指定扮演角色后可以执行哪些操作，操作哪些资源。\n\n3. 角色可被扮演的条件  \n（1）给该用户绑定包含AssumeRole的策略；  \n（2）将该用户配置为角色载体的主体。\n\n4. 此接口可以支持永久密钥或临时密钥调用。\n\n\n**典型场景**\n\n1. 跨账号授权：主账号A需要操作主账号B的资源。  \n例如：A账号下有子用户a，B账号下有角色role b，a可以通过AssumeRole接口扮演b，以角色b身份登录账号B的控制台，并操作资源。\n\n2. 跨服务调用：云上的A服务需要访问或操作B服务的资源。  \n例如：为A服务接入一个服务相关角色，用户授权创建角色和策略后，A服务即可调用AssumeRole获取用户的服务相关角色临时密钥，调用B服务接口并访问资源。\n\n\n\n**最佳实践**\n1. 临时访问凭证在有效期内（Expiration）都可以使用，建议在有效期内重复使用，避免业务请求该接口频率达到上限被限频；\n2. 授予临时访问凭证权限的CAM策略，建议严格遵循最小权限原则；\n3. 建议不要使用主账号永久密钥，对该接口进行调用。",
       "input": "AssumeRoleRequest",
       "name": "申请扮演角色临时访问凭证",
       "output": "AssumeRoleResponse",
@@ -29,10 +29,17 @@
       "status": "online"
     },
     "GetFederationToken": {
-      "document": "**使用说明**\n\n返回一组临时访问凭证，典型的应用场景是代理应用程序集中申请临时访问凭证，下发给企业网络内其他分布式终端应用，比如终端应用上传文件到COS场景，本接口仅支持永久密钥调用。\n\n**最佳实践**\n\n1. 临时访问凭据在有效期内都可以使用，建议在有效期内重复使用，以避免业务请求速率上升后被限频\n2. 授予临时访问凭证权限的CAM策略，建议按权限最小化原则\n3. 调用接口的永久密钥，建议不要使用主账号",
+      "document": "**使用说明**\n\n1. 返回一组临时身份访问凭证，包含token和获取该身份的临时密钥；\n\n2. 当您需要将当前账号下的部分权限和资源临时委托给第三方（如合作伙伴、外包团队），且希望避免下发永久密钥时，调用此接口；\n3. 临时身份的权限为：当前调用账号的权限和输入参数 Policy 权限的交集；\n4. 此接口仅支持永久密钥调用。\n\n\n**典型场景**\n\n1. 代理应用程序集中申请临时访问凭证，下发给企业网络内的其他分布式终端应用。例如：终端应用上传文件到COS。\n\n2. 将指定资源临时委托给第三方代理。例如：申请临时访问凭证，分发给企业外部团队，仅允许查看某个存储桶，有效期结束后权限自动回收。\n\n\n**最佳实践**\n1. 临时访问凭证在有效期内（Expiration）都可以使用，建议在有效期内重复使用，避免业务请求该接口频率达到上限被限频；\n\n2. 授予临时访问凭证权限的CAM策略，建议严格遵循最小权限原则；\n3. 建议不要使用主账号永久密钥，对该接口进行调用。",
       "input": "GetFederationTokenRequest",
       "name": "获取联合身份临时访问凭证",
       "output": "GetFederationTokenResponse",
+      "status": "online"
+    },
+    "GetSessionToken": {
+      "document": "获取MFA临时证书",
+      "input": "GetSessionTokenRequest",
+      "name": "获取MFA临时证书",
+      "output": "GetSessionTokenResponse",
       "status": "online"
     },
     "QueryApiKey": {
@@ -92,7 +99,7 @@
         {
           "disabled": false,
           "document": "角色的资源描述，可在[访问管理](https://console.cloud.tencent.com/cam/role)，点击角色名获取。\n普通角色：\nqcs::cam::uin/12345678:role/4611686018427397919、qcs::cam::uin/12345678:roleName/testRoleName\n服务角色：\nqcs::cam::uin/12345678:role/tencentcloudServiceRole/4611686018427397920、qcs::cam::uin/12345678:role/tencentcloudServiceRoleName/testServiceRoleName",
-          "example": "qcs::cam::uin/100015158414:roleName/readOnlyRole",
+          "example": "qcs::cam::uin/10001:roleName/readOnlyRole",
           "member": "string",
           "name": "RoleArn",
           "required": true,
@@ -128,7 +135,7 @@
         {
           "disabled": false,
           "document": "角色外部ID，可在[访问管理](https://console.cloud.tencent.com/cam/role)，点击角色名获取。\n长度在2到128之间，可包含大小写字符，数字以及特殊字符：=,.@:/-。 正则为：[\\w+=,.@:\\/-]*",
-          "example": "role-1232",
+          "example": "role-external-id",
           "member": "string",
           "name": "ExternalId",
           "required": false,
@@ -137,7 +144,7 @@
         {
           "disabled": false,
           "document": "会话标签列表。最多可以传递 50 个会话标签，不支持包含相同标签键。",
-          "example": "[{\"Key\":\"partment\",\"Value\":\"product\"}]",
+          "example": "无",
           "member": "Tag",
           "name": "Tags",
           "required": false,
@@ -151,6 +158,24 @@
           "name": "SourceIdentity",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "MFA序列号，与进行调用的CAM用户关联的MFA设备的标识号。格式qcs::cam:uin/${ownerUin}::mfa/${mfaType}。mfaType支持softToken（软token）",
+          "example": "qcs::cam:uin/10001::mfa/softToken",
+          "member": "string",
+          "name": "SerialNumber",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "mfa身份验证码。",
+          "example": "482724",
+          "member": "string",
+          "name": "TokenCode",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -161,7 +186,7 @@
         {
           "disabled": false,
           "document": "临时访问凭证",
-          "example": "{\"Token\":\"da1e***\",\"TmpSecretId\":\"AKID***\",\"TmpSecretKey\":\"q95K***\"}",
+          "example": "无",
           "member": "Credentials",
           "name": "Credentials",
           "output_required": true,
@@ -546,6 +571,81 @@
           "output_required": true,
           "type": "string",
           "value_allowed_null": true
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "GetSessionTokenRequest": {
+      "document": "GetSessionToken请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "MFA序列号，与进行调用的CAM用户关联的MFA设备的标识号。格式qcs::cam:uin/${ownerUin}::mfa/${mfaType}。mfaType支持softToken（软token）",
+          "example": "qcs::cam:uin/10001::mfa/softToken",
+          "member": "string",
+          "name": "SerialNumber",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "mfa身份验证码。",
+          "example": "482724",
+          "member": "string",
+          "name": "TokenCode",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "指定临时证书的有效期，单位：秒，默认1800秒，主账号最长可设定有效期为7200秒，子账号最长可设定有效期为129600秒。",
+          "example": "1800",
+          "member": "int64",
+          "name": "DurationSeconds",
+          "required": false,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "GetSessionTokenResponse": {
+      "document": "GetSessionToken返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "临时访问凭证",
+          "example": "{\"Token\":\"da1e***\",\"TmpSecretId\":\"AKID***\",\"TmpSecretKey\":\"q95K***\"}",
+          "member": "Credentials",
+          "name": "Credentials",
+          "output_required": true,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "证书无效的时间，返回 Unix 时间戳，精确到秒",
+          "example": "1686664553",
+          "member": "uint64",
+          "name": "ExpiredTime",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "临时访问凭证的过期时间，以 iso8601 格式的 UTC 时间表示",
+          "example": "2018-12-04T09:06:16Z",
+          "member": "string",
+          "name": "Expiration",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",

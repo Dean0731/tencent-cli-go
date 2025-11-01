@@ -457,6 +457,24 @@
           "name": "UserPrivilege",
           "required": false,
           "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "计算组列表",
+          "example": "[\"cp1\"]",
+          "member": "string",
+          "name": "ComputeGroups",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "集群ID",
+          "example": "cdwdoris-xxx",
+          "member": "string",
+          "name": "InstanceId",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -638,7 +656,7 @@
         {
           "disabled": false,
           "document": "远端doris的连接信息",
-          "example": "source",
+          "example": "无",
           "member": "DorisSourceInfo",
           "name": "DorisSourceInfo",
           "output_required": true,
@@ -689,6 +707,28 @@
           "required": false,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "快照保留策略",
+          "example": "无",
+          "member": "SnapshotRemainPolicy",
+          "name": "SnapshotRemainPolicy",
+          "output_required": false,
+          "required": false,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "隔离次数",
+          "example": "1",
+          "member": "int64",
+          "name": "IsolationCount",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -724,6 +764,17 @@
           "example": "snapshot-axxx",
           "member": "string",
           "name": "SnapShotPath",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "cos桶所在地域",
+          "example": "ap-chongqing",
+          "member": "string",
+          "name": "Region",
           "output_required": false,
           "required": false,
           "type": "string",
@@ -887,7 +938,7 @@
         },
         {
           "disabled": false,
-          "document": "实例对应snapshoit的id",
+          "document": "实例对应Snapshot的id",
           "example": "2221",
           "member": "int64",
           "name": "TaskId",
@@ -1221,6 +1272,16 @@
     "ClusterConfigsInfoFromEMR": {
       "document": "用于返回XML格式的配置文件和内容以及其他配置文件有关的信息",
       "members": [
+        {
+          "disabled": false,
+          "document": "计算组id",
+          "example": "tchd-lb3twoq7-r8q3poye",
+          "member": "string",
+          "name": "ComputeGroupId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
         {
           "disabled": false,
           "document": "配置文件名称",
@@ -1642,7 +1703,7 @@
           "type": "list"
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "0为默认。1时是对远端的doris进行备份，不周期，一次性",
           "example": "1",
           "member": "int64",
@@ -1651,7 +1712,7 @@
           "type": "int"
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "远端doris集群的连接信息",
           "example": "DorisSourceInfo",
           "member": "DorisSourceInfo",
@@ -1661,7 +1722,7 @@
         },
         {
           "disabled": false,
-          "document": "0为默认。1时是一次性备份。2时是远端备份",
+          "document": "0为周期备份。1时是立即备份。3时是定时备份。",
           "example": "1",
           "member": "int64",
           "name": "BackupTimeType",
@@ -1669,7 +1730,7 @@
           "type": "int"
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "0为默认。1时是备份完成后立即恢复",
           "example": "1",
           "member": "int64",
@@ -1678,7 +1739,7 @@
           "type": "int"
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "0为默认。1时是提供自定义的secret连接cos",
           "example": "1",
           "member": "int64",
@@ -1687,7 +1748,7 @@
           "type": "int"
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "cos认证的信息",
           "example": "1",
           "member": "CosSourceInfo",
@@ -1728,6 +1789,24 @@
           "example": "carson-test-1301087413",
           "member": "string",
           "name": "CosBucket",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "快照保留策略",
+          "example": "无",
+          "member": "SnapshotRemainPolicy",
+          "name": "SnapshotRemainPolicy",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "disabled": false,
+          "document": "备份数据所在地域，当前地域应该为空",
+          "example": "ap-chongqing",
+          "member": "string",
+          "name": "DataRemoteRegion",
           "required": false,
           "type": "string"
         }
@@ -1966,6 +2045,42 @@
           "name": "UserMultiZoneInfoArr",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "是否存算分离",
+          "example": "false",
+          "member": "bool",
+          "name": "IsSSC",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "CU数",
+          "example": "64",
+          "member": "int64",
+          "name": "SSCCU",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": true,
+          "document": "缓存盘大小",
+          "example": "200",
+          "member": "string",
+          "name": "CacheDiskSize",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "缓存盘大小",
+          "example": "200",
+          "member": "int64",
+          "name": "CacheDataDiskSize",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -2243,6 +2358,16 @@
           "output_required": false,
           "type": "bool",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "计算组",
+          "example": "tchd-xasdfa-xqexasdf",
+          "member": "string",
+          "name": "ComputeGroup",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -2276,6 +2401,15 @@
           "name": "IsDeleteAll",
           "required": false,
           "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "true代表恢复删除隔离中的job 默认false就是删除",
+          "example": "false",
+          "member": "bool",
+          "name": "IsRecover",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -2283,6 +2417,16 @@
     "DeleteBackUpDataResponse": {
       "document": "DeleteBackUpData返回参数结构体",
       "members": [
+        {
+          "disabled": false,
+          "document": "错误信息",
+          "example": "this is a error",
+          "member": "string",
+          "name": "ErrorMsg",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
@@ -2926,7 +3070,7 @@
         {
           "disabled": false,
           "document": "返回实例的配置文件相关的信息",
-          "example": "[ ]",
+          "example": "无",
           "member": "ClusterConfigsInfoFromEMR",
           "name": "ClusterConfList",
           "output_required": true,
@@ -2961,6 +3105,16 @@
           "name": "HasCN",
           "output_required": false,
           "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "实例已经存在的jar包列表",
+          "example": "无",
+          "member": "ClusterConfigsInfoFromEMR",
+          "name": "ExistingJarConfList",
+          "output_required": false,
+          "type": "list",
           "value_allowed_null": false
         },
         {
@@ -3259,6 +3413,15 @@
           "name": "IsQuery",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "计算组列表",
+          "example": "[\"cg1\",\"cg2\"]",
+          "member": "string",
+          "name": "ComputeGroups",
+          "required": false,
+          "type": "list"
         }
       ],
       "type": "object"
@@ -3422,6 +3585,15 @@
           "name": "IsQuery",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "计算组列表",
+          "example": "[\"cg1\",\"cg2\"]",
+          "member": "string",
+          "name": "ComputeGroups",
+          "required": false,
+          "type": "list"
         }
       ],
       "type": "object"
@@ -3499,7 +3671,7 @@
         {
           "disabled": false,
           "document": "Be节点",
-          "example": "已废弃",
+          "example": "beNodes",
           "member": "string",
           "name": "BeNodes",
           "output_required": false,
@@ -3509,7 +3681,7 @@
         {
           "disabled": false,
           "document": "Fe节点",
-          "example": "已废弃",
+          "example": "feNodes",
           "member": "string",
           "name": "FeNodes",
           "output_required": false,
@@ -3761,6 +3933,15 @@
           "name": "EndTime",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "计算组ID",
+          "example": "cg-1",
+          "member": "string",
+          "name": "ComputeGroupId",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -3854,8 +4035,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群状态，例如：Serving",
-          "example": "str",
+          "document": "集群状态 \n Init  创建中 \nServing   运行中 \nIsolated   已隔离 \nChanging  变更中",
+          "example": "Serving",
           "member": "string",
           "name": "InstanceState",
           "output_required": true,
@@ -3865,7 +4046,7 @@
         {
           "disabled": false,
           "document": "集群操作创建时间",
-          "example": "str",
+          "example": "2025-09-01 23:01:23",
           "member": "string",
           "name": "FlowCreateTime",
           "output_required": true,
@@ -3909,6 +4090,26 @@
           "member": "string",
           "name": "FlowMsg",
           "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "流程ProcessId",
+          "example": "124654",
+          "member": "string",
+          "name": "ProcessId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "Job名称",
+          "example": "create_instance",
+          "member": "string",
+          "name": "JobName",
+          "output_required": false,
           "type": "string",
           "value_allowed_null": false
         },
@@ -4061,6 +4262,15 @@
           "name": "SearchTags",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "0 : 存算一体,1：存算分离,2:ALL",
+          "example": "1",
+          "member": "int64",
+          "name": "InstanceType",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -4281,6 +4491,24 @@
           "name": "SortOrder",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "user",
+          "example": "user1",
+          "member": "string",
+          "name": "UserName",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "计算组列表",
+          "example": "[\"cg1\",\"cg2\"]",
+          "member": "string",
+          "name": "ComputeGroups",
+          "required": false,
+          "type": "list"
         }
       ],
       "type": "object"
@@ -4453,6 +4681,24 @@
           "name": "SortOrder",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "user",
+          "example": "user1",
+          "member": "string",
+          "name": "UserName",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "计算组列表",
+          "example": "[\"cg1\",\"cg2\"]",
+          "member": "string",
+          "name": "ComputeGroups",
+          "required": false,
+          "type": "list"
         }
       ],
       "type": "object"
@@ -4547,6 +4793,15 @@
           "name": "SpecName",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否存算分离",
+          "example": "false",
+          "member": "bool",
+          "name": "IsSSC",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -4677,6 +4932,15 @@
           "name": "TableName",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "用户名列表",
+          "example": "[ ]",
+          "member": "string",
+          "name": "UserNames",
+          "required": false,
+          "type": "list"
         }
       ],
       "type": "object"
@@ -5150,7 +5414,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "集群实例ID, \"cdw-xxxx\" 字符串类型",
+          "document": "集群实例ID, \"cdwdoris-xxxx\" 字符串类型",
           "example": "cdwch-xxxxxxxx",
           "member": "string",
           "name": "InstanceId",
@@ -5170,8 +5434,8 @@
         },
         {
           "disabled": false,
-          "document": "状态,\nInit 创建中; Serving 运行中； \nDeleted已销毁；Deleting 销毁中；\nModify 集群变更中；",
-          "example": "Running",
+          "document": "状态,\nInit  创建中\nServing   运行中\nIsolated   已隔离\nChanging  变更中",
+          "example": "Serving",
           "member": "string",
           "name": "Status",
           "output_required": true,
@@ -5280,7 +5544,7 @@
         },
         {
           "disabled": false,
-          "document": "高可用，“true\" \"false\"",
+          "document": "高可用，\"true\" \"false\"",
           "example": "false",
           "member": "string",
           "name": "HA",
@@ -5330,7 +5594,7 @@
         },
         {
           "disabled": false,
-          "document": "可用区说明，例如 \"广州二区\"",
+          "document": "可用区说明，例如 \"广州三区\"",
           "example": "广州三区",
           "member": "string",
           "name": "ZoneDesc",
@@ -5411,7 +5675,7 @@
         {
           "disabled": false,
           "document": "日志集ID",
-          "example": "seqeas-123q1",
+          "example": "seqeas-13q1",
           "member": "string",
           "name": "ClsLogSetId",
           "output_required": true,
@@ -5471,7 +5735,7 @@
         {
           "disabled": false,
           "document": "cos桶",
-          "example": "bucketName-cos-apps-cq-12382198",
+          "example": "bucketName-cos-apps-cq-12782193",
           "member": "string",
           "name": "CosBucketName",
           "output_required": false,
@@ -5521,7 +5785,7 @@
         {
           "disabled": false,
           "document": "页面特性，用于前端屏蔽一些页面入口",
-          "example": "[\"catalog\",\"xx\"]",
+          "example": "[\"catalog\",\"notthis\"]",
           "member": "string",
           "name": "Characteristic",
           "output_required": false,
@@ -5611,7 +5875,7 @@
         {
           "disabled": false,
           "document": "冷热分层使用COS桶",
-          "example": "bucketName-cos-apps-cq-12382198",
+          "example": "bucketName-cos-apps-cq-1382198",
           "member": "string",
           "name": "CoolDownBucket",
           "output_required": false,
@@ -5666,6 +5930,56 @@
           "name": "CNSummary",
           "output_required": false,
           "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "计算组个数",
+          "example": "1",
+          "member": "int64",
+          "name": "ComputeGroupCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "存算分离cos存储数据",
+          "example": "64.3",
+          "member": "float",
+          "name": "CosStorageSize",
+          "output_required": false,
+          "type": "float",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "存算分离的指标 当是true 不支持新建计算组",
+          "example": "true",
+          "member": "bool",
+          "name": "IsMasterNonVM",
+          "output_required": false,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "Cos容量包大小",
+          "example": "3130",
+          "member": "int64",
+          "name": "CosPkgCapacity",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "集群是否使用托管桶",
+          "example": "false",
+          "member": "bool",
+          "name": "UseManagedBucket",
+          "output_required": false,
+          "type": "bool",
           "value_allowed_null": false
         }
       ],
@@ -5796,10 +6110,30 @@
         },
         {
           "disabled": false,
+          "document": "虚拟可用区",
+          "example": "virtual-ap-guangzhou-5-0",
+          "member": "string",
+          "name": "VirtualZone",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
           "document": "创建时间",
           "example": "2024-12-16 12:23:11",
           "member": "string",
           "name": "CreateTime",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "计算组ID",
+          "example": "tchd-26twtz8s-cer39jcb",
+          "member": "string",
+          "name": "ComputeGroupId",
           "output_required": false,
           "type": "string",
           "value_allowed_null": false
@@ -5916,6 +6250,16 @@
           "example": "创建集群：FE节点3个/4核16G/增强型SSD云硬盘200GB,BE节点3个/4核16G/增强型SSD云硬盘200GB",
           "member": "string",
           "name": "OperationDetail",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "计算组id",
+          "example": "tchd-1234-4321",
+          "member": "string",
+          "name": "ComputerGroupId",
           "output_required": false,
           "type": "string",
           "value_allowed_null": false
@@ -6438,6 +6782,42 @@
           "name": "WhiteHost",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "更新类型，默认0，1为更新绑定计算组，2为更新默认计算组",
+          "example": "0",
+          "member": "int64",
+          "name": "UpdateType",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "需绑定计算组列表",
+          "example": "[\"cp1\"]",
+          "member": "string",
+          "name": "UpdateComputeGroups",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "默认计算组",
+          "example": "tchd-ekwold58-gdviogwc",
+          "member": "string",
+          "name": "DefaultComputeGroup",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "0: 灵活场景 1: 固定场景",
+          "example": "1",
+          "member": "int64",
+          "name": "ComputeGroupType",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -6687,6 +7067,46 @@
           "output_required": false,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "RIP",
+          "example": "10.0.13.4",
+          "member": "string",
+          "name": "RIp",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "计算组ID",
+          "example": "tchd-asdf-qsqw4e",
+          "member": "string",
+          "name": "ComputeGroupId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "创建时间",
+          "example": "2025-01-13 20:03:04",
+          "member": "string",
+          "name": "CreateTime",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "虚拟可用区",
+          "example": "virtual-ap-chongqing-1-1",
+          "member": "string",
+          "name": "VirtualZone",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -6792,6 +7212,39 @@
           "required": false,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "计算组id",
+          "example": "cg-123",
+          "member": "string",
+          "name": "ComputeGroupId",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "rip",
+          "example": "1.2.3.4",
+          "member": "string",
+          "name": "RIp",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "虚拟可用区",
+          "example": "virtual-ap-chongqing-1-1",
+          "member": "string",
+          "name": "VirtualZone",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -6806,6 +7259,7 @@
           "member": "string",
           "name": "Spec",
           "output_required": true,
+          "required": false,
           "type": "string",
           "value_allowed_null": false
         },
@@ -6816,6 +7270,7 @@
           "member": "int64",
           "name": "NodeSize",
           "output_required": true,
+          "required": false,
           "type": "int",
           "value_allowed_null": false
         },
@@ -6826,6 +7281,7 @@
           "member": "int64",
           "name": "Core",
           "output_required": true,
+          "required": false,
           "type": "int",
           "value_allowed_null": false
         },
@@ -6836,6 +7292,7 @@
           "member": "int64",
           "name": "Memory",
           "output_required": true,
+          "required": false,
           "type": "int",
           "value_allowed_null": false
         },
@@ -6846,6 +7303,7 @@
           "member": "int64",
           "name": "Disk",
           "output_required": true,
+          "required": false,
           "type": "int",
           "value_allowed_null": false
         },
@@ -6856,6 +7314,7 @@
           "member": "string",
           "name": "DiskType",
           "output_required": true,
+          "required": false,
           "type": "string",
           "value_allowed_null": false
         },
@@ -6866,6 +7325,7 @@
           "member": "string",
           "name": "DiskDesc",
           "output_required": true,
+          "required": false,
           "type": "string",
           "value_allowed_null": false
         },
@@ -6876,6 +7336,7 @@
           "member": "AttachCBSSpec",
           "name": "AttachCBSSpec",
           "output_required": true,
+          "required": false,
           "type": "object",
           "value_allowed_null": false
         },
@@ -6886,6 +7347,7 @@
           "member": "string",
           "name": "SubProductType",
           "output_required": false,
+          "required": false,
           "type": "string",
           "value_allowed_null": false
         },
@@ -6896,6 +7358,7 @@
           "member": "int64",
           "name": "SpecCore",
           "output_required": false,
+          "required": false,
           "type": "int",
           "value_allowed_null": false
         },
@@ -6906,6 +7369,7 @@
           "member": "int64",
           "name": "SpecMemory",
           "output_required": false,
+          "required": false,
           "type": "int",
           "value_allowed_null": false
         },
@@ -6916,6 +7380,7 @@
           "member": "int64",
           "name": "DiskCount",
           "output_required": false,
+          "required": false,
           "type": "int",
           "value_allowed_null": false
         },
@@ -6926,6 +7391,7 @@
           "member": "int64",
           "name": "Encrypt",
           "output_required": false,
+          "required": false,
           "type": "int",
           "value_allowed_null": false
         },
@@ -6936,11 +7402,12 @@
           "member": "int64",
           "name": "MaxDiskSize",
           "output_required": false,
+          "required": false,
           "type": "int",
           "value_allowed_null": false
         }
       ],
-      "usage": "out"
+      "usage": "both"
     },
     "OpenCoolDownPolicyRequest": {
       "document": "OpenCoolDownPolicy请求参数结构体",
@@ -7283,6 +7750,15 @@
           "name": "HaType",
           "required": true,
           "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "前端鉴权使用",
+          "example": "false",
+          "member": "bool",
+          "name": "CheckAuth",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -7436,6 +7912,26 @@
           "name": "Bucket",
           "output_required": false,
           "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "存算分离集群数",
+          "example": "12",
+          "member": "int64",
+          "name": "SSCCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否开通存算分离",
+          "example": "false",
+          "member": "bool",
+          "name": "EnableSSC",
+          "output_required": false,
+          "type": "bool",
           "value_allowed_null": false
         }
       ],
@@ -7702,7 +8198,7 @@
         {
           "disabled": false,
           "document": "配置文件名称",
-          "example": "fe/be/broken",
+          "example": "FE/BE/BROKER",
           "member": "string",
           "name": "ConfigName",
           "required": true,
@@ -8002,6 +8498,16 @@
           "output_required": false,
           "type": "int",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "恢复任务id",
+          "example": "3412",
+          "member": "int64",
+          "name": "ID",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -8044,6 +8550,15 @@
           "name": "HaType",
           "required": false,
           "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "前端鉴权使用",
+          "example": "false",
+          "member": "bool",
+          "name": "CheckAuth",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -8113,12 +8628,30 @@
         },
         {
           "disabled": false,
-          "document": "角色（MATER/CORE），MASTER 对应 FE，CORE对应BE",
+          "document": "角色（MASTER/CORE），MASTER 对应 FE，CORE对应BE",
           "example": "BE",
           "member": "string",
           "name": "Type",
           "required": true,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "前端鉴权使用，后端API调用传false，传true不会执行变配",
+          "example": "false",
+          "member": "bool",
+          "name": "CheckAuth",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "是否滚动重启",
+          "example": "false",
+          "member": "bool",
+          "name": "RollingRestart",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -8181,7 +8714,7 @@
         },
         {
           "disabled": false,
-          "document": "调度类型，不传该参数时为立即执行：\nDay-天\nWeek-周\nMonth-月\nOnce-单次\n",
+          "document": "调度类型，不传该参数时为立即执行：\nDay-天\nWeek-周\nMonth-月\nQuarter-季度\nYear-年\nOnce-单次\n",
           "example": "Day",
           "member": "string",
           "name": "ScheduleType",
@@ -8463,9 +8996,58 @@
           "output_required": false,
           "type": "int",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "计算组",
+          "example": "tchd-asdfqx-asdfd2",
+          "member": "string",
+          "name": "ComputeGroup",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
+    },
+    "SnapshotRemainPolicy": {
+      "document": "备份快照保留策略",
+      "members": [
+        {
+          "disabled": false,
+          "document": "0-不主动删除；1-超过指定时间周期自动删除；2-保留指定数据快照",
+          "example": "1",
+          "member": "int64",
+          "name": "Type",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "保留快照的时间",
+          "example": "7",
+          "member": "int64",
+          "name": "RemainDays",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "保留最新快照的数量",
+          "example": "10",
+          "member": "int64",
+          "name": "RemainLatestNum",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
     },
     "Tag": {
       "document": "标签描述",
@@ -8646,6 +9228,15 @@
           "name": "CamRangerGroupIds",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "0: 灵活场景 1: 固定场景",
+          "example": "0",
+          "member": "int64",
+          "name": "ComputeGroupType",
+          "required": false,
+          "type": "int"
         }
       ],
       "usage": "in"
@@ -8774,7 +9365,7 @@
         },
         {
           "disabled": false,
-          "document": "Encryptid",
+          "document": "Encrypted",
           "example": "1",
           "member": "int64",
           "name": "Encrypt",
@@ -8790,6 +9381,16 @@
           "name": "Main",
           "output_required": false,
           "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "0表示未开通容器化，1表示已开通容器化",
+          "example": "0",
+          "member": "int64",
+          "name": "ContainerEnabled",
+          "output_required": false,
+          "type": "int",
           "value_allowed_null": false
         }
       ],

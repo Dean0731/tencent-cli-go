@@ -1105,6 +1105,15 @@
           "name": "WafConfig",
           "required": false,
           "type": "object"
+        },
+        {
+          "disabled": false,
+          "document": "标签",
+          "example": "无",
+          "member": "Tag",
+          "name": "Tags",
+          "required": false,
+          "type": "list"
         }
       ],
       "type": "object"
@@ -2055,6 +2064,17 @@
           "required": false,
           "type": "object",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "标签",
+          "example": "无",
+          "member": "Tag",
+          "name": "Tags",
+          "output_required": false,
+          "required": false,
+          "type": "list",
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -2840,6 +2860,16 @@
           "value_allowed_null": false
         },
         {
+          "disabled": false,
+          "document": "标签",
+          "example": "无",
+          "member": "Tag",
+          "name": "Tags",
+          "output_required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
           "name": "RequestId",
@@ -3091,6 +3121,7 @@
           "example": "100",
           "member": "int64",
           "name": "TotalCount",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -3100,6 +3131,7 @@
           "example": "无",
           "member": "FunctionLog",
           "name": "Data",
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -3109,6 +3141,7 @@
           "example": "无",
           "member": "LogSearchContext",
           "name": "SearchContext",
+          "output_required": true,
           "type": "object",
           "value_allowed_null": false
         },
@@ -4003,7 +4036,7 @@
         },
         {
           "disabled": false,
-          "document": "参数已废弃\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "该参数即将下线，不推荐用户使用\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "\"entrypoint.sh\"",
           "member": "string",
           "name": "EntryPoint",
@@ -4068,6 +4101,7 @@
           "example": "'FALSE'",
           "member": "string",
           "name": "DynamicEnabled",
+          "output_required": true,
           "required": false,
           "type": "string",
           "value_allowed_null": true
@@ -4078,6 +4112,7 @@
           "example": "1",
           "member": "uint64",
           "name": "MaxConcurrency",
+          "output_required": false,
           "required": false,
           "type": "int",
           "value_allowed_null": true
@@ -6430,7 +6465,7 @@
         },
         {
           "disabled": false,
-          "document": "请求 Invoke 接口，该参数已弃用。请求 InvokeFunction 接口，该参数值为请求执行[状态码](https://cloud.tencent.com/document/product/583/42611)。",
+          "document": "该参数不再维护，不推荐用户继续使用。",
           "example": "200",
           "member": "int64",
           "name": "InvokeResult",
@@ -7086,6 +7121,16 @@
           "output_required": true,
           "type": "string",
           "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "与此触发器关联的资源。目前仅函数URL关联的自定义域名会返回",
+          "example": "[{\\\"domain\\\":\\\"test.com\\\",\\\"PathMatch\\\":\\\"/*\\\"}]",
+          "member": "string",
+          "name": "BoundResources",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"

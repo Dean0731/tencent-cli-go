@@ -80,7 +80,7 @@
     "CreateInstanceAccount": {
       "document": "本接口（CreateInstanceAccount）用于自定义访问实例的账号。",
       "input": "CreateInstanceAccountRequest",
-      "name": "创建实例子账号",
+      "name": "自定义实例账号",
       "output": "CreateInstanceAccountResponse",
       "status": "online"
     },
@@ -183,9 +183,9 @@
       "status": "online"
     },
     "DescribeInstanceAccount": {
-      "document": "本接口（DescribeInstanceAccount）用于查看实例子账号信息。",
+      "document": "本接口（DescribeInstanceAccount）用于查看实例账号信息。",
       "input": "DescribeInstanceAccountRequest",
-      "name": "查看实例子账号信息",
+      "name": "查看实例账号信息",
       "output": "DescribeInstanceAccountResponse",
       "status": "online"
     },
@@ -428,7 +428,7 @@
       "status": "online"
     },
     "DescribeSecondLevelBackupInfo": {
-      "document": "查询实例秒级备份信息",
+      "document": "本接口（DescribeSecondLevelBackupInfo）用于查询实例秒级备份信息。",
       "input": "DescribeSecondLevelBackupInfoRequest",
       "name": "查询实例秒级备份信息",
       "output": "DescribeSecondLevelBackupInfoResponse",
@@ -575,9 +575,9 @@
       "status": "online"
     },
     "ModifyInstanceAccount": {
-      "document": "本接口（ModifyInstanceAccount）用于修改实例子账号。",
+      "document": "本接口（ModifyInstanceAccount）用于修改实例账号。",
       "input": "ModifyInstanceAccountRequest",
-      "name": "修改实例子账号",
+      "name": "修改实例账号",
       "output": "ModifyInstanceAccountResponse",
       "status": "online"
     },
@@ -589,9 +589,9 @@
       "status": "online"
     },
     "ModifyInstanceBackupMode": {
-      "document": "修改实例的备份模式",
+      "document": "本接口（ModifyInstanceBackupMode）用于修改实例的备份模式。",
       "input": "ModifyInstanceBackupModeRequest",
-      "name": "修改实例备份模式",
+      "name": "开启或关闭数据闪回功能",
       "output": "ModifyInstanceBackupModeResponse",
       "status": "online"
     },
@@ -670,6 +670,13 @@
       "input": "ReleaseWanAddressRequest",
       "name": "关闭外网接口",
       "output": "ReleaseWanAddressResponse",
+      "status": "online"
+    },
+    "RemoveReplicationGroup": {
+      "document": "本接口（RemoveReplicationGroup）用于删除复制组。",
+      "input": "RemoveReplicationGroupRequest",
+      "name": "删除复制组",
+      "output": "RemoveReplicationGroupResponse",
       "status": "online"
     },
     "RemoveReplicationInstance": {
@@ -861,7 +868,7 @@
         },
         {
           "disabled": false,
-          "document": "实例ID。请登录[Redis控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
+          "document": "实例ID。\n- 添加复制组实例有地域与可用区限制。具体信息，请参见[使用限制](https://cloud.tencent.com/document/product/239/71934)。\n- 当前仅4.0、5.0 Redis 版集群架构的实例支持加入复制组。\n- 请登录 [Redis 控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制需加入复制组的实例 ID。",
           "example": "crs-deindi7de",
           "member": "string",
           "name": "InstanceId",
@@ -955,7 +962,7 @@
         {
           "disabled": false,
           "document": "实例 ID 列表，请登录[Redis控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
-          "example": "crs-deindi7de",
+          "example": "[\"crs-deindi7de\"]",
           "member": "string",
           "name": "InstanceIds",
           "required": true,
@@ -963,7 +970,7 @@
         },
         {
           "disabled": false,
-          "document": "应用的参数模板ID，请通过接口[DescribeParamTemplateInfo](https://cloud.tencent.com/document/product/239/58748)的返回参数 **TemplateId** 获取参数模板 ID。",
+          "document": "应用的参数模板ID。\n- 请通过接口 [DescribeParamTemplateInfo](https://cloud.tencent.com/document/product/239/58748) 的返回参数 **TemplateId** 获取参数模板 ID。\n- 仅当参数模板版本与目标实例的架构版本一致时，操作才能成功执行。版本不匹配将触发执行错误。",
           "example": "crs-cfg-rhlppeye",
           "member": "string",
           "name": "TemplateId",
@@ -979,7 +986,7 @@
         {
           "disabled": false,
           "document": "任务ID",
-          "example": "212",
+          "example": "[212]",
           "member": "int64",
           "name": "TaskIds",
           "output_required": true,
@@ -1546,7 +1553,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例 ID，请登录[Redis控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
+          "document": "实例 ID，请登录 [Redis 控制台回收站](https://console.cloud.tencent.com/redis/recycle)的实例列表复制实例 ID。",
           "example": "crs-5a4py64p",
           "member": "string",
           "name": "InstanceId",
@@ -1598,6 +1605,15 @@
           "name": "Password",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否加密密码",
+          "example": "false",
+          "member": "bool",
+          "name": "EncryptPassword",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -1674,7 +1690,7 @@
         },
         {
           "disabled": false,
-          "document": "安全组ID。请登录控制台，在<b>安全组</b>页面获取安全组 ID 信息。",
+          "document": "安全组ID。请通过 [DescribeInstanceSecurityGroup](https://cloud.tencent.com/document/product/239/34447) 接口获取实例的安全组 ID。",
           "example": "[\"sg-bmadczm1\"]",
           "member": "string",
           "name": "SecurityGroupIdList",
@@ -1684,7 +1700,7 @@
         {
           "disabled": false,
           "document": "克隆实例使用的备份ID。请通过接口[DescribeInstanceBackups](https://cloud.tencent.com/document/product/239/20011)获取备份ID。",
-          "example": "154572601-1165734322-153731238",
+          "example": "154572601-1165734322-153705740",
           "member": "string",
           "name": "BackupId",
           "required": true,
@@ -1729,7 +1745,7 @@
         {
           "disabled": false,
           "document": "克隆实例的访问密码。<ul><li>当输入参数<b>NoAuth</b>为<b>true</b>时，可不设置该参数。</li><li>当实例为Redis2.8、4.0和5.0时，其密码格式为：8-30个字符，至少包含小写字母、大写字母、数字和字符 ()`~!@#$%^&*-+=_|{}[]:;<>,.?/ 中的2种，不能以\"/\"开头；</li><li>当实例为CKV 3.2时，其密码格式为：8-30个字符，必须包含字母和数字，且不包含其他字符。</li></ul>",
-          "example": "123456MyP@ssword",
+          "example": "305961MyP@ssword",
           "member": "string",
           "name": "Password",
           "required": false,
@@ -1792,7 +1808,7 @@
         {
           "disabled": false,
           "document": "指定克隆实例的告警策略 ID。请登录[腾讯云可观测平台控制台](https://console.cloud.tencent.com/monitor/alarm2/policy)，在 <b>告警管理</b> > <b>策略管理</b>页面获取策略 ID 信息。",
-          "example": "policy-ny3vfcp0",
+          "example": "[\"policy-ny3vfcp0\"]",
           "member": "string",
           "name": "AlarmPolicyList",
           "required": false,
@@ -1806,6 +1822,15 @@
           "name": "CloneTime",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否加密密码",
+          "example": "false",
+          "member": "bool",
+          "name": "EncryptPassword",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -1814,9 +1839,9 @@
       "document": "CloneInstances返回参数结构体",
       "members": [
         {
-          "disabled": false,
-          "document": "请求任务 ID。",
-          "example": "\"crs-bzssy0cp,crs-a47h97c1\"",
+          "disabled": true,
+          "document": "交易的ID。",
+          "example": "20250825297021530591847",
           "member": "string",
           "name": "DealId",
           "output_required": true,
@@ -1831,6 +1856,16 @@
           "name": "InstanceIds",
           "output_required": true,
           "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "订单号。",
+          "example": "20250825297021530591847",
+          "member": "string",
+          "name": "DealName",
+          "output_required": false,
+          "type": "string",
           "value_allowed_null": false
         },
         {
@@ -1946,7 +1981,7 @@
         },
         {
           "disabled": false,
-          "document": "账户读写权限，支持选择只读与读写权限。\n- r：只读\n- rw: 读写权限",
+          "document": "账户读写权限，支持选择只读与读写权限。\n- r：只读。\n- rw: 读写。",
           "example": "rw",
           "member": "string",
           "name": "Privilege",
@@ -1955,12 +1990,21 @@
         },
         {
           "disabled": false,
-          "document": "子账号描述信息，长度[0,64] 字节，支持中文。",
+          "document": "账号备注描述信息，长度为[0,64] 字节，支持中文。",
           "example": "\"生产账号\"",
           "member": "string",
           "name": "Remark",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否加密密码",
+          "example": "false",
+          "member": "bool",
+          "name": "EncryptPassword",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -1970,7 +2014,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "任务ID",
+          "document": "任务ID。",
           "example": "29600111",
           "member": "int64",
           "name": "TaskId",
@@ -1992,7 +2036,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例类型。\n<ul><li>2：Redis 2.8 内存版（标准架构）。</li><li>3：CKV 3.2 内存版（标准架构）。</li><li>4：CKV 3.2 内存版（集群架构）。</li><li>6：Redis 4.0 内存版（标准架构）。</li><li>7：Redis 4.0 内存版（集群架构）。</li><li>8：Redis 5.0 内存版（标准架构）。</li><li>9：Redis 5.0 内存版（集群架构）。</li><li>15：Redis 6.2 内存版（标准架构）。</li><li>16：Redis 6.2 内存版（集群架构）。</li><li>17：Redis 7.0 内存版（标准架构）。</li><li>18：Redis 7.0 内存版（集群架构）。</li>说明：CKV 版本当前有存量用户使用，暂时保留。</ul>",
+          "document": "实例类型。\n- 2：Redis 2.8 内存版（标准架构）。\n- 3：CKV 3.2 内存版（标准架构）。\n- 4：CKV 3.2 内存版（集群架构）。\n- 6：Redis 4.0 内存版（标准架构）。\n- 7：Redis 4.0 内存版（集群架构）。\n- 8：Redis 5.0 内存版（标准架构）。\n- 9：Redis 5.0 内存版（集群架构）。\n- 15：Redis 6.2 内存版（标准架构）。\n- 16：Redis 6.2 内存版（集群架构）。\n- 17：Redis 7.0 内存版（标准架构）。\n- 18：Redis 7.0 内存版（集群架构）。\n- 200：Memcached 1.6 内存版（集群架构）。\n**说明**：CKV 版本当前有存量用户使用，暂时保留。",
           "example": "6",
           "member": "uint64",
           "name": "TypeId",
@@ -2047,7 +2091,7 @@
         {
           "disabled": false,
           "document": "访问实例的密码。\n- 当输入参数**NoAuth**为**true**时，指设置实例为免密码访问，Password可不用配置，否则Password为必填参数。\n- 当实例类型**TypeId**为Redis 2.8 内存版标准架构、Redis 4.0、5.0、6.2、7.0内存版标准架构或集群架构时，其密码复杂度要求为：8-64个字符，至少包含小写字母、大写字母、数字和字符()`~!@#$%^&*-+=_|{}[]:;<>,.?/ 中的2种，不能以\"/\"开头。\n- 当实例类型**TypeId**为CKV 3.2 内存版标准架构或集群架构时，其密码复杂度为：8-30个字符，必须包含字母和数字，且不包含其他字符。",
-          "example": "123456MyP@ssword",
+          "example": "260945MyP@ssword",
           "member": "string",
           "name": "Password",
           "required": false,
@@ -2118,7 +2162,7 @@
         },
         {
           "disabled": false,
-          "document": "实例副本数量。\n- Redis 内存版 4.0、5.0、6.2 标准架构和集群架构支持副本数量范围为[1,5]。\n- Redis 2.8标准版、CKV标准版只支持1副本。",
+          "document": "实例副本数量。\n- Redis 内存版 4.0、5.0、6.2、7.0 标准架构和集群架构支持副本数量范围为[1,5]。\n- Redis 2.8标准版、CKV标准版只支持1副本。",
           "example": "1",
           "member": "int64",
           "name": "RedisReplicasNum",
@@ -2199,7 +2243,7 @@
         },
         {
           "disabled": false,
-          "document": "指定实例的产品版本。\n- local：本地盘版。\n- cloud：云盘版，\n- cdc：独享集群版。如果不传默认发货为本地盘版本。",
+          "document": "指实例部署模式。\n- local：传统架构，默认为 local。\n- cdc：独享集群。\n- cloud：云原生，当前已暂停售卖。",
           "example": "cdc",
           "member": "string",
           "name": "ProductVersion",
@@ -2208,7 +2252,7 @@
         },
         {
           "disabled": false,
-          "document": "独享集群 ID。当**ProductVersion**设置为**cdc**时，该参数必须设置。",
+          "document": "独享集群 ID。\n\n- 当 **ProductVersion** 设置为 **cdc** 时，该参数必须设置。\n- 请通过接口[ DescribeRedisClusters](https://cloud.tencent.com/document/product/239/109628) 获取集群 ID。",
           "example": "crs-cdc-0xigvn3t",
           "member": "string",
           "name": "RedisClusterId",
@@ -2223,6 +2267,15 @@
           "name": "AlarmPolicyList",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "是否加密密码",
+          "example": "false",
+          "member": "bool",
+          "name": "EncryptPassword",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -2231,9 +2284,9 @@
       "document": "CreateInstances返回参数结构体",
       "members": [
         {
-          "disabled": false,
+          "disabled": true,
           "document": "交易的ID。",
-          "example": "\"crs-bzssy0cp,crs-a47h97c1\"",
+          "example": "20250825297021530591847",
           "member": "string",
           "name": "DealId",
           "output_required": true,
@@ -2243,11 +2296,21 @@
         {
           "disabled": false,
           "document": "实例ID。",
-          "example": "\"crs-bzssy0cp\",\"crs-a47h97c1\"",
+          "example": "[\"crs-bzssy0cp\",\"crs-a47h97c1\"]",
           "member": "string",
           "name": "InstanceIds",
           "output_required": true,
           "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "订单号。",
+          "example": "20250825297021530591847",
+          "member": "string",
+          "name": "DealName",
+          "output_required": false,
+          "type": "string",
           "value_allowed_null": false
         },
         {
@@ -2264,7 +2327,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "参数模板名称。",
+          "document": "参数模板名称。字符长度要求为[2,64]。",
           "example": "自定义参数模板",
           "member": "string",
           "name": "Name",
@@ -2282,7 +2345,7 @@
         },
         {
           "disabled": false,
-          "document": "产品类型。\n- 2：Redis 2.8 内存版（标准架构）。\n- 6：Redis 4.0 内存版（标准架构）。\n- 7：Redis 4.0 内存版（集群架构）。\n- 8：Redis 5.0 内存版（标准架构）。\n- 9：Redis 5.0 内存版（集群架构）。\n- 15：Redis 6.2 内存版（标准架构）。\n- 16：Redis 6.2 内存版（集群架构）。\n- 17：Redis 7.0 内存版（标准架构）。\n- 18：Redis 7.0 内存版（集群架构）。",
+          "document": "产品类型。\n- 6：Redis 4.0 内存版（标准架构）。\n- 7：Redis 4.0 内存版（集群架构）。\n- 8：Redis 5.0 内存版（标准架构）。\n- 9：Redis 5.0 内存版（集群架构）。\n- 15：Redis 6.2 内存版（标准架构）。\n- 16：Redis 6.2 内存版（集群架构）。\n- 17：Redis 7.0 内存版（标准架构）。\n- 18：Redis 7.0 内存版（集群架构）。",
           "example": "6",
           "member": "uint64",
           "name": "ProductType",
@@ -2379,6 +2442,16 @@
           "value_allowed_null": false
         },
         {
+          "disabled": false,
+          "document": "复制组string型id",
+          "example": "crs-repl-sdaXXX",
+          "member": "string",
+          "name": "GroupId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
           "name": "RequestId",
@@ -2413,7 +2486,7 @@
         {
           "disabled": false,
           "document": "修改时间。",
-          "example": "0",
+          "example": "1718073070",
           "member": "int64",
           "name": "Updatetime",
           "output_required": true,
@@ -2474,7 +2547,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "参数模板 ID。",
+          "document": "参数模板 ID。请登录 [Redis 控制台的参数模板](https://console.cloud.tencent.com/redis/templates)页面获取模板 ID。",
           "example": "crs-cfg-rhlppeye",
           "member": "string",
           "name": "TemplateId",
@@ -2924,7 +2997,7 @@
       "document": "DescribeBackupUrl返回参数结构体",
       "members": [
         {
-          "disabled": false,
+          "disabled": true,
           "document": "外网下载地址（6小时内链接有效），该字段正在逐步废弃中。",
           "example": "[\"http://example.com/download/rdb/1.rdb\"]",
           "member": "string",
@@ -2934,7 +3007,7 @@
           "value_allowed_null": false
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "内网下载地址（6小时内链接有效），该字段正在逐步废弃中。",
           "example": "[\"http://example.com/download/rdb/1.rdb\"]",
           "member": "string",
@@ -2944,7 +3017,7 @@
           "value_allowed_null": false
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "文件名称，该字段正在逐步废弃中。\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "[\"1.rdb\"]",
           "member": "string",
@@ -3301,7 +3374,7 @@
         },
         {
           "disabled": false,
-          "document": "分页大小。",
+          "document": "分页大小。默认值为20，最小值为1，最大值为100。",
           "example": "10",
           "member": "int64",
           "name": "Limit",
@@ -3403,7 +3476,7 @@
         {
           "disabled": false,
           "document": "备份任务的状态：\n1：备份在流程中。\n2：备份正常。\n3：备份转RDB文件处理中。\n4：已完成RDB转换。\n-1：备份已过期。\n-2：备份已删除。",
-          "example": "2",
+          "example": "[2]",
           "member": "int64",
           "name": "Status",
           "required": false,
@@ -3650,13 +3723,22 @@
       "document": "DescribeInstanceDealDetail请求参数结构体",
       "members": [
         {
-          "disabled": false,
-          "document": "订单交易ID数组，即 [CreateInstances](https://cloud.tencent.com/document/api/239/20026) 的输出参数DealId。数组最大长度限制为10",
-          "example": "[\"6959052\\n\"]",
+          "disabled": true,
+          "document": "订单号，即 [CreateInstances](https://cloud.tencent.com/document/api/239/20026) 的输出参数DealId。数组最大长度限制为10",
+          "example": "[\"20250825297021508048753\"]",
           "member": "string",
           "name": "DealIds",
-          "required": true,
+          "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "订单号，即 [CreateInstances](https://cloud.tencent.com/document/api/239/20026) 的输出参数DealName。数组最大长度限制为10",
+          "example": "20250825297021508048753",
+          "member": "string",
+          "name": "DealName",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -3715,7 +3797,7 @@
         },
         {
           "disabled": false,
-          "document": "输出每页显示事件的数量，默认：10，最大100。",
+          "document": "输出每页显示事件的数量。\n- 默认值：10。\n- 取值范围：[1,100]。",
           "example": "10",
           "member": "int64",
           "name": "PageSize",
@@ -3724,7 +3806,7 @@
         },
         {
           "disabled": false,
-          "document": "配置查询事件的输出页码，即支持根据PageNo（页码）与 PageSize （每页输出数量）查询某一页的事件。默认：1。",
+          "document": "配置查询事件的输出页码，即支持根据PageNo（页码）与 PageSize （每页输出数量）查询某一页的事件。\n- 默认值：1。\n- 取值范围：大于0 的正整数。",
           "example": "1",
           "member": "int64",
           "name": "PageNo",
@@ -3734,7 +3816,7 @@
         {
           "disabled": false,
           "document": "事件当前状态。\n- Waiting：未到达执行日期或不在维护时间窗内的事件。\n- Running：在维护时间窗内，正在执行维护的事件。\n- Finished：已全部完成维护的事件。\n- Canceled：已取消执行的事件。",
-          "example": "Running",
+          "example": "[\"Running\"]",
           "member": "string",
           "name": "Status",
           "required": false,
@@ -3743,7 +3825,7 @@
         {
           "disabled": false,
           "document": "事件类型，当前仅支持配置实例迁移、资源腾挪、机房裁撤相关的运维操作。该参数仅支持配置为 **InstanceMigration**。",
-          "example": "InstanceMigration",
+          "example": "[\"InstanceMigration\"]",
           "member": "string",
           "name": "EventTypes",
           "required": false,
@@ -3752,7 +3834,7 @@
         {
           "disabled": false,
           "document": "配置查询事件等级。事件等级根据其影响严重程度和紧急程度进行分级，由重至轻依次为关键、重要、中等、一般。\n- Critical：关键\n- High：重要\n- Middle：中等\n- Low：一般",
-          "example": "Low",
+          "example": "[\"Low\"]",
           "member": "string",
           "name": "Grades",
           "required": false,
@@ -3777,7 +3859,7 @@
         {
           "disabled": false,
           "document": "实例事件信息",
-          "example": "RedisInstanceEvent",
+          "example": "无",
           "member": "RedisInstanceEvent",
           "name": "RedisInstanceEvents",
           "output_required": true,
@@ -3798,7 +3880,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例ID。",
+          "document": "实例ID。请登录[Redis控制台](https://console.cloud.tencent.com/redis/instance)在实例列表复制实例 ID。",
           "example": "crs-d8ej0xn2",
           "member": "string",
           "name": "InstanceId",
@@ -4317,7 +4399,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例Id",
+          "document": "实例 ID 。请登录 [Redis 控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
           "example": "crs-5a4py64p",
           "member": "string",
           "name": "InstanceId",
@@ -4326,7 +4408,7 @@
         },
         {
           "disabled": false,
-          "document": "分页大小",
+          "document": "分页大小。默认为100，最大值为 200。",
           "example": "100",
           "member": "uint64",
           "name": "Limit",
@@ -4335,7 +4417,7 @@
         },
         {
           "disabled": false,
-          "document": "偏移量，取Limit整数倍",
+          "document": "偏移量，取Limit整数倍，默认值为0。计算公式：offset=limit*(页码-1)。",
           "example": "0",
           "member": "uint64",
           "name": "Offset",
@@ -4459,8 +4541,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例 ID 列表，数组长度限制[0,100]。例如：[\"crs-f2ho5rsz\\n\"]",
-          "example": "[\"crs-f2ho5rsz\\n\"]",
+          "document": "实例 ID 列表，数组长度限制[0,100]。请登录 [Redis 控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
+          "example": "[\"crs-f2ho5rsz\"]",
           "member": "string",
           "name": "InstanceIds",
           "required": true,
@@ -4505,7 +4587,7 @@
         },
         {
           "disabled": false,
-          "document": "是否过滤掉从节信息。\n- true；过滤从节点。\n- false：不过滤。",
+          "document": "指定是否过滤掉从节信息。\n- true；过滤从节点。\n- false：不过滤。默认为 false。",
           "example": "false",
           "member": "bool",
           "name": "FilterSlave",
@@ -4569,7 +4651,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "指定实例 ID。例如：crs-xjhsdj****。请登录[Redis控制台](https://console.cloud.tencent.com/redis#/)在实例列表复制实例 ID。\n示例值：crs-asdasdas",
+          "document": "指定实例 ID。请登录[Redis控制台](https://console.cloud.tencent.com/redis#/)在实例列表复制实例 ID。",
           "example": "crs-f8bjda0p",
           "member": "string",
           "name": "InstanceId",
@@ -4578,7 +4660,7 @@
         },
         {
           "disabled": false,
-          "document": "功能特性名称\n- read-local-node-only 就近接入功能\n- multi-account 多账号功能",
+          "document": "支持查询的功能特性如下所示。\n- read-local-node-only：就近接入。\n- multi-account：多账号管理。\n- auto-failback：故障恢复场景，主节点是否开启自动回切。",
           "example": "read-local-node-only",
           "member": "string",
           "name": "FeatureName",
@@ -4822,7 +4904,7 @@
         },
         {
           "disabled": false,
-          "document": "实例类型。\n- 2：Redis 2.8 内存版（标准架构）。\n- 3：CKV 3.2 内存版（标准架构）。\n- 4：CKV 3.2 内存版（集群架构）。\n- 5：Redis 2.8 内存版（单机）。\n- 6：Redis 4.0 内存版（标准架构）。\n- 7：Redis 4.0 内存版（集群架构）。\n- 8：Redis 5.0 内存版（标准架构）。\n- 9：Redis 5.0 内存版（集群架构）。\n- 15：Redis 6.2 内存版（标准架构）。\n- 16：Redis 6.2 内存版（集群架构）。\n- 17：Redis 7.0 内存版（标准架构）。\n- 18：Redis 7.0 内存版（集群架构）。",
+          "document": "实例类型。\n- 2：Redis 2.8 内存版（标准架构）。\n- 3：CKV 3.2 内存版（标准架构）。\n- 4：CKV 3.2 内存版（集群架构）。\n- 5：Redis 2.8 内存版（单机）。\n- 6：Redis 4.0 内存版（标准架构）。\n- 7：Redis 4.0 内存版（集群架构）。\n- 8：Redis 5.0 内存版（标准架构）。\n- 9：Redis 5.0 内存版（集群架构）。\n- 15：Redis 6.2 内存版（标准架构）。\n- 16：Redis 6.2 内存版（集群架构）。\n- 17：Redis 7.0 内存版（标准架构）。\n- 18：Redis 7.0 内存版（集群架构）。\n- 200:Memcached 1.6 内存版（集群架构）。",
           "example": "8",
           "member": "int64",
           "name": "Type",
@@ -4859,7 +4941,7 @@
         {
           "disabled": false,
           "document": "根据标签的 Key 和 Value 筛选资源。该参数不配置或者数组设置为空值，则不根据标签进行过滤。",
-          "example": "无",
+          "example": "[{\"TagKey\":\"key1\",\"TagValue\":\"value1\"}]",
           "member": "InstanceTagInfo",
           "name": "InstanceTags",
           "required": false,
@@ -4920,7 +5002,7 @@
         {
           "disabled": false,
           "document": "实例详细信息列表。",
-          "example": "无",
+          "example": "具体请参考对应数据结构",
           "member": "InstanceSet",
           "name": "InstanceSet",
           "output_required": true,
@@ -5323,7 +5405,7 @@
         },
         {
           "disabled": false,
-          "document": "慢查询阈值，单位：毫秒。",
+          "document": "慢查询阈值。取值为大于0 的正整数。单位：毫秒。",
           "example": "100",
           "member": "int64",
           "name": "MinQueryTime",
@@ -5332,7 +5414,7 @@
         },
         {
           "disabled": false,
-          "document": "每页输出的任务列表大小，默认为 20，最多输出100条。",
+          "document": "每页输出的任务列表大小。默认值为20，最小值为1，最大值为100。",
           "example": "10",
           "member": "int64",
           "name": "Limit",
@@ -5341,7 +5423,7 @@
         },
         {
           "disabled": false,
-          "document": "分页偏移量，取Limit整数倍，计算公式：offset=limit*(页码-1)。",
+          "document": "分页偏移量。默认为0。取值为 Limit 整数倍。计算公式：offset=limit*(页码-1)。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -5366,7 +5448,7 @@
         },
         {
           "disabled": false,
-          "document": "慢查询详情。",
+          "document": "慢查询详情，注意：TotalCount大于1W，即慢日志超过1万条，不支持返回日志详情，返回数据为空。 建议缩小BeginTime和EndTime的时间间隔，多次查询。",
           "example": "无",
           "member": "InstanceProxySlowlogDetail",
           "name": "InstanceProxySlowLogDetail",
@@ -5436,7 +5518,7 @@
         {
           "disabled": false,
           "document": "Redis独享集群 ID。请登录[专用集群控制台](https://console.cloud.tencent.com/cdc/dedicatedcluster/index?rid=1\n)切换至**云服务管理**页面，在下拉框选择**云数据库 Redis**，可获取独享集群ID。",
-          "example": "['crs-cdc-p8ktf94h']",
+          "example": "[\"crs-cdc-p8ktf94h\"]",
           "member": "string",
           "name": "RedisClusterIds",
           "required": false,
@@ -5631,7 +5713,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "每页输出实例列表的大小，参数默认值20。",
+          "document": "每页输出实例列表的大小。取值为大于0 的正整数，默认为20。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
@@ -5705,7 +5787,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例 ID。",
+          "document": "实例 ID。请登录 [Redis 控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
           "example": "crs-deindi7de",
           "member": "string",
           "name": "InstanceId",
@@ -5782,7 +5864,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "指定实例 ID。例如：crs-xjhsdj****。请登录Redis控制台在实例列表复制实例 ID。",
+          "document": "指定实例 ID。请登录 [Redis 控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
           "example": "crs-asdasdas",
           "member": "string",
           "name": "InstanceId",
@@ -5791,7 +5873,7 @@
         },
         {
           "disabled": false,
-          "document": "秒级备份时间戳，7天内",
+          "document": "秒级备份时间戳。\n- 设置范围：支持7天内任意秒级时间点。\n-  时间戳格式：Unix 时间戳。",
           "example": "1716449238",
           "member": "int64",
           "name": "BackupTimestamp",
@@ -5806,7 +5888,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "备份记录ID ",
+          "document": "备份记录ID。",
           "example": "12",
           "member": "string",
           "name": "BackupId",
@@ -5816,7 +5898,7 @@
         },
         {
           "disabled": false,
-          "document": "备份时间戳",
+          "document": "备份时间戳。",
           "example": "1716449238",
           "member": "int64",
           "name": "BackupTimestamp",
@@ -5826,7 +5908,7 @@
         },
         {
           "disabled": false,
-          "document": "备份不存在的时间戳范围\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "备份不存在的时间戳范围。\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "无",
           "member": "SecondLevelBackupMissingTimestamps",
           "name": "MissingTimestamps",
@@ -5836,7 +5918,7 @@
         },
         {
           "disabled": false,
-          "document": "实例开启秒级备份的时间戳",
+          "document": "实例开启秒级备份的时间戳。",
           "example": "1716449238",
           "member": "int64",
           "name": "StartTimestamp",
@@ -5885,7 +5967,7 @@
         },
         {
           "disabled": false,
-          "document": "慢查询平均执行时间阈值，单位：毫秒。",
+          "document": "慢查询平均执行时间阈值。取值为大于0 的正整数。单位：毫秒。",
           "example": "100",
           "member": "int64",
           "name": "MinQueryTime",
@@ -5894,7 +5976,7 @@
         },
         {
           "disabled": false,
-          "document": "每个页面展示的慢查询条数，默认值为20，最大100。",
+          "document": "每个页面展示的慢查询条数，默认值为20，最小值为1，最大值为100。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
@@ -5903,7 +5985,7 @@
         },
         {
           "disabled": false,
-          "document": "慢查询条数的偏移量，取Limit整数倍。计算公式：offset=limit*(页码-1)。",
+          "document": "慢查询条数的偏移量。默认为0。取Limit整数倍。计算公式：offset=limit*(页码-1)。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -5936,7 +6018,7 @@
           "value_allowed_null": false
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "已废弃，该参数存在命名不规范问题，后续用参数InstanceSlowLogDetail取代。慢查询详情。",
           "example": "无",
           "member": "InstanceSlowlogDetail",
@@ -5947,7 +6029,7 @@
         },
         {
           "disabled": false,
-          "document": "慢查询详情。",
+          "document": "慢查询详情，注意：TotalCount大于1W，即慢日志超过1万条，不支持返回日志详情，返回数据为空。 建议缩小BeginTime和EndTime的时间间隔，多次查询。",
           "example": "无",
           "member": "InstanceSlowlogDetail",
           "name": "InstanceSlowLogDetail",
@@ -6055,7 +6137,7 @@
         },
         {
           "disabled": false,
-          "document": "实例名称。",
+          "document": "实例名称。请登录 [Redis 控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例名称。",
           "example": "crs-rhlppeye",
           "member": "string",
           "name": "InstanceName",
@@ -6073,7 +6155,7 @@
         },
         {
           "disabled": false,
-          "document": "分页偏移量，取Limit整数倍。计算公式：offset=limit*(页码-1)。",
+          "document": "分页偏移量。取值需为 Limit 的整数倍：offset=limit*(页码-1)，默认值为0。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -6081,9 +6163,9 @@
           "type": "int"
         },
         {
-          "disabled": false,
-          "document": "项目 ID。登录 [Redis 控制台](https://console.cloud.tencent.com/redis)，在右上角的账号信息下拉菜单中，选择**项目管理**，即可获取对应的项目 ID。",
-          "example": "11322",
+          "disabled": true,
+          "document": "该字段已废弃, 请忽略, 项目 ID",
+          "example": "[11322]",
           "member": "int64",
           "name": "ProjectIds",
           "required": false,
@@ -6091,8 +6173,8 @@
         },
         {
           "disabled": false,
-          "document": "任务类型。\n\n- FLOW_CREATE: \"001\"，新建实例。\n- FLOW_RESIZE ： \"002\"，配置变更。\n- FLOW_CLOSE：\"003\"，关闭实例。\n- FLOW_CLEAN： \"004\"，清空实例。\n- FLOW_STARTUP：\"005\"，实例启用。\n- FLOW_DELETE：\"006\"，删除实例。\n- FLOW_SETPWD：\"007\"，重置密码。\n- FLOW_EXPORTBACKUP：\"009\"，导出备份文件。\n- FLOW_RESTOREBACKUP：\"010\"，恢复备份。\n- FLOW_BACKUPINSTANCE：\"012\"，备份实例。\n- FLOW_MIGRATEINSTANCE：\"013\"，迁移实例。\n- FLOW_DELBACKUP：\"014\"，删除备份。\n- FLOW_EXCHANGEINSTANCE： \"016\"，切换实例流程。\n- FLOW_AUTOBACKUP：\"017\"，自动备份实例。\n- FLOW_MIGRATECHECK： \"022\"，迁移参数校验。\n- FLOW_MIGRATETASK：\"023\"，数据迁移中。\n- FLOW_CLEANDB：\"025\"，清空某个数据库。\n- FLOW_CLONEBACKUP：\"026\"，克隆备份。\n- FLOW_CHANGEVIP： \"027\"，改变vip地址。\n- FLOW_EXPORSHR ：\"028\"，扩缩容。\n- FLOW_ADDNODES：\"029\"，加（减）节点。\n- FLOW_CHANGENET：\"031\"，改变网络类型。\n- FLOW_MODIFYINSTACEREADONLY：\"033\"，只读策略变更。\n- FLOW_MODIFYINSTANCEPARAMS：\"034\"，修改实例参数。\n- FLOW_MODIFYINSTANCEPASSWORDFREE：\"035\"，设置免密。\n- FLOW_SWITCHINSTANCEVIP：\"036\"，实例VIP切换。\n- FLOW_MODIFYINSTANCEACCOUNT：\"037\"，实例帐号变更。\n- FLOW_MODIFYINSTANCEBANDWIDTH：\"038\"，实例带宽变更。\n- FLOW_ENABLEINSTANCE_REPLICATE：\"039\"，开启副本只读。\n- FLOW_DISABLEINSTANCE_REPLICATE：\"040\"，关闭副本只读。\n- FLOW_UpgradeArch：\"041\"，实例架构升级，主从升集群。\n- FLOW_DowngradeArch： \"042\"，实例架构降级，集群降主从。\n- FLOW_UpgradeVersion： \"043\"，版本升级。\n- FLOW_MODIFYCONNECTIONCONFIG：\"044\"，带宽连接数调整，\n- FLOW_CLEARNETWORK：\"045\"，更换网络，\n- FLOW_REMOVE_BACKUP_FILE：\"046\"，删除备份。\n- FLOW_UPGRADE_SUPPORT_MULTI_AZ：\"047\"，升级实例支持多可用区。\n- FLOW_SHUTDOWN_MASTER：\"048\"，模拟故障。\n- FLOW_CHANGE_REPLICA_TO_MASTER：\"049\"，手动提主。\n- FLOW_CODE_ADD_REPLICATION_INSTANCE：\"050\"，新增复制组。\n- FLOW_OPEN_WAN：\"052\"，开通外网。\n- FLOW_CLOSE_WAN：\"053\"，关闭外网FLOW_UPDATE_WAN：\"054\"，更新外网。\n- FLOW_CODE_DELETE_REPLICATION_INSTANCE：\"055\"，解绑复制组。\n- FLOW_CODE_CHANGE_MASTER_INSTANCE：\"056\"，复制组实例切主。\n- FLOW_CODE_CHANGE_INSTANCE_ROLE： \"057\"，更改复制组实例角色。\n- FLOW_MIGRATE_NODE：\"058\"，迁移节点。\n- FLOW_SWITCH_NODE：\"059\"，切换节点。\n- FLOW_UPGRADE_SMALL_VERSION：\"060\"，升级 Redi s版本。\n- FLOW_UPGRADE_PROXY_VERSION：\"061\"，升级 Proxy 版本。\n- FLOW_MODIFY_INSTANCE_NETWORK： \"062\"，实例修改网络。\n- FLOW_MIGRATE_PROXY_NODE：\"063\"，迁移proxy节点。\n- FLOW_MIGRATION_INSTANCE_ZONE：\"066\"，实例可用区迁移中。\n- FLOW_UPGRADE_INSTANCE_CACHE_AND_PROXY： \"067\"，实例版本升级中。\n- FLOW_MODIFY_PROXY_NUM：\"069\"，加（减）Proxy 节点。\n- FLOW_MODIFYBACKUPMOD：\"070\"，变更实例备份模式。",
-          "example": "037",
+          "document": "任务类型。\n\n- FLOW_CREATE: \"001\"，新建实例。\n- FLOW_RESIZE ： \"002\"，配置变更。\n- FLOW_CLOSE：\"003\"，关闭实例。\n- FLOW_CLEAN： \"004\"，清空实例。\n- FLOW_STARTUP：\"005\"，实例启用。\n- FLOW_DELETE：\"006\"，删除实例。\n- FLOW_SETPWD：\"007\"，重置密码。\n- FLOW_EXPORTBACKUP：\"009\"，导出备份文件。\n- FLOW_RESTOREBACKUP：\"010\"，恢复备份。\n- FLOW_BACKUPINSTANCE：\"012\"，备份实例。\n- FLOW_MIGRATEINSTANCE：\"013\"，迁移实例。\n- FLOW_DELBACKUP：\"014\"，删除备份。\n- FLOW_EXCHANGEINSTANCE： \"016\"，切换实例流程。\n- FLOW_AUTOBACKUP：\"017\"，自动备份实例。\n- FLOW_MIGRATECHECK： \"022\"，迁移参数校验。\n- FLOW_MIGRATETASK：\"023\"，数据迁移中。\n- FLOW_CLEANDB：\"025\"，清空某个数据库。\n- FLOW_CLONEBACKUP：\"026\"，克隆备份。\n- FLOW_CHANGEVIP： \"027\"，改变vip地址。\n- FLOW_EXPORSHR ：\"028\"，扩缩容。\n- FLOW_ADDNODES：\"029\"，加（减）节点。\n- FLOW_CHANGENET：\"031\"，改变网络类型。\n- FLOW_MODIFYINSTACEREADONLY：\"033\"，只读策略变更。\n- FLOW_MODIFYINSTANCEPARAMS：\"034\"，修改实例参数。\n- FLOW_MODIFYINSTANCEPASSWORDFREE：\"035\"，设置免密。\n- FLOW_SWITCHINSTANCEVIP：\"036\"，实例VIP切换。\n- FLOW_MODIFYINSTANCEACCOUNT：\"037\"，实例账号变更。\n- FLOW_MODIFYINSTANCEBANDWIDTH：\"038\"，实例带宽变更。\n- FLOW_ENABLEINSTANCE_REPLICATE：\"039\"，开启副本只读。\n- FLOW_DISABLEINSTANCE_REPLICATE：\"040\"，关闭副本只读。\n- FLOW_UpgradeArch：\"041\"，实例架构升级，主从升集群。\n- FLOW_DowngradeArch： \"042\"，实例架构降级，集群降主从。\n- FLOW_UpgradeVersion： \"043\"，版本升级。\n- FLOW_MODIFYCONNECTIONCONFIG：\"044\"，带宽连接数调整，\n- FLOW_CLEARNETWORK：\"045\"，更换网络，\n- FLOW_REMOVE_BACKUP_FILE：\"046\"，删除备份。\n- FLOW_UPGRADE_SUPPORT_MULTI_AZ：\"047\"，升级实例支持多可用区。\n- FLOW_SHUTDOWN_MASTER：\"048\"，模拟故障。\n- FLOW_CHANGE_REPLICA_TO_MASTER：\"049\"，手动提主。\n- FLOW_CODE_ADD_REPLICATION_INSTANCE：\"050\"，新增复制组。\n- FLOW_OPEN_WAN：\"052\"，开通外网。\n- FLOW_CLOSE_WAN：\"053\"，关闭外网FLOW_UPDATE_WAN：\"054\"，更新外网。\n- FLOW_CODE_DELETE_REPLICATION_INSTANCE：\"055\"，解绑复制组。\n- FLOW_CODE_CHANGE_MASTER_INSTANCE：\"056\"，复制组实例切主。\n- FLOW_CODE_CHANGE_INSTANCE_ROLE： \"057\"，更改复制组实例角色。\n- FLOW_MIGRATE_NODE：\"058\"，迁移节点。\n- FLOW_SWITCH_NODE：\"059\"，切换节点。\n- FLOW_UPGRADE_SMALL_VERSION：\"060\"，升级 Redis版本。\n- FLOW_UPGRADE_PROXY_VERSION：\"061\"，升级 Proxy 版本。\n- FLOW_MODIFY_INSTANCE_NETWORK： \"062\"，实例修改网络。\n- FLOW_MIGRATE_PROXY_NODE：\"063\"，迁移proxy节点。\n- FLOW_MIGRATION_INSTANCE_ZONE：\"066\"，实例可用区迁移中。\n- FLOW_UPGRADE_INSTANCE_CACHE_AND_PROXY： \"067\"，实例版本升级中。\n- FLOW_MODIFY_PROXY_NUM：\"069\"，加（减）Proxy 节点。\n- FLOW_MODIFYBACKUPMOD：\"070\"，变更实例备份模式。",
+          "example": "[\"037\"]",
           "member": "string",
           "name": "TaskTypes",
           "required": false,
@@ -6119,7 +6201,7 @@
         {
           "disabled": false,
           "document": "该参数为内部使用，请忽略。",
-          "example": "[0.1.2]",
+          "example": "[0,1,2]",
           "member": "int64",
           "name": "TaskStatus",
           "required": false,
@@ -6135,7 +6217,7 @@
           "type": "list"
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "该字段已废弃，使用OperateUin代替，请忽略。",
           "example": "[10002274123]",
           "member": "int64",
@@ -6146,7 +6228,7 @@
         {
           "disabled": false,
           "document": "操作者账号 ID，UIN。",
-          "example": "[\"10002274123\"]",
+          "example": "[\"12458915647\"]",
           "member": "string",
           "name": "OperateUin",
           "required": false,
@@ -6219,7 +6301,7 @@
         },
         {
           "disabled": false,
-          "document": "慢查询阈值（毫秒）",
+          "document": "慢查询阈值，取值为大于0的正整数，单位：毫秒。",
           "example": "10",
           "member": "int64",
           "name": "MinQueryTime",
@@ -6228,7 +6310,7 @@
         },
         {
           "disabled": false,
-          "document": "页面大小：默认20，最大100。",
+          "document": "页面大小。默认为20，最小为1，最大为100。",
           "example": "20",
           "member": "int64",
           "name": "Limit",
@@ -6237,7 +6319,7 @@
         },
         {
           "disabled": false,
-          "document": "分页偏移量，取Limit整数倍。计算公式：offset=limit*(页码-1)。",
+          "document": "分页偏移量。默认为0，取值为 Limit 整数倍，计算公式：offset=limit*(页码-1)。",
           "example": "0",
           "member": "int64",
           "name": "Offset",
@@ -6262,7 +6344,7 @@
         },
         {
           "disabled": false,
-          "document": "慢查询详情",
+          "document": "慢查询详情，注意：TotalCount大于1W，即慢日志超过1万条，不支持返回日志详情，返回数据为空。 建议缩小BeginTime和EndTime的时间间隔，多次查询。",
           "example": "无",
           "member": "TendisSlowLogDetail",
           "name": "TendisSlowLogDetail",
@@ -6284,7 +6366,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例 ID，请登录[Redis控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
+          "document": "实例 ID，请登录[Redis控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制按量计费的实例 ID。",
           "example": "crs-5a4py64p",
           "member": "string",
           "name": "InstanceId",
@@ -6335,12 +6417,22 @@
       "document": "DestroyPrepaidInstance返回参数结构体",
       "members": [
         {
-          "disabled": false,
+          "disabled": true,
           "document": "订单Id",
-          "example": "6977675",
+          "example": "20250825297021508048753",
           "member": "string",
           "name": "DealId",
           "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "订单号。",
+          "example": "20250825297021508048753",
+          "member": "string",
+          "name": "DealName",
+          "output_required": false,
           "type": "string",
           "value_allowed_null": false
         },
@@ -6414,7 +6506,7 @@
         {
           "disabled": false,
           "document": "实例ID列表，一个或者多个实例 ID 组成的数组。请登录[Redis控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
-          "example": "[\"crs-eb2w7dto\\n\"]",
+          "example": "[\"crs-eb2w7dto\"]",
           "member": "string",
           "name": "InstanceIds",
           "required": true,
@@ -6449,7 +6541,7 @@
         },
         {
           "disabled": false,
-          "document": "只读路由策略。\n- master：表示只读路由至主节点。\n- replication：表示只读路由至从节点。\n- 默认策略：表示写主节点，读从节点。",
+          "document": "只读路由策略。\n- master：表示只读路由至主节点。\n- replication：表示只读路由至从节点。默认值为：replication。",
           "example": "[\"master\"]",
           "member": "string",
           "name": "ReadonlyPolicy",
@@ -6463,7 +6555,7 @@
       "document": "EnableReplicaReadonly返回参数结构体",
       "members": [
         {
-          "disabled": false,
+          "disabled": true,
           "document": "错误：ERROR，正确OK（已废弃）",
           "example": "OK",
           "member": "string",
@@ -6506,7 +6598,7 @@
         },
         {
           "disabled": false,
-          "document": "地域ID 。\n- 1：广州 \n- 4：上海 \n- 5：中国香港 \n- 7：上海金融 \n- 8：北京 \n- 9：新加坡\n- 11：深圳金融\n- 15：美西（硅谷）\n- 16：成都 \n- 17：德国 \n- 18：韩国 \n- 19：重庆 \n- 21：印度 \n- 22：美东（弗吉尼亚）\n- 23：泰国 \n- 25：日本",
+          "document": "地域ID 。\n- 1：广州 \n- 4：上海 \n- 5：中国香港 \n- 7：上海金融 \n- 8：北京 \n- 9：新加坡\n- 11：深圳金融\n- 15：美西（硅谷）\n- 16：成都 \n- 17：德国 \n- 18：韩国 \n- 19：重庆 \n- 22：美东（弗吉尼亚）\n- 23：泰国 \n- 25：日本",
           "example": "1",
           "member": "int64",
           "name": "RegionId",
@@ -6704,7 +6796,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例类型。\n- 2：Redis 2.8 内存版（标准架构）。\n- 6：Redis 4.0 内存版（标准架构）。\n- 7：Redis 4.0 内存版（集群架构）。\n- 8：Redis 5.0 内存版（标准架构）。\n- 9：Redis 5.0 内存版（集群架构）。\n- 15：Redis 6.2 内存版（标准架构）。\n- 16：Redis 6.2 内存版（集群架构）。\n- 17：Redis 7.0 内存版（标准架构）。\n- 18：Redis 7.0 内存版（集群架构）。",
+          "document": "实例类型。\n- 2：Redis 2.8 内存版（标准架构）。\n- 6：Redis 4.0 内存版（标准架构）。\n- 7：Redis 4.0 内存版（集群架构）。\n- 8：Redis 5.0 内存版（标准架构）。\n- 9：Redis 5.0 内存版（集群架构）。\n- 15：Redis 6.2 内存版（标准架构）。\n- 16：Redis 6.2 内存版（集群架构）。\n- 17：Redis 7.0 内存版（标准架构）。\n- 18：Redis 7.0 内存版（集群架构）。\n- 200:Memcached 1.6 内存版（集群架构）。",
           "example": "6",
           "member": "uint64",
           "name": "TypeId",
@@ -6749,7 +6841,7 @@
         },
         {
           "disabled": false,
-          "document": "实例所属的可用区ID，可参考[地域和可用区](https://cloud.tencent.com/document/product/239/4106)  。",
+          "document": "实例所属的可用区 ID，可参考[地域和可用区](https://cloud.tencent.com/document/product/239/4106)  。\n**说明**：请在 **ZoneId** 与 **ZoneName** 中至少指定一个参数。",
           "example": "100002",
           "member": "uint64",
           "name": "ZoneId",
@@ -6758,7 +6850,7 @@
         },
         {
           "disabled": false,
-          "document": "实例分片数量。2.8 标准架构无需配置分片，其余版本标准架构需要配置分片数量为1。集群架构需指定需购买的分片数量。",
+          "document": "实例分片数量。\n- 标准架构需要配置分片数量为1。\n- 集群架构分片数量支持设置为1、3、5、8、12、16、24、32、40、48、64、80、96、128。",
           "example": "1",
           "member": "int64",
           "name": "RedisShardNum",
@@ -6767,7 +6859,7 @@
         },
         {
           "disabled": false,
-          "document": "实例副本数量。2.8 标准架构无需配置副本数量。",
+          "document": "实例副本数量。取值范围为：1、2、3、4、5。",
           "example": "1",
           "member": "int64",
           "name": "RedisReplicasNum",
@@ -6785,7 +6877,7 @@
         },
         {
           "disabled": false,
-          "document": "实例所属的可用区名称，可参考[地域和可用区](https://cloud.tencent.com/document/product/239/4106)  。",
+          "document": "实例所属的可用区名称，可参考[地域和可用区](https://cloud.tencent.com/document/product/239/4106)  。\n**说明**：请在 **ZoneId** 与 **ZoneName** 中至少指定一个参数。",
           "example": "ap-guangzhou",
           "member": "string",
           "name": "ZoneName",
@@ -6809,12 +6901,42 @@
       "members": [
         {
           "disabled": false,
-          "document": "价格，单位：分",
-          "example": "30400",
+          "document": "价格",
+          "example": "30400.0",
           "member": "float",
           "name": "Price",
           "output_required": true,
           "type": "float",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "高精度价格",
+          "example": "30400.123",
+          "member": "float",
+          "name": "HighPrecisionPrice",
+          "output_required": false,
+          "type": "float",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "币种",
+          "example": "CNY",
+          "member": "string",
+          "name": "Currency",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "价格金额单位\n\n- pent: 分\n- microPent: 微分",
+          "example": "pent",
+          "member": "string",
+          "name": "AmountUnit",
+          "output_required": false,
+          "type": "string",
           "value_allowed_null": false
         },
         {
@@ -6831,7 +6953,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "包年包月实例的购买时长，单位：月。",
+          "document": "包年包月实例的购买时长。\n- 单位：月。\n- 取值范围 [1,2,3,4,5,6,7,8,9,10,11,12,24,36]。",
           "example": "1",
           "member": "uint64",
           "name": "Period",
@@ -6840,7 +6962,7 @@
         },
         {
           "disabled": false,
-          "document": "指定实例 ID。例如：crs-xjhsdj****。请登录[Redis控制台](https://console.cloud.tencent.com/redis)在实例列表复制实例 ID。",
+          "document": "指定实例 ID。例如：crs-xjhsdj****。请登录 [Redis 控制台](https://console.cloud.tencent.com/redis)在实例列表复制包年包月实例 ID。",
           "example": "crs-rhlppeye",
           "member": "string",
           "name": "InstanceId",
@@ -6855,12 +6977,42 @@
       "members": [
         {
           "disabled": false,
-          "document": "价格，单位：分。",
-          "example": "100800",
+          "document": "价格",
+          "example": "100800.00",
           "member": "float",
           "name": "Price",
           "output_required": true,
           "type": "float",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "高精度价格",
+          "example": "30400.123",
+          "member": "float",
+          "name": "HighPrecisionPrice",
+          "output_required": false,
+          "type": "float",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "币种",
+          "example": "CNY",
+          "member": "string",
+          "name": "Currency",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "价格金额单位\n\n- pent: 分\n- microPent: 微分",
+          "example": "pent",
+          "member": "string",
+          "name": "AmountUnit",
+          "output_required": false,
+          "type": "string",
           "value_allowed_null": false
         },
         {
@@ -6895,7 +7047,7 @@
         },
         {
           "disabled": false,
-          "document": "分片数量，Redis 2.8主从版、CKV主从版和Redis2.8单机版不需要填写。",
+          "document": "分片数量。\n- 实例为标准架构，RedisShardNum 默认为1。\n- Redis 2.8主从版、CKV主从版和 Redis 2.8单机版不需要填写。",
           "example": "3",
           "member": "uint64",
           "name": "RedisShardNum",
@@ -6919,12 +7071,42 @@
       "members": [
         {
           "disabled": false,
-          "document": "价格，单位：分",
-          "example": "30400",
+          "document": "价格",
+          "example": "30400.00",
           "member": "float",
           "name": "Price",
           "output_required": true,
           "type": "float",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "高精度价格",
+          "example": "30400.123",
+          "member": "float",
+          "name": "HighPrecisionPrice",
+          "output_required": false,
+          "type": "float",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "币种",
+          "example": "CNY",
+          "member": "string",
+          "name": "Currency",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "价格金额单位\n\n- pent: 分\n- microPent: 微分",
+          "example": "pent",
+          "member": "string",
+          "name": "AmountUnit",
+          "output_required": false,
+          "type": "string",
           "value_allowed_null": false
         },
         {
@@ -7600,7 +7782,7 @@
         {
           "disabled": false,
           "document": "慢查询详细命令行信息。",
-          "example": "hget hash_key classify_scope::default",
+          "example": "hget",
           "member": "string",
           "name": "CommandLine",
           "output_required": true,
@@ -7615,6 +7797,26 @@
           "name": "ExecuteTime",
           "output_required": true,
           "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "收客户端请求时长(ms)",
+          "example": "100",
+          "member": "int64",
+          "name": "RecvClientEnd",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "发送客户端请求时长(ms)",
+          "example": "100",
+          "member": "int64",
+          "name": "SendClientEnd",
+          "output_required": false,
+          "type": "int",
           "value_allowed_null": false
         }
       ],
@@ -7671,8 +7873,8 @@
         },
         {
           "disabled": false,
-          "document": "用户APPID。APPID是与账号ID有唯一对应关系的应用 ID，部分腾讯云产品会使用此 APPID。\n",
-          "example": "1310******",
+          "document": "用户AppId。AppId是与账号ID有唯一对应关系的应用 ID，部分腾讯云产品会使用此 AppId。\n",
+          "example": "13103214145",
           "member": "int64",
           "name": "Appid",
           "output_required": true,
@@ -7691,7 +7893,7 @@
         },
         {
           "disabled": false,
-          "document": "地域 ID。<ul><li>1：广州。</li><li>4：上海。</li><li>5：中国香港。</li><li>7：上海金融。</li> <li>8：北京。</li> <li>9：新加坡。</li> <li>11：深圳金融。</li> <li>15：美西（硅谷）。</li><li>16：成都。</li><li>17：法兰克福。</li><li>18：首尔。</li><li>19：重庆。</li><li>21：孟买。</li><li>22：美东（弗吉尼亚）。</li><li>23：曼谷。</li><li>25：东京。</li></ul>",
+          "document": "地域 ID。<ul><li>1：广州。</li><li>4：上海。</li><li>5：中国香港。</li><li>7：上海金融。</li> <li>8：北京。</li> <li>9：新加坡。</li> <li>11：深圳金融。</li> <li>15：美西（硅谷）。</li><li>16：成都。</li><li>17：法兰克福。</li><li>18：首尔。</li><li>19：重庆。</li><li>22：美东（弗吉尼亚）。</li><li>23：曼谷。</li><li>25：东京。</li></ul>",
           "example": "1",
           "member": "int64",
           "name": "RegionId",
@@ -7772,7 +7974,7 @@
         {
           "disabled": false,
           "document": "实例内存容量大小。单位：MB，1MB=1024KB。",
-          "example": "1451",
+          "example": "1451.0",
           "member": "float",
           "name": "Size",
           "output_required": true,
@@ -7780,9 +7982,9 @@
           "value_allowed_null": false
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "该字段已废弃。请使用腾讯云可观测平台API 接口 [GetMonitorData](https://cloud.tencent.com/document/product/248/31014) 获取实例已使用的内存容量。",
-          "example": "0",
+          "example": "0.0",
           "member": "float",
           "name": "SizeUsed",
           "output_required": true,
@@ -7791,7 +7993,7 @@
         },
         {
           "disabled": false,
-          "document": "实例类型。\n- 2：Redis 2.8 内存版（标准架构）。\n- 3：CKV 3.2 内存版（标准架构）。\n- 4：CKV 3.2 内存版（集群架构）。\n- 5：Redis 2.8 内存版（单机）。\n- 6：Redis 4.0 内存版（标准架构）。\n- 7：Redis 4.0 内存版（集群架构）。\n- 8：Redis 5.0 内存版（标准架构）。\n- 9：Redis 5.0 内存版（集群架构）。\n- 15：Redis 6.2 内存版（标准架构）。\n- 16：Redis 6.2 内存版（集群架构）。\n- 17：Redis 7.0 内存版（标准架构）。\n- 18：Redis 7.0 内存版（集群架构）。",
+          "document": "实例类型。\n- 2：Redis 2.8 内存版（标准架构）。\n- 3：CKV 3.2 内存版（标准架构）。\n- 4：CKV 3.2 内存版（集群架构）。\n- 5：Redis 2.8 内存版（单机）。\n- 6：Redis 4.0 内存版（标准架构）。\n- 7：Redis 4.0 内存版（集群架构）。\n- 8：Redis 5.0 内存版（标准架构）。\n- 9：Redis 5.0 内存版（集群架构）。\n- 15：Redis 6.2 内存版（标准架构）。\n- 16：Redis 6.2 内存版（集群架构）。\n- 17：Redis 7.0 内存版（标准架构）。\n- 18：Redis 7.0 内存版（集群架构）。\n- 200:Memcached 1.6 内存版（集群架构）。",
           "example": "7",
           "member": "int64",
           "name": "Type",
@@ -7902,7 +8104,7 @@
         {
           "disabled": false,
           "document": "反亲和性标签。",
-          "example": "antiaffinity-tag-name",
+          "example": "[\"tag1\"]",
           "member": "string",
           "name": "Tags",
           "output_required": true,
@@ -7971,8 +8173,8 @@
         },
         {
           "disabled": false,
-          "document": "从节点读取权重。",
-          "example": "1",
+          "document": "从节点读取权重。\n- 0：表示关闭副本只读。\n- 100：表示开启副本只读。",
+          "example": "0",
           "member": "int64",
           "name": "SlaveReadWeight",
           "output_required": true,
@@ -7992,7 +8194,7 @@
         {
           "disabled": false,
           "document": "项目名称。",
-          "example": "Default",
+          "example": "project",
           "member": "string",
           "name": "ProjectName",
           "output_required": true,
@@ -8131,7 +8333,7 @@
         },
         {
           "disabled": false,
-          "document": "实例的节点详细信息。",
+          "document": "实例的节点详细信息。\n只有多可用区实例会返回。",
           "example": "无",
           "member": "RedisNodeInfo",
           "name": "NodeSet",
@@ -8247,6 +8449,16 @@
           "name": "BackupMode",
           "output_required": false,
           "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "删除保护开关，0关闭，1开启",
+          "example": "0",
+          "member": "int64",
+          "name": "DeleteProtectionSwitch",
+          "output_required": false,
+          "type": "int",
           "value_allowed_null": false
         }
       ],
@@ -8837,6 +9049,15 @@
           "name": "Password",
           "required": true,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否加密密码",
+          "example": "false",
+          "member": "bool",
+          "name": "EncryptPassword",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -8881,7 +9102,7 @@
           "example": "[\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\",\"Saturday\"]",
           "member": "string",
           "name": "WeekDays",
-          "required": true,
+          "required": false,
           "type": "list"
         },
         {
@@ -8890,7 +9111,7 @@
           "example": "04:00-05:00",
           "member": "string",
           "name": "TimePeriod",
-          "required": true,
+          "required": false,
           "type": "string"
         },
         {
@@ -8899,6 +9120,15 @@
           "example": "1",
           "member": "int64",
           "name": "AutoBackupType",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "全量备份文件保存天数。 仅支持设置为 7，单位：天。如需更长天数，请[提交工单](https://console.cloud.tencent.com/workorder/category)申请。",
+          "example": "7",
+          "member": "int64",
+          "name": "BackupStorageDays",
           "required": false,
           "type": "int"
         }
@@ -9034,7 +9264,7 @@
         },
         {
           "disabled": false,
-          "document": "附加带宽，大于0，单位MB。",
+          "document": "附加带宽，大于0，单位MB。\n**说明**：Bandwidth 和 ClientLimit 参数不能同时为空，您必须至少选择其中一个进行配置。",
           "example": "5",
           "member": "int64",
           "name": "Bandwidth",
@@ -9043,7 +9273,7 @@
         },
         {
           "disabled": false,
-          "document": "单分片的总连接数。\n- 未开启副本只读时，下限为10000，上限为40000。\n- 开启副本只读时，下限为10000，上限为10000×(只读副本数+3)。",
+          "document": "单分片的总连接数。\n- 未开启副本只读时，下限为10000，上限为40000。\n- 开启副本只读时，下限为10000，上限为10000×(只读副本数+3)。\n**说明**：Bandwidth 和 ClientLimit 参数不能同时为空，您必须至少选择其中一个进行配置。",
           "example": "20000",
           "member": "int64",
           "name": "ClientLimit",
@@ -9089,8 +9319,8 @@
         },
         {
           "disabled": false,
-          "document": "更换为新的安全组 ID 列表，即一个或者多个安全组 ID 组成的数组。\n- 若实例第一次配置安全组，请使用接口[AssociateSecurityGroups](https://cloud.tencent.com/document/product/239/41260)先绑定安全组。\n- 更换安全组，请在[控制台安全组](https://console.cloud.tencent.com/vpc/security-group)页面获取安全组 ID。",
-          "example": "[\"sg-ajr1jzgj\\n\"]",
+          "document": "更换为新的安全组 ID 列表，即一个或者多个安全组 ID 组成的数组。\n- 若实例第一次配置安全组，请使用接口[AssociateSecurityGroups](https://cloud.tencent.com/document/product/239/41260)先绑定安全组。\n- 更换安全组，请在[控制台安全组](https://console.cloud.tencent.com/vpc/security-group)页面获取安全组 ID。\n  **注意：**该入参会全量替换存量已有集合，非增量更新。修改需传入预期的全量集合。",
+          "example": "[\"sg-ajr1jzgj\"]",
           "member": "string",
           "name": "SecurityGroupIds",
           "required": true,
@@ -9134,7 +9364,7 @@
         },
         {
           "disabled": false,
-          "document": "子账号名称，如果要修改主账号，填 root。",
+          "document": "指定需修改的账号。\n- root：指在创建 Redis 数据库实例时自动生成的账号。用户无法修改其读写权限，仅可修改其请求路由策略。\n- 自定义的账号：用户在实例创建成功后手动创建的账号。用户可以随时修改其读写权限与请求路由策略。",
           "example": "example_name",
           "member": "string",
           "name": "AccountName",
@@ -9143,7 +9373,7 @@
         },
         {
           "disabled": false,
-          "document": "子账号密码。",
+          "document": "指定所修改账号访问的密码。",
           "example": "redis***",
           "member": "string",
           "name": "AccountPassword",
@@ -9152,7 +9382,7 @@
         },
         {
           "disabled": false,
-          "document": "子账号描述信息",
+          "document": "账号描述信息",
           "example": "some account instruction",
           "member": "string",
           "name": "Remark",
@@ -9161,7 +9391,7 @@
         },
         {
           "disabled": false,
-          "document": "账号读写路由策略。\n- master：表示主节点。\n- replication：表示从节点。",
+          "document": "指定所修改账号读写请求路由的策略。\n- master：表示读写请求路由至主节点。\n- replication：表示读写请求路由至从节点。",
           "example": "master",
           "member": "string",
           "name": "ReadonlyPolicy",
@@ -9170,7 +9400,7 @@
         },
         {
           "disabled": false,
-          "document": "子账号读写策略。\n- r：只读。\n- w：只写。\n- rw：读写。",
+          "document": "指定所修改账号的读写权限。\n- r：只读。\n- w：只写。\n- rw：读写。",
           "example": "rw",
           "member": "string",
           "name": "Privilege",
@@ -9179,10 +9409,19 @@
         },
         {
           "disabled": false,
-          "document": "指定是否将主账号切换为免密账号。这里只适用于主账号，子账号不可免密。\n- true：将主账号切换为免密账号。\n- false：不切换。",
+          "document": "指定是否将默认账号（root）设置为免密账号。自定义账号不支持免密访问。\n- true：默认账号（root）设置为免密账号。\n- false：默认账号（root）不设置为免密账号。",
           "example": "true",
           "member": "bool",
           "name": "NoAuth",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "指定所修改的账号是否加密密码",
+          "example": "false",
+          "member": "bool",
+          "name": "EncryptPassword",
           "required": false,
           "type": "bool"
         }
@@ -9194,7 +9433,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "任务ID",
+          "document": "任务ID。",
           "example": "11011",
           "member": "int64",
           "name": "TaskId",
@@ -9271,7 +9510,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例的ID，长度在12-36之间。",
+          "document": "实例的ID。请登录 [Redis 控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
           "example": "crs-asdasda2",
           "member": "string",
           "name": "InstanceId",
@@ -9280,7 +9519,7 @@
         },
         {
           "disabled": false,
-          "document": "备份模式：\n- SecondLevelBackup   秒级备份\n- NormalLevelBackup    普通备份",
+          "document": "备份模式：\n- SecondLevelBackup   秒级备份。\n- NormalLevelBackup    普通备份。",
           "example": "SecondLevelBackup",
           "member": "string",
           "name": "BackupMode",
@@ -9295,7 +9534,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "任务ID",
+          "document": "任务 ID。",
           "example": "95027",
           "member": "int64",
           "name": "TaskId",
@@ -9326,7 +9565,7 @@
         },
         {
           "disabled": false,
-          "document": "事件 ID。请通过 DescribeInstanceEvents 获取需修改的事件 ID。",
+          "document": "事件 ID。请通过 [DescribeInstanceEvents](https://cloud.tencent.com/document/product/239/104779) 获取需修改的事件 ID。",
           "example": "89",
           "member": "int64",
           "name": "EventId",
@@ -9426,7 +9665,7 @@
         },
         {
           "disabled": false,
-          "document": "投递的日志集ID。通过接口[DescribeInstanceLogDelivery](https://cloud.tencent.com/document/product/239/110878)的返回参数 **SlowLog** 的子参数 **LogsetId** 获取。",
+          "document": "投递的日志集ID。通过接口[DescribeLogsets](https://cloud.tencent.com/document/api/614/58624)获取到日志集ID。",
           "example": "4ae3d686-0dcf-4db3-9867-482def442c9a",
           "member": "string",
           "name": "LogsetId",
@@ -9435,7 +9674,7 @@
         },
         {
           "disabled": false,
-          "document": "投递的日志主题ID。请通过接口[DescribeInstanceLogDelivery](https://cloud.tencent.com/document/product/239/110878)的返回参数 **SlowLog** 的子参数 **TopicId** 获取。",
+          "document": "投递的日志主题ID。通过接口[DescribeTopics](https://cloud.tencent.com/document/api/614/56454)获取到日志主题ID。",
           "example": "27197b72-e1cb-4fc1-ab21-3865f589136f",
           "member": "string",
           "name": "TopicId",
@@ -9444,7 +9683,7 @@
         },
         {
           "disabled": false,
-          "document": "日志集名称。若**LogsetId**未指定具体的日志集ID，请配置该参数，设置日志集名称，系统会以设置的日志集名称自动创建新的日志集。",
+          "document": "日志集名称。**LogsetId**为空时必传，系统会以LogsetName为名称来创建新的日志集并投递日志。",
           "example": "test-set-name",
           "member": "string",
           "name": "LogsetName",
@@ -9453,7 +9692,7 @@
         },
         {
           "disabled": false,
-          "document": "日志主题名称，TopicId为空时必传，会自动创建新的日志主题。",
+          "document": "日志主题名称。**TopicId**为空时必传，系统会以TopicName为名称来创建新的日志主题并投递日志。",
           "example": "test-topic-name",
           "member": "string",
           "name": "TopicName",
@@ -9664,7 +9903,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "修改实例操作。如填写：\n- rename：表示实例重命名。\n- modifyProject：修改实例所属项目。\n- modifyAutoRenew：修改实例续费标记。",
+          "document": "修改实例操作。如填写：\n- rename：表示实例重命名。\n- modifyProject：修改实例所属项目。\n- modifyAutoRenew：修改实例续费标记。\n- modifyDeleteProtectionSwitch：修改实例删除保护。",
           "example": "rename",
           "member": "string",
           "name": "Operation",
@@ -9682,7 +9921,7 @@
         },
         {
           "disabled": false,
-          "document": "实例的新名称。",
+          "document": "实例的新名称。名称只支持长度为60个字符的中文、英文、数字、下划线_、分隔符-。",
           "example": "[\"newname1\",\"newname2\\r\\n\"]",
           "member": "string",
           "name": "InstanceNames",
@@ -9709,6 +9948,15 @@
         },
         {
           "disabled": false,
+          "document": "删除保护开关。- 0：默认状态，指关闭。- 1：开关打开。",
+          "example": "[1,0]",
+          "member": "int64",
+          "name": "DeleteProtectionSwitches",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": true,
           "document": "目前在废弃中，存量用户还可以使用，建议新用户使用 InstanceIds。",
           "example": "crs-rhlppeye",
           "member": "string",
@@ -9717,7 +9965,7 @@
           "type": "string"
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "已经废弃",
           "example": "crs-rhlppeye",
           "member": "string",
@@ -9726,7 +9974,7 @@
           "type": "string"
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "已经废弃。",
           "example": "1",
           "member": "int64",
@@ -9772,7 +10020,7 @@
         },
         {
           "disabled": false,
-          "document": "维护时间窗结束时间，如：19:00。",
+          "document": "维护时间窗结束时间，如：19:00。\n**说明：**维护时间窗时长，当前支持：30分钟、1小时、1.5小时、2小时、3小时。",
           "example": "06:00",
           "member": "string",
           "name": "EndTime",
@@ -10268,33 +10516,33 @@
         },
         {
           "disabled": false,
-          "document": "参数允许的最大值。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "参数允许的最大值。",
           "example": "1",
           "member": "string",
           "name": "Max",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "参数允许的最小值。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "参数允许的最小值。",
           "example": "1000",
           "member": "string",
           "name": "Min",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "参数可选枚举值。如果为非枚举参数，则为空。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "参数可选枚举值。如果为非枚举参数，则为空。",
           "example": "[\"yes\",\"no\"]",
           "member": "string",
           "name": "EnumValue",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -10423,7 +10671,7 @@
           "value_allowed_null": false
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "该参数名因存在拼写不规范的问题，建议使用**EnableReplicaReadOnly**参数取代。其含义为是否支持副本只读。\n- true：支持副本只读。\n- false：不支持。",
           "example": "false",
           "member": "bool",
@@ -10434,13 +10682,13 @@
         },
         {
           "disabled": false,
-          "document": "是否支持副本只读。\n- true：支持副本只读。\n- false：不支持。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "是否支持副本只读。\n- true：支持副本只读。\n- false：不支持。",
           "example": "false",
           "member": "bool",
           "name": "EnableReplicaReadOnly",
           "output_required": false,
           "type": "bool",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -10450,23 +10698,23 @@
       "members": [
         {
           "disabled": false,
-          "document": "节点 ID。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "节点 ID。",
           "example": "de1d54148ed79f11c3b4a49c878b29c721******",
           "member": "string",
           "name": "NodeId",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "可用区 ID。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "可用区 ID。",
           "example": "100002",
           "member": "int64",
           "name": "ZoneId",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -10536,33 +10784,33 @@
         },
         {
           "disabled": false,
-          "document": "内部字段，用户可忽略。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "内部字段，用户可忽略。",
           "example": "0",
           "member": "int64",
           "name": "BackupSize",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "内部字段，用户可忽略。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "内部字段，用户可忽略。",
           "example": "0",
           "member": "int64",
           "name": "FullBackup",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "内部字段，用户可忽略。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "内部字段，用户可忽略。",
           "example": "0",
           "member": "int64",
           "name": "InstanceType",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -10778,133 +11026,133 @@
       "members": [
         {
           "disabled": false,
-          "document": "事件 ID。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "事件 ID。",
           "example": "102",
           "member": "int64",
           "name": "ID",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例 ID。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例 ID。",
           "example": "crs-ewflkgfe",
           "member": "string",
           "name": "InstanceId",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例名称。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例名称。",
           "example": "redis",
           "member": "string",
           "name": "InstanceName",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "事件类型，当前仅支持配置实例迁移、资源腾挪、机房裁撤相关的运维操作。该参数仅支持配置为 **InstanceMigration**。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "事件类型，当前仅支持配置实例迁移、资源腾挪、机房裁撤相关的运维操作。该参数仅支持配置为 **InstanceMigration**。",
           "example": "InstanceMigration",
           "member": "string",
           "name": "Type",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "事件等级根据其影响严重程度和紧急程度进行分级，由重至轻依次为关键、重要、中等、一般。\n- Critical：关键\n- High：重要\n- Middle：中等\n- Low：一般\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "事件等级根据其影响严重程度和紧急程度进行分级，由重至轻依次为关键、重要、中等、一般。\n- Critical：关键\n- High：重要\n- Middle：中等\n- Low：一般",
           "example": "Critical",
           "member": "string",
           "name": "Grade",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "事件计划执行日期。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "事件计划执行日期。",
           "example": "2018-09-10",
           "member": "string",
           "name": "ExecutionDate",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "事件计划执行开始时间。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "事件计划执行开始时间。",
           "example": "03:00",
           "member": "string",
           "name": "StartTime",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "事件计划执行结束时间。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "事件计划执行结束时间。",
           "example": "04:00",
           "member": "string",
           "name": "EndTime",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "运维事件最迟执行的日期，即该事件必须在该日期之前完成，否则可能会对业务产生影响。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "运维事件最迟执行的日期，即该事件必须在该日期之前完成，否则可能会对业务产生影响。",
           "example": "2018-09-10",
           "member": "string",
           "name": "LatestExecutionDate",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "事件当前状态。\n- Waiting：未到达执行日期或不在维护时间窗内的事件。\n- Running：在维护时间窗内，正在执行维护的事件。\n- Finished：已全部完成维护的事件。\n- Canceled：已取消执行的事件。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "事件当前状态。\n- Waiting：未到达执行日期或不在维护时间窗内的事件。\n- Running：在维护时间窗内，正在执行维护的事件。\n- Finished：已全部完成维护的事件。\n- Canceled：已取消执行的事件。",
           "example": "Waiting",
           "member": "string",
           "name": "Status",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "事件执行任务完成时间。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "事件执行任务完成时间。",
           "example": "2018-09-10 09:10:23",
           "member": "string",
           "name": "TaskEndTime",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "事件影响信息。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "事件影响信息。",
           "example": "迁移完成时会有一次秒级别的闪断",
           "member": "string",
           "name": "EffectInfo",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "事件最初计划执行日期。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "事件最初计划执行日期。",
           "example": "2018-09-10",
           "member": "string",
           "name": "InitialExecutionDate",
           "output_required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -11160,13 +11408,40 @@
       ],
       "type": "object"
     },
+    "RemoveReplicationGroupRequest": {
+      "document": "RemoveReplicationGroup请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "复制组ID。请登录 [Redis控制台的全球复制](https://console.cloud.tencent.com/redis/replication) 页面获取复制组 ID。",
+          "example": "crs-rpl-xxx",
+          "member": "string",
+          "name": "GroupId",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "RemoveReplicationGroupResponse": {
+      "document": "RemoveReplicationGroup返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "RemoveReplicationInstanceRequest": {
       "document": "RemoveReplicationInstance请求参数结构体",
       "members": [
         {
           "disabled": false,
           "document": "复制组 ID。例如：crs-rpl-m3zt****。请登录[Redis 控制台](https://console.cloud.tencent.com/redis/replication)的全球复制组列表获取复制组 ID。\n",
-          "example": "crs-rpl-",
+          "example": "crs-rpl-deindi7de",
           "member": "string",
           "name": "GroupId",
           "required": true,
@@ -11220,7 +11495,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "购买时长，单位：月。",
+          "document": "购买时长。\n- 单位：月。\n- 取值范围 [1,2,3,4,5,6,7,8,9,10,11,12,24,36]。",
           "example": "12",
           "member": "uint64",
           "name": "Period",
@@ -11229,7 +11504,7 @@
         },
         {
           "disabled": false,
-          "document": "实例 ID，请登录[Redis控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
+          "document": "实例 ID，请登录 [Redis 控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
           "example": "crs-5a4py64p",
           "member": "string",
           "name": "InstanceId",
@@ -11238,7 +11513,7 @@
         },
         {
           "disabled": false,
-          "document": "标识是否修改计费模式。<ul><li>当前实例计费模式为按量计费方式，预转换为包年包月而续费，请指定该参数为 <b>prepaid</b>。</li><li>当前实例计费模式为包年包月方式，可不设置该参数。</li></ul>",
+          "document": "标识是否修改计费模式。\n- 当前实例计费模式为按量计费方式，预转换为包年包月而续费，请指定该参数为 <b>prepaid</b>。\n- 当前实例计费模式为包年包月方式，可不设置该参数。",
           "example": "PREPAID",
           "member": "string",
           "name": "ModifyPayMode",
@@ -11252,12 +11527,22 @@
       "document": "RenewInstance返回参数结构体",
       "members": [
         {
-          "disabled": false,
+          "disabled": true,
           "document": "交易ID。",
-          "example": "6954225",
+          "example": "20250825297021530591847",
           "member": "string",
           "name": "DealId",
           "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "订单号。",
+          "example": "20250825297021530591847",
+          "member": "string",
+          "name": "DealName",
+          "output_required": false,
           "type": "string",
           "value_allowed_null": false
         },
@@ -11340,7 +11625,7 @@
         },
         {
           "disabled": false,
-          "document": "重置的密码。若切换为免密实例时，可不配置该参数。其他情况必须配置。",
+          "document": "重置的密码。若切换为免密实例时，可不配置该参数。\n- 长度8-32位, 推荐使用12位以上的密码。\n- 不能以\"/\"开头。\n- 至少包含小写字母a- z、大写字母A - Z、数字0 - 9、特殊字符 ()~!@#$%^&*-+=_|{}[]:;<>,.?/中的两项。",
           "example": "zy456987",
           "member": "string",
           "name": "Password",
@@ -11349,10 +11634,19 @@
         },
         {
           "disabled": false,
-          "document": "是否切换免密实例。\n- false：切换为非免密码实例。\n- true：切换为免密码实例。默认 false。",
+          "document": "是否切换免密实例。\n- false：切换为非免密码实例。默认 false。\n- true：切换为免密码实例。",
           "example": "true",
           "member": "bool",
           "name": "NoAuth",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "是否加密密码。\n- false：非加密密码。默认 false。\n- true：加密密码。",
+          "example": "false",
+          "member": "bool",
+          "name": "EncryptPassword",
           "required": false,
           "type": "bool"
         }
@@ -11446,7 +11740,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "待操作的实例ID，可通过 DescribeInstances 接口返回值中的 InstanceId 获取。",
+          "document": "待操作的实例ID，可通过 [DescribeInstances](https://cloud.tencent.com/document/product/239/20018) 接口返回值中的 InstanceId 获取。",
           "example": "crs-5a4py64p",
           "member": "string",
           "name": "InstanceId",
@@ -11455,8 +11749,8 @@
         },
         {
           "disabled": false,
-          "document": "备份ID，可通过 GetRedisBackupList 接口返回值中的 backupId 获取",
-          "example": "678362566696298532848117",
+          "document": "备份ID，可通过 [DescribeInstanceBackups](https://cloud.tencent.com/document/product/239/20011) 接口返回的参数 RedisBackupSet 获取。",
+          "example": "\"154572601-1165734321-153731245\"",
           "member": "string",
           "name": "BackupId",
           "required": true,
@@ -11501,23 +11795,23 @@
       "members": [
         {
           "disabled": false,
-          "document": "开始时间戳\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "开始时间戳",
           "example": "1716449238",
           "member": "int64",
           "name": "StartTimeStamp",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "结束时间戳\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "结束时间戳",
           "example": "1716449238",
           "member": "int64",
           "name": "EndTimeStamp",
           "output_required": false,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -11787,7 +12081,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例 ID，请登录[Redis控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
+          "document": "实例 ID，请登录[Redis控制台](https://console.cloud.tencent.com/redis/instance/list)在回收站复制需解隔离的实例 ID。",
           "example": "crs-7ponppu3",
           "member": "string",
           "name": "InstanceId",
@@ -11801,7 +12095,7 @@
       "document": "StartupInstance返回参数结构体",
       "members": [
         {
-          "disabled": false,
+          "disabled": true,
           "document": "该字段已废弃，请通过查询实例接口获取到的状态来判断实例是否已解隔离",
           "example": "1203",
           "member": "int64",
@@ -11934,11 +12228,20 @@
         {
           "disabled": false,
           "document": "实例 ProxyID，请通过接口[DescribeInstanceNodeInfo](https://cloud.tencent.com/document/product/239/48603)的返回参数**Proxy**中的**NodeId**获取。  ",
-          "example": "vbjxbsucvnkcndkbk",
+          "example": "6ff0eb7815606bb7e3f14cdde9410b64b488e8f9",
           "member": "string",
           "name": "ProxyID",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "实例 ProxyID列表，请通过接口[DescribeInstanceNodeInfo](https://cloud.tencent.com/document/product/239/48603)的返回参数**Proxy**中的**NodeId**获取。",
+          "example": "[\"896873be5805ebacae5042311237e6d2d78be00b\"]",
+          "member": "string",
+          "name": "ProxyIDList",
+          "required": false,
+          "type": "list"
         }
       ],
       "type": "object"
@@ -11946,6 +12249,16 @@
     "SwitchProxyResponse": {
       "document": "SwitchProxy返回参数结构体",
       "members": [
+        {
+          "disabled": false,
+          "document": "任务ID。",
+          "example": "1378445",
+          "member": "int64",
+          "name": "TaskId",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
@@ -11960,93 +12273,93 @@
       "members": [
         {
           "disabled": false,
-          "document": "任务 ID。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "任务 ID。",
           "example": "42371",
           "member": "int64",
           "name": "TaskId",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "任务开始时间。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "任务开始时间。",
           "example": "2019-11-15 14:25:37",
           "member": "string",
           "name": "StartTime",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "任务类型。\n- FLOW_CREATE: \"001\"，新建实例\n- FLOW_RESIZE ： \"002\"，配置变更\n- FLOW_CLOSE：\"003\"，关闭实例\n- FLOW_CLEAN： \"004\"，清空实例\n- FLOW_STARTUP：\"005\"，实例启用。\n- FLOW_DELETE：\"006\"，删除实例。\n- FLOW_SETPWD：\"007\"，重置密码。\n- FLOW_EXPORTBACKUP：\"009\"，导出备份文件。\n- FLOW_RESTOREBACKUP：\"010\"，恢复备份。\n- FLOW_BACKUPINSTANCE：\"012\"，备份实例。\n- FLOW_MIGRATEINSTANCE：\"013\"，迁移实例。\n- FLOW_DELBACKUP：\"014\"，删除备份。\n- FLOW_EXCHANGEINSTANCE： \"016\"，切换实例流程。\n- FLOW_AUTOBACKUP：\"017\"，自动备份实例。\n- FLOW_MIGRATECHECK： \"022\"，迁移参数校验。\n- FLOW_MIGRATETASK：\"023\"，数据迁移中。\n- FLOW_CLEANDB：\"025\"，清空某个数据库。\n- FLOW_CLONEBACKUP：\"026\"，克隆备份。\n- FLOW_CHANGEVIP： \"027\"，改变vip地址。\n- FLOW_EXPORSHR ：\"028\"，扩缩容。\n- FLOW_ADDNODES：\"029\"，加（减）节点。\n- FLOW_CHANGENET：\"031\"，改变网络类型。\n- FLOW_MODIFYINSTACEREADONLY：\"033\"，只读策略变更。\n- FLOW_MODIFYINSTANCEPARAMS：\"034\"，修改实例参数。\n- FLOW_MODIFYINSTANCEPASSWORDFREE：\"035\"，设置免密。\n- FLOW_SWITCHINSTANCEVIP：\"036\"，实例VIP切换。\n- FLOW_MODIFYINSTANCEACCOUNT：\"037\"，实例帐号变更。\n- FLOW_MODIFYINSTANCEBANDWIDTH：\"038\"，实例带宽变更。\n- FLOW_ENABLEINSTANCE_REPLICATE：\"039\"，开启副本只读。\n- FLOW_DISABLEINSTANCE_REPLICATE：\"040\"，关闭副本只读。\n- FLOW_UpgradeArch：\"041\"，实例架构升级，主从升集群。\n- FLOW_DowngradeArch： \"042\"，实例架构降级，集群降主从。\n- FLOW_UpgradeVersion： \"043\"，版本升级。\n- FLOW_MODIFYCONNECTIONCONFIG：\"044\"，带宽连接数调整。\n- FLOW_CLEARNETWORK：\"045\"，更换网络，\n- FLOW_REMOVE_BACKUP_FILE：\"046\"，删除备份。\n- FLOW_UPGRADE_SUPPORT_MULTI_AZ：\"047\"，升级实例支持多可用区。\n- FLOW_SHUTDOWN_MASTER：\"048\"，模拟故障。\n- FLOW_CHANGE_REPLICA_TO_MASTER：\"049\"，手动提主。\n- FLOW_CODE_ADD_REPLICATION_INSTANCE：\"050\"，新增复制组。\n- FLOW_OPEN_WAN：\"052\"，开通外网。\n- FLOW_CLOSE_WAN：\"053\"，关闭外网FLOW_UPDATE_WAN：\"054\"，更新外网。\n- FLOW_CODE_DELETE_REPLICATION_INSTANCE：\"055\"，解绑复制组。\n- FLOW_CODE_CHANGE_MASTER_INSTANCE：\"056\"，复制组实例切主。\n- FLOW_CODE_CHANGE_INSTANCE_ROLE： \"057\"，更改复制组实例角色。\n- FLOW_MIGRATE_NODE：\"058\"，迁移节点。\n- FLOW_SWITCH_NODE：\"059\"，切换节点。\n- FLOW_UPGRADE_SMALL_VERSION：\"060\"，升级 Redi s版本。\n- FLOW_UPGRADE_PROXY_VERSION：\"061\"，升级 Proxy 版本。\n- FLOW_MODIFY_INSTANCE_NETWORK： \"062\"，实例修改网络。\n- FLOW_MIGRATE_PROXY_NODE：\"063\"，迁移proxy节点。\n- FLOW_MIGRATION_INSTANCE_ZONE：\"066\"，实例可用区迁移中。\n- FLOW_UPGRADE_INSTANCE_CACHE_AND_PROXY： \"067\"，实例版本升级中。\n- FLOW_MODIFY_PROXY_NUM：\"069\"，加（减）Proxy 节点。\n- FLOW_MODIFYBACKUPMOD：\"070\"，变更实例备份模式。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "任务类型。\n- FLOW_CREATE: \"001\"，新建实例\n- FLOW_RESIZE ： \"002\"，配置变更\n- FLOW_CLOSE：\"003\"，关闭实例\n- FLOW_CLEAN： \"004\"，清空实例\n- FLOW_STARTUP：\"005\"，实例启用。\n- FLOW_DELETE：\"006\"，删除实例。\n- FLOW_SETPWD：\"007\"，重置密码。\n- FLOW_EXPORTBACKUP：\"009\"，导出备份文件。\n- FLOW_RESTOREBACKUP：\"010\"，恢复备份。\n- FLOW_BACKUPINSTANCE：\"012\"，备份实例。\n- FLOW_MIGRATEINSTANCE：\"013\"，迁移实例。\n- FLOW_DELBACKUP：\"014\"，删除备份。\n- FLOW_EXCHANGEINSTANCE： \"016\"，切换实例流程。\n- FLOW_AUTOBACKUP：\"017\"，自动备份实例。\n- FLOW_MIGRATECHECK： \"022\"，迁移参数校验。\n- FLOW_MIGRATETASK：\"023\"，数据迁移中。\n- FLOW_CLEANDB：\"025\"，清空数据库。\n- FLOW_CLONEBACKUP：\"026\"，克隆备份。\n- FLOW_CHANGEVIP： \"027\"，改变vip地址。\n- FLOW_EXPORSHR ：\"028\"，扩缩容。\n- FLOW_ADDNODES：\"029\"，加（减）节点。\n- FLOW_CHANGENET：\"031\"，改变网络类型。\n- FLOW_MODIFYINSTACEREADONLY：\"033\"，只读策略变更。\n- FLOW_MODIFYINSTANCEPARAMS：\"034\"，修改实例参数。\n- FLOW_MODIFYINSTANCEPASSWORDFREE：\"035\"，设置免密。\n- FLOW_SWITCHINSTANCEVIP：\"036\"，实例VIP切换。\n- FLOW_MODIFYINSTANCEACCOUNT：\"037\"，实例账号变更。\n- FLOW_MODIFYINSTANCEBANDWIDTH：\"038\"，实例带宽变更。\n- FLOW_ENABLEINSTANCE_REPLICATE：\"039\"，开启副本只读。\n- FLOW_DISABLEINSTANCE_REPLICATE：\"040\"，关闭副本只读。\n- FLOW_UpgradeArch：\"041\"，实例架构升级，主从升集群。\n- FLOW_DowngradeArch： \"042\"，实例架构降级，集群降主从。\n- FLOW_UpgradeVersion： \"043\"，版本升级。\n- FLOW_MODIFYCONNECTIONCONFIG：\"044\"，带宽连接数调整。\n- FLOW_CLEARNETWORK：\"045\"，更换网络，\n- FLOW_REMOVE_BACKUP_FILE：\"046\"，删除备份。\n- FLOW_UPGRADE_SUPPORT_MULTI_AZ：\"047\"，升级实例支持多可用区。\n- FLOW_SHUTDOWN_MASTER：\"048\"，模拟故障。\n- FLOW_CHANGE_REPLICA_TO_MASTER：\"049\"，手动提主。\n- FLOW_CODE_ADD_REPLICATION_INSTANCE：\"050\"，新增复制组。\n- FLOW_OPEN_WAN：\"052\"，开通外网。\n- FLOW_CLOSE_WAN：\"053\"，关闭外网\n- FLOW_CODE_DELETE_REPLICATION_INSTANCE：\"055\"，解绑复制组。\n- FLOW_CODE_CHANGE_MASTER_INSTANCE：\"056\"，复制组实例切主。\n- FLOW_CODE_CHANGE_INSTANCE_ROLE： \"057\"，更改复制组实例角色。\n- FLOW_MIGRATE_NODE：\"058\"，迁移节点。\n- FLOW_SWITCH_NODE：\"059\"，切换节点。\n- FLOW_UPGRADE_SMALL_VERSION：\"060\"，升级 Redis版本。\n- FLOW_UPGRADE_PROXY_VERSION：\"061\"，升级 Proxy 版本。\n- FLOW_MODIFY_INSTANCE_NETWORK： \"062\"，实例修改网络。\n- FLOW_MIGRATE_PROXY_NODE：\"063\"，迁移 proxy节点。\n- FLOW_MIGRATION_INSTANCE_ZONE：\"066\"，实例可用区迁移中。\n- FLOW_UPGRADE_INSTANCE_CACHE_AND_PROXY： \"067\"，实例版本升级中。\n- FLOW_MODIFY_PROXY_NUM：\"069\"，加（减）Proxy 节点。\n- FLOW_MODIFYBACKUPMOD：\"070\"，变更实例备份模式。",
           "example": "037",
           "member": "string",
           "name": "TaskType",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例名称。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例名称。",
           "example": "生产-***Redis",
           "member": "string",
           "name": "InstanceName",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "实例 ID。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "实例 ID。",
           "example": "crs-opcazbrb",
           "member": "string",
           "name": "InstanceId",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "项目 ID。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "项目 ID。",
           "example": "0",
           "member": "int64",
           "name": "ProjectId",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "任务进度。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "任务进度。",
           "example": "1",
           "member": "float",
           "name": "Progress",
           "output_required": true,
           "type": "float",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "任务执行结束时间。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "任务执行结束时间。",
           "example": "2019-11-15 14:25:25",
           "member": "string",
           "name": "EndTime",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "任务执行状态。\n\n0：任务初始化。\n1：执行中。\n2：完成。\n4：失败。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "任务执行状态。\n\n0：任务初始化。\n1：执行中。\n2：完成。\n4：失败。",
           "example": "2",
           "member": "int64",
           "name": "Result",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -12147,9 +12460,9 @@
       "document": "订单交易信息",
       "members": [
         {
-          "disabled": false,
+          "disabled": true,
           "document": "订单号ID，调用云API时使用此ID",
-          "example": "192314****",
+          "example": "2024112****",
           "member": "string",
           "name": "DealId",
           "output_required": true,
@@ -12259,7 +12572,7 @@
         {
           "disabled": false,
           "document": "实例ID",
-          "example": "100035***,100036***",
+          "example": "[\"crs-d8glo9rf\"]",
           "member": "string",
           "name": "InstanceIds",
           "output_required": true,
@@ -12274,8 +12587,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "待变更实例 ID。",
-          "example": "crs-5qlrlhux",
+          "document": "待变更实例 ID。请登录[Redis控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
+          "example": "crs-5qlr****",
           "member": "string",
           "name": "InstanceId",
           "required": true,
@@ -12283,7 +12596,7 @@
         },
         {
           "disabled": false,
-          "document": "指实例每个分片内存变更后的大小。<ul><li>单位 MB。</li><li>每次只能修改参数MemSize、RedisShardNum和RedisReplicasNum其中的一个，不能同时修改。且修改其中一个参数时，其他两个参数需输入实例原有的配置规格。</li><li>缩容时，缩容后的规格务必要大于等于使用容量的1.3倍，否则将执行失败。</li></ul>",
+          "document": "指实例每个分片内存变更后的大小。\n- 单位 MB。\n- 每次只能修改参数MemSize、RedisShardNum和RedisReplicasNum其中的一个，不能同时修改。且修改其中一个参数时，其他两个参数需输入实例原有的配置规格。\n- 缩容时，缩容后的规格务必要大于等于使用容量的1.3倍，否则将执行失败。",
           "example": "3096",
           "member": "uint64",
           "name": "MemSize",
@@ -12292,7 +12605,7 @@
         },
         {
           "disabled": false,
-          "document": "指实例变更后的分片数量。<ul><li>标准架构不需要配置该参数，集群架构为必填参数。</li><li>集群架构，每次只能修改参数RedisShardNum、MemSize和RedisReplicasNum其中的一个，不能同时修改。且修改其中一个参数时，其他两个参数需输入实例原有的配置规格。</li></ul>",
+          "document": "指实例变更后的分片数量。\n- 标准架构不需要配置该参数，集群架构为必填参数。\n- 集群架构，每次只能修改参数RedisShardNum、MemSize和RedisReplicasNum其中的一个，不能同时修改。且修改其中一个参数时，其他两个参数需输入实例原有的配置规格。",
           "example": "3",
           "member": "uint64",
           "name": "RedisShardNum",
@@ -12301,7 +12614,7 @@
         },
         {
           "disabled": false,
-          "document": "指实例变更后的副本数量。<ul><li>每次只能修改参数RedisReplicasNum、MemSize和RedisShardNum其中的一个，不能同时修改。且修改其中一个参数时，其他两个参数需输入实例原有的配置规格。</li><li>多AZ实例修改副本时必须要传入NodeSet。</li></ul>",
+          "document": "指实例变更后的副本数量。\n- 每次只能修改参数 RedisReplicasNum、MemSize 和 RedisShardNum 其中的一个，不能同时修改。且修改其中一个参数时，其他两个参数需输入实例原有的配置规格。\n- 多AZ实例修改副本时必须要传入 NodeSet。",
           "example": "2",
           "member": "uint64",
           "name": "RedisReplicasNum",
@@ -12316,6 +12629,15 @@
           "name": "NodeSet",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "切换时间。 \n- 1：维护时间窗操作：指升级规格在设置的维护时间窗内执行。请通过接口[DescribeMaintenanceWindow](https://cloud.tencent.com/document/product/239/46336)查询设置的维护时间窗时间段。增减副本、增减分片、扩缩内存均支持在维护时间窗执行操作。维护时间窗升级规格正在分地域逐步测试发布中，部分区域已支持，未覆盖地域若需紧急接入，请[提交工单](https://console.cloud.tencent.com/workorder/category)申请白名单。\n- 2：立即操作：操作将立即执行，无需等待维护时间窗。系统默认设置为立即操作。",
+          "example": "2",
+          "member": "uint64",
+          "name": "SwitchOption",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -12324,12 +12646,22 @@
       "document": "UpgradeInstance返回参数结构体",
       "members": [
         {
-          "disabled": false,
+          "disabled": true,
           "document": "订单ID。",
-          "example": "200010798",
+          "example": "20250825297021509398751",
           "member": "string",
           "name": "DealId",
           "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "订单号。",
+          "example": "20250825297021509398751",
+          "member": "string",
+          "name": "DealName",
+          "output_required": false,
           "type": "string",
           "value_allowed_null": false
         },
@@ -12379,12 +12711,22 @@
       "document": "UpgradeInstanceVersion返回参数结构体",
       "members": [
         {
-          "disabled": false,
+          "disabled": true,
           "document": "订单ID",
-          "example": "6954227",
+          "example": "20250825297021820475193",
           "member": "string",
           "name": "DealId",
           "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "订单号。",
+          "example": "20250825297021820475193",
+          "member": "string",
+          "name": "DealName",
+          "output_required": false,
           "type": "string",
           "value_allowed_null": false
         },
@@ -12411,7 +12753,7 @@
         },
         {
           "disabled": false,
-          "document": "当前 Proxy 版本。",
+          "document": "当前 Proxy 版本。请通过 [DescribeInstances](https://cloud.tencent.com/document/product/239/20018) 接口获取实例当前 Proxy 版本。",
           "example": "5.0.0",
           "member": "string",
           "name": "CurrentProxyVersion",
@@ -12420,7 +12762,7 @@
         },
         {
           "disabled": false,
-          "document": "可升级的 Redis 版本。",
+          "document": "可升级的 Redis 版本。请通过 [DescribeInstances](https://cloud.tencent.com/document/product/239/20018) 接口获取实例可升级的 Redis 版本。",
           "example": "5.0.1",
           "member": "string",
           "name": "UpgradeProxyVersion",
@@ -12530,7 +12872,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "实例ID，请登录[Redis控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
+          "document": "实例ID，请登录 [Redis 控制台](https://console.cloud.tencent.com/redis/instance/list)在实例列表复制实例 ID。",
           "example": "crs-rhlppeye",
           "member": "string",
           "name": "InstanceId",
@@ -12539,7 +12881,7 @@
         },
         {
           "disabled": false,
-          "document": "升级多可用区之后是否支持就近访问功能。\n<ul><li>true：支持就近访问功能。升级过程，需同时升级 Proxy 版本和 Redis 内核小版本，涉及数据搬迁，可能会长达数小时。</li><li>false：无需支持就近访问功能。升级多可用区仅涉及管理元数据迁移，对服务没有影响，升级过程通常在3分钟内完成。</li></ul>",
+          "document": "升级多可用区之后是否支持就近访问功能。\n- true：支持就近访问功能。升级过程，需同时升级 Proxy 版本和 Redis 内核小版本，涉及数据搬迁，可能会长达数小时。\n- false：无需支持就近访问功能。升级多可用区仅涉及管理元数据迁移，对服务没有影响，升级过程通常在3分钟内完成。默认为 false。",
           "example": "true",
           "member": "bool",
           "name": "UpgradeProxyAndRedisServer",

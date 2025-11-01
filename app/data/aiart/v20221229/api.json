@@ -70,6 +70,13 @@
       "output": "QueryTrainPortraitModelJobResponse",
       "status": "online"
     },
+    "RefineImage": {
+      "document": "将图像变清晰，增强图像细节。变清晰后的图片将保持原图比例，长边为2048。\n默认提供1个并发，代表最多能同时处理1个已提交的任务。",
+      "input": "RefineImageRequest",
+      "name": "图片变清晰",
+      "output": "RefineImageResponse",
+      "status": "online"
+    },
     "ReplaceBackground": {
       "document": "商品背景生成接口根据指定的背景描述 Prompt，将商品图中的原背景替换为自定义的新背景并保留商品主体形象，实现商品背景的自由生成与更换。\n\n商品背景生成默认提供1个并发任务数，代表最多能同时处理1个已提交的任务，上一个任务处理完毕后才能开始处理下一个任务。",
       "input": "ReplaceBackgroundRequest",
@@ -119,11 +126,18 @@
       "output": "SubmitTrainPortraitModelJobResponse",
       "status": "online"
     },
-    "TextToImage": {
-      "document": "**本接口已迁移至腾讯混元大模型-文生图轻量版，即将停止此处维护，可切换至 [文生图轻量版 API](https://cloud.tencent.com/document/product/1729/108738) 继续使用。**\n\n智能文生图接口基于文生图（标准版）模型，将根据输入的文本描述，智能生成与之相关的结果图。\n\n智能文生图默认提供3个并发任务数，代表最多能同时处理3个已提交的任务，上一个任务处理完毕后才能开始处理下一个任务。",
-      "input": "TextToImageRequest",
-      "name": "智能文生图（即将下线）",
-      "output": "TextToImageResponse",
+    "TextToImageLite": {
+      "document": "混元文生图接口，基于混元大模型，根据输入的文本描述智能生成图片\n默认提供1个并发，代表最多能同时处理1个已提交的任务，上一个任务处理完毕后，才能开始处理下一个任务。",
+      "input": "TextToImageLiteRequest",
+      "name": "混元生图（极速版）",
+      "output": "TextToImageLiteResponse",
+      "status": "online"
+    },
+    "TextToImageRapid": {
+      "document": "混元文生图接口，基于混元大模型，根据输入的文本描述智能生成图片\n默认提供1个并发，代表最多能同时处理1个已提交的任务，上一个任务处理完毕后，才能开始处理下一个任务。",
+      "input": "TextToImageRapidRequest",
+      "name": "混元生图（2.0）",
+      "output": "TextToImageRapidResponse",
       "status": "online"
     },
     "UploadTrainPortraitImages": {
@@ -137,7 +151,7 @@
   "metadata": {
     "apiVersion": "2022-12-29",
     "api_brief": "结合输入的文本或图片智能创作出与输入相关的图像内容。",
-    "serviceNameCN": "大模型图像创作引擎",
+    "serviceNameCN": "腾讯混元生图",
     "serviceShortName": "aiart"
   },
   "objects": {
@@ -147,7 +161,7 @@
         {
           "disabled": false,
           "document": "模特图片 Url。\n图片限制：单边分辨率小于3000，且大于512，转成 Base64 字符串后小于 8MB。\n输入要求：\n1、建议上传正面模特图片，至少完整露出应穿着输入指定服装的身体部位（全身、上半身或下半身），无大角度身体偏转或异常姿势。\n2、建议上传3:4比例的图片，生成效果更佳。\n3、建议模特图片中的原始服装和更换后的服装类别一致，或原始服装在身体上的覆盖范围小于等于更换后的服装（例如需要给模特换上短裤，则原始模特图片中也建议穿短裤，不建议穿长裤），否则会影响人像生成效果。\n",
-          "example": "https://xxx.com/model.jpg",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/model.jpg",
           "member": "string",
           "name": "ModelUrl",
           "required": true,
@@ -156,7 +170,7 @@
         {
           "disabled": false,
           "document": "服装图片 Url。\n图片限制：单边分辨率小于3000，大于512，转成 Base64 字符串后小于 8MB。\n输入要求：\n建议上传服装完整的正面平铺图片，仅包含1个服装主体，服装类型支持上衣、下装、连衣裙，三选一。算法将根据输入的图片，结合服装图片给模特换装。",
-          "example": "https://xxx.com/cloth.jpg",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/cloth.jpg",
           "member": "string",
           "name": "ClothesUrl",
           "required": true,
@@ -183,7 +197,7 @@
         {
           "disabled": false,
           "document": "标识内容设置。\n默认在生成结果图右下角添加“图片由 AI 生成”字样，您可根据自身需要替换为其他的标识图片。",
-          "example": "{\"LogoUrl\": \"https://xxx.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
+          "example": "{\"LogoUrl\": \"https://cos.ap-guangzhou.myqcloud.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
           "member": "LogoParam",
           "name": "LogoParam",
           "required": false,
@@ -229,7 +243,7 @@
         {
           "disabled": false,
           "document": "用户图 URL 列表",
-          "example": "[\"\"https://xxx.com/input.jpg\"\"]",
+          "example": "[\"https://cos.ap-guangzhou.myqcloud.com/input.jpg\"]",
           "member": "string",
           "name": "ImageUrls",
           "required": false,
@@ -313,7 +327,7 @@
         {
           "disabled": false,
           "document": "输入图 Url。\nBase64 和 Url 必须提供一个，如果都提供以 Url 为准。\n图片限制：单边分辨率小于5000，转成 Base64 字符串后小于 6MB，格式支持 jpg、jpeg、png、bmp、tiff、webp。",
-          "example": "https://xxx.com/image.jpg",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/image.jpg",
           "member": "string",
           "name": "InputUrl",
           "required": false,
@@ -340,7 +354,7 @@
         {
           "disabled": false,
           "document": "标识内容设置。\n默认在生成结果图右下角添加“图片由 AI 生成”字样，您可根据自身需要替换为其他的标识图片。",
-          "example": "{\"LogoUrl\": \"https://xxx.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
+          "example": "{\"LogoUrl\": \"https://cos.ap-guangzhou.myqcloud.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
           "member": "LogoParam",
           "name": "LogoParam",
           "required": false,
@@ -380,6 +394,34 @@
       ],
       "type": "object"
     },
+    "Image": {
+      "document": "图片",
+      "members": [
+        {
+          "disabled": false,
+          "document": "图片Base64",
+          "example": "MIIHNjCCBh6gAwIBAgIQCVe4E0h49mzI0NcSqMy1",
+          "member": "string",
+          "name": "Base64",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "图片Url",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/image.jpg",
+          "member": "string",
+          "name": "Url",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
+    },
     "ImageInpaintingRemovalRequest": {
       "document": "ImageInpaintingRemoval请求参数结构体",
       "members": [
@@ -395,7 +437,7 @@
         {
           "disabled": false,
           "document": "输入图 Url。\nBase64 和 Url 必须提供一个，如果都提供以 Url 为准。\n图片限制：单边分辨率小于5000，转成 Base64 字符串后小于 6MB，格式支持 jpg、jpeg、png、bmp、tiff、webp。",
-          "example": "https://xxx.com/image.jpg",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/image.jpg",
           "member": "string",
           "name": "InputUrl",
           "required": false,
@@ -413,7 +455,7 @@
         {
           "disabled": false,
           "document": "消除区域 Mask 图 Url。\nMask 为单通道灰度图，待消除部分呈白色区域，原图保持部分呈黑色区域。\nMask 的 Base64 和 Url 必须提供一个，如果都提供以 Url 为准。\n图片限制：Mask 分辨率需要和输入原图保持一致，转成 Base64 字符串后小于 6MB。",
-          "example": "https://xxx.com/mask.jpg",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/mask.png",
           "member": "string",
           "name": "MaskUrl",
           "required": false,
@@ -440,7 +482,7 @@
         {
           "disabled": false,
           "document": "标识内容设置。\n默认在生成结果图右下角添加“图片由 AI 生成”字样，您可根据自身需要替换为其他的标识图片。",
-          "example": "{\"LogoUrl\": \"https://xxx.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
+          "example": "{\"LogoUrl\": \"https://cos.ap-guangzhou.myqcloud.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
           "member": "LogoParam",
           "name": "LogoParam",
           "required": false,
@@ -495,7 +537,7 @@
         {
           "disabled": false,
           "document": "输入图 Url。\nBase64 和 Url 必须提供一个，如果都提供以 Url 为准。\n图片限制：单边分辨率小于5000，转成 Base64 字符串后小于 6MB，格式支持 jpg、jpeg、png、bmp、tiff、webp。",
-          "example": "https://xxx.com/image.jpg",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/image.jpg",
           "member": "string",
           "name": "InputUrl",
           "required": false,
@@ -522,7 +564,7 @@
         {
           "disabled": false,
           "document": "标识内容设置。\n默认在生成结果图右下角添加“图片由 AI 生成”字样，您可根据自身需要替换为其他的标识图片。",
-          "example": "{\"LogoUrl\": \"https://xxx.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
+          "example": "{\"LogoUrl\": \"https://cos.ap-guangzhou.myqcloud.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
           "member": "LogoParam",
           "name": "LogoParam",
           "required": false,
@@ -568,7 +610,7 @@
         {
           "disabled": false,
           "document": "输入图 Url。\n算法将根据输入的图片，结合文本描述智能生成与之相关的图像。\nBase64 和 Url 必须提供一个，如果都提供以 Url 为准。\n图片限制：单边分辨率小于5000且大于50，转成 Base64 字符串后小于 8MB，格式支持 jpg、jpeg、png、bmp、tiff、webp。",
-          "example": "https://xxx.com/image.jpg",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/image.jpg",
           "member": "string",
           "name": "InputUrl",
           "required": false,
@@ -577,7 +619,7 @@
         {
           "disabled": false,
           "document": "文本描述。\n用于在输入图的基础上引导生成图效果，增加生成结果中出现描述内容的可能。\n推荐使用中文。最多支持256个 utf-8 字符。",
-          "example": "无",
+          "example": "清新自然",
           "member": "string",
           "name": "Prompt",
           "required": false,
@@ -586,7 +628,7 @@
         {
           "disabled": false,
           "document": "反向文本描述。\n用于一定程度上从反面引导模型生成的走向，减少生成结果中出现描述内容的可能，但不能完全杜绝。\n推荐使用中文。最多可传256个 utf-8 字符。",
-          "example": "无",
+          "example": "黑色",
           "member": "string",
           "name": "NegativePrompt",
           "required": false,
@@ -622,7 +664,7 @@
         {
           "disabled": false,
           "document": "标识内容设置。\n默认在生成结果图右下角添加“图片由 AI 生成”字样，您可根据自身需要替换为其他的标识图片。",
-          "example": "{\"LogoUrl\": \"https://xxx.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
+          "example": "{\"LogoUrl\": \"https://cos.ap-guangzhou.myqcloud.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
           "member": "LogoParam",
           "name": "LogoParam",
           "required": false,
@@ -694,79 +736,89 @@
       "members": [
         {
           "disabled": false,
-          "document": "水印 Url",
-          "example": "无",
+          "document": "水印 Url\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/logo.jpg",
           "member": "string",
           "name": "LogoUrl",
+          "output_required": false,
           "required": false,
-          "type": "string"
+          "type": "string",
+          "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "水印 Base64，Url 和 Base64 二选一传入，如果都提供以 Url 为准",
-          "example": "无",
+          "document": "水印 Base64，Url 和 Base64 二选一传入，如果都提供以 Url 为准\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "/9j/4QlQaHR0c...N6a2M5ZCI",
           "member": "string",
           "name": "LogoImage",
+          "output_required": false,
           "required": false,
-          "type": "string"
+          "type": "string",
+          "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "水印图片位于生成结果图中的坐标，将按照坐标对标识图片进行位置和大小的拉伸匹配",
-          "example": "无",
+          "document": "水印图片位于生成结果图中的坐标，将按照坐标对标识图片进行位置和大小的拉伸匹配\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "{\"X\": 10, \"Y\": 10, \"Width\": 10, \"Height\": 10}",
           "member": "LogoRect",
           "name": "LogoRect",
+          "output_required": false,
           "required": false,
-          "type": "object"
+          "type": "object",
+          "value_allowed_null": true
         }
       ],
-      "usage": "in"
+      "usage": "both"
     },
     "LogoRect": {
       "document": "输入框",
       "members": [
         {
           "disabled": false,
-          "document": "左上角X坐标",
-          "example": "无",
+          "document": "左上角X坐标\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "10",
           "member": "int64",
           "name": "X",
+          "output_required": false,
           "required": false,
           "type": "int",
           "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "左上角Y坐标",
-          "example": "无",
+          "document": "左上角Y坐标\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "10",
           "member": "int64",
           "name": "Y",
+          "output_required": false,
           "required": false,
           "type": "int",
           "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "方框宽度",
-          "example": "无",
+          "document": "方框宽度\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "10",
           "member": "int64",
           "name": "Width",
+          "output_required": false,
           "required": false,
           "type": "int",
           "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "方框高度",
-          "example": "无",
+          "document": "方框高度\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "10",
           "member": "int64",
           "name": "Height",
+          "output_required": false,
           "required": false,
           "type": "int",
           "value_allowed_null": true
         }
       ],
-      "usage": "in"
+      "usage": "both"
     },
     "QueryDrawPortraitJobRequest": {
       "document": "QueryDrawPortraitJob请求参数结构体",
@@ -774,7 +826,7 @@
         {
           "disabled": false,
           "document": "查询生成写真图片任务 ID。",
-          "example": "无",
+          "example": "d33c2c966ae1476a5fae5e76",
           "member": "string",
           "name": "JobId",
           "required": true,
@@ -789,7 +841,7 @@
         {
           "disabled": false,
           "document": "任务状态码。\nINIT: 初始化、WAIT：等待中、RUN：运行中、FAIL：处理失败、DONE：处理完成。",
-          "example": "无",
+          "example": "DONE",
           "member": "string",
           "name": "JobStatusCode",
           "output_required": false,
@@ -799,7 +851,7 @@
         {
           "disabled": false,
           "document": "任务状态信息。",
-          "example": "无",
+          "example": "处理完成",
           "member": "string",
           "name": "JobStatusMsg",
           "output_required": false,
@@ -809,7 +861,7 @@
         {
           "disabled": false,
           "document": "任务错误码。",
-          "example": "无",
+          "example": "InternalError.EngineError",
           "member": "string",
           "name": "JobErrorCode",
           "output_required": false,
@@ -819,7 +871,7 @@
         {
           "disabled": false,
           "document": "任务错误信息。",
-          "example": "无",
+          "example": "算法服务异常。",
           "member": "string",
           "name": "JobErrorMsg",
           "output_required": false,
@@ -829,7 +881,7 @@
         {
           "disabled": false,
           "document": "结果 URL 数组。\nURL 有效期1小时，请及时保存。",
-          "example": "无",
+          "example": "[\"https://aiart-portrait-xxx.cos.ap-guangzhou.myqcloud.com/xxx?q-sign-algorithm=sha1&q-ak=xxx&q-sign-time=1731996860;1732000460&q-key-time=1731996860;1732000460&q-header-list=host&q-url-param-list=&q-signature=2a86d7f0c5482e10d6867ddea14d9e3973201e95\"]",
           "member": "string",
           "name": "ResultUrls",
           "output_required": false,
@@ -839,7 +891,7 @@
         {
           "disabled": false,
           "document": "结果描述数组。",
-          "example": "无",
+          "example": "[\"SUCCESS\"]",
           "member": "string",
           "name": "ResultDetails",
           "output_required": false,
@@ -983,7 +1035,7 @@
         {
           "disabled": false,
           "document": "任务处理失败错误码。\n",
-          "example": "无",
+          "example": "FailedOperation.DownloadError",
           "member": "string",
           "name": "JobErrorCode",
           "output_required": false,
@@ -993,7 +1045,7 @@
         {
           "disabled": false,
           "document": "任务处理失败错误信息。\n",
-          "example": "无",
+          "example": "文件下载失败。",
           "member": "string",
           "name": "JobErrorMsg",
           "output_required": false,
@@ -1025,7 +1077,7 @@
         {
           "disabled": false,
           "document": "任务 ID。",
-          "example": "无",
+          "example": "251197749-1732000778-a319cc1b-a646-11ef-be80-525400047e59-0",
           "member": "string",
           "name": "JobId",
           "required": true,
@@ -1040,7 +1092,7 @@
         {
           "disabled": false,
           "document": "当前任务状态码：\n1：等待中、2：运行中、4：处理失败、5：处理完成。",
-          "example": "无",
+          "example": "5",
           "member": "string",
           "name": "JobStatusCode",
           "output_required": false,
@@ -1050,7 +1102,7 @@
         {
           "disabled": false,
           "document": "当前任务状态：排队中、处理中、处理失败或者处理完成。\n",
-          "example": "无",
+          "example": "处理完成",
           "member": "string",
           "name": "JobStatusMsg",
           "output_required": false,
@@ -1060,7 +1112,7 @@
         {
           "disabled": false,
           "document": "任务处理失败错误码。\n",
-          "example": "无",
+          "example": "FailedOperation.DownloadError",
           "member": "string",
           "name": "JobErrorCode",
           "output_required": false,
@@ -1070,7 +1122,7 @@
         {
           "disabled": false,
           "document": "任务处理失败错误信息。\n",
-          "example": "无",
+          "example": "文件下载失败。",
           "member": "string",
           "name": "JobErrorMsg",
           "output_required": false,
@@ -1080,7 +1132,7 @@
         {
           "disabled": false,
           "document": "生成图 URL 列表，有效期1小时，请及时保存。\n",
-          "example": "无",
+          "example": "[\"https://aiart-xxx.cos.ap-guangzhou.myqcloud.com/xxx.jpg?q-sign-algorithm=sha1&q-ak=xxxxx&q-sign-time=1731574045;1731577645&q-key-time=1731574045;1731577645&q-header-list=host&q-url-param-list=&q-signature=31fe75c1c18c3d91db59508961209dd37aaf41c7\"]",
           "member": "string",
           "name": "ResultImage",
           "output_required": false,
@@ -1090,7 +1142,7 @@
         {
           "disabled": false,
           "document": "结果 detail 数组，Success 代表成功。\n",
-          "example": "无",
+          "example": "[\"Success\"]",
           "member": "string",
           "name": "ResultDetails",
           "output_required": false,
@@ -1100,7 +1152,7 @@
         {
           "disabled": false,
           "document": "对应 SubmitTextToImageProJob 接口中 Revise 参数。开启扩写时，返回扩写后的 prompt 文本。 如果关闭扩写，将直接返回原始输入的 prompt。",
-          "example": "无",
+          "example": "动漫风格，画面主要描述一个雨天的场景，一位亚洲男孩在雨中独自行走，他的身姿显得有些落寞，背景是一个阴雨连绵的城市，镜头是中景",
           "member": "string",
           "name": "RevisedPrompt",
           "output_required": false,
@@ -1122,7 +1174,7 @@
         {
           "disabled": false,
           "document": "写真模型 ID。\n",
-          "example": "无",
+          "example": "model_01",
           "member": "string",
           "name": "ModelId",
           "required": true,
@@ -1137,7 +1189,7 @@
         {
           "disabled": false,
           "document": "任务状态码。\nINIT: 初始化、WAIT：等待中、RUN：运行中、FAIL：处理失败、DONE：处理完成。",
-          "example": "无",
+          "example": "DONE",
           "member": "string",
           "name": "JobStatusCode",
           "output_required": false,
@@ -1147,7 +1199,7 @@
         {
           "disabled": false,
           "document": "任务状态信息。",
-          "example": "无",
+          "example": "处理完成",
           "member": "string",
           "name": "JobStatusMsg",
           "output_required": false,
@@ -1157,7 +1209,7 @@
         {
           "disabled": false,
           "document": "任务错误码。",
-          "example": "无",
+          "example": "0",
           "member": "string",
           "name": "JobErrorCode",
           "output_required": false,
@@ -1167,7 +1219,7 @@
         {
           "disabled": false,
           "document": "任务错误信息。",
-          "example": "无",
+          "example": "处理完成",
           "member": "string",
           "name": "JobErrorMsg",
           "output_required": false,
@@ -1233,13 +1285,68 @@
       ],
       "usage": "both"
     },
+    "RefineImageRequest": {
+      "document": "RefineImage请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "输入图 Url。\nBase64 和 Url 必须提供一个，如果都提供以 Url 为准。\n图片限制：转成 Base64 字符串后小于 6MB，格式支持 jpg、jpeg、png、bmp、tiff、webp。",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/image.jpg",
+          "member": "string",
+          "name": "InputUrl",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "输入图 Base64 数据。\nBase64 和 Url 必须提供一个，如果都提供以 Url 为准。\n图片限制：转成 Base64 字符串后小于 6MB，格式支持 jpg、jpeg、png、bmp、tiff、webp。",
+          "example": "9j/4QlQaHR0c...N6a2M5ZCI",
+          "member": "string",
+          "name": "InputImage",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "返回图像方式（base64 或 url) ，二选一，默认为 base64。url 有效期为1小时。 示例值：url",
+          "example": "url",
+          "member": "string",
+          "name": "RspImgType",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "RefineImageResponse": {
+      "document": "RefineImage返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "根据入参 RspImgType 填入不同，返回不同的内容。\n如果传入 base64 则返回生成图 Base64 编码。\n如果传入 url 则返回的生成图 URL , 有效期1小时，请及时保存。",
+          "example": "url",
+          "member": "string",
+          "name": "ResultImage",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "ReplaceBackgroundRequest": {
       "document": "ReplaceBackground请求参数结构体",
       "members": [
         {
           "disabled": false,
           "document": "商品原图 Url。\n图片限制：单边分辨率小于4000，长宽比在2:5 ~ 5:2之间，转成 Base64 字符串后小于 6MB，格式支持 jpg、jpeg、png、bmp、tiff、webp。",
-          "example": "https://xxx.com/product.jpg",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/product.jpg",
           "member": "string",
           "name": "ProductUrl",
           "required": true,
@@ -1265,7 +1372,7 @@
         },
         {
           "disabled": false,
-          "document": "商品图中的商品主体名称。\n建议说明商品主体，否则影响生成效果。",
+          "document": "商品图中的商品主体名称。\n最多支持50个 utf-8 字符，支持中、英文。\n建议说明商品主体，否则影响生成效果。",
           "example": "汽车",
           "member": "string",
           "name": "Product",
@@ -1284,7 +1391,7 @@
         {
           "disabled": false,
           "document": "商品 Mask 图 Url，要求背景透明，保留商品主体。\n如果不传，将自动使用内置的商品分割算法得到 Mask。\n支持自定义上传 Mask，如果该参数不为空，则以实际上传的数据为准。\n图片限制：Mask 图必须和商品原图分辨率一致，转成 Base64 字符串后小于 6MB，格式仅支持 png。",
-          "example": "https://xxx.com/mask.jpg",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/mask.jpg",
           "member": "string",
           "name": "MaskUrl",
           "required": false,
@@ -1311,7 +1418,7 @@
         {
           "disabled": false,
           "document": "标识内容设置。\n默认在生成结果图右下角添加“图片由 AI 生成”字样，您可根据自身需要替换为其他的标识图片。",
-          "example": "{\"LogoUrl\": \"https://xxx.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
+          "example": "{\"LogoUrl\": \"https://cos.ap-guangzhou.myqcloud.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
           "member": "LogoParam",
           "name": "LogoParam",
           "required": false,
@@ -1366,15 +1473,17 @@
       "members": [
         {
           "disabled": false,
-          "document": "生成图分辨率\n\n图像风格化（图生图）支持生成以下分辨率的图片：origin（与输入图分辨率一致，长边最高为2000，超出将做等比例缩小）、768:768（1:1）、768:1024（3:4）、1024:768（4:3），不传默认使用origin，如果指定生成的长宽比与输入图长宽比差异过大可能导致图片内容被裁剪。",
+          "document": "生成图分辨率\n\n图像风格化（图生图）支持生成以下分辨率的图片：origin（与输入图分辨率一致，长边最高为2000，超出将做等比例缩小）、768:768（1:1）、768:1024（3:4）、1024:768（4:3），不传默认使用origin，如果指定生成的长宽比与输入图长宽比差异过大可能导致图片内容被裁剪。\n注意：此字段可能返回 null，表示取不到有效值。",
           "example": "768:768",
           "member": "string",
           "name": "Resolution",
+          "output_required": false,
           "required": false,
-          "type": "string"
+          "type": "string",
+          "value_allowed_null": true
         }
       ],
-      "usage": "in"
+      "usage": "both"
     },
     "SketchToImageRequest": {
       "document": "SketchToImage请求参数结构体",
@@ -1400,7 +1509,7 @@
         {
           "disabled": false,
           "document": "线稿图 Url。\nBase64 和 Url 必须提供一个，如果都提供以Url 为准。\n图片限制：黑白线稿图片，单边分辨率小于5000且大于128（分辨率过小会导致效果受损），转成 Base64 字符串后小于 6MB，格式支持 jpg、jpeg、png、bmp、tiff、webp。",
-          "example": "https://xxx.com/image.jpg",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/image.jpg",
           "member": "string",
           "name": "InputUrl",
           "required": false,
@@ -1418,7 +1527,7 @@
         {
           "disabled": false,
           "document": "标识内容设置。\n默认在生成结果图右下角添加“图片由 AI 生成”字样，您可根据自身需要替换为其他的标识图片。",
-          "example": "{\"LogoUrl\": \"https://xxx.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
+          "example": "{\"LogoUrl\": \"https://cos.ap-guangzhou.myqcloud.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
           "member": "LogoParam",
           "name": "LogoParam",
           "required": false,
@@ -1464,7 +1573,7 @@
         {
           "disabled": false,
           "document": "写真模型 ID。\n",
-          "example": "abcde",
+          "example": "model_01",
           "member": "string",
           "name": "ModelId",
           "required": true,
@@ -1482,7 +1591,7 @@
         {
           "disabled": false,
           "document": "本次生成的图片数量，取值范围[1,4]",
-          "example": "无",
+          "example": "1",
           "member": "int64",
           "name": "ImageNum",
           "required": true,
@@ -1500,7 +1609,7 @@
         {
           "disabled": false,
           "document": "标识内容设置。 \n默认在生成结果图右下角添加“图片由 AI 生成”字样，您可根据自身需要替换为其他的标识图片。",
-          "example": "无",
+          "example": "{\"LogoUrl\": \"https://cos.ap-guangzhou.myqcloud.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
           "member": "LogoParam",
           "name": "LogoParam",
           "required": false,
@@ -1524,7 +1633,7 @@
         {
           "disabled": false,
           "document": "提交生成写真图片任务 ID。\n",
-          "example": "无",
+          "example": "cf3c2c70f0277a17527cf676",
           "member": "string",
           "name": "JobId",
           "output_required": false,
@@ -1546,7 +1655,7 @@
         {
           "disabled": false,
           "document": "美照模板图 URL。\n图片限制：模板图中最多出现5张人脸，单边分辨率大于300，转成 Base64 字符串后小于 10MB，格式支持 jpg、jpeg、png、bmp、tiff、webp。",
-          "example": "https://xxx.com/image.jpg",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/image.jpg",
           "member": "string",
           "name": "TemplateUrl",
           "required": true,
@@ -1554,8 +1663,8 @@
         },
         {
           "disabled": false,
-          "document": "用户图 URL 列表，以及模板图中需要替换成用户的人脸框信息。\n一张美照中可包含1 ~ 5个用户形象。每个用户需上传1 ~ 6张照片，如果图中存在多个人脸将取最大人脸。\n模板图中的人脸数量需要大于等于用户个数。如果不传每个用户在模板图中的人脸框位置，默认按照模板图人脸框从大到小的顺序进行替换。如需自定义顺序，需要依次上传每个用户在模板图中的人脸框位置。\n图片限制：每张图片转成 Base64 字符串后小于 10MB，格式支持 jpg、jpeg、png、bmp、tiff、webp。建议使用单人、正脸、脸部区域占比较大、脸部清晰无遮挡、无大角度偏转、无夸张表情的用户图。",
-          "example": "[     {         \"ImageUrls\": [             \"https://xxx.com/image.jpg\"         ]     } ]",
+          "document": "用户图 URL 列表，以及模板图中需要替换成用户的人脸框信息。\n一张美照中可包含1 ~ 5个用户形象。每个用户需上传1 ~ 6张照片，仅支持单人照。\n模板图中的人脸数量需要大于等于用户个数。如果不传每个用户在模板图中的人脸框位置，默认按照模板图人脸框从大到小的顺序进行替换。如需自定义顺序，需要依次上传每个用户在模板图中的人脸框位置。\n图片限制：每张图片转成 Base64 字符串后小于 10MB，格式支持 jpg、jpeg、png、bmp、tiff、webp。建议使用单人、正脸、脸部区域占比较大、脸部清晰无遮挡、无大角度偏转、无夸张表情的用户图。",
+          "example": "[{\"ImageUrls\": [\"https://cos.ap-guangzhou.myqcloud.com/image.jpg\"]}]",
           "member": "FaceInfo",
           "name": "FaceInfos",
           "required": false,
@@ -1609,7 +1718,7 @@
         {
           "disabled": false,
           "document": "标识内容设置。\n默认在生成结果图右下角添加“图片由 AI 生成”字样，您可根据自身需要替换为其他的标识图片。",
-          "example": "{\"LogoUrl\": \"https://xxx.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
+          "example": "{\"LogoUrl\": \"https://cos.ap-guangzhou.myqcloud.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
           "member": "LogoParam",
           "name": "LogoParam",
           "required": false,
@@ -1664,7 +1773,7 @@
         {
           "disabled": false,
           "document": "人像参考图 Url。\nBase64 和 Url 必须提供一个，如果都提供以 Url 为准。\n图片限制：单边分辨率小于5000，转成 Base64 字符串后小于 6MB，格式支持 jpg、jpeg、png、bmp、tiff、webp。",
-          "example": "https://xxx.com/image.jpg",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/image.jpg",
           "member": "string",
           "name": "InputUrl",
           "required": false,
@@ -1709,7 +1818,7 @@
         {
           "disabled": false,
           "document": "标识内容设置。\n默认在生成结果图右下角添加“图片由 AI 生成”字样，您可根据自身需要替换为其他的标识图片。",
-          "example": "{\"LogoUrl\": \"https://xxx.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
+          "example": "{\"LogoUrl\": \"https://cos.ap-guangzhou.myqcloud.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
           "member": "LogoParam",
           "name": "LogoParam",
           "required": false,
@@ -1724,7 +1833,7 @@
         {
           "disabled": false,
           "document": "任务id",
-          "example": "string",
+          "example": "251197749-1736402968-49025b63-ce50-11ef-9ce4-5254006b9705-0",
           "member": "string",
           "name": "JobId",
           "output_required": false,
@@ -1755,7 +1864,7 @@
         {
           "disabled": false,
           "document": "绘画风格。\n请在 [文生图（高级版）风格列表](https://cloud.tencent.com/document/product/1668/104567) 中选择期望的风格，传入风格编号。\n不传默认不指定风格。",
-          "example": "无",
+          "example": "riman",
           "member": "string",
           "name": "Style",
           "required": false,
@@ -1764,7 +1873,7 @@
         {
           "disabled": false,
           "document": "生成图分辨率。\n支持生成以下分辨率的图片：768:768（1:1）、768:1024（3:4）、1024:768（4:3）、1024:1024（1:1）、720:1280（9:16）、1280:720（16:9）、768:1280（3:5）、1280:768（5:3），不传默认使用1024:1024。",
-          "example": "无",
+          "example": "1024:1024",
           "member": "string",
           "name": "Resolution",
           "required": false,
@@ -1773,7 +1882,7 @@
         {
           "disabled": false,
           "document": "为生成结果图添加显式水印标识的开关，默认为1。  \n1：添加。  \n0：不添加。  \n其他数值：默认按1处理。  \n建议您使用显著标识来提示结果图使用了 AI 绘画技术，是 AI 生成的图片。",
-          "example": "无",
+          "example": "1",
           "member": "int64",
           "name": "LogoAdd",
           "required": false,
@@ -1782,7 +1891,7 @@
         {
           "disabled": false,
           "document": "文生图模型，默认使用engine1。\n取值：\nengine1\nengine2",
-          "example": "无",
+          "example": "engine1",
           "member": "string",
           "name": "Engine",
           "required": false,
@@ -1791,7 +1900,7 @@
         {
           "disabled": false,
           "document": "prompt 扩写开关。1为开启，0为关闭，不传默认开启。\n开启扩写后，将自动扩写原始输入的 prompt 并使用扩写后的 prompt 生成图片，返回生成图片结果时将一并返回扩写后的 prompt 文本。\n如果关闭扩写，将直接使用原始输入的 prompt 生成图片。\n建议开启，在多数场景下可提升生成图片效果、丰富生成图片细节。",
-          "example": "无",
+          "example": "0",
           "member": "int64",
           "name": "Revise",
           "required": false,
@@ -1806,7 +1915,7 @@
         {
           "disabled": false,
           "document": "任务 ID。",
-          "example": "无",
+          "example": "251197749-1732000967-13b82f68-a647-11ef-be80-525400047e59-0",
           "member": "string",
           "name": "JobId",
           "output_required": true,
@@ -1828,7 +1937,7 @@
         {
           "disabled": false,
           "document": "在上传写真训练图片时指定的写真模型 ID。 \n每个 AI 写真模型自训练完成起1年内有效，有效期内可使用模型生成图片，期满后需要重新训练模型。\n",
-          "example": "abcde",
+          "example": "model_01",
           "member": "string",
           "name": "ModelId",
           "required": true,
@@ -1849,12 +1958,12 @@
       ],
       "type": "object"
     },
-    "TextToImageRequest": {
-      "document": "TextToImage请求参数结构体",
+    "TextToImageLiteRequest": {
+      "document": "TextToImageLite请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "文本描述。\n算法将根据输入的文本智能生成与之相关的图像。建议详细描述画面主体、细节、场景等，文本描述越丰富，生成效果越精美。\n不能为空，推荐使用中文。最多可传256个 utf-8 字符。",
+          "document": "文本描述。将根据输入的文本智能生成与之相关的图像。\n不能为空，推荐使用中文。最多可传1024个 utf-8 字符。",
           "example": "雨中, 竹林,  小路",
           "member": "string",
           "name": "Prompt",
@@ -1863,8 +1972,8 @@
         },
         {
           "disabled": false,
-          "document": "反向文本描述。\n用于一定程度上从反面引导模型生成的走向，减少生成结果中出现描述内容的可能，但不能完全杜绝。\n推荐使用中文。最多可传256个 utf-8 字符。",
-          "example": "黑色，雨",
+          "document": "反向提示词。 减少生成结果中出现描述内容。\n推荐使用中文。最多可传1024个 utf-8 字符。",
+          "example": "黑色",
           "member": "string",
           "name": "NegativePrompt",
           "required": false,
@@ -1872,21 +1981,21 @@
         },
         {
           "disabled": false,
-          "document": "绘画风格。\n请在 [智能文生图风格列表](https://cloud.tencent.com/document/product/1668/86249) 中选择期望的风格，传入风格编号。\n推荐使用且只使用一种风格。不传默认使用201（日系动漫风格）。",
-          "example": "[\"101\"]",
+          "document": "生成图分辨率，默认1024:1024。\n支持的图像宽高比例: 1:1，3:4，4:3，9:16，16:9。\n支持的长边分辨率: 160，200，225，258，512，520，608，768，1024，1080，1280，1600，1620，1920，2048，2400，2560，2592，3440，3840，4096。",
+          "example": "1024:1024",
           "member": "string",
-          "name": "Styles",
+          "name": "Resolution",
           "required": false,
-          "type": "list"
+          "type": "string"
         },
         {
           "disabled": false,
-          "document": "生成图结果的配置，包括输出图片分辨率和尺寸等。\n支持生成以下分辨率的图片：768:768（1:1）、768:1024（3:4）、1024:768（4:3）、1024:1024（1:1）、720:1280（9:16）、1280:720（16:9）、768:1280（3:5）、1280:768（5:3）、1080:1920（9:16）、1920:1080（16:9），不传默认使用768:768。\n",
-          "example": "768:768",
-          "member": "ResultConfig",
-          "name": "ResultConfig",
+          "document": "随机种子，默认随机。\n0：随机种子生成。\n不传：随机种子生成。\n正数：固定种子生成。\n",
+          "example": "1",
+          "member": "int64",
+          "name": "Seed",
           "required": false,
-          "type": "object"
+          "type": "int"
         },
         {
           "disabled": false,
@@ -1900,7 +2009,117 @@
         {
           "disabled": false,
           "document": "标识内容设置。\n默认在生成结果图右下角添加“图片由 AI 生成”字样，您可根据自身需要替换为其他的标识图片。",
-          "example": "{\"LogoUrl\": \"https://xxx.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
+          "example": "{\"LogoUrl\": \"https://cos.ap-guangzhou.myqcloud.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
+          "member": "LogoParam",
+          "name": "LogoParam",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "disabled": false,
+          "document": "返回图像方式（base64 或 url），二选一，默认为 base64。url 有效期为1小时。",
+          "example": "url",
+          "member": "string",
+          "name": "RspImgType",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "TextToImageLiteResponse": {
+      "document": "TextToImageLite返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "根据入参 RspImgType 填入不同，返回不同的内容。\n如果传入 base64 则返回生成图 Base64 编码。\n如果传入 url 则返回的生成图 URL , 有效期1小时，请及时保存。",
+          "example": "https://xxx.cos.ap-guangzhou.myqcloud.com/xxx.jpg",
+          "member": "string",
+          "name": "ResultImage",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "Seed",
+          "example": "1",
+          "member": "int64",
+          "name": "Seed",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "TextToImageRapidRequest": {
+      "document": "TextToImageRapid请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "文本描述。\n算法将根据输入的文本智能生成与之相关的图像。建议详细描述画面主体、细节、场景等，文本描述越丰富，生成效果越精美。\n不能为空，推荐使用中文。最多可传256个 utf-8 字符。",
+          "example": "雨中, 竹林,  小路",
+          "member": "string",
+          "name": "Prompt",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "生成图分辨率，默认1024:1024。\n支持的图像宽高比例: 1:1，3:4，4:3，9:16，16:9。\n支持的长边分辨率: 160，200，225，258，512，520，608，768，1024，1080，1280，1600，1620，1920，2048，2400，2560，2592，3440，3840，4096。",
+          "example": "1024:1024",
+          "member": "string",
+          "name": "Resolution",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "随机种子，默认随机。\n0：随机种子生成。\n不传：随机种子生成。\n正数：固定种子生成。\n",
+          "example": "1",
+          "member": "int64",
+          "name": "Seed",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "参考图。\n\n- Base64 和 Url 必须提供一个，如果都提供以 Url 为准。\n- 当传入Image参数时，Style和Resolution参数不生效，输出图分辨率将保持Image传入图分辨率。\n- 图片限制：单边分辨率大于128且小于2048；图片小于6M；格式支持 jpg、jpeg、png、bmp、tiff、webp。",
+          "example": "\"Image\":{\"Url\":\"https://cos.ap-guangzhou.myqcloud.com/image.jpg\", \"Base64\": \"\"}",
+          "member": "Image",
+          "name": "Image",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "disabled": false,
+          "document": "生成的图片风格，参考值：\n\n1：宫崎骏风格；\n2：新海诚风格；\n3：去旅行风格；\n4：水彩风格；\n5：像素风格；\n6：童话世界风格；\n7：奇趣卡通风格；\n8：赛博朋克风格；\n9：极简风格；\n10：复古风格；\n11：暗黑系风格；\n12：波普风风格；\n13：糖果色风格；\n14：胶片电影风格；\n15：素描风格；\n16：水墨画风格；\n17：油画风格；\n18：粉笔风格；\n19：粘土风格；\n20：毛毡风格；\n21：刺绣风格；\n22：彩铅风格；\n23：莫奈风格；\n24：毕加索风格；\n25：穆夏风格；\n26：古风二次元风格；\n27：都市二次元风格；\n28：悬疑风格；\n29：校园风格；\n30：都市异能风格。",
+          "example": "\"1\"",
+          "member": "string",
+          "name": "Style",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "为生成结果图添加标识的开关，默认为1。\n1：添加标识。\n0：不添加标识。\n其他数值：默认按1处理。\n建议您使用显著标识来提示结果图使用了 AI 绘画技术，是 AI 生成的图片。",
+          "example": "1",
+          "member": "int64",
+          "name": "LogoAdd",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "标识内容设置。\n默认在生成结果图右下角添加“图片由 AI 生成”字样，您可根据自身需要替换为其他的标识图片。",
+          "example": "{\"LogoUrl\": \"https://cos.ap-guangzhou.myqcloud.com/logo.jpg\", \"LogoRect\": {\"X\": 10, \"Y\": 10, \"Width\": 20, \"Height\": 20}}",
           "member": "LogoParam",
           "name": "LogoParam",
           "required": false,
@@ -1918,8 +2137,8 @@
       ],
       "type": "object"
     },
-    "TextToImageResponse": {
-      "document": "TextToImage返回参数结构体",
+    "TextToImageRapidResponse": {
+      "document": "TextToImageRapid返回参数结构体",
       "members": [
         {
           "disabled": false,
@@ -1929,6 +2148,16 @@
           "name": "ResultImage",
           "output_required": true,
           "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "Seed",
+          "example": "1",
+          "member": "int64",
+          "name": "Seed",
+          "output_required": false,
+          "type": "int",
           "value_allowed_null": false
         },
         {
@@ -1946,7 +2175,7 @@
         {
           "disabled": false,
           "document": "写真模型 ID。由英文大小写字母、数字及下划线组成。\n用于唯一标识一个写真模型，一个写真模型只能用于一个人物的写真图片生成。",
-          "example": "无",
+          "example": "model_01",
           "member": "string",
           "name": "ModelId",
           "required": true,
@@ -1955,7 +2184,7 @@
         {
           "disabled": false,
           "document": "写真模型训练用的基础图像 URL，用于固定写真模型可生成的人物。\n图片数量：1张。\n图片内容：单人，脸部清晰。\n图片限制：单边分辨率小于2000，转成 Base64 字符串后小于 5MB。\n",
-          "example": "无",
+          "example": "https://cos.ap-guangzhou.myqcloud.com/image.jpg",
           "member": "string",
           "name": "BaseUrl",
           "required": false,
@@ -1964,7 +2193,7 @@
         {
           "disabled": false,
           "document": "写真模型训练用的图像 URL 列表，仅常规训练模式需要上传。\n图片数量：19 - 24 张。\n图片内容：单人，脸部清晰，和基础图像中的人物为同一人。\n图片限制：单边分辨率小于2000，转成 Base64 字符串后小于 5MB。",
-          "example": "无",
+          "example": "[\"https://cos.ap-guangzhou.myqcloud.com/image1.jpg\"]",
           "member": "string",
           "name": "Urls",
           "required": false,
@@ -1973,7 +2202,7 @@
         {
           "disabled": false,
           "document": "训练图像质量过滤开关配置。\n支持开启或关闭对训练图像分辨率下限、脸部区域大小、脸部遮挡的过滤，默认开启以上过滤。\n如果训练图像内包含多人脸或无人脸、和 Base 人像不为同一人也将被过滤，不可关闭该过滤条件。\n建议：关闭以上过滤可能导致写真生成效果受损，建议使用单人、正脸、脸部区域占比较大、脸部清晰无遮挡、无大角度偏转、无夸张表情的图像进行训练。",
-          "example": "无",
+          "example": "{\"Resolution\":1,\"Size\":1,\"Occlusion\":1}",
           "member": "Filter",
           "name": "Filter",
           "required": false,
@@ -1982,7 +2211,7 @@
         {
           "disabled": false,
           "document": "训练模式。\n默认使用常规训练模式。如果使用快速训练模式和免训练模式，只需要在 BaseUrl 中传入1张图片，Urls.N 中无需传入图片。\n0：常规训练模式，上传多张图片用于模型训练，完成训练后可生成写真图片。\n1：快速训练模式，仅需上传1张图片用于模型训练，训练速度更快，完成训练后可生成写真图片。\n2：免训练模式，仅需上传1张图片，跳过模型训练环节，直接生成写真图片。",
-          "example": "无",
+          "example": "1",
           "member": "int64",
           "name": "TrainMode",
           "required": false,
@@ -1997,7 +2226,7 @@
         {
           "disabled": false,
           "document": "用于提示对应上传的Urls训练图片是否符合要求，如果未通过需要重新上传。如果基础图像不符合要求会直接通过ErrorCode提示。如果您选择了快速模式，该参数返回为空数组。",
-          "example": "[\"Success\"]",
+          "example": "[\"SUCCESS\"]",
           "member": "string",
           "name": "ResultDetails",
           "output_required": false,

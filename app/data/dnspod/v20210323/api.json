@@ -56,6 +56,13 @@
       "output": "CreateDomainGroupResponse",
       "status": "online"
     },
+    "CreateDomainsAnalyticsFile": {
+      "document": "批量导出域名解析量",
+      "input": "CreateDomainsAnalyticsFileRequest",
+      "name": "批量导出域名解析量",
+      "output": "CreateDomainsAnalyticsFileResponse",
+      "status": "online"
+    },
     "CreateLineGroup": {
       "document": "创建域名的线路分组",
       "input": "CreateLineGroupRequest",
@@ -96,6 +103,13 @@
       "input": "CreateSnapshotRequest",
       "name": "创建快照",
       "output": "CreateSnapshotResponse",
+      "status": "online"
+    },
+    "CreateSubDomainsAnalyticsFile": {
+      "document": "批量导出子域名解析量",
+      "input": "CreateSubDomainsAnalyticsFileRequest",
+      "name": "批量导出子域名解析量",
+      "output": "CreateSubDomainsAnalyticsFileResponse",
       "status": "online"
     },
     "CreateSubdomainValidateTXTValue": {
@@ -183,7 +197,7 @@
       "status": "online"
     },
     "DescribeBatchTask": {
-      "document": "获取任务详情",
+      "document": "获取批量操作任务执行详情",
       "input": "DescribeBatchTaskRequest",
       "name": "获取任务详情",
       "output": "DescribeBatchTaskResponse",
@@ -208,6 +222,13 @@
       "input": "DescribeDomainAnalyticsRequest",
       "name": "域名解析量统计",
       "output": "DescribeDomainAnalyticsResponse",
+      "status": "online"
+    },
+    "DescribeDomainAndRecordList": {
+      "document": "批量操作中搜索域名",
+      "input": "DescribeDomainAndRecordListRequest",
+      "name": "批量操作中搜索域名",
+      "output": "DescribeDomainAndRecordListResponse",
       "status": "online"
     },
     "DescribeDomainCustomLineList": {
@@ -273,11 +294,25 @@
       "output": "DescribeDomainShareUserListResponse",
       "status": "online"
     },
+    "DescribeDomainVipList": {
+      "document": "获取套餐列表",
+      "input": "DescribeDomainVipListRequest",
+      "name": "获取套餐列表",
+      "output": "DescribeDomainVipListResponse",
+      "status": "online"
+    },
     "DescribeDomainWhois": {
       "document": "获取域名Whois信息",
       "input": "DescribeDomainWhoisRequest",
       "name": "获取域名Whois信息",
       "output": "DescribeDomainWhoisResponse",
+      "status": "online"
+    },
+    "DescribeFileInfoByJobId": {
+      "document": "根据批量任务ID获取生成文件信息",
+      "input": "DescribeFileInfoByJobIdRequest",
+      "name": "根据任务ID获取生成的文件信息",
+      "output": "DescribeFileInfoByJobIdResponse",
       "status": "online"
     },
     "DescribeLineGroupList": {
@@ -357,6 +392,13 @@
       "output": "DescribeRecordTypeResponse",
       "status": "online"
     },
+    "DescribeResolveCount": {
+      "document": "查看域名的解析量",
+      "input": "DescribeResolveCountRequest",
+      "name": "查询域名解析量",
+      "output": "DescribeResolveCountResponse",
+      "status": "online"
+    },
     "DescribeSnapshotConfig": {
       "document": "查询解析快照配置",
       "input": "DescribeSnapshotConfigRequest",
@@ -411,6 +453,13 @@
       "input": "DescribeVASStatisticRequest",
       "name": "获取域名增值服务用量",
       "output": "DescribeVASStatisticResponse",
+      "status": "online"
+    },
+    "DescribeVasList": {
+      "document": "获取增值服务列表",
+      "input": "DescribeVasListRequest",
+      "name": "获取增值服务列表",
+      "output": "DescribeVasListResponse",
       "status": "online"
     },
     "DownloadSnapshot": {
@@ -646,15 +695,6 @@
         },
         {
           "disabled": false,
-          "document": "记录权重值(暂未支持)。",
-          "example": "10",
-          "member": "uint64",
-          "name": "Weight",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
           "document": "记录的 MX 记录值，非 MX 记录类型，默认为 0，MX记录则必选。",
           "example": "20",
           "member": "uint64",
@@ -670,24 +710,6 @@
           "name": "TTL",
           "required": false,
           "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "记录状态(暂未支持)。0表示禁用，1表示启用。默认启用。",
-          "example": "1",
-          "member": "uint64",
-          "name": "Enabled",
-          "required": false,
-          "type": "int"
-        },
-        {
-          "disabled": false,
-          "document": "记录备注(暂未支持)。",
-          "example": "记录的备注信息",
-          "member": "string",
-          "name": "Remark",
-          "required": false,
-          "type": "string"
         }
       ],
       "usage": "in"
@@ -838,6 +860,168 @@
       ],
       "usage": "out"
     },
+    "BatchSearchDomainInfo": {
+      "document": "批量操作筛选域名信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "域名",
+          "example": "example.com",
+          "member": "string",
+          "name": "Domain",
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "域名 ID",
+          "example": "12620698",
+          "member": "uint64",
+          "name": "DomainId",
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "域名套餐等级",
+          "example": "DP_Free",
+          "member": "string",
+          "name": "DomainGrade",
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "记录信息列表",
+          "example": "无",
+          "member": "BatchSearchRecordInfo",
+          "name": "RecordList",
+          "required": false,
+          "type": "list",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "BatchSearchRecordInfo": {
+      "document": "批量操作筛选记录信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "解析记录 ID",
+          "example": "15689601",
+          "member": "uint64",
+          "name": "RecordId",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "解析线路",
+          "example": "默认",
+          "member": "string",
+          "name": "Area",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "记录备注",
+          "example": "首页",
+          "member": "string",
+          "name": "Remark",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "TTL(秒)",
+          "example": "600",
+          "member": "uint64",
+          "name": "TTL",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "记录类型",
+          "example": "A",
+          "member": "string",
+          "name": "RecordType",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "记录是否启用",
+          "example": "1",
+          "member": "uint64",
+          "name": "Enabled",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "权重\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "20",
+          "member": "uint64",
+          "name": "Weight",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "记录分组 ID",
+          "example": "0",
+          "member": "uint64",
+          "name": "GroupId",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "子域名",
+          "example": "www",
+          "member": "string",
+          "name": "SubDomain",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "解析值",
+          "example": "0.0.0.0",
+          "member": "string",
+          "name": "Value",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "MX优先级\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "0",
+          "member": "uint64",
+          "name": "MX",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": true
+        }
+      ],
+      "usage": "out"
+    },
     "CheckRecordSnapshotRollbackRequest": {
       "document": "CheckRecordSnapshotRollback请求参数结构体",
       "members": [
@@ -852,7 +1036,7 @@
         },
         {
           "disabled": false,
-          "document": "快照 ID",
+          "document": "快照记录 ID",
           "example": "BCED853D",
           "member": "string",
           "name": "SnapshotId",
@@ -885,12 +1069,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "错误原因\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "错误原因",
           "example": "记录线路不正确",
           "member": "string",
           "name": "Reason",
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -989,23 +1174,23 @@
         },
         {
           "disabled": false,
-          "document": "检查失败数量\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "检查失败数量",
           "example": "13",
           "member": "uint64",
           "name": "Failed",
           "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "失败记录信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "失败记录信息",
           "example": "无",
           "member": "SnapshotRecord",
           "name": "FailedRecordList",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -1186,13 +1371,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "见RecordInfoBatch\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "见RecordInfoBatch",
           "example": "无",
           "member": "CreateDomainBatchRecord",
           "name": "RecordList",
-          "required": true,
+          "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -1200,29 +1385,29 @@
           "example": "1",
           "member": "uint64",
           "name": "Id",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "域名\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名",
           "example": "test.com",
           "member": "string",
           "name": "Domain",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "域名等级\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名等级",
           "example": "DP_FREE",
           "member": "string",
           "name": "DomainGrade",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -1230,29 +1415,29 @@
           "example": "null",
           "member": "string",
           "name": "ErrMsg",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "该条任务运行状态\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "该条任务运行状态",
           "example": "waiting",
           "member": "string",
           "name": "Status",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "操作类型\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "操作类型",
           "example": "plus",
           "member": "string",
           "name": "Operation",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -1262,73 +1447,73 @@
       "members": [
         {
           "disabled": false,
-          "document": "子域名(主机记录)。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "子域名(主机记录)。",
           "example": "www",
           "member": "string",
           "name": "SubDomain",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "记录类型, 详见 DescribeRecordType 接口\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "记录类型, 详见 DescribeRecordType 接口",
           "example": "A",
           "member": "string",
           "name": "RecordType",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "解析记录的线路，详见 DescribeRecordLineList 接口\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "解析记录的线路，详见 DescribeRecordLineList 接口",
           "example": "百度",
           "member": "string",
           "name": "RecordLine",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "记录值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "记录值",
           "example": "129.23.32.32",
           "member": "string",
           "name": "Value",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "记录的 TTL 值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "记录的 TTL 值",
           "example": "600",
           "member": "uint64",
           "name": "TTL",
-          "required": true,
+          "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "记录添加状态\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "记录添加状态",
           "example": "waiting",
           "member": "string",
           "name": "Status",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "操作类型\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "操作类型",
           "example": "plus",
           "member": "string",
           "name": "Operation",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -1336,7 +1521,7 @@
           "example": "null",
           "member": "string",
           "name": "ErrMsg",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
@@ -1346,7 +1531,7 @@
           "example": "1",
           "member": "uint64",
           "name": "Id",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         }
@@ -1359,7 +1544,7 @@
         {
           "disabled": false,
           "document": "域名数组",
-          "example": "[dnspod1.cn,dnspod2.cn]",
+          "example": "[\"dnspod1.cn\",\"dnspod2.cn\"]",
           "member": "string",
           "name": "DomainList",
           "required": true,
@@ -1573,6 +1758,70 @@
       ],
       "type": "object"
     },
+    "CreateDomainsAnalyticsFileRequest": {
+      "document": "CreateDomainsAnalyticsFile请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "需要查询解析量的域名数组。",
+          "example": "[\"dnspod.cn\",\"dnspod.com\"]",
+          "member": "string",
+          "name": "Domains",
+          "required": true,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "查询解析量的时间区间起点。如：2023-01-01。",
+          "example": "2023-01-01",
+          "member": "string",
+          "name": "StartDate",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询解析量的统计维度。默认为 DATE。\nDATE：按天统计\nHOUR：按小时统计",
+          "example": "DATE",
+          "member": "string",
+          "name": "DNSFormat",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询解析量的时间区间终点。如：2023-01-01。默认为当天。",
+          "example": "2023-01-02",
+          "member": "string",
+          "name": "EndDate",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "CreateDomainsAnalyticsFileResponse": {
+      "document": "CreateDomainsAnalyticsFile返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "当前批量任务 id。",
+          "example": "1",
+          "member": "uint64",
+          "name": "JobId",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "CreateLineGroupCopyRequest": {
       "document": "CreateLineGroupCopy请求参数结构体",
       "members": [
@@ -1687,13 +1936,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "见RecordInfoBatch\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "见RecordInfoBatch",
           "example": "无",
           "member": "CreateRecordBatchRecord",
           "name": "RecordList",
-          "required": true,
+          "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -1701,29 +1950,29 @@
           "example": "1",
           "member": "uint64",
           "name": "Id",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "域名\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名",
           "example": "test.com",
           "member": "string",
           "name": "Domain",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "域名等级\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名等级",
           "example": "DP_FREE",
           "member": "string",
           "name": "DomainGrade",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -1731,19 +1980,19 @@
           "example": "null",
           "member": "string",
           "name": "ErrMsg",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "该条任务运行状态\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "该条任务运行状态",
           "example": "waiting",
           "member": "string",
           "name": "Status",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -1751,19 +2000,19 @@
           "example": "plus",
           "member": "string",
           "name": "Operation",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "域名ID\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名ID",
           "example": "142123",
           "member": "uint64",
           "name": "DomainId",
-          "required": true,
+          "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -1773,63 +2022,63 @@
       "members": [
         {
           "disabled": false,
-          "document": "子域名(主机记录)。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "子域名(主机记录)。",
           "example": "www",
           "member": "string",
           "name": "SubDomain",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "记录类型, 详见 DescribeRecordType 接口\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "记录类型, 详见 DescribeRecordType 接口",
           "example": "A",
           "member": "string",
           "name": "RecordType",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "解析记录的线路，详见 DescribeRecordLineList 接口\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "解析记录的线路，详见 DescribeRecordLineList 接口",
           "example": "百度",
           "member": "string",
           "name": "RecordLine",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "记录值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "记录值",
           "example": "129.23.32.32",
           "member": "string",
           "name": "Value",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "记录的 TTL 值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "记录的 TTL 值",
           "example": "600",
           "member": "uint64",
           "name": "TTL",
-          "required": true,
+          "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "记录添加状态\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "记录添加状态",
           "example": "waiting",
           "member": "string",
           "name": "Status",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -1837,7 +2086,7 @@
           "example": "plus",
           "member": "string",
           "name": "Operation",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
@@ -1847,7 +2096,7 @@
           "example": "null",
           "member": "string",
           "name": "ErrMsg",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
@@ -1857,29 +2106,29 @@
           "example": "1",
           "member": "uint64",
           "name": "Id",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "记录的MX权重\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "记录的MX权重",
           "example": "12",
           "member": "uint64",
           "name": "MX",
-          "required": true,
+          "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "记录的权重\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "记录的权重",
           "example": "10",
           "member": "uint64",
           "name": "Weight",
-          "required": false,
+          "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -1889,8 +2138,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "域名ID，多个 domain_id 用英文逗号进行分割。",
-          "example": "31,32",
+          "document": "域名ID，多个域名ID用英文逗号进行分割。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
+          "example": "[\"49\",\"53\"]",
           "member": "string",
           "name": "DomainIdList",
           "required": true,
@@ -1917,6 +2166,7 @@
           "example": "无",
           "member": "CreateRecordBatchDetail",
           "name": "DetailList",
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -1926,6 +2176,7 @@
           "example": "101",
           "member": "uint64",
           "name": "JobId",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -1944,7 +2195,7 @@
         {
           "disabled": false,
           "document": "域名",
-          "example": "xxyy.com",
+          "example": "dnspod.cn",
           "member": "string",
           "name": "Domain",
           "required": true,
@@ -1961,7 +2212,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
           "example": "3123",
           "member": "uint64",
           "name": "DomainId",
@@ -1980,6 +2231,7 @@
           "example": "1578",
           "member": "uint64",
           "name": "GroupId",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -2006,7 +2258,7 @@
         },
         {
           "disabled": false,
-          "document": "记录类型，通过 API 记录类型获得，大写英文，比如：A 。",
+          "document": "记录类型，可通过接口DescribeRecordType获得，大写英文，比如：A 。",
           "example": "A",
           "member": "string",
           "name": "RecordType",
@@ -2015,7 +2267,7 @@
         },
         {
           "disabled": false,
-          "document": "记录线路，通过 API 记录线路获得，中文，比如：默认。",
+          "document": "记录线路，可以通过接口DescribeRecordLineList查看当前域名允许的线路信息，中文，比如：默认。",
           "example": "默认",
           "member": "string",
           "name": "RecordLine",
@@ -2051,7 +2303,7 @@
         },
         {
           "disabled": false,
-          "document": "线路的 ID，通过 API 记录线路获得，英文字符串，比如：10=1。参数RecordLineId优先级高于RecordLine，如果同时传递二者，优先使用RecordLineId参数。",
+          "document": "线路的 ID，可以通过接口DescribeRecordLineList查看当前域名允许的线路信息，英文字符串，比如：10=1。参数RecordLineId优先级高于RecordLine，如果同时传递二者，优先使用RecordLineId参数。",
           "example": "10=1",
           "member": "string",
           "name": "RecordLineId",
@@ -2060,7 +2312,7 @@
         },
         {
           "disabled": false,
-          "document": "MX 优先级，当记录类型是 MX 时有效，范围1-20，MX 记录时必选。",
+          "document": "MX 优先级，当记录类型是 MX、HTTPS、SVCB 时必填，范围1-65535。",
           "example": "10",
           "member": "uint64",
           "name": "MX",
@@ -2182,6 +2434,79 @@
       ],
       "type": "object"
     },
+    "CreateSubDomainsAnalyticsFileRequest": {
+      "document": "CreateSubDomainsAnalyticsFile请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "需要查询解析量的域名数组。",
+          "example": "无",
+          "member": "SubDomainsAnalyticsParamsItem",
+          "name": "Domains",
+          "required": true,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "查询解析量的时间区间起点。如：2023-01-01。",
+          "example": "2023-01-01",
+          "member": "string",
+          "name": "StartDate",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询解析量子域名类型。\n1：子域名\n2：无解析量子域名",
+          "example": "1",
+          "member": "uint64",
+          "name": "SubDomainType",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "查询解析量的统计维度。默认为 DATE。\nDATE：按天统计\nHOUR：按小时统计",
+          "example": "DATE",
+          "member": "string",
+          "name": "DNSFormat",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询解析量的时间区间终点。如：2023-01-01。默认为当天。",
+          "example": "2023-01-02",
+          "member": "string",
+          "name": "EndDate",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "CreateSubDomainsAnalyticsFileResponse": {
+      "document": "CreateSubDomainsAnalyticsFile返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "当前批量任务 id。",
+          "example": "1",
+          "member": "uint64",
+          "name": "JobId",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "CreateSubdomainValidateTXTValueRequest": {
       "document": "CreateSubdomainValidateTXTValue请求参数结构体",
       "members": [
@@ -2202,7 +2527,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "需要添加 TXT 记录的域名。",
+          "document": "需要添加 TXT 记录的主域名。",
           "example": "dnspod.cn",
           "member": "string",
           "name": "Domain",
@@ -2213,7 +2538,7 @@
         {
           "disabled": false,
           "document": "需要添加 TXT 记录的主机记录。",
-          "example": "dnspodcheck",
+          "example": "_dnspodcheck",
           "member": "string",
           "name": "Subdomain",
           "output_required": true,
@@ -2241,6 +2566,16 @@
           "value_allowed_null": false
         },
         {
+          "disabled": false,
+          "document": "需要添加 TXT 记录的上级域名(可选，主域名和上级域名任选一个添加即可)。",
+          "example": "sub",
+          "member": "string",
+          "name": "ParentDomain",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
           "name": "RequestId",
@@ -2263,7 +2598,7 @@
         },
         {
           "disabled": false,
-          "document": "记录线路，通过 API 记录线路获得，中文，比如：默认。",
+          "document": "记录线路",
           "example": "默认",
           "member": "string",
           "name": "RecordLine",
@@ -2299,7 +2634,7 @@
         },
         {
           "disabled": false,
-          "document": "线路的 ID，通过 API 记录线路获得，英文字符串，比如：10=1。参数RecordLineId优先级高于RecordLine，如果同时传递二者，优先使用RecordLineId参数。",
+          "document": "线路的 ID，英文字符串，比如：10=1。参数RecordLineId优先级高于RecordLine，如果同时传递二者，优先使用RecordLineId参数。",
           "example": "10=1",
           "member": "string",
           "name": "RecordLineId",
@@ -2335,7 +2670,7 @@
         },
         {
           "disabled": false,
-          "document": "记录分组 Id。可以通过接口 DescribeRecordGroupList 接口 GroupId 字段获取。",
+          "document": "记录分组 Id。",
           "example": "3430",
           "member": "uint64",
           "name": "GroupId",
@@ -2840,7 +3175,7 @@
         {
           "disabled": false,
           "document": "域名",
-          "example": "xxyy.com",
+          "example": "dnspod.cn",
           "member": "string",
           "name": "Domain",
           "required": true,
@@ -2848,7 +3183,7 @@
         },
         {
           "disabled": false,
-          "document": "分组 ID",
+          "document": "分组 ID，可通过DescribeRecordGroupList接口获取所有记录分组",
           "example": "145",
           "member": "uint64",
           "name": "GroupId",
@@ -2857,7 +3192,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
           "example": "3123",
           "member": "uint64",
           "name": "DomainId",
@@ -2975,7 +3310,7 @@
         {
           "disabled": false,
           "document": "域名",
-          "example": "xxyy.com",
+          "example": "dnspod.cn",
           "member": "string",
           "name": "Domain",
           "required": true,
@@ -2983,7 +3318,7 @@
         },
         {
           "disabled": false,
-          "document": "快照记录 ID",
+          "document": "快照 ID。可以通过接口DescribeSnapshotList查询快照 ID",
           "example": "EG34GE",
           "member": "string",
           "name": "SnapshotId",
@@ -2992,7 +3327,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
           "example": "3123",
           "member": "uint64",
           "name": "DomainId",
@@ -3019,13 +3354,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "见BatchRecordInfo\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "见BatchRecordInfo",
           "example": "无",
           "member": "BatchRecordInfo",
           "name": "RecordList",
-          "required": true,
+          "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -3033,7 +3368,7 @@
           "example": "1",
           "member": "uint64",
           "name": "Id",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -3043,19 +3378,19 @@
           "example": "test.com",
           "member": "string",
           "name": "Domain",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "域名等级\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名等级",
           "example": "DP_FREE",
           "member": "string",
           "name": "DomainGrade",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -3063,19 +3398,19 @@
           "example": "null",
           "member": "string",
           "name": "ErrMsg",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "该条任务运行状态\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "该条任务运行状态",
           "example": "waiting",
           "member": "string",
           "name": "Status",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -3083,7 +3418,7 @@
           "example": "plus",
           "member": "string",
           "name": "Operation",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
@@ -3093,7 +3428,7 @@
           "example": "142123",
           "member": "uint64",
           "name": "DomainId",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": true
         }
@@ -3273,7 +3608,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
           "example": "1143114",
           "member": "uint64",
           "name": "DomainId",
@@ -3325,6 +3660,124 @@
       ],
       "type": "object"
     },
+    "DescribeDomainAndRecordListRequest": {
+      "document": "DescribeDomainAndRecordList请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "搜索所有域名。AllDomain、GroupIdList、DomainList、DomainIdList 参数传任一个即可。优先级为：AllDomain > GroupIdList  > DomainList > DomainIdList。",
+          "example": "yes",
+          "member": "string",
+          "name": "AllDomain",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "要搜索的域名列表。",
+          "example": "[\"dnspod.cn\",\"dnspod.com\"]",
+          "member": "string",
+          "name": "DomainList",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "要搜索的域名 ID 列表。",
+          "example": "[72203,72204]",
+          "member": "uint64",
+          "name": "DomainIdList",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "要搜索的域名分组 ID 列表。",
+          "example": "[9,10]",
+          "member": "uint64",
+          "name": "GroupIdList",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "记录类型筛选",
+          "example": "A",
+          "member": "string",
+          "name": "RecordType",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "子域名筛选",
+          "example": "www",
+          "member": "string",
+          "name": "SubKeyword",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "记录值筛选",
+          "example": "192",
+          "member": "string",
+          "name": "ValueKeyword",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "线路筛选",
+          "example": "默认",
+          "member": "string",
+          "name": "Area",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "备注筛选",
+          "example": "备注",
+          "member": "string",
+          "name": "Remark",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "记录状态筛选\n1：正常\n0：暂停\n",
+          "example": "1",
+          "member": "string",
+          "name": "Enabled",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeDomainAndRecordListResponse": {
+      "document": "DescribeDomainAndRecordList返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "域名列表",
+          "example": "无",
+          "member": "BatchSearchDomainInfo",
+          "name": "DetailList",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "DescribeDomainCustomLineListRequest": {
       "document": "DescribeDomainCustomLineList请求参数结构体",
       "members": [
@@ -3339,7 +3792,7 @@
         },
         {
           "disabled": false,
-          "document": "域名ID，如果传了DomainId，系统将会忽略Domain参数，优先使用DomainId",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
           "example": "1009",
           "member": "uint64",
           "name": "DomainId",
@@ -3413,7 +3866,7 @@
         },
         {
           "disabled": false,
-          "document": "根据域名分组 id 获取域名，可通过 DescribeDomain 或 DescribeDomainList 接口 GroupId 字段获取。",
+          "document": "根据域名分组 id 获取域名",
           "example": "[1]",
           "member": "int64",
           "name": "GroupId",
@@ -3621,7 +4074,7 @@
         },
         {
           "disabled": false,
-          "document": "分组ID, 获取指定分组的域名",
+          "document": "分组ID, 获取指定分组的域名，可以通过接口DescribeDomainGroupList查看当前域名分组信息",
           "example": "1",
           "member": "int64",
           "name": "GroupId",
@@ -3728,12 +4181,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "域名信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名日志信息",
           "example": "[\"2021-01-18 12:06:11: (111.111.111.111) 添加 A 记录 默认 线路 ftp 值 64]",
           "member": "string",
           "name": "LogList",
+          "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -3741,6 +4195,7 @@
           "example": "100",
           "member": "uint64",
           "name": "PageSize",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -3750,6 +4205,7 @@
           "example": "1",
           "member": "uint64",
           "name": "TotalCount",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -3967,7 +4423,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
           "example": "61",
           "member": "uint64",
           "name": "DomainId",
@@ -3986,6 +4442,99 @@
           "example": "无",
           "member": "DomainShareUserInfo",
           "name": "DomainShareList",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeDomainVipListRequest": {
+      "document": "DescribeDomainVipList请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "偏移量，默认值为0。",
+          "example": "0",
+          "member": "uint64",
+          "name": "Offset",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "限制数量，默认值为20。",
+          "example": "20",
+          "member": "uint64",
+          "name": "Limit",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "通过关键字搜索域名关联的套餐，默认值为空，为空时不作为筛选条件。",
+          "example": "dnspod.cn",
+          "member": "string",
+          "name": "Keyword",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "使用资源ID列表查询",
+          "example": "[\"f815b34b\", \"a4ba8c4f\"]",
+          "member": "string",
+          "name": "ResourceIdList",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "需要筛选的套餐版本",
+          "example": "[\"DP_Plus\",\"DP_Ultra\"]",
+          "member": "string",
+          "name": "GradeList",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "是否只获取未绑定域名套餐",
+          "example": "true",
+          "member": "bool",
+          "name": "GetUnbindResource",
+          "required": false,
+          "type": "bool"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeDomainVipListResponse": {
+      "document": "DescribeDomainVipList返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "符合筛选条件的套餐总数",
+          "example": "1",
+          "member": "uint64",
+          "name": "TotalCount",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "套餐信息列表",
+          "example": "无",
+          "member": "PackageListItem",
+          "name": "PackageList",
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -4022,6 +4571,44 @@
           "example": "无",
           "member": "WhoisInfo",
           "name": "Info",
+          "output_required": true,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeFileInfoByJobIdRequest": {
+      "document": "DescribeFileInfoByJobId请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID",
+          "example": "1808638",
+          "member": "uint64",
+          "name": "JobId",
+          "required": true,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeFileInfoByJobIdResponse": {
+      "document": "DescribeFileInfoByJobId返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "生成文件相关信息",
+          "example": "无",
+          "member": "FileInfo",
+          "name": "FileInfo",
+          "output_required": true,
           "type": "object",
           "value_allowed_null": false
         },
@@ -4094,6 +4681,7 @@
           "example": "无",
           "member": "LineGroupItem",
           "name": "LineGroups",
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -4103,6 +4691,7 @@
           "example": "无",
           "member": "LineGroupSum",
           "name": "Info",
+          "output_required": true,
           "type": "object",
           "value_allowed_null": false
         },
@@ -4166,7 +4755,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
           "example": "1923",
           "member": "uint64",
           "name": "DomainId",
@@ -4185,6 +4774,7 @@
           "example": "true",
           "member": "bool",
           "name": "Exist",
+          "output_required": true,
           "type": "bool",
           "value_allowed_null": false
         },
@@ -4211,7 +4801,7 @@
         },
         {
           "disabled": false,
-          "document": "要获取的解析记录所属的域名 Id，如果传了 DomainId，系统将会忽略 Domain 参数。 可以通过接口 DescribeDomainList 查到所有的 Domain 以及 DomainId。",
+          "document": "要获取的解析记录所属的域名 Id，如果传了 DomainId，系统将会忽略 Domain 参数。 ",
           "example": "81345824",
           "member": "uint64",
           "name": "DomainId",
@@ -4238,7 +4828,7 @@
         },
         {
           "disabled": false,
-          "document": "获取某些线路ID的解析记录。可以通过接口 DescribeRecordLineList 查看当前域名允许的线路信息。",
+          "document": "获取某些线路ID的解析记录。",
           "example": "[\"0\"]",
           "member": "string",
           "name": "RecordLine",
@@ -4247,7 +4837,7 @@
         },
         {
           "disabled": false,
-          "document": "获取某些分组下的解析记录时，传这个分组 Id。可以通过接口 DescribeRecordGroupList 接口 GroupId 字段获取。",
+          "document": "获取某些分组下的解析记录时，传这个分组 Id。",
           "example": "[23]",
           "member": "uint64",
           "name": "GroupId",
@@ -4283,7 +4873,7 @@
         },
         {
           "disabled": false,
-          "document": "偏移量，默认值为0。如果入参携带\"Domain\",\"ffset\",\"Limit\" 这3个以外的参数，记录结果限制最大3000条",
+          "document": "偏移量，默认值为0。如果入参携带\"Domain\",\"offset\",\"Limit\" 这3个以外的参数，记录结果限制最大3000条",
           "example": "0",
           "member": "uint64",
           "name": "Offset",
@@ -4457,7 +5047,7 @@
         {
           "disabled": false,
           "document": "域名",
-          "example": "xxyy.com",
+          "example": "dnspod.cn",
           "member": "string",
           "name": "Domain",
           "required": true,
@@ -4465,7 +5055,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
           "example": "3123",
           "member": "uint64",
           "name": "DomainId",
@@ -4502,6 +5092,7 @@
           "example": "无",
           "member": "RecordGroupInfo",
           "name": "GroupList",
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -4528,7 +5119,7 @@
         },
         {
           "disabled": false,
-          "document": "要查询线路列表的域名 ID。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain。可以通过接口 DescribeDomainList 查到所有的 Domain 以及 DomainId。",
+          "document": "要查询线路列表的域名 ID。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain。",
           "example": "97213027",
           "member": "uint64",
           "name": "DomainId",
@@ -4630,8 +5221,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "要获取的解析记录所属的域名",
-          "example": "shenjianing.com",
+          "document": "域名",
+          "example": "dnspod.cn",
           "member": "string",
           "name": "Domain",
           "required": true,
@@ -4639,7 +5230,7 @@
         },
         {
           "disabled": false,
-          "document": "要获取的解析记录所属的域名Id，如果传了DomainId，系统将会忽略Domain参数。 可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
           "example": "81345824",
           "member": "uint64",
           "name": "DomainId",
@@ -4684,7 +5275,7 @@
         },
         {
           "disabled": false,
-          "document": "获取某个分组下的解析记录时，传这个分组Id。",
+          "document": "获取某个分组下的解析记录时，传这个分组Id。可通过DescribeRecordGroupList接口获取所有分组",
           "example": "23",
           "member": "uint64",
           "name": "GroupId",
@@ -4868,6 +5459,7 @@
           "example": "121212",
           "member": "uint64",
           "name": "JobId",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -4877,17 +5469,19 @@
           "example": "ok",
           "member": "string",
           "name": "Status",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "失败的记录信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "失败的记录信息",
           "example": "无",
           "member": "SnapshotRecord",
           "name": "FailedRecordList",
+          "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -4895,6 +5489,7 @@
           "example": "xxyy.com",
           "member": "string",
           "name": "Domain",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
@@ -4904,6 +5499,7 @@
           "example": "95",
           "member": "uint64",
           "name": "Progress",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": true
         },
@@ -4913,6 +5509,7 @@
           "example": "1",
           "member": "uint64",
           "name": "LeftMinutes",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": true
         },
@@ -4922,6 +5519,7 @@
           "example": "2",
           "member": "uint64",
           "name": "Total",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": true
         },
@@ -4931,6 +5529,7 @@
           "example": "1",
           "member": "uint64",
           "name": "Failed",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": true
         },
@@ -4940,6 +5539,7 @@
           "example": "1",
           "member": "uint64",
           "name": "Success",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": true
         },
@@ -4949,6 +5549,7 @@
           "example": "https://cos.xx.com/yyy.csv",
           "member": "string",
           "name": "CosUrl",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
@@ -4998,13 +5599,13 @@
       ],
       "type": "object"
     },
-    "DescribeSnapshotConfigRequest": {
-      "document": "DescribeSnapshotConfig请求参数结构体",
+    "DescribeResolveCountRequest": {
+      "document": "DescribeResolveCount请求参数结构体",
       "members": [
         {
           "disabled": false,
-          "document": "域名",
-          "example": "xxyy.com",
+          "document": "要查询解析量的域名",
+          "example": "example.com",
           "member": "string",
           "name": "Domain",
           "required": true,
@@ -5012,7 +5613,100 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
+          "document": "查询的开始时间，格式：YYYY-MM-DD，最多允许查询最近32天的数据。",
+          "example": "2022-06-08",
+          "member": "string",
+          "name": "StartDate",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询的结束时间，格式：YYYY-MM-DD，最多允许查询最近32天的数据。",
+          "example": "2022-06-14",
+          "member": "string",
+          "name": "EndDate",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "数据统计格式，取值为minute、hour、day，分别表示按十分钟、小时、天统计数据",
+          "example": "minute",
+          "member": "string",
+          "name": "DnsFormat",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
+          "example": "435436",
+          "member": "uint64",
+          "name": "DomainId",
+          "required": false,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeResolveCountResponse": {
+      "document": "DescribeResolveCount返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "解析量明细",
+          "example": "无",
+          "member": "ResolveCountDataItem",
+          "name": "Data",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "解析量统计信息",
+          "example": "无",
+          "member": "ResolveCountInfo",
+          "name": "Info",
+          "output_required": true,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "别名解析量明细",
+          "example": "无",
+          "member": "ResolveCountAliasItem",
+          "name": "AliasData",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeSnapshotConfigRequest": {
+      "document": "DescribeSnapshotConfig请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "域名",
+          "example": "dnspod.cn",
+          "member": "string",
+          "name": "Domain",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
           "example": "121313",
           "member": "uint64",
           "name": "DomainId",
@@ -5031,6 +5725,7 @@
           "example": "无",
           "member": "SnapshotConfig",
           "name": "SnapshotConfig",
+          "output_required": true,
           "type": "object",
           "value_allowed_null": false
         },
@@ -5049,7 +5744,7 @@
         {
           "disabled": false,
           "document": "域名",
-          "example": "xxyy.com",
+          "example": "dnspod.cn",
           "member": "string",
           "name": "Domain",
           "required": true,
@@ -5057,7 +5752,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
           "example": "3123",
           "member": "uint64",
           "name": "DomainId",
@@ -5076,6 +5771,7 @@
           "example": "无",
           "member": "SnapshotPageInfo",
           "name": "Info",
+          "output_required": true,
           "type": "object",
           "value_allowed_null": false
         },
@@ -5085,6 +5781,7 @@
           "example": "无",
           "member": "SnapshotInfo",
           "name": "SnapshotList",
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -5525,6 +6222,90 @@
           "example": "无",
           "member": "VASStatisticItem",
           "name": "VASList",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeVasListRequest": {
+      "document": "DescribeVasList请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "偏移量，默认值为0。",
+          "example": "0",
+          "member": "uint64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "限制数量，默认值为20。",
+          "example": "20",
+          "member": "uint64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "域名ID",
+          "example": "12",
+          "member": "uint64",
+          "name": "DomainId",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "使用资源 ID 列表查询",
+          "example": "[\"f815b34b\", \"a4ba8c4f\"]",
+          "member": "string",
+          "name": "ResourceIdList",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "增值服务类型",
+          "example": "D_URLCOUNT",
+          "member": "string",
+          "name": "LimitType",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeVasListResponse": {
+      "document": "DescribeVasList返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "符合筛选条件的套餐总数",
+          "example": "1",
+          "member": "uint64",
+          "name": "TotalCount",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "增值服务信息列表",
+          "example": "无",
+          "member": "VasListItem",
+          "name": "VasList",
+          "output_required": true,
           "type": "list",
           "value_allowed_null": false
         },
@@ -5938,13 +6719,13 @@
         },
         {
           "disabled": false,
-          "document": "域名备注\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名备注",
           "example": "firstdomain",
           "member": "string",
           "name": "Remark",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -6068,13 +6849,13 @@
         },
         {
           "disabled": false,
-          "document": "域名实际使用的NS列表\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名实际使用的NS列表",
           "example": "[ns3.dnsv3.com]",
           "member": "string",
           "name": "ActualNsList",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -6088,33 +6869,33 @@
         },
         {
           "disabled": false,
-          "document": "域名所有者的账户昵称\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名所有者的账户昵称",
           "example": "lili",
           "member": "string",
           "name": "OwnerNick",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "是否在付费套餐宽限期\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "是否在付费套餐宽限期",
           "example": "yes",
           "member": "string",
           "name": "IsGracePeriod",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "是否在付费套餐缓冲期\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "是否在付费套餐缓冲期",
           "example": "yes",
           "member": "string",
           "name": "VipBuffered",
           "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -6158,23 +6939,23 @@
         },
         {
           "disabled": false,
-          "document": "是否是子域名。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "是否是子域名。",
           "example": "true",
           "member": "bool",
           "name": "IsSubDomain",
           "output_required": true,
           "type": "bool",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "域名关联的标签列表\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名关联的标签列表",
           "example": "无",
           "member": "TagItem",
           "name": "TagList",
           "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -6480,59 +7261,59 @@
           "example": "21253",
           "member": "uint64",
           "name": "DomainShareId",
-          "required": false,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "共享模式。r-只读；w-可写；rw-可读写。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "共享模式。r-只读；w-可写；rw-可读写。",
           "example": "rw",
           "member": "string",
           "name": "Mode",
-          "required": false,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "共享到的用户昵称\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "共享到的用户昵称",
           "example": "张三",
           "member": "string",
           "name": "Nickname",
-          "required": false,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "共享到的用户UIN\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "共享到的用户UIN",
           "example": "700000283316",
           "member": "string",
           "name": "QCloudUIN",
-          "required": false,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "共享状态。enabled-有效；pause-无效。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "共享状态。enabled-有效；pause-无效。",
           "example": "enabled",
           "member": "string",
           "name": "Status",
-          "required": false,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "共享的子域名\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "共享的子域名",
           "example": "api",
           "member": "string",
           "name": "SubDomain",
-          "required": false,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -6579,6 +7360,7 @@
           "example": "https://xx.cos.yy.com/zzz.csv",
           "member": "string",
           "name": "CosUrl",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -6590,6 +7372,122 @@
         }
       ],
       "type": "object"
+    },
+    "FileInfo": {
+      "document": "生成的文件信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "文件 id。",
+          "example": "10",
+          "member": "uint64",
+          "name": "FileId",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文件生成时间。",
+          "example": "2023-01-17 14:54:06",
+          "member": "string",
+          "name": "CreatedOn",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文件最后更新时间。",
+          "example": "2023-01-17 14:54:07",
+          "member": "string",
+          "name": "UpdatedOn",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文件涉及到的域名。",
+          "example": "[\"dnspod.cn\"]",
+          "member": "string",
+          "name": "Domains",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文件名称。",
+          "example": "xxxx.xlsx",
+          "member": "string",
+          "name": "Name",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文件下载链接。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "https://xxxx.xxx.xx",
+          "member": "string",
+          "name": "FileUrl",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "生成文件的任务 id。",
+          "example": "11",
+          "member": "uint64",
+          "name": "JobId",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "生成文件的进度。100 表示 完成度为100%。",
+          "example": "100",
+          "member": "uint64",
+          "name": "Progress",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "文件状态。\nOK：已完成\nRUNNING：正在生成中\nERROR：生成失败\nCANCELED：文件已取消生成\nCANCELING：文件正在取消生成\nEXPIRED：文件已过期",
+          "example": "OK",
+          "member": "string",
+          "name": "Status",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "生成文件的任务类型。\nRECORD_LOG：解析量数据\nRECORD_EXPORT：导出解析记录\nDOMAIN_EXPORT：导出域名列表",
+          "example": "RECORD_LOG",
+          "member": "string",
+          "name": "Type",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "剩余时间",
+          "example": "无",
+          "member": "LeftTime",
+          "name": "LeftTime",
+          "output_required": true,
+          "type": "object",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
     },
     "GroupInfo": {
       "document": "域名分组列表",
@@ -6646,22 +7544,60 @@
           "example": "ttl",
           "member": "string",
           "name": "Key",
+          "output_required": true,
           "required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "值",
           "example": "600",
           "member": "string",
           "name": "Value",
+          "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
+    },
+    "LeftTime": {
+      "document": "批量生成文件剩余时间",
+      "members": [
+        {
+          "disabled": false,
+          "document": "剩余天数",
+          "example": "2",
+          "member": "uint64",
+          "name": "Days",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "剩余小时数",
+          "example": "4",
+          "member": "uint64",
+          "name": "Hours",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "剩余分钟数",
+          "example": "49",
+          "member": "uint64",
+          "name": "Mins",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
     },
     "LineGroupDetail": {
       "document": "自定义线路分组详细信息",
@@ -7052,7 +7988,7 @@
         },
         {
           "disabled": false,
-          "document": "域名要锁定的天数，最多可锁定的天数可以通过获取域名权限接口获取。",
+          "document": "域名要锁定的天数，最多可锁定的天数可以通过DescribeDomainPurview接口获取。",
           "example": "30",
           "member": "uint64",
           "name": "LockDays",
@@ -7080,6 +8016,7 @@
           "example": "无",
           "member": "LockInfo",
           "name": "LockInfo",
+          "output_required": true,
           "type": "object",
           "value_allowed_null": false
         },
@@ -7106,8 +8043,8 @@
         },
         {
           "disabled": false,
-          "document": "域名需要转入的账号，支持Uin或者邮箱格式",
-          "example": "test@gmail.com",
+          "document": "域名需要转入的账号Uin",
+          "example": "100000000328",
           "member": "string",
           "name": "Account",
           "required": true,
@@ -7340,7 +8277,7 @@
         },
         {
           "disabled": false,
-          "document": "记录线路，通过 API 记录线路获得，中文，比如：默认。",
+          "document": "记录线路，中文，比如：默认。",
           "example": "联通",
           "member": "string",
           "name": "RecordLine",
@@ -7349,7 +8286,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
           "example": "12620688",
           "member": "uint64",
           "name": "DomainId",
@@ -7367,7 +8304,7 @@
         },
         {
           "disabled": false,
-          "document": "线路的 ID，通过 API 记录线路获得，英文字符串，比如：10=1。参数RecordLineId优先级高于RecordLine，如果同时传递二者，优先使用RecordLineId参数。",
+          "document": "线路的 ID，英文字符串，比如：10=1。参数RecordLineId优先级高于RecordLine，如果同时传递二者，优先使用RecordLineId参数。",
           "example": "10=1",
           "member": "string",
           "name": "RecordLineId",
@@ -7521,13 +8458,13 @@
       "members": [
         {
           "disabled": false,
-          "document": "见RecordInfoBatchModify\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "见RecordInfoBatchModify",
           "example": "无",
           "member": "BatchRecordInfo",
           "name": "RecordList",
-          "required": true,
+          "output_required": true,
           "type": "list",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -7535,29 +8472,29 @@
           "example": "1",
           "member": "uint64",
           "name": "Id",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "域名\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名",
           "example": "test.com",
           "member": "string",
           "name": "Domain",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "域名等级\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名等级",
           "example": "DP_FREE",
           "member": "string",
           "name": "DomainGrade",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -7565,19 +8502,19 @@
           "example": "null",
           "member": "string",
           "name": "ErrMsg",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "该条任务运行状态\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "该条任务运行状态",
           "example": "waiting",
           "member": "string",
           "name": "Status",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -7585,19 +8522,19 @@
           "example": "plus",
           "member": "string",
           "name": "Operation",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": true
         },
         {
           "disabled": false,
-          "document": "域名ID\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "域名ID",
           "example": "142123",
           "member": "uint64",
           "name": "DomainId",
-          "required": true,
+          "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -7607,7 +8544,7 @@
       "members": [
         {
           "disabled": false,
-          "document": "记录ID数组。可以通过接口DescribeRecordList查到所有的解析记录列表以及对应的RecordId",
+          "document": "记录ID数组。可以通过接口DescribeRecordList查到所有的解析记录列表以及对应的RecordId。单次最多修改5000条记录。",
           "example": "[15736895]",
           "member": "uint64",
           "name": "RecordIdList",
@@ -7643,7 +8580,7 @@
         },
         {
           "disabled": false,
-          "document": "MX记录优先级，仅当修改为 MX 记录时为必填参数。",
+          "document": "MX 优先级，当记录类型是 MX、HTTPS、SVCB 时必填，范围1-65535。",
           "example": "5",
           "member": "string",
           "name": "MX",
@@ -7668,7 +8605,7 @@
         },
         {
           "disabled": false,
-          "document": "见modifyRecordBatchDetail",
+          "document": "见ModifyRecordBatchDetail",
           "example": "无",
           "member": "ModifyRecordBatchDetail",
           "name": "DetailList",
@@ -7736,6 +8673,7 @@
           "example": "162",
           "member": "uint64",
           "name": "RecordId",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -7754,7 +8692,7 @@
         {
           "disabled": false,
           "document": "域名",
-          "example": "xxyy.com",
+          "example": "dnspod.cn",
           "member": "string",
           "name": "Domain",
           "required": true,
@@ -7771,7 +8709,7 @@
         },
         {
           "disabled": false,
-          "document": "要修改的分组 ID",
+          "document": "要修改的分组 ID，可通过DescribeRecordGroupList接口获取所有记录分组",
           "example": "146",
           "member": "uint64",
           "name": "GroupId",
@@ -7780,7 +8718,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
           "example": "3123",
           "member": "uint64",
           "name": "DomainId",
@@ -7799,6 +8737,7 @@
           "example": "1578",
           "member": "uint64",
           "name": "GroupId",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -7879,7 +8818,7 @@
         },
         {
           "disabled": false,
-          "document": "记录类型，通过 API 记录类型获得，大写英文，比如：A 。",
+          "document": "记录类型，可通过接口DescribeRecordType获得，大写英文，比如：A 。",
           "example": "A",
           "member": "string",
           "name": "RecordType",
@@ -7888,7 +8827,7 @@
         },
         {
           "disabled": false,
-          "document": "记录线路，通过 API 记录线路获得，中文，比如：默认。",
+          "document": "记录线路，可以通过接口DescribeRecordLineList查看当前域名允许的线路信息。比如：默认。",
           "example": "默认",
           "member": "string",
           "name": "RecordLine",
@@ -7933,7 +8872,7 @@
         },
         {
           "disabled": false,
-          "document": "线路的 ID，通过 API 记录线路获得，英文字符串，比如：10=1。参数RecordLineId优先级高于RecordLine，如果同时传递二者，优先使用RecordLineId参数。",
+          "document": "线路的 ID，可以通过接口DescribeRecordLineList查看当前域名允许的线路信息，比如：10=1。参数RecordLineId优先级高于RecordLine，如果同时传递二者，优先使用RecordLineId参数。",
           "example": "10=1",
           "member": "string",
           "name": "RecordLineId",
@@ -7942,7 +8881,7 @@
         },
         {
           "disabled": false,
-          "document": "MX 优先级，当记录类型是 MX 时有效，范围1-20，MX 记录时必选。",
+          "document": "MX 优先级，当记录类型是 MX、HTTPS、SVCB 时必填，范围1-65535。",
           "example": "10",
           "member": "uint64",
           "name": "MX",
@@ -8089,7 +9028,7 @@
         {
           "disabled": false,
           "document": "域名",
-          "example": "xxyy.com",
+          "example": "dnspod.cn",
           "member": "string",
           "name": "Domain",
           "required": true,
@@ -8097,7 +9036,7 @@
         },
         {
           "disabled": false,
-          "document": "分组 ID",
+          "document": "分组 ID，可通过DescribeRecordGroupList接口获取所有记录分组",
           "example": "145",
           "member": "uint64",
           "name": "GroupId",
@@ -8106,7 +9045,7 @@
         },
         {
           "disabled": false,
-          "document": "记录 ID，多个 ID 用竖线“|”分割",
+          "document": "记录 ID，多个 ID 用竖线“|”分割，可以通过接口DescribeRecordList查到所有的解析记录列表以及对应的RecordId",
           "example": "123232|2343232",
           "member": "string",
           "name": "RecordId",
@@ -8115,7 +9054,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
           "example": "3123",
           "member": "uint64",
           "name": "DomainId",
@@ -8214,7 +9153,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
           "example": "1923",
           "member": "uint64",
           "name": "DomainId",
@@ -8277,7 +9216,7 @@
         },
         {
           "disabled": false,
-          "document": "记录 ID 。可以通过接口DescribeRecordList查到所有的解析记录列表以及对应的RecordId",
+          "document": "记录 ID 。",
           "example": "162",
           "member": "uint64",
           "name": "RecordId",
@@ -8286,7 +9225,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
           "example": "1923",
           "member": "uint64",
           "name": "DomainId",
@@ -8511,6 +9450,162 @@
           "required": true,
           "type": "string",
           "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "PackageListItem": {
+      "document": "套餐列表元素",
+      "members": [
+        {
+          "disabled": false,
+          "document": "域名ID\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "12",
+          "member": "uint64",
+          "name": "DomainId",
+          "required": true,
+          "type": "int",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "域名的原始格式\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "zhaodapian.com",
+          "member": "string",
+          "name": "Domain",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "套餐等级代码",
+          "example": "DP_FREE",
+          "member": "string",
+          "name": "Grade",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "套餐名称",
+          "example": "免费版",
+          "member": "string",
+          "name": "GradeTitle",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "付费套餐开通时间",
+          "example": "2021-04-07 13:34:20",
+          "member": "datetime",
+          "name": "VipStartAt",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "付费套餐到期时间",
+          "example": "2022-04-07 13:34:20",
+          "member": "datetime",
+          "name": "VipEndAt",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "域名是否开通VIP自动续费，是：YES，否：NO，默认：DEFAULT",
+          "example": "YES",
+          "member": "string",
+          "name": "VipAutoRenew",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "套餐剩余换绑/绑定域名次数",
+          "example": "2",
+          "member": "uint64",
+          "name": "RemainTimes",
+          "required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "套餐资源ID",
+          "example": "bb355194",
+          "member": "string",
+          "name": "ResourceId",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "域名等级代号",
+          "example": "9",
+          "member": "uint64",
+          "name": "GradeLevel",
+          "required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "套餐绑定的域名的状态",
+          "example": "enable",
+          "member": "string",
+          "name": "Status",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "套餐是否处于宽限期",
+          "example": "yes",
+          "member": "string",
+          "name": "IsGracePeriod",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否降级",
+          "example": "true",
+          "member": "bool",
+          "name": "Downgrade",
+          "required": true,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "关联安全防护信息\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "无",
+          "member": "SecurityInfo",
+          "name": "SecurityInfo",
+          "required": true,
+          "type": "object",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "套餐绑定的域名是否为子域名\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "true",
+          "member": "bool",
+          "name": "IsSubDomain",
+          "required": true,
+          "type": "bool",
+          "value_allowed_null": true
         }
       ],
       "usage": "out"
@@ -8804,7 +9899,7 @@
           "example": "158",
           "member": "uint64",
           "name": "Id",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -8814,7 +9909,7 @@
           "example": "www",
           "member": "string",
           "name": "SubDomain",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -8824,7 +9919,7 @@
           "example": "A",
           "member": "string",
           "name": "RecordType",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -8834,7 +9929,7 @@
           "example": "百度",
           "member": "string",
           "name": "RecordLine",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -8844,7 +9939,7 @@
           "example": "90=0",
           "member": "string",
           "name": "RecordLineId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -8854,7 +9949,7 @@
           "example": "129.23.32.32",
           "member": "string",
           "name": "Value",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -8864,7 +9959,7 @@
           "example": "10",
           "member": "uint64",
           "name": "Weight",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": true
         },
@@ -8874,7 +9969,7 @@
           "example": "20",
           "member": "uint64",
           "name": "MX",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -8884,7 +9979,7 @@
           "example": "600",
           "member": "uint64",
           "name": "TTL",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -8894,7 +9989,7 @@
           "example": "1",
           "member": "uint64",
           "name": "Enabled",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -8904,19 +9999,19 @@
           "example": "Ok",
           "member": "string",
           "name": "MonitorStatus",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "记录的备注。\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "记录的备注。",
           "example": "这是解析记录的备注",
           "member": "string",
           "name": "Remark",
-          "required": true,
+          "output_required": true,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -8924,7 +10019,7 @@
           "example": "2021-03-31 11:38:02",
           "member": "datetime",
           "name": "UpdatedOn",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -8934,7 +10029,7 @@
           "example": "62",
           "member": "uint64",
           "name": "DomainId",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         }
@@ -8950,7 +10045,7 @@
           "example": "1",
           "member": "uint64",
           "name": "RecordId",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -8960,7 +10055,7 @@
           "example": "1.1.1.1",
           "member": "string",
           "name": "Value",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -8970,7 +10065,7 @@
           "example": "ENABLE",
           "member": "string",
           "name": "Status",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -8980,7 +10075,7 @@
           "example": "2021-03-28 11:27:09",
           "member": "datetime",
           "name": "UpdatedOn",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -8990,7 +10085,7 @@
           "example": "www",
           "member": "string",
           "name": "Name",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9000,7 +10095,7 @@
           "example": "默认",
           "member": "string",
           "name": "Line",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9010,7 +10105,7 @@
           "example": "0",
           "member": "string",
           "name": "LineId",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9020,7 +10115,7 @@
           "example": "A",
           "member": "string",
           "name": "Type",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9030,7 +10125,7 @@
           "example": "20",
           "member": "uint64",
           "name": "Weight",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": true
         },
@@ -9040,7 +10135,7 @@
           "example": "OK",
           "member": "string",
           "name": "MonitorStatus",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9050,7 +10145,7 @@
           "example": "用于api",
           "member": "string",
           "name": "Remark",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9060,19 +10155,19 @@
           "example": "600",
           "member": "uint64",
           "name": "TTL",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "MX值，只有MX记录有\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "MX值，只有MX记录有",
           "example": "10",
           "member": "uint64",
           "name": "MX",
-          "required": true,
+          "output_required": true,
           "type": "int",
-          "value_allowed_null": true
+          "value_allowed_null": false
         },
         {
           "disabled": false,
@@ -9080,8 +10175,126 @@
           "example": "true",
           "member": "bool",
           "name": "DefaultNS",
-          "required": false,
+          "output_required": true,
           "type": "bool",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "ResolveCountAliasItem": {
+      "document": "域名别名解析量统计信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "域名解析量统计信息",
+          "example": "无",
+          "member": "ResolveCountInfo",
+          "name": "Info",
+          "output_required": true,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "解析量明细",
+          "example": "无",
+          "member": "ResolveCountDataItem",
+          "name": "Data",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "ResolveCountDataItem": {
+      "document": "解析量小计",
+      "members": [
+        {
+          "disabled": false,
+          "document": "解析量",
+          "example": "1000",
+          "member": "uint64",
+          "name": "Num",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "统计的时间点",
+          "example": "2024-11-11 02:00:00",
+          "member": "string",
+          "name": "DateKey",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "ResolveCountInfo": {
+      "document": "域名解析量统计信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "当前统计周期解析量总计",
+          "example": "10000",
+          "member": "uint64",
+          "name": "DnsTotal",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "当前查询的域名",
+          "example": "example.com",
+          "member": "string",
+          "name": "Domain",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "当前统计周期开始时间",
+          "example": "2022-06-08",
+          "member": "string",
+          "name": "StartDate",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "当前统计周期结束时间",
+          "example": "2022-06-14",
+          "member": "string",
+          "name": "EndDate",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "当前统计的子域名",
+          "example": "www",
+          "member": "string",
+          "name": "SubDomain",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "数据统计格式，取值为minute、hour、day，分别表示按十分钟、小时、天统计数据",
+          "example": "hour",
+          "member": "string",
+          "name": "DnsFormat",
+          "output_required": true,
+          "type": "string",
           "value_allowed_null": false
         }
       ],
@@ -9093,7 +10306,7 @@
         {
           "disabled": false,
           "document": "域名",
-          "example": "xxyy.com",
+          "example": "dnspod.cn",
           "member": "string",
           "name": "Domain",
           "required": true,
@@ -9101,7 +10314,7 @@
         },
         {
           "disabled": false,
-          "document": "快照 ID",
+          "document": "快照 ID。可以通过接口DescribeSnapshotList查询快照 ID",
           "example": "BCED853D",
           "member": "string",
           "name": "SnapshotId",
@@ -9119,7 +10332,7 @@
         },
         {
           "disabled": false,
-          "document": "之前的快照回滚任务 ID",
+          "document": "之前的快照回滚任务 ID。可从RollbackSnapshot接口获取",
           "example": "45",
           "member": "uint64",
           "name": "TaskId",
@@ -9128,7 +10341,7 @@
         },
         {
           "disabled": false,
-          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。",
+          "document": "域名 ID 。参数 DomainId 优先级比参数 Domain 高，如果传递参数 DomainId 将忽略参数 Domain 。可以通过接口DescribeDomainList查到所有的Domain以及DomainId",
           "example": "3123",
           "member": "uint64",
           "name": "DomainId",
@@ -9147,6 +10360,7 @@
           "example": "23113",
           "member": "uint64",
           "name": "JobId",
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -9222,6 +10436,42 @@
         }
       ],
       "type": "object"
+    },
+    "SecurityInfo": {
+      "document": "套餐中安全防护信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "是否是免费赠送：yes-是；no-不是",
+          "example": "yes",
+          "member": "string",
+          "name": "IsDefendFree",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "防护类型",
+          "example": "security_almighty",
+          "member": "string",
+          "name": "Key",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "资源 ID",
+          "example": "sd12fgs12",
+          "member": "string",
+          "name": "ResourceId",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
     },
     "SnapshotConfig": {
       "document": "域名解析快照配置",
@@ -9486,6 +10736,52 @@
       ],
       "usage": "both"
     },
+    "SubDomainsAnalyticsParamsItem": {
+      "document": "批量导出子域名解析量查询条件",
+      "members": [
+        {
+          "disabled": false,
+          "document": "要查询解析量的主域名。",
+          "example": "dnspod.cn",
+          "member": "string",
+          "name": "Domain",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "要查询解析量的子域名主机头。",
+          "example": "www",
+          "member": "string",
+          "name": "SubDomain",
+          "required": false,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "查询子域名列表的偏移量。没有指定查询的 Subdomain 参数时，根据分页参数返回每页子域名解析量。",
+          "example": "0",
+          "member": "uint64",
+          "name": "Offset",
+          "required": false,
+          "type": "int",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "查询子域名列表的每页条数。没有指定查询的 Subdomain 参数时，根据分页参数返回每页子域名解析量。",
+          "example": "10",
+          "member": "uint64",
+          "name": "Limit",
+          "required": false,
+          "type": "int",
+          "value_allowed_null": true
+        }
+      ],
+      "usage": "in"
+    },
     "SubdomainAliasAnalyticsItem": {
       "document": "子域名别名解析量统计信息",
       "members": [
@@ -9587,19 +10883,21 @@
           "example": "key1",
           "member": "string",
           "name": "TagKey",
+          "output_required": true,
           "required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
-          "document": "标签值\n注意：此字段可能返回 null，表示取不到有效值。",
+          "document": "标签值",
           "example": "value1",
           "member": "string",
           "name": "TagValue",
+          "output_required": true,
           "required": false,
           "type": "string",
-          "value_allowed_null": true
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -9637,7 +10935,7 @@
           "example": "myfm",
           "member": "string",
           "name": "Nick",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9647,7 +10945,7 @@
           "example": "5299600",
           "member": "int64",
           "name": "Id",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -9657,7 +10955,7 @@
           "example": "qcloud_uin_100000000328@qcloud.com",
           "member": "string",
           "name": "Email",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9667,7 +10965,7 @@
           "example": "enabled",
           "member": "string",
           "name": "Status",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9677,7 +10975,7 @@
           "example": "187****3214",
           "member": "string",
           "name": "Telephone",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9687,7 +10985,7 @@
           "example": "yes",
           "member": "string",
           "name": "EmailVerified",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9697,7 +10995,7 @@
           "example": "yes",
           "member": "string",
           "name": "TelephoneVerified",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9707,7 +11005,7 @@
           "example": "DP_Free",
           "member": "string",
           "name": "UserGrade",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9717,7 +11015,7 @@
           "example": "王小云",
           "member": "string",
           "name": "RealName",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9727,7 +11025,7 @@
           "example": "yes",
           "member": "string",
           "name": "WechatBinded",
-          "required": true,
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -9737,7 +11035,7 @@
           "example": "100000000328",
           "member": "int64",
           "name": "Uin",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -9747,8 +11045,18 @@
           "example": " [\"r6i9m.dnspod.net\",\"a6i6c.dnspod.net\" ]",
           "member": "string",
           "name": "FreeNs",
-          "required": true,
+          "output_required": true,
           "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "用户是否允许任何人转移域名到本账号",
+          "example": "true",
+          "member": "bool",
+          "name": "AllowTransferIn",
+          "output_required": true,
+          "type": "bool",
           "value_allowed_null": false
         }
       ],
@@ -9795,6 +11103,122 @@
           "name": "UseCount",
           "required": false,
           "type": "int",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "VasListItem": {
+      "document": "增值服务信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "规格总数",
+          "example": "5",
+          "member": "uint64",
+          "name": "LimitNumber",
+          "required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "购买时间",
+          "example": "2022-08-22",
+          "member": "string",
+          "name": "StartedAt",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "到期时间",
+          "example": "2023-08-22",
+          "member": "string",
+          "name": "EndedAt",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "资源唯一 ID",
+          "example": "33d4e22f",
+          "member": "string",
+          "name": "ResourceId",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "自动续费标识",
+          "example": "default",
+          "member": "string",
+          "name": "AutoRenew",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "已绑定的域名",
+          "example": "xxx.com",
+          "member": "string",
+          "name": "Domain",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "绑定类型",
+          "example": "user",
+          "member": "string",
+          "name": "BindType",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "增值服务类型",
+          "example": "ptr",
+          "member": "string",
+          "name": "Key",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "增值服务名",
+          "example": "PTR 反解析记录",
+          "member": "string",
+          "name": "Name",
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否可续费",
+          "example": "true",
+          "member": "bool",
+          "name": "CanRenew",
+          "required": true,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否只允许付费套餐域名可购买",
+          "example": "true",
+          "member": "bool",
+          "name": "VipDomain",
+          "required": true,
+          "type": "bool",
           "value_allowed_null": false
         }
       ],
@@ -10084,6 +11508,16 @@
           "output_required": false,
           "type": "string",
           "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "腾讯注册商资质",
+          "example": "epp",
+          "member": "string",
+          "name": "RegistrarType",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"

@@ -42,13 +42,6 @@
       "output": "CreateAssetSortingReportTaskResponse",
       "status": "online"
     },
-    "CreateClassificationRule": {
-      "document": "创建识别规则",
-      "input": "CreateClassificationRuleRequest",
-      "name": "创建识别规则",
-      "output": "CreateClassificationRuleResponse",
-      "status": "online"
-    },
     "CreateDSPAAssessmentRiskLevel": {
       "document": "风险项页面---创建风险等级",
       "input": "CreateDSPAAssessmentRiskLevelRequest",
@@ -161,20 +154,6 @@
       "output": "CreateIdentifyRuleAnotherNameResponse",
       "status": "online"
     },
-    "CreateNewClassification": {
-      "document": "创建新分类",
-      "input": "CreateNewClassificationRequest",
-      "name": "创建新分类",
-      "output": "CreateNewClassificationResponse",
-      "status": "online"
-    },
-    "CreateOrCopyStandard": {
-      "document": "创建或复制分级分类模板",
-      "input": "CreateOrCopyStandardRequest",
-      "name": "创建或复制分级分类模板",
-      "output": "CreateOrCopyStandardResponse",
-      "status": "online"
-    },
     "DecribeSuggestRiskLevelMatrix": {
       "document": "风险等级的定义页面-创建风险等级的时候生成的一个默认的矩阵",
       "input": "DecribeSuggestRiskLevelMatrixRequest",
@@ -257,20 +236,6 @@
       "input": "DescribeCOSAssetSensitiveDistributionRequest",
       "name": "查询cos资产分布详情",
       "output": "DescribeCOSAssetSensitiveDistributionResponse",
-      "status": "online"
-    },
-    "DescribeClassificationInfo": {
-      "document": "查询分类信息\n",
-      "input": "DescribeClassificationInfoRequest",
-      "name": "查询分类信息",
-      "output": "DescribeClassificationInfoResponse",
-      "status": "online"
-    },
-    "DescribeClassificationRuleCount": {
-      "document": "查询标准下所有分类的识别规则数量(不算子分类下的识别规则)",
-      "input": "DescribeClassificationRuleCountRequest",
-      "name": "查询标准下所有分类的识别规则数量(不算子分类下的识别规则)",
-      "output": "DescribeClassificationRuleCountResponse",
       "status": "online"
     },
     "DescribeDSPAAssessmentHighRiskTop10Overview": {
@@ -435,7 +400,7 @@
       "status": "online"
     },
     "DescribeDSPAAssessmentTemplateControlItems": {
-      "document": "获取DSPA评估模版关联的评估控制项列表",
+      "document": "获取DSPA评估模板关联的评估控制项列表",
       "input": "DescribeDSPAAssessmentTemplateControlItemsRequest",
       "name": "获取DSPA评估模板关联控制项列表",
       "output": "DescribeDSPAAssessmentTemplateControlItemsResponse",
@@ -589,7 +554,7 @@
       "status": "online"
     },
     "DescribeDSPADiscoveryTaskResult": {
-      "document": "获取分类分级任务结果，该接口只有在任务状态为以下状态时才支持结果正常查询：\n3 扫描成功，\n4 扫描失败",
+      "document": "获取分类分级任务结果，该接口只有在任务状态为以下状态时才支持结果正常查询：3 扫描成功，4 扫描失败",
       "input": "DescribeDSPADiscoveryTaskResultRequest",
       "name": "获取分类分级任务执行结果",
       "output": "DescribeDSPADiscoveryTaskResultResponse",
@@ -607,6 +572,13 @@
       "input": "DescribeDSPADiscoveryTaskTablesRequest",
       "name": "获取分级分级扫描的表集合",
       "output": "DescribeDSPADiscoveryTaskTablesResponse",
+      "status": "online"
+    },
+    "DescribeDSPADiscoveryTasks": {
+      "document": "获取分类分级任务列表",
+      "input": "DescribeDSPADiscoveryTasksRequest",
+      "name": "获取分类分级任务信息列表",
+      "output": "DescribeDSPADiscoveryTasksResponse",
       "status": "online"
     },
     "DescribeDSPAESDataAssetByComplianceId": {
@@ -693,13 +665,6 @@
       "output": "DescribeExportTaskResultResponse",
       "status": "online"
     },
-    "DescribeLeafClassification": {
-      "document": "查询标准下所有叶子节点分类",
-      "input": "DescribeLeafClassificationRequest",
-      "name": "查询标准下所有叶子节点分类",
-      "output": "DescribeLeafClassificationResponse",
-      "status": "online"
-    },
     "DescribeMongoAssetSensitiveDistribution": {
       "document": "数据资产报告-查询mongo 的敏感资产报告，包含（数据库资产，设敏级别数据库top10，资产详情）",
       "input": "DescribeMongoAssetSensitiveDistributionRequest",
@@ -726,20 +691,6 @@
       "input": "DescribeReportTasksRequest",
       "name": "获取资产报表任务列表",
       "output": "DescribeReportTasksResponse",
-      "status": "online"
-    },
-    "DescribeRuleDetail": {
-      "document": "查询分类规则详情\n",
-      "input": "DescribeRuleDetailRequest",
-      "name": "查询分类规则详情",
-      "output": "DescribeRuleDetailResponse",
-      "status": "online"
-    },
-    "DescribeRuleList": {
-      "document": "查询分类下规则列表\n",
-      "input": "DescribeRuleListRequest",
-      "name": "查询分类下规则列表",
-      "output": "DescribeRuleListResponse",
       "status": "online"
     },
     "DescribeSensitiveCOSDataDistribution": {
@@ -824,20 +775,6 @@
       "input": "ListDSPAMetaResourcesRequest",
       "name": "拉取用户云资源",
       "output": "ListDSPAMetaResourcesResponse",
-      "status": "online"
-    },
-    "ModifyClassificationRule": {
-      "document": "编辑识别规则",
-      "input": "ModifyClassificationRuleRequest",
-      "name": "编辑识别规则",
-      "output": "ModifyClassificationRuleResponse",
-      "status": "online"
-    },
-    "ModifyClassificationRuleState": {
-      "document": "修改识别规则状态",
-      "input": "ModifyClassificationRuleStateRequest",
-      "name": "修改识别规则状态",
-      "output": "ModifyClassificationRuleStateResponse",
       "status": "online"
     },
     "ModifyDSPAAssessmentRisk": {
@@ -936,48 +873,6 @@
       "input": "ModifyDSPATaskResultRequest",
       "name": "调整任务扫描结果",
       "output": "ModifyDSPATaskResultResponse",
-      "status": "online"
-    },
-    "ModifyLevelInfo": {
-      "document": "修改敏感级别信息",
-      "input": "ModifyLevelInfoRequest",
-      "name": "修改敏感级别信息",
-      "output": "ModifyLevelInfoResponse",
-      "status": "online"
-    },
-    "ModifyLevelName": {
-      "document": "修改级别名称",
-      "input": "ModifyLevelNameRequest",
-      "name": "修改级别名称",
-      "output": "ModifyLevelNameResponse",
-      "status": "online"
-    },
-    "ModifyLevelState": {
-      "document": "开启级别或关闭级别",
-      "input": "ModifyLevelStateRequest",
-      "name": "修改级别状态",
-      "output": "ModifyLevelStateResponse",
-      "status": "online"
-    },
-    "ModifyMergeClassification": {
-      "document": "一个分类合并到另一个分类中（分类拖拽功能）",
-      "input": "ModifyMergeClassificationRequest",
-      "name": "一个分类合并到另一个分类中（分类拖拽功能）",
-      "output": "ModifyMergeClassificationResponse",
-      "status": "online"
-    },
-    "ModifyNewClassification": {
-      "document": "修改分类信息",
-      "input": "ModifyNewClassificationRequest",
-      "name": "修改分类信息",
-      "output": "ModifyNewClassificationResponse",
-      "status": "online"
-    },
-    "ModifyStandardInfo": {
-      "document": "修改分级分类模板信息",
-      "input": "ModifyStandardInfoRequest",
-      "name": "修改分级分类模板信息",
-      "output": "ModifyStandardInfoResponse",
       "status": "online"
     },
     "QueryDSPAMetaResourceDbList": {
@@ -1502,7 +1397,7 @@
         {
           "disabled": false,
           "document": "关联模板列表",
-          "example": "[{\"TemplateId\":10,\"TemplateName\":\"风险模版\"}]",
+          "example": "[{\"TemplateId\":10,\"TemplateName\":\"风险模板\"}]",
           "member": "TemplateInfo",
           "name": "ReferTemplateList",
           "output_required": true,
@@ -1845,7 +1740,7 @@
         {
           "disabled": false,
           "document": "支持的数据源类型",
-          "example": "[mysq,pgsql]",
+          "example": "[mysql,pgsql]",
           "member": "string",
           "name": "SupportDataSource",
           "output_required": true,
@@ -2314,7 +2209,7 @@
         {
           "disabled": false,
           "document": "数据源Id",
-          "example": "cos-xadsa",
+          "example": "cos-cd514cb2baa46034bedae480c871f5b6a367e123",
           "member": "string",
           "name": "DataSourceId",
           "output_required": true,
@@ -2961,23 +2856,6 @@
       ],
       "type": "object"
     },
-    "CreateClassificationRuleRequest": {
-      "document": "CreateClassificationRule请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "CreateClassificationRuleResponse": {
-      "document": "CreateClassificationRule返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
     "CreateComplianceRules": {
       "document": "合规组分类关联规则信息",
       "members": [
@@ -3553,7 +3431,7 @@
         },
         {
           "disabled": false,
-          "document": "1代表模版开启，0代表模版关闭",
+          "document": "1代表模板开启，0代表模板关闭",
           "example": "1",
           "member": "int64",
           "name": "Status",
@@ -4009,7 +3887,7 @@
         },
         {
           "disabled": false,
-          "document": "合规组ID列表，最多支持添加5个",
+          "document": "此参数必选。合规组ID列表，最多支持添加5个",
           "example": "[1,2]",
           "member": "int64",
           "name": "ComplianceGroupIds",
@@ -4049,6 +3927,15 @@
           "example": "id",
           "member": "string",
           "name": "GlobalOrderField",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "full:全量扫描 incre:变更扫描",
+          "example": "full",
+          "member": "string",
+          "name": "ScanRange",
           "required": false,
           "type": "string"
         }
@@ -4537,40 +4424,6 @@
           "type": "string",
           "value_allowed_null": false
         },
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "CreateNewClassificationRequest": {
-      "document": "CreateNewClassification请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "CreateNewClassificationResponse": {
-      "document": "CreateNewClassification返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "CreateOrCopyStandardRequest": {
-      "document": "CreateOrCopyStandard请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "CreateOrCopyStandardResponse": {
-      "document": "CreateOrCopyStandard返回参数结构体",
-      "members": [
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
@@ -5763,7 +5616,7 @@
           "type": "string"
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "数据源类型",
           "example": "cdb",
           "member": "string",
@@ -5772,7 +5625,7 @@
           "type": "string"
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "数据源ID",
           "example": "cos-xxx",
           "member": "string",
@@ -5789,7 +5642,7 @@
         {
           "disabled": false,
           "document": "绑定的DB列表（已废弃）",
-          "example": "[db1,db2]",
+          "example": "[\"db1\",\"db2\"]",
           "member": "string",
           "name": "BindDBList",
           "output_required": false,
@@ -5799,7 +5652,7 @@
         {
           "disabled": false,
           "document": "绑定信息",
-          "example": "[{\"ResourceId\":\"cdb-a1b2c3\",\"DbInfos\":[{\"DbName\":\"asset\",\"ValidStatus\":\"bind\",\"BindType\":\"binded\"}]}[",
+          "example": "无",
           "member": "DBInstanceInfo",
           "name": "BindList",
           "output_required": false,
@@ -5881,40 +5734,6 @@
           "type": "list",
           "value_allowed_null": false
         },
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "DescribeClassificationInfoRequest": {
-      "document": "DescribeClassificationInfo请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "DescribeClassificationInfoResponse": {
-      "document": "DescribeClassificationInfo返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "DescribeClassificationRuleCountRequest": {
-      "document": "DescribeClassificationRuleCount请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "DescribeClassificationRuleCountResponse": {
-      "document": "DescribeClassificationRuleCount返回参数结构体",
-      "members": [
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
@@ -6644,7 +6463,7 @@
         {
           "disabled": false,
           "document": "风险值",
-          "example": "[\"ItemName\":\"ins-a1b2c3\",\"RiskNum\":3}]",
+          "example": "无",
           "member": "RiskItem",
           "name": "Items",
           "output_required": true,
@@ -7305,12 +7124,22 @@
       "document": "DescribeDSPAAssessmentRiskSideList返回参数结构体",
       "members": [
         {
-          "disabled": false,
+          "disabled": true,
           "document": "风险面列表",
           "example": "[{\"Key\":\"cloudstorage_security\",\"Value\":2}]",
           "member": "Note",
           "name": "RiskSideItmeList",
           "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "风险面列表",
+          "example": "无",
+          "member": "Note",
+          "name": "RiskSideItemList",
+          "output_required": false,
           "type": "list",
           "value_allowed_null": false
         },
@@ -8079,12 +7908,21 @@
           "type": "int"
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "扫描Bucket任务结果ID",
           "example": "1",
           "member": "int64",
           "name": "BucketResultId",
-          "required": true,
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "扫描结果id",
+          "example": "1",
+          "member": "int64",
+          "name": "ScanResultId",
+          "required": false,
           "type": "int"
         }
       ],
@@ -8096,7 +7934,7 @@
         {
           "disabled": false,
           "document": "文件列表",
-          "example": "[file1, file2]",
+          "example": "[\"1.txt\"]",
           "member": "string",
           "name": "Files",
           "output_required": true,
@@ -8150,6 +7988,33 @@
           "name": "Filters",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "开始时间",
+          "example": "2025-05-01 12:00:00",
+          "member": "string",
+          "name": "StartTime",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "结束时间",
+          "example": "2025-05-01 13:00:00",
+          "member": "string",
+          "name": "EndTime",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否查询历史结果",
+          "example": "true",
+          "member": "bool",
+          "name": "FetchHistory",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -8174,6 +8039,16 @@
           "member": "int64",
           "name": "TotalCount",
           "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "最大展示扫描结果次数",
+          "example": "10",
+          "member": "int64",
+          "name": "MaxCount",
+          "output_required": false,
           "type": "int",
           "value_allowed_null": false
         },
@@ -8301,20 +8176,20 @@
         },
         {
           "disabled": false,
-          "document": "扫描Bucket结果ID",
-          "example": "1",
-          "member": "int64",
-          "name": "BucketResultId",
-          "required": true,
-          "type": "int"
-        },
-        {
-          "disabled": false,
           "document": "合规组ID",
           "example": "1",
           "member": "int64",
           "name": "ComplianceId",
           "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": true,
+          "document": "扫描Bucket结果ID",
+          "example": "1",
+          "member": "int64",
+          "name": "BucketResultId",
+          "required": false,
           "type": "int"
         },
         {
@@ -8379,6 +8254,15 @@
           "name": "CategoryIdList",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "扫描结果id",
+          "example": "1",
+          "member": "int64",
+          "name": "ScanResultId",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -8389,7 +8273,7 @@
         {
           "disabled": false,
           "document": "扫描结果详情列表",
-          "example": "[]",
+          "example": "无",
           "member": "DspaDiscoveryCOSTaskResultDetail",
           "name": "Items",
           "output_required": true,
@@ -8805,7 +8689,7 @@
         },
         {
           "disabled": false,
-          "document": "是否仅显示已开启模版",
+          "document": "是否仅显示已开启模板",
           "example": "false",
           "member": "bool",
           "name": "IsFilterCloseComplianceGroup",
@@ -8821,7 +8705,7 @@
         {
           "disabled": false,
           "document": "合规组列表",
-          "example": "[{                         \"ComplianceGroupId\": 15114,                         \"Name\": \"模板1\",                         \"Description\": \"\",                         \"ComplianceGroupType\": 2,                         \"ComplianceGroupRules\": null,                         \"LevelGroupId\": 1198,                         \"Disabled\": false,                         \"IsAlias\": false                     }]",
+          "example": "[{\"ComplianceGroupId\": 15114, \"Name\": \"模板1\", \"Description\": \"\", \"ComplianceGroupType\": 2, \"ComplianceGroupRules\": null, \"LevelGroupId\": 1198, \"Disabled\": false, \"IsAlias\": false}]",
           "member": "DspaDiscoveryComplianceGroupInfo",
           "name": "Items",
           "output_required": true,
@@ -9244,6 +9128,15 @@
           "name": "CategoryIdList",
           "required": false,
           "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "任务扫描id",
+          "example": "1",
+          "member": "int64",
+          "name": "ScanResultId",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -9254,7 +9147,7 @@
         {
           "disabled": false,
           "document": "扫描结果详情列表",
-          "example": "[   {     \"FieldResultId\": 1,     \"TaskId\": 1,     \"TableName\": \"miyaxlliutest001\",     \"FieldName\": \"hhtestbIllhhtest\",     \"SchemaName\": \"\",     \"RuleId\": 74,     \"RuleName\": \"交易金额\",     \"CategoryId\": 333,     \"CategoryName\": \"交易记录\",     \"CategoryFullPath\": \"[\\\"用户数据\\\",\\\"用户交易记录\\\",\\\"交易记录\\\"]\",     \"LevelId\": 8,     \"LevelName\": \"敏感\",     \"LevelRiskScore\": 10,     \"SafeGuard\": {       \"Encrypt\": \"\",       \"Desensitization\": \"\"     }   } ]",
+          "example": "无",
           "member": "DspaDiscoveryTaskResultDetail",
           "name": "Items",
           "output_required": true,
@@ -9363,6 +9256,33 @@
           "name": "ResourceRegion",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "开始时间",
+          "example": "2025-05-01 12:00:00",
+          "member": "string",
+          "name": "StartTime",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "结束时间",
+          "example": "2025-05-01 13:00:00",
+          "member": "string",
+          "name": "EndTime",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "是否查询历史结果",
+          "example": "true",
+          "member": "bool",
+          "name": "FetchHistory",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -9373,7 +9293,7 @@
         {
           "disabled": false,
           "document": "扫描任务结果项",
-          "example": "[   {     \"DbResultId\": 1,     \"TaskId\": 1,     \"TaskName\": \"新建任务0001\",     \"DataSourceId\": \"cdb-6cmpe42v\",     \"DataSourceName\": \"cdb-测试\",     \"ResourceRegion\": \"ap-guangzhou\",     \"ResultId\": 1,     \"DbName\": \"dsgctest001\",     \"TotalTables\": 1,     \"SensitiveTables\": 0,     \"SensitiveField\": 0,     \"TotalField\": 51,     \"EndTime\": \"2024-11-09 13:20:48\",     \"Status\": 3,     \"ErrorInfo\": \"\"   } ]",
+          "example": "无",
           "member": "DspaDiscoveryTaskDbResult",
           "name": "Items",
           "output_required": true,
@@ -9387,6 +9307,16 @@
           "member": "int64",
           "name": "TotalCount",
           "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "最大展示扫描结果次数",
+          "example": "10",
+          "member": "int64",
+          "name": "MaxCount",
+          "output_required": false,
           "type": "int",
           "value_allowed_null": false
         },
@@ -9421,12 +9351,12 @@
           "type": "int"
         },
         {
-          "disabled": false,
+          "disabled": true,
           "document": "数据库扫描结果ID",
           "example": "1",
           "member": "int64",
           "name": "DbResultId",
-          "required": true,
+          "required": false,
           "type": "int"
         },
         {
@@ -9437,6 +9367,15 @@
           "name": "DbName",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "任务扫描id",
+          "example": "1",
+          "member": "int64",
+          "name": "ScanResultId",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -9452,6 +9391,107 @@
           "name": "Items",
           "output_required": true,
           "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeDSPADiscoveryTasksRequest": {
+      "document": "DescribeDSPADiscoveryTasks请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "DSPA实例ID",
+          "example": "dspa-001",
+          "member": "string",
+          "name": "DspaId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "数据源类型，可取值如下：\ncdb 表示云数据库 MySQL,\ndcdb 表示TDSQL MySQL版,\nmariadb 表示云数据库 MariaDB,\npostgres 表示云数据库 PostgreSQL,\ncynosdbpg 表示TDSQL-C PostgreSQL版,\ncynosdbmysql 表示TDSQL-C MySQL版,\nselfbuilt-db 表示自建数据库",
+          "example": "cdb",
+          "member": "string",
+          "name": "DataSourceType",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "任务ID",
+          "example": "1",
+          "member": "int64",
+          "name": "TaskId",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "任务名称",
+          "example": "扫描敏感数据任务",
+          "member": "string",
+          "name": "Name",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "任务扫描结果状态，可供选择的状态值有：-1待触发 0待扫描 1扫描中 2扫描终止 3扫描成功 4扫描失败",
+          "example": "[1,2]",
+          "member": "int64",
+          "name": "StatusList",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "偏移量，默认为0",
+          "example": "0",
+          "member": "int64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "返回结果集数量，默认值是10000，最大值为10000，根据该资源的个数限制条件，该资源的个数不会超过10000，所以如果不输入该字段，默认获取全量数据",
+          "example": "20",
+          "member": "int64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeDSPADiscoveryTasksResponse": {
+      "document": "DescribeDSPADiscoveryTasks返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务列表",
+          "example": "无",
+          "member": "DspaDiscoveryTask",
+          "name": "Items",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "符合条件的任务列表数",
+          "example": "1",
+          "member": "int64",
+          "name": "TotalCount",
+          "output_required": true,
+          "type": "int",
           "value_allowed_null": false
         },
         {
@@ -9869,6 +9909,24 @@
           "name": "Name",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "每页返回的记录数",
+          "example": "10",
+          "member": "int64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "从第几条记录开始返回",
+          "example": "0",
+          "member": "int64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -10156,7 +10214,7 @@
         {
           "disabled": false,
           "document": "数据样本列表，最多10条数据",
-          "example": "[{\"DataSample\":\"adfedf\"}}",
+          "example": "无",
           "member": "DspaFieldResultDataSample",
           "name": "Items",
           "output_required": true,
@@ -10294,23 +10352,6 @@
           "type": "string",
           "value_allowed_null": false
         },
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "DescribeLeafClassificationRequest": {
-      "document": "DescribeLeafClassification请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "DescribeLeafClassificationResponse": {
-      "document": "DescribeLeafClassification返回参数结构体",
-      "members": [
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
@@ -10509,7 +10550,7 @@
         {
           "disabled": false,
           "document": "下载链接集合",
-          "example": "[htpp://www.xxx.com/url]",
+          "example": "[http://www.xxx.com/url]",
           "member": "string",
           "name": "DownloadUrlSet",
           "output_required": false,
@@ -10599,40 +10640,6 @@
       ],
       "type": "object"
     },
-    "DescribeRuleDetailRequest": {
-      "document": "DescribeRuleDetail请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "DescribeRuleDetailResponse": {
-      "document": "DescribeRuleDetail返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "DescribeRuleListRequest": {
-      "document": "DescribeRuleList请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "DescribeRuleListResponse": {
-      "document": "DescribeRuleList返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
     "DescribeSensitiveCOSDataDistributionRequest": {
       "document": "DescribeSensitiveCOSDataDistribution请求参数结构体",
       "members": [
@@ -10648,7 +10655,7 @@
         {
           "disabled": false,
           "document": "2331",
-          "example": "合规组id",
+          "example": "1",
           "member": "int64",
           "name": "ComplianceId",
           "required": true,
@@ -10657,7 +10664,7 @@
         {
           "disabled": false,
           "document": "查询的资产信息列表",
-          "example": "{\"DataSourceType\":\"cdb\",\"DataSourceInfo\":[{\"DataSourceId\":\"cdb-b1c2\",\"BindList\":[\"db_asset\"]}]}",
+          "example": "无",
           "member": "AssetList",
           "name": "AssetList",
           "required": true,
@@ -10672,7 +10679,7 @@
         {
           "disabled": false,
           "document": "分级分布",
-          "example": "[{\"Key\":\"Level\",\"Value\":\"high\"}]",
+          "example": "无",
           "member": "Note",
           "name": "LevelDistribution",
           "output_required": true,
@@ -10682,7 +10689,7 @@
         {
           "disabled": false,
           "document": "分类分布",
-          "example": "[[\"Key\":\"Category\",\"Value\":\"级别\"}]",
+          "example": "无",
           "member": "Note",
           "name": "CategoryDistribution",
           "output_required": true,
@@ -10692,7 +10699,7 @@
         {
           "disabled": false,
           "document": "规则分布详情",
-          "example": "[{\"RuleId\":4,\"RuleName\":\"身份信息评估\",\"LevelId\":2,\"LevelName\":\"高风险\",\"RuleCnt\":2}]",
+          "example": "无",
           "member": "RuleDistribution",
           "name": "RuleDistribution",
           "output_required": true,
@@ -10742,7 +10749,7 @@
         {
           "disabled": false,
           "document": "查询的资产信息列表",
-          "example": "{\"DataSourceType\":\"cdb\",\"DataSourceInfo\":[{\"DataSourceId\":\"cdb-b1c2\",\"BindList\":[\"db_asset\"]}]}",
+          "example": "无",
           "member": "AssetList",
           "name": "AssetList",
           "required": true,
@@ -10757,7 +10764,7 @@
         {
           "disabled": false,
           "document": "分级分布",
-          "example": "[{\"Key\":\"高\",\"Value\":\"2\"]",
+          "example": "无",
           "member": "Note",
           "name": "LevelDistribution",
           "output_required": true,
@@ -10767,7 +10774,7 @@
         {
           "disabled": false,
           "document": "分类分布",
-          "example": "[\"Key\":\"个人信息\", \"Value\":\"2\"]",
+          "example": "无",
           "member": "Note",
           "name": "CategoryDistribution",
           "output_required": true,
@@ -10777,7 +10784,7 @@
         {
           "disabled": false,
           "document": "敏感规则分布详情列表",
-          "example": "[{\"AppId\":125500087,\"Uin\":\"24987078\",\"SubAccountUin\":\"298788091\",\"MetaType\":\"cdb\",\"StartTime\":\"2024-08-10 00:02:03\",\"FinishTime\":\"2024-08-10 00:03:00\",\"Status\":\"success\",\"ErrorInfo\":\"\"}]",
+          "example": "无",
           "member": "RuleDistribution",
           "name": "RuleDistribution",
           "output_required": true,
@@ -11607,7 +11614,7 @@
         {
           "disabled": false,
           "document": "Bucket扫描的结束时间，格式如：2006-01-02 15:04:05",
-          "example": "2006-01-02 15:04:05",
+          "example": "2025-01-02 15:04:05",
           "member": "string",
           "name": "EndTime",
           "output_required": true,
@@ -11661,6 +11668,26 @@
           "member": "string",
           "name": "OverSize",
           "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务实例id",
+          "example": "3_1",
+          "member": "string",
+          "name": "TaskInstanceId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "开始时间",
+          "example": "2025-01-02 15:04:05",
+          "member": "string",
+          "name": "StartTime",
+          "output_required": false,
           "type": "string",
           "value_allowed_null": false
         }
@@ -12242,7 +12269,7 @@
         },
         {
           "disabled": false,
-          "document": "1代表模版开启，0代表模版关闭",
+          "document": "1代表模板开启，0代表模板关闭",
           "example": "1",
           "member": "int64",
           "name": "Status",
@@ -12252,7 +12279,7 @@
         },
         {
           "disabled": false,
-          "document": "模版最后修改时间",
+          "document": "模板最后修改时间",
           "example": "2024-10-08 16:11:44",
           "member": "string",
           "name": "ModifyTime",
@@ -12672,6 +12699,132 @@
       ],
       "usage": "out"
     },
+    "DspaDiscoveryTask": {
+      "document": "分类分级任务相关信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务ID",
+          "example": "1",
+          "member": "int64",
+          "name": "TaskId",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务名称",
+          "example": "分类分级任务",
+          "member": "string",
+          "name": "Name",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务描述",
+          "example": "分类分级任务描述",
+          "member": "string",
+          "name": "Description",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "执行周期，0单次 1每天 2每周 3每月",
+          "example": "0",
+          "member": "int64",
+          "name": "Period",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "执行计划，0立即 1定时",
+          "example": "0",
+          "member": "int64",
+          "name": "Plan",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务开关；1 打开，0 关闭",
+          "example": "1",
+          "member": "int64",
+          "name": "Enable",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "元数据对象信息",
+          "example": "{\"ResourceRegion\":\"ap-guangzhou\",\"DataSourceId\":\"cdb-xxxxxxx\",\"DataSourceName\":\"test_db\",\"ProxyAddress\":[],\"Condition\":\"\",\"DataSourceType\":\"cdb\"}",
+          "member": "DspaDiscoveryTaskDataSource",
+          "name": "DataSourceInfo",
+          "output_required": true,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "通用规则集开关，0 关闭，1 启用",
+          "example": "1",
+          "member": "int64",
+          "name": "GeneralRuleSetEnable",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务最新的一次执行结果信息，该字段用于查询任务列表接口",
+          "example": "{\"Id\":665,\"EndTime\":\"2025-05-12 04:53:03\",\"Status\":3,\"Result\":\"\",\"ResultDescription\":\"\",\"Suggestion\":\"\",\"Progress\":100}",
+          "member": "ScanTaskResult",
+          "name": "Result",
+          "output_required": true,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "定时开始时间\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "2025-05-1212:12:12",
+          "member": "string",
+          "name": "TimingStartTime",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "关联模板是否更新",
+          "example": "true",
+          "member": "bool",
+          "name": "ComplianceUpdate",
+          "output_required": true,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "\tfull:全量扫描 incre:变更扫描",
+          "example": "full",
+          "member": "string",
+          "name": "ScanRange",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
     "DspaDiscoveryTaskCOSCondition": {
       "document": "描述对象存储类敏感识别扫描人元数据条件。",
       "members": [
@@ -12860,7 +13013,7 @@
         {
           "disabled": false,
           "document": "DB扫描的结束时间，格式如：2006-01-02 15:04:05",
-          "example": "2006-01-02 15:04:05",
+          "example": "2025-01-02 15:04:05",
           "member": "string",
           "name": "EndTime",
           "output_required": true,
@@ -12925,6 +13078,36 @@
           "name": "TotalField",
           "output_required": false,
           "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务实例id",
+          "example": "3_1",
+          "member": "string",
+          "name": "TaskInstanceId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "开始时间",
+          "example": "2025-01-02 15:00:05",
+          "member": "string",
+          "name": "StartTime",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "扫描范围（full:全量扫描 incre：变更扫描）",
+          "example": "full",
+          "member": "string",
+          "name": "ScanRange",
+          "output_required": false,
+          "type": "string",
           "value_allowed_null": false
         }
       ],
@@ -13030,6 +13213,16 @@
           "member": "string",
           "name": "TimingStartTime",
           "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "full:全量扫描 incre:变更扫描",
+          "example": "full",
+          "member": "string",
+          "name": "ScanRange",
+          "output_required": false,
           "type": "string",
           "value_allowed_null": false
         }
@@ -13379,6 +13572,16 @@
           "name": "InsTotalQuota",
           "output_required": false,
           "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "标签",
+          "example": "无",
+          "member": "Tag",
+          "name": "Tags",
+          "output_required": false,
+          "type": "list",
           "value_allowed_null": false
         }
       ],
@@ -14498,7 +14701,7 @@
         {
           "disabled": false,
           "document": "地域",
-          "example": "ap-shanghia",
+          "example": "ap-shanghai",
           "member": "string",
           "name": "ResourceRegion",
           "output_required": false,
@@ -15301,9 +15504,18 @@
         {
           "disabled": false,
           "document": "过滤项。\n支持的过滤项包括：DspaId、Status、Version、DspaName、Channel。\nDspaId和DspaName支持模糊搜索。\nStatus支持的可选值：enabled、disabled。\nVersion支持的可选值：trial、official。\nChannel支持的可选值：sp_cds_dsgc_pre（代表dsgc实例）、sp_cds_dsgc_wedata_dc（代表wedata实例）",
-          "example": " [       {         \"Name\": \"Channel\",         \"Values\": [           \"dsgc\"         ]       },       {         \"Name\": \"DspaName\",         \"Values\": [           \"订单实例\"         ]       }     ]",
+          "example": "无",
           "member": "DspaDataSourceMngFilter",
           "name": "Filters",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "Tag键值过滤",
+          "example": "无",
+          "member": "Tag",
+          "name": "TagFilter",
           "required": false,
           "type": "list"
         },
@@ -15335,7 +15547,7 @@
         {
           "disabled": false,
           "document": "资源列表。",
-          "example": "[   {     \"AppId\": 251205474,     \"DspaId\": \"dspa-44b7bd87\",     \"DspaName\": \"dspa-44b7bd87\",     \"DspaDescription\": \"dspa-44b7bd87\",     \"InsAuthCount\": 0,     \"DBAuthCount\": 0,     \"CosBindCount\": 0,     \"InstanceVersion\": \"professional\",     \"Status\": \"enabled\",     \"ExpiredAt\": 1733034406,     \"TrialVersion\": \"\",     \"TrialEndAt\": 18446744011573955000,     \"InsTotalQuota\": 5,     \"DbTotalQuota\": 5,     \"CosTotalQuota\": 1,     \"CosQuotaUnit\": \"T\",     \"RenewFlag\": 0,     \"Channel\": \"dsgc\"   } ]",
+          "example": "无",
           "member": "DspaInstance",
           "name": "InstanceList",
           "output_required": true,
@@ -15547,40 +15759,6 @@
       ],
       "type": "object"
     },
-    "ModifyClassificationRuleRequest": {
-      "document": "ModifyClassificationRule请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "ModifyClassificationRuleResponse": {
-      "document": "ModifyClassificationRule返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "ModifyClassificationRuleStateRequest": {
-      "document": "ModifyClassificationRuleState请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "ModifyClassificationRuleStateResponse": {
-      "document": "ModifyClassificationRuleState返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
     "ModifyDSPAAssessmentRiskLatestRequest": {
       "document": "ModifyDSPAAssessmentRiskLatest请求参数结构体",
       "members": [
@@ -15668,7 +15846,7 @@
         {
           "disabled": false,
           "document": "风险等级名称",
-          "example": "riskLevel",
+          "example": "高风险",
           "member": "string",
           "name": "RiskLevelName",
           "required": true,
@@ -15677,7 +15855,7 @@
         {
           "disabled": false,
           "document": "风险的描述",
-          "example": "rislDesc",
+          "example": "高风险",
           "member": "string",
           "name": "RiskLevelDescription",
           "required": true,
@@ -15812,7 +15990,7 @@
         {
           "disabled": false,
           "document": "模板的描述",
-          "example": "tmplate-desc",
+          "example": "template-desc",
           "member": "string",
           "name": "TemplateDescription",
           "required": false,
@@ -16492,6 +16670,15 @@
           "name": "DataSourceType",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "\tfull:全量扫描 incre:变更扫描",
+          "example": "full",
+          "member": "string",
+          "name": "ScanRange",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -16732,108 +16919,6 @@
     },
     "ModifyDSPATaskResultResponse": {
       "document": "ModifyDSPATaskResult返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "ModifyLevelInfoRequest": {
-      "document": "ModifyLevelInfo请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "ModifyLevelInfoResponse": {
-      "document": "ModifyLevelInfo返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "ModifyLevelNameRequest": {
-      "document": "ModifyLevelName请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "ModifyLevelNameResponse": {
-      "document": "ModifyLevelName返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "ModifyLevelStateRequest": {
-      "document": "ModifyLevelState请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "ModifyLevelStateResponse": {
-      "document": "ModifyLevelState返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "ModifyMergeClassificationRequest": {
-      "document": "ModifyMergeClassification请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "ModifyMergeClassificationResponse": {
-      "document": "ModifyMergeClassification返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "ModifyNewClassificationRequest": {
-      "document": "ModifyNewClassification请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "ModifyNewClassificationResponse": {
-      "document": "ModifyNewClassification返回参数结构体",
-      "members": [
-        {
-          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
-          "member": "string",
-          "name": "RequestId",
-          "type": "string"
-        }
-      ],
-      "type": "object"
-    },
-    "ModifyStandardInfoRequest": {
-      "document": "ModifyStandardInfo请求参数结构体",
-      "members": [],
-      "type": "object"
-    },
-    "ModifyStandardInfoResponse": {
-      "document": "ModifyStandardInfo返回参数结构体",
       "members": [
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -17566,7 +17651,7 @@
         },
         {
           "disabled": false,
-          "document": "报告模版名称",
+          "document": "报告模板名称",
           "example": "数据资产报告",
           "member": "string",
           "name": "ReportTemplateName",
@@ -18463,6 +18548,16 @@
           "output_required": false,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "扫描进度",
+          "example": "99.98",
+          "member": "float",
+          "name": "Progress",
+          "output_required": false,
+          "type": "float",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -18694,6 +18789,45 @@
         }
       ],
       "usage": "out"
+    },
+    "Tag": {
+      "document": "标签键/值和所属类别",
+      "members": [
+        {
+          "disabled": false,
+          "document": "标签键",
+          "example": "key1",
+          "member": "string",
+          "name": "TagKey",
+          "output_required": true,
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "标签值",
+          "example": "value1",
+          "member": "string",
+          "name": "TagValue",
+          "output_required": true,
+          "required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "标签所属类别",
+          "example": "category1",
+          "member": "string",
+          "name": "Category",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
     },
     "TemplateInfo": {
       "document": "评估模板的详情数据",

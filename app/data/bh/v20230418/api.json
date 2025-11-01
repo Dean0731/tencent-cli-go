@@ -1,5 +1,12 @@
 {
   "actions": {
+    "AccessDevices": {
+      "document": "外部客户访问资产",
+      "input": "AccessDevicesRequest",
+      "name": "运维登录资产",
+      "output": "AccessDevicesResponse",
+      "status": "online"
+    },
     "AddDeviceGroupMembers": {
       "document": "添加资产组成员",
       "input": "AddDeviceGroupMembersRequest",
@@ -33,6 +40,20 @@
       "input": "BindDeviceResourceRequest",
       "name": "修改资产绑定的堡垒机服务",
       "output": "BindDeviceResourceResponse",
+      "status": "online"
+    },
+    "CheckLDAPConnection": {
+      "document": "测试LDAP连接",
+      "input": "CheckLDAPConnectionRequest",
+      "name": "测试LDAP连接",
+      "output": "CheckLDAPConnectionResponse",
+      "status": "online"
+    },
+    "CreateAccessWhiteListRule": {
+      "document": "添加访问白名单规则",
+      "input": "CreateAccessWhiteListRuleRequest",
+      "name": "添加访问白名单规则",
+      "output": "CreateAccessWhiteListRuleResponse",
       "status": "online"
     },
     "CreateAcl": {
@@ -77,6 +98,13 @@
       "output": "CreateDeviceGroupResponse",
       "status": "online"
     },
+    "CreateOperationTask": {
+      "document": "创建运维任务",
+      "input": "CreateOperationTaskRequest",
+      "name": "创建运维任务",
+      "output": "CreateOperationTaskResponse",
+      "status": "online"
+    },
     "CreateResource": {
       "document": "创建堡垒机实例",
       "input": "CreateResourceRequest",
@@ -96,6 +124,13 @@
       "input": "CreateUserGroupRequest",
       "name": "新建用户组",
       "output": "CreateUserGroupResponse",
+      "status": "online"
+    },
+    "DeleteAccessWhiteListRules": {
+      "document": "删除访问白名单规则",
+      "input": "DeleteAccessWhiteListRulesRequest",
+      "name": "删除访问白名单规则",
+      "output": "DeleteAccessWhiteListRulesResponse",
       "status": "online"
     },
     "DeleteAcls": {
@@ -147,6 +182,13 @@
       "output": "DeleteDevicesResponse",
       "status": "online"
     },
+    "DeleteOperationTasks": {
+      "document": "删除运维任务",
+      "input": "DeleteOperationTasksRequest",
+      "name": "删除运维任务",
+      "output": "DeleteOperationTasksResponse",
+      "status": "online"
+    },
     "DeleteUserGroupMembers": {
       "document": "删除用户组成员",
       "input": "DeleteUserGroupMembersRequest",
@@ -173,6 +215,13 @@
       "input": "DeployResourceRequest",
       "name": "开通服务",
       "output": "DeployResourceResponse",
+      "status": "online"
+    },
+    "DescribeAccessWhiteListRules": {
+      "document": "查询访问白名单规则列表",
+      "input": "DescribeAccessWhiteListRulesRequest",
+      "name": "查询访问白名单规则列表",
+      "output": "DescribeAccessWhiteListRulesResponse",
       "status": "online"
     },
     "DescribeAcls": {
@@ -245,6 +294,13 @@
       "output": "DescribeDomainsResponse",
       "status": "online"
     },
+    "DescribeLDAPUnitSet": {
+      "document": "获取LDAP ou 列表",
+      "input": "DescribeLDAPUnitSetRequest",
+      "name": "获取LDAP ou 列表",
+      "output": "DescribeLDAPUnitSetResponse",
+      "status": "online"
+    },
     "DescribeLoginEvent": {
       "document": "查询登录日志",
       "input": "DescribeLoginEventRequest",
@@ -257,6 +313,13 @@
       "input": "DescribeOperationEventRequest",
       "name": "查询操作日志",
       "output": "DescribeOperationEventResponse",
+      "status": "online"
+    },
+    "DescribeOperationTask": {
+      "document": "获取运维任务列表",
+      "input": "DescribeOperationTaskRequest",
+      "name": "获取运维任务",
+      "output": "DescribeOperationTaskResponse",
       "status": "online"
     },
     "DescribeResources": {
@@ -329,11 +392,25 @@
       "output": "ModifyDeviceGroupResponse",
       "status": "online"
     },
+    "ModifyLDAPSetting": {
+      "document": "修改LDAP配置信息",
+      "input": "ModifyLDAPSettingRequest",
+      "name": "修改LDAP配置信息",
+      "output": "ModifyLDAPSettingResponse",
+      "status": "online"
+    },
     "ModifyOAuthSetting": {
       "document": "设置OAuth认证参数",
       "input": "ModifyOAuthSettingRequest",
       "name": "设置OAuth认证参数",
       "output": "ModifyOAuthSettingResponse",
+      "status": "online"
+    },
+    "ModifyOperationTask": {
+      "document": "修改运维任务",
+      "input": "ModifyOperationTaskRequest",
+      "name": "修改运维任务",
+      "output": "ModifyOperationTaskResponse",
       "status": "online"
     },
     "ModifyResource": {
@@ -355,6 +432,13 @@
       "input": "ModifyUserGroupRequest",
       "name": "修改用户组",
       "output": "ModifyUserGroupResponse",
+      "status": "online"
+    },
+    "ReplaySession": {
+      "document": "会话回放",
+      "input": "ReplaySessionRequest",
+      "name": "会话回放",
+      "output": "ReplaySessionResponse",
       "status": "online"
     },
     "ResetDeviceAccountPassword": {
@@ -383,6 +467,13 @@
       "input": "RunChangePwdTaskRequest",
       "name": "执行改密任务",
       "output": "RunChangePwdTaskResponse",
+      "status": "online"
+    },
+    "RunOperationTask": {
+      "document": "执行运维任务",
+      "input": "RunOperationTaskRequest",
+      "name": "执行运维任务",
+      "output": "RunOperationTaskResponse",
       "status": "online"
     },
     "SearchAuditLog": {
@@ -433,6 +524,34 @@
       "name": "命令检索",
       "output": "SearchSessionCommandResponse",
       "status": "online"
+    },
+    "SearchSubtaskResultById": {
+      "document": "查询运维子任务执行结果",
+      "input": "SearchSubtaskResultByIdRequest",
+      "name": "查询运维子任务执行结果",
+      "output": "SearchSubtaskResultByIdResponse",
+      "status": "online"
+    },
+    "SearchTaskResult": {
+      "document": "搜索运维任务执行结果",
+      "input": "SearchTaskResultRequest",
+      "name": "搜索运维任务执行结果",
+      "output": "SearchTaskResultResponse",
+      "status": "online"
+    },
+    "SetLDAPSyncFlag": {
+      "document": "设置LDAP 立即同步标记",
+      "input": "SetLDAPSyncFlagRequest",
+      "name": "设置LDAP 立即同步标记",
+      "output": "SetLDAPSyncFlagResponse",
+      "status": "online"
+    },
+    "UnlockUser": {
+      "document": "解锁用户",
+      "input": "UnlockUserRequest",
+      "name": "解锁用户",
+      "output": "UnlockUserResponse",
+      "status": "online"
     }
   },
   "metadata": {
@@ -480,6 +599,262 @@
         }
       ],
       "usage": "both"
+    },
+    "AccessDevicesRequest": {
+      "document": "AccessDevices请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "资产的登录账号",
+          "example": "root",
+          "member": "string",
+          "name": "Account",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": true,
+          "document": "运维端登录账号",
+          "example": "zhangsan",
+          "member": "string",
+          "name": "LoginAccount",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": true,
+          "document": "运维端登录密码",
+          "example": "980930",
+          "member": "string",
+          "name": "LoginPassword",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "资产ID",
+          "example": "12",
+          "member": "uint64",
+          "name": "DeviceId",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "资源id(优先使用DeviceId)",
+          "example": "ins-bhtest",
+          "member": "string",
+          "name": "InstanceId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "未托管密码私钥时，填入",
+          "example": "1a2b3c",
+          "member": "string",
+          "name": "Password",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "未托管密码私钥时，填入",
+          "example": "bh-test-private-key",
+          "member": "string",
+          "name": "PrivateKey",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "未托管密码私钥时，填入",
+          "example": "1a2b3c",
+          "member": "string",
+          "name": "PrivateKeyPassword",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "客户端工具",
+          "example": "mrd",
+          "member": "string",
+          "name": "Exe",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "RDP挂载盘符驱动（mstsc支持）",
+          "example": "[\"c:\",\"d:\"]",
+          "member": "string",
+          "name": "Drivers",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "窗口宽度（RDP支持）",
+          "example": "800",
+          "member": "uint64",
+          "name": "Width",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "窗口高度（RDP支持）",
+          "example": "600",
+          "member": "uint64",
+          "name": "Height",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "是否内网访问（默认不是）",
+          "example": "false",
+          "member": "bool",
+          "name": "IntranetAccess",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "是否自动管理访问串，删掉过期的，新建可用的（默认false）",
+          "example": "false",
+          "member": "bool",
+          "name": "AutoManageAccessCredential",
+          "required": false,
+          "type": "bool"
+        }
+      ],
+      "type": "object"
+    },
+    "AccessDevicesResponse": {
+      "document": "AccessDevices返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "认证信息",
+          "example": "{\"Ip\":\"127.0.0.1\",\"Port\":22}",
+          "member": "AccessInfo",
+          "name": "AccessInfo",
+          "output_required": false,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "AccessInfo": {
+      "document": "认证信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "地址",
+          "example": "127.0.0.1",
+          "member": "string",
+          "name": "Ip",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "端口",
+          "example": "80",
+          "member": "uint64",
+          "name": "Port",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "账号",
+          "example": "v_feifei",
+          "member": "string",
+          "name": "User",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "密码",
+          "example": "980930",
+          "member": "string",
+          "name": "Password",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "唤起链接｜wss链接",
+          "example": "tsecbh://CgcxLjIuMS4xEgNtcmQaDzEyMy4yMDcuMTA2LjIxNyDFQSoNMTkyLjE2OC4xMS4xMzIr546w572R546v5aKD5YaF572R6K6_6Zeu6ZW_5pyf5L2_55SoLeWLv-WIoDoNYWRtaW5pc3RyYXRvckIQcmYwU1pIQ0ozcmlFQ1lVb0gBUIAIWIAGeAA",
+          "member": "string",
+          "name": "AccessURL",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "AccessWhiteListRule": {
+      "document": "访问白名单规则",
+      "members": [
+        {
+          "disabled": false,
+          "document": "规则ID",
+          "example": "10",
+          "member": "uint64",
+          "name": "Id",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "IP或者网段",
+          "example": "10.10.10.1",
+          "member": "string",
+          "name": "Source",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "备注信息",
+          "example": "规则1",
+          "member": "string",
+          "name": "Remark",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "修改时间",
+          "example": "2020-12-20T19:51:23+08:00",
+          "member": "datetime_iso",
+          "name": "ModifyTime",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
     },
     "Acl": {
       "document": "访问权限",
@@ -1107,6 +1482,16 @@
           "output_required": true,
           "type": "bool",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务错误消息",
+          "example": "超出配额限制",
+          "member": "string",
+          "name": "ErrMsg",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -1219,6 +1604,60 @@
           "example": "net-default",
           "member": "string",
           "name": "DomainId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群托管账号维度。1-集群，2-命名空间，3-工作负载",
+          "example": "1",
+          "member": "uint64",
+          "name": "ManageDimension",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群托管账号id",
+          "example": "1",
+          "member": "int64",
+          "name": "ManageAccountId",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群托管账号名称",
+          "example": "root",
+          "member": "string",
+          "name": "ManageAccount",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群托管账号凭证",
+          "example": "test-kubeconfig",
+          "member": "string",
+          "name": "ManageKubeconfig",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群托管的namespace",
+          "example": "nameSpace0",
+          "member": "string",
+          "name": "Namespace",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群托管的workload",
+          "example": "workload0",
+          "member": "string",
+          "name": "Workload",
           "required": false,
           "type": "string"
         }
@@ -1485,9 +1924,127 @@
           "output_required": false,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "上次执行时间",
+          "example": "2020-12-27T19:51:23+08:00",
+          "member": "datetime_iso",
+          "name": "LastTime",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
+    },
+    "CheckLDAPConnectionRequest": {
+      "document": "CheckLDAPConnection请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "是否开启LDAP认证，必须为true",
+          "example": "true",
+          "member": "bool",
+          "name": "Enable",
+          "required": true,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "服务器地址",
+          "example": "10.10.10.1",
+          "member": "string",
+          "name": "Ip",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "服务端口",
+          "example": "389",
+          "member": "uint64",
+          "name": "Port",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "是否开启SSL，false-不开启，true-开启",
+          "example": "true",
+          "member": "bool",
+          "name": "EnableSSL",
+          "required": true,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "Base DN",
+          "example": "bh-test-DN",
+          "member": "string",
+          "name": "BaseDN",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "管理员账号",
+          "example": "admin",
+          "member": "string",
+          "name": "AdminAccount",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "管理员密码",
+          "example": "pwd",
+          "member": "string",
+          "name": "AdminPassword",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "备用服务器地址",
+          "example": "10.10.10.2",
+          "member": "string",
+          "name": "IpBackup",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "网络域id",
+          "example": "net-default",
+          "member": "string",
+          "name": "DomainId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "用户名称映射属性",
+          "example": "cn",
+          "member": "string",
+          "name": "AttributeUserName",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "CheckLDAPConnectionResponse": {
+      "document": "CheckLDAPConnection返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
     },
     "Clb": {
       "document": "负载均衡",
@@ -1550,6 +2107,267 @@
         }
       ],
       "usage": "out"
+    },
+    "Command": {
+      "document": "命令集合",
+      "members": [
+        {
+          "disabled": false,
+          "document": "命令",
+          "example": "pwd",
+          "member": "string",
+          "name": "Cmd",
+          "output_required": true,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "命令输入的时间",
+          "example": "2020-01-01T01:01:01Z",
+          "member": "string",
+          "name": "Time",
+          "output_required": true,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "命令执行时间相对于所属会话开始时间的偏移量，单位ms",
+          "example": "1",
+          "member": "uint64",
+          "name": "TimeOffset",
+          "output_required": true,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "命令执行情况，1--允许，2--拒绝，3--确认",
+          "example": "1",
+          "member": "int64",
+          "name": "Action",
+          "output_required": true,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "会话id",
+          "example": "bh-test-sid-1a2b3c",
+          "member": "string",
+          "name": "Sid",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "用户名",
+          "example": "zhangsan",
+          "member": "string",
+          "name": "UserName",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "设备account",
+          "example": "张三",
+          "member": "string",
+          "name": "Account",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "设备ip",
+          "example": "ins-onwx8e9y",
+          "member": "string",
+          "name": "InstanceId",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "source ip",
+          "example": "1.1.124.125",
+          "member": "string",
+          "name": "FromIp",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "该命令所属会话的会话开始时间",
+          "example": "2020-01-01T01:01:01Z",
+          "member": "string",
+          "name": "SessTime",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "该命令所属会话的会话开始时间",
+          "example": "2020-01-01T01:01:01Z",
+          "member": "string",
+          "name": "SessionTime",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "复核时间",
+          "example": "2020-01-01T01:01:01Z",
+          "member": "string",
+          "name": "ConfirmTime",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "用户部门id",
+          "example": "1.3",
+          "member": "string",
+          "name": "UserDepartmentId",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "用户部门name",
+          "example": "部门名称",
+          "member": "string",
+          "name": "UserDepartmentName",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "设备部门id",
+          "example": "1",
+          "member": "string",
+          "name": "DeviceDepartmentId",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "设备部门name",
+          "example": "部门名称",
+          "member": "string",
+          "name": "DeviceDepartmentName",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "会话大小",
+          "example": "10",
+          "member": "uint64",
+          "name": "Size",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "签名值",
+          "example": "adef2345defdadaefdc1",
+          "member": "string",
+          "name": "SignValue",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "资产类型",
+          "example": "TKE",
+          "member": "string",
+          "name": "DeviceKind",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
+    },
+    "CreateAccessWhiteListRuleRequest": {
+      "document": "CreateAccessWhiteListRule请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "ip 10.10.10.1或者网段10.10.10.0/24，最小长度4字节，最大长度40字节。",
+          "example": "10.10.10.0/24",
+          "member": "string",
+          "name": "Source",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "备注信息，最小长度0字符，最大长度40字符。",
+          "example": "规则1",
+          "member": "string",
+          "name": "Remark",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "CreateAccessWhiteListRuleResponse": {
+      "document": "CreateAccessWhiteListRule返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "新建成功后返回的记录ID",
+          "example": "1",
+          "member": "uint64",
+          "name": "Id",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
     },
     "CreateAclRequest": {
       "document": "CreateAcl请求参数结构体",
@@ -2089,7 +2907,7 @@
         },
         {
           "disabled": false,
-          "document": "标识cmdlist字段前端是否为base64加密传值.\n0:表示非base64加密\n1:表示是base64加密",
+          "document": "标识CmdList字段前端是否为base64加密传值.0:表示非base64加密1:表示是base64加密",
           "example": "0",
           "member": "uint64",
           "name": "Encoding",
@@ -2213,6 +3031,115 @@
       ],
       "type": "object"
     },
+    "CreateOperationTaskRequest": {
+      "document": "CreateOperationTask请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "运维任务名称",
+          "example": "runshell",
+          "member": "string",
+          "name": "Name",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "运维任务类型,1 - 手工执行, 2 - 周期性自动执行",
+          "example": "1",
+          "member": "uint64",
+          "name": "Type",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "执行账号",
+          "example": "root",
+          "member": "string",
+          "name": "Account",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "超时时间,单位秒",
+          "example": "5",
+          "member": "uint64",
+          "name": "Timeout",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "执行脚本内容",
+          "example": "ls -a",
+          "member": "string",
+          "name": "Script",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "执行主机集合，满足条件以下三个条件：1. 资产绑定可用的专业版或国密版堡垒机服务；2、资产类型为linux资产；3、用户具有资产权限，且资产添加了指定执行账号",
+          "example": "[13,25]",
+          "member": "uint64",
+          "name": "DeviceIdSet",
+          "required": true,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "执行间隔，单位天. 手工执行时无需传入",
+          "example": "1",
+          "member": "uint64",
+          "name": "Period",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "首次执行日期 默认1970-01-01T08:00:01+08:00,手工执行时无需传入",
+          "example": "1970-01-01T08:00:01+08:00",
+          "member": "datetime_iso",
+          "name": "FirstTime",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "Script参数是否需要进行base64编码后传递，1-需要进行base64编码后传递，非1值-不需要进行base64编码后传递",
+          "example": "1",
+          "member": "uint64",
+          "name": "Encoding",
+          "required": false,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "CreateOperationTaskResponse": {
+      "document": "CreateOperationTask返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "运维任务ID",
+          "example": "2",
+          "member": "uint64",
+          "name": "TaskId",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "CreateResourceRequest": {
       "document": "CreateResource请求参数结构体",
       "members": [
@@ -2314,6 +3241,15 @@
           "name": "Trial",
           "required": false,
           "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "是否共享clb，0：不共享，1：共享",
+          "example": "0",
+          "member": "uint64",
+          "name": "ShareClb",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -2410,7 +3346,7 @@
         {
           "disabled": false,
           "document": "按照\"国家地区代码|手机号\"的格式输入，如: \"+86|xxxxxxxx\"。手机号和邮箱参数至少传一项",
-          "example": "133*****34",
+          "example": "86|133*****34",
           "member": "string",
           "name": "Phone",
           "required": false,
@@ -2495,6 +3431,33 @@
           "type": "int",
           "value_allowed_null": false
         },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DeleteAccessWhiteListRulesRequest": {
+      "document": "DeleteAccessWhiteListRules请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "待删除的ID集合",
+          "example": "[1,2]",
+          "member": "uint64",
+          "name": "IdSet",
+          "required": true,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "DeleteAccessWhiteListRulesResponse": {
+      "document": "DeleteAccessWhiteListRules返回参数结构体",
+      "members": [
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
@@ -2692,6 +3655,33 @@
     },
     "DeleteDevicesResponse": {
       "document": "DeleteDevices返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DeleteOperationTasksRequest": {
+      "document": "DeleteOperationTasks请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "运维任务ID集合",
+          "example": "[3,4]",
+          "member": "uint64",
+          "name": "IdSet",
+          "required": true,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "DeleteOperationTasksResponse": {
+      "document": "DeleteOperationTasks返回参数结构体",
       "members": [
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -2962,6 +3952,51 @@
           "name": "CdcClusterId",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "开通堡垒机指定共享的clbId",
+          "example": "lb-xefesef",
+          "member": "string",
+          "name": "ShareClbId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "0-关闭web访问堡垒机，1-开启web访问堡垒机",
+          "example": "1",
+          "member": "uint64",
+          "name": "WebAccess",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "0-关闭客户端访问堡垒机，1-开启客户端访问堡垒机",
+          "example": "1",
+          "member": "uint64",
+          "name": "ClientAccess",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "0-关闭内网访问堡垒机，1-开启内网访问堡垒机",
+          "example": "0",
+          "member": "uint64",
+          "name": "IntranetAccess",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "0-关闭公网访问堡垒机，1-开启公网访问堡垒机",
+          "example": "1",
+          "member": "uint64",
+          "name": "ExternalAccess",
+          "required": false,
+          "type": "int"
         }
       ],
       "type": "object"
@@ -2969,6 +4004,100 @@
     "DeployResourceResponse": {
       "document": "DeployResource返回参数结构体",
       "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeAccessWhiteListRulesRequest": {
+      "document": "DescribeAccessWhiteListRules请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "用户ID集合，非必需，如果使用IdSet参数则忽略Name参数",
+          "example": "[1,2]",
+          "member": "uint64",
+          "name": "IdSet",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "来源IP或网段，模糊查询，最大长度64字符",
+          "example": "10.10.10.1",
+          "member": "string",
+          "name": "Name",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "分页偏移位置，默认0",
+          "example": "0",
+          "member": "uint64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "每页条目数量，默认20",
+          "example": "10",
+          "member": "uint64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeAccessWhiteListRulesResponse": {
+      "document": "DescribeAccessWhiteListRules返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "记录总数",
+          "example": "2",
+          "member": "uint64",
+          "name": "TotalCount",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "访问白名单规则列表",
+          "example": "[]",
+          "member": "AccessWhiteListRule",
+          "name": "AccessWhiteListRuleSet",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否放开全部来源IP，如果为true，TotalCount为0，AccessWhiteListRuleSet为空",
+          "example": "true",
+          "member": "bool",
+          "name": "AllowAny",
+          "output_required": true,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否开启自动添加来源IP, 如果为true, 在开启访问白名单的情况下将自动添加来源IP",
+          "example": "true",
+          "member": "bool",
+          "name": "AllowAuto",
+          "output_required": true,
+          "type": "bool",
+          "value_allowed_null": false
+        },
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
@@ -3466,6 +4595,16 @@
           "value_allowed_null": false
         },
         {
+          "disabled": false,
+          "document": "账号信息列表",
+          "example": "[{ \"BoundPrivateKey\": true,  \"Account\": \"root\",  \"Id\": 1,  \"BoundPassword\": true, \"DeviceId\": 1 }  ]",
+          "member": "DeviceAccount",
+          "name": "DeviceAccountSet",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
           "member": "string",
           "name": "RequestId",
@@ -3914,6 +5053,133 @@
       ],
       "type": "object"
     },
+    "DescribeLDAPUnitSetRequest": {
+      "document": "DescribeLDAPUnitSet请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "是否开启LDAP认证，true-开启",
+          "example": "true",
+          "member": "bool",
+          "name": "Enable",
+          "required": true,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "服务器地址",
+          "example": "10.10.10.1",
+          "member": "string",
+          "name": "Ip",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "服务端口",
+          "example": "389",
+          "member": "uint64",
+          "name": "Port",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "是否开启SSL，false-不开启，true-开启",
+          "example": "true",
+          "member": "bool",
+          "name": "EnableSSL",
+          "required": true,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "Base DN",
+          "example": "bh-test-DN",
+          "member": "string",
+          "name": "BaseDN",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "管理员账号",
+          "example": "admin",
+          "member": "string",
+          "name": "AdminAccount",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "管理员密码",
+          "example": "pwd",
+          "member": "string",
+          "name": "AdminPassword",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "用户名映射属性",
+          "example": "attr-user-name",
+          "member": "string",
+          "name": "AttributeUserName",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "部门过滤",
+          "example": "bh-attr-test",
+          "member": "string",
+          "name": "AttributeUnit",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "备用服务器地址",
+          "example": "10.10.10.2",
+          "member": "string",
+          "name": "IpBackup",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "网络域Id",
+          "example": "net-default",
+          "member": "string",
+          "name": "DomainId",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeLDAPUnitSetResponse": {
+      "document": "DescribeLDAPUnitSet返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "ou 列表",
+          "example": "[]",
+          "member": "string",
+          "name": "UnitSet",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "DescribeLoginEventRequest": {
       "document": "DescribeLoginEvent请求参数结构体",
       "members": [
@@ -4136,6 +5402,80 @@
         {
           "disabled": false,
           "document": "总记录数",
+          "example": "10",
+          "member": "uint64",
+          "name": "TotalCount",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeOperationTaskRequest": {
+      "document": "DescribeOperationTask请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "运维任务名称",
+          "example": "测试运维任务\t",
+          "member": "string",
+          "name": "Name",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "运维任务类型，1 - 手工执行任务， 2 - 周期性任务",
+          "example": "1",
+          "member": "uint64",
+          "name": "Type",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "分页偏移位置，默认值为0",
+          "example": "0",
+          "member": "uint64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "每页条目数，默认20",
+          "example": "20",
+          "member": "uint64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeOperationTaskResponse": {
+      "document": "DescribeOperationTask返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "运维任务列表",
+          "example": "[{\"Id\":3,\"OperationId\":\"op-ys8231a\"}]",
+          "member": "OperationTask",
+          "name": "OperationTasks",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务总数",
           "example": "10",
           "member": "uint64",
           "name": "TotalCount",
@@ -4496,7 +5836,7 @@
         },
         {
           "disabled": false,
-          "document": "认证方式，0 - 本地, 1 - LDAP, 2 - OAuth, 不传为全部",
+          "document": "认证方式，0 - 本地, 1 - LDAP, 2 - OAuth, 3-ioa 不传为全部",
           "example": "[0,1]",
           "member": "uint64",
           "name": "AuthTypeSet",
@@ -4518,6 +5858,24 @@
           "example": "[\"Name\":\"Status\",\"Values\":[\"Locked\"]]",
           "member": "Filter",
           "name": "Filters",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "是否获取cam用户, 0-否，1-是",
+          "example": "1",
+          "member": "uint64",
+          "name": "IsCamUser",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "用户来源，0-bh，1-ioa,不传为全部",
+          "example": "[1]",
+          "member": "uint64",
+          "name": "UserFromSet",
           "required": false,
           "type": "list"
         }
@@ -4757,6 +6115,152 @@
           "name": "SSLCertName",
           "output_required": false,
           "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "IOA侧的资源ID",
+          "example": "10034",
+          "member": "int64",
+          "name": "IOAId",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群托管维度。1-集群，2-命名空间，3-工作负载",
+          "example": "1",
+          "member": "uint64",
+          "name": "ManageDimension",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群托管账号id\t",
+          "example": "100",
+          "member": "uint64",
+          "name": "ManageAccountId",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群命名空间\t",
+          "example": "namespace",
+          "member": "string",
+          "name": "Namespace",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群工作负载\t",
+          "example": "workload",
+          "member": "string",
+          "name": "Workload",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群pod已同步数量",
+          "example": "10",
+          "member": "uint64",
+          "name": "SyncPodCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群pod总数量\t",
+          "example": "20",
+          "member": "uint64",
+          "name": "TotalPodCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "DeviceAccount": {
+      "document": "主机账号",
+      "members": [
+        {
+          "disabled": false,
+          "document": "账号ID",
+          "example": "1",
+          "member": "uint64",
+          "name": "Id",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "主机ID",
+          "example": "1",
+          "member": "uint64",
+          "name": "DeviceId",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "账号名",
+          "example": "admin",
+          "member": "string",
+          "name": "Account",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "true-已托管密码，false-未托管密码",
+          "example": "true",
+          "member": "bool",
+          "name": "BoundPassword",
+          "output_required": true,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "true-已托管私钥，false-未托管私钥",
+          "example": "true",
+          "member": "bool",
+          "name": "BoundPrivateKey",
+          "output_required": true,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否托管凭证, true-托管，false-未托管",
+          "example": "true",
+          "member": "bool",
+          "name": "BoundKubeconfig",
+          "output_required": false,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否为k8s资产管理账号\t",
+          "example": "true",
+          "member": "bool",
+          "name": "IsK8SManageAccount",
+          "output_required": false,
+          "type": "bool",
           "value_allowed_null": false
         }
       ],
@@ -5012,6 +6516,67 @@
           "member": "uint64",
           "name": "Count",
           "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
+    },
+    "IOAUserGroup": {
+      "document": "同步过来的ioa用户分组信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "ioa用户组织id",
+          "example": "85232",
+          "member": "uint64",
+          "name": "OrgId",
+          "output_required": true,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "ioa用户组织名称",
+          "example": "开发部",
+          "member": "string",
+          "name": "OrgName",
+          "output_required": true,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "ioa用户组织id路径\t",
+          "example": "2321.23341.2334",
+          "member": "string",
+          "name": "OrgIdPath",
+          "output_required": true,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "ioa用户组织名称路径\t",
+          "example": "全网账户.钉钉.开发部",
+          "member": "string",
+          "name": "OrgNamePath",
+          "output_required": true,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "ioa关联用户源类型",
+          "example": "0",
+          "member": "uint64",
+          "name": "Source",
+          "output_required": true,
           "required": false,
           "type": "int",
           "value_allowed_null": false
@@ -5788,6 +7353,204 @@
       ],
       "type": "object"
     },
+    "ModifyLDAPSettingRequest": {
+      "document": "ModifyLDAPSetting请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "是否开启LDAP认证，false-不开启，true-开启",
+          "example": "true",
+          "member": "bool",
+          "name": "Enable",
+          "required": true,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "服务器地址",
+          "example": "10.10.10.1",
+          "member": "string",
+          "name": "Ip",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "备用服务器地址",
+          "example": "10.10.10.2",
+          "member": "string",
+          "name": "IpBackup",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "服务端口",
+          "example": "389",
+          "member": "uint64",
+          "name": "Port",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "是否开启SSL，false-不开启，true-开启",
+          "example": "true",
+          "member": "bool",
+          "name": "EnableSSL",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "Base DN",
+          "example": "base-dn",
+          "member": "string",
+          "name": "BaseDN",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "管理员账号",
+          "example": "admin",
+          "member": "string",
+          "name": "AdminAccount",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "管理员密码",
+          "example": "adminpwd",
+          "member": "string",
+          "name": "AdminPassword",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "用户属性",
+          "example": "attr-user",
+          "member": "string",
+          "name": "AttributeUser",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "用户名属性",
+          "example": "attr-username",
+          "member": "string",
+          "name": "AttributeUserName",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "自动同步，false-不开启，true-开启",
+          "example": "true",
+          "member": "bool",
+          "name": "AutoSync",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "覆盖用户信息，false-不开启，true-开启",
+          "example": "true",
+          "member": "bool",
+          "name": "Overwrite",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "同步周期，30～60000之间的整数",
+          "example": "30",
+          "member": "uint64",
+          "name": "SyncPeriod",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "是否同步全部，false-不开启，true-开启",
+          "example": "true",
+          "member": "bool",
+          "name": "SyncAll",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "同步OU列表，SyncAll为false时必传",
+          "example": "[]",
+          "member": "string",
+          "name": "SyncUnitSet",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "组织单元属性",
+          "example": "unit",
+          "member": "string",
+          "name": "AttributeUnit",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "用户姓名属性",
+          "example": "realname",
+          "member": "string",
+          "name": "AttributeRealName",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "手机号属性",
+          "example": "phone",
+          "member": "string",
+          "name": "AttributePhone",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "邮箱属性",
+          "example": "email",
+          "member": "string",
+          "name": "AttributeEmail",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "网络域Id",
+          "example": "net-default",
+          "member": "string",
+          "name": "DomainId",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "ModifyLDAPSettingResponse": {
+      "document": "ModifyLDAPSetting返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "ModifyOAuthSettingRequest": {
       "document": "ModifyOAuthSetting请求参数结构体",
       "members": [
@@ -5878,6 +7641,114 @@
       ],
       "type": "object"
     },
+    "ModifyOperationTaskRequest": {
+      "document": "ModifyOperationTask请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "任务Id",
+          "example": "2",
+          "member": "uint64",
+          "name": "Id",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "任务名称",
+          "example": "test_ssh",
+          "member": "string",
+          "name": "Name",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "任务类型, 1 - 手工执行, 2 - 周期性自动执行",
+          "example": "1",
+          "member": "uint64",
+          "name": "Type",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "执行账号",
+          "example": "ubuntu",
+          "member": "string",
+          "name": "Account",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "超时时间,单位秒",
+          "example": "5",
+          "member": "uint64",
+          "name": "Timeout",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "执行脚本内容",
+          "example": "ls",
+          "member": "string",
+          "name": "Script",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "执行主机集合，满足条件以下三个条件：1. 资产绑定可用的专业版或国密版堡垒机服务；2、资产类型为linux资产；3、用户具有资产权限，且资产添加了指定执行账号",
+          "example": "[1,3]",
+          "member": "uint64",
+          "name": "DeviceIdSet",
+          "required": true,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "执行间隔，单位天. 手工执行时无需传入",
+          "example": "2",
+          "member": "uint64",
+          "name": "Period",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "首次执行日期，默认1970-01-01T08:00:01+08:00,手工执行时无需传入",
+          "example": "1970-01-01T08:00:01+08:00",
+          "member": "datetime_iso",
+          "name": "FirstTime",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "Script参数是否需要进行base64编码后传递，1-需要进行base64编码后传递，非1值-不需要进行base64编码后传递",
+          "example": "1",
+          "member": "uint64",
+          "name": "Encoding",
+          "required": false,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "ModifyOperationTaskResponse": {
+      "document": "ModifyOperationTask返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
     "ModifyResourceRequest": {
       "document": "ModifyResource请求参数结构体",
       "members": [
@@ -5891,8 +7762,8 @@
           "type": "string"
         },
         {
-          "disabled": false,
-          "document": "已废弃",
+          "disabled": true,
+          "document": "状态",
           "example": "0",
           "member": "string",
           "name": "Status",
@@ -6206,6 +8077,185 @@
         }
       ],
       "usage": "out"
+    },
+    "OperationTask": {
+      "document": "运维任务信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "运维任务主键ID",
+          "example": "1",
+          "member": "uint64",
+          "name": "Id",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运维任务ID",
+          "example": "ops-zc8n78qv77368032",
+          "member": "string",
+          "name": "OperationId",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运维任务名称",
+          "example": "test1012-勿删",
+          "member": "string",
+          "name": "Name",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "创建用户",
+          "example": "bh_jingsan",
+          "member": "string",
+          "name": "UserName",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运维人员姓名",
+          "example": "张三",
+          "member": "string",
+          "name": "RealName",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "任务类型，1 - 手工执行任务， 2 - 周期性任务",
+          "example": "1",
+          "member": "uint64",
+          "name": "Type",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "周期性任务执行间隔，单位天",
+          "example": "7",
+          "member": "uint64",
+          "name": "Period",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "执行账户",
+          "example": "root",
+          "member": "string",
+          "name": "NextTime",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "下一次执行时间",
+          "example": "2022-03-17T20:30:32.79977276+08:00",
+          "member": "string",
+          "name": "FirstTime",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "ReplayInformation": {
+      "document": "回放所需字段信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "令牌",
+          "example": "bh-replay-token",
+          "member": "string",
+          "name": "Token",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "会话开始时间",
+          "example": "2020-01-01T01:01:01Z",
+          "member": "string",
+          "name": "StartTime",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "回放链接",
+          "example": "ws://localhost:8080/bh/replay",
+          "member": "string",
+          "name": "Address",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "回放类型 ，默认0， 1-rfb 2-mp4 3-ssh",
+          "example": "0",
+          "member": "uint64",
+          "name": "ReplayType",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "ReplaySessionRequest": {
+      "document": "ReplaySession请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "会话Sid",
+          "example": "d6021542-c198-4d6f-a1fd-a8091544847c",
+          "member": "string",
+          "name": "Sid",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "ReplaySessionResponse": {
+      "document": "ReplaySession返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "回放所需信息",
+          "example": "{\"Token\":\"eyJhbGciOiJFUzUx\", \"StartTime\":\"2025-07-01T19:25:31+08:00\", \"Address\":\"wss://bh.cloud.tencent.com/tui/replay\",\"ReplayType\": 0}",
+          "member": "ReplayInformation",
+          "name": "ReplayInfo",
+          "output_required": true,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
     },
     "ResetDeviceAccountPasswordRequest": {
       "document": "ResetDeviceAccountPassword请求参数结构体",
@@ -6690,6 +8740,126 @@
           "output_required": false,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否共享clb，true-共享clb，false-独享clb",
+          "example": "false",
+          "member": "bool",
+          "name": "ShareClb",
+          "output_required": false,
+          "type": "bool",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "共享clb id",
+          "example": "lb-5fa81478",
+          "member": "string",
+          "name": "OpenClbId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运营商信息",
+          "example": "CMCC/CTCC/CUCC",
+          "member": "string",
+          "name": "LbVipIsp",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "linux资产命令行运维端口",
+          "example": "10001",
+          "member": "int64",
+          "name": "TUICmdPort",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "linux资产直连端口",
+          "example": "10002",
+          "member": "int64",
+          "name": "TUIDirectPort",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "1 默认值，web访问开启，0 web访问关闭，2 web访问开通中，3 web访问关闭中",
+          "example": "1",
+          "member": "uint64",
+          "name": "WebAccess",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "1 默认值，客户单访问开启，0 客户端访问关闭，2 客户端访问开通中，3 客户端访问关闭中",
+          "example": "1",
+          "member": "uint64",
+          "name": "ClientAccess",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "1 默认值，外网访问开启，0 外网访问关闭，2 外网访问开通中，3 外网访问关闭中",
+          "example": "1",
+          "member": "uint64",
+          "name": "ExternalAccess",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "0默认值。0-免费版（试用版）ioa，1-付费版ioa",
+          "example": "0",
+          "member": "uint64",
+          "name": "IOAResource",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "零信任堡垒机用户扩展包个数。1个扩展包对应20个用户数",
+          "example": "1",
+          "member": "uint64",
+          "name": "PackageIOAUserCount",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": " 零信任堡垒机带宽扩展包个数。一个扩展包表示4M带宽",
+          "example": "1",
+          "member": "uint64",
+          "name": "PackageIOABandwidth",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "堡垒机实例对应的零信任实例id",
+          "example": "ioa-bh-1-833ae717984772235e780aa",
+          "member": "string",
+          "name": "IOAResourceId",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -6753,6 +8923,33 @@
     },
     "RunChangePwdTaskResponse": {
       "document": "RunChangePwdTask返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "RunOperationTaskRequest": {
+      "document": "RunOperationTask请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "运维任务ID",
+          "example": "3",
+          "member": "uint64",
+          "name": "Id",
+          "required": true,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "RunOperationTaskResponse": {
+      "document": "RunOperationTask返回参数结构体",
       "members": [
         {
           "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
@@ -6898,6 +9095,16 @@
           "name": "TotalCount",
           "output_required": true,
           "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "命令列表",
+          "example": "[{\"Sid\": \"d6021542-c198-4d6f-a1fd-a8091544847c\",\"Cmd\":\"pwd\"}]",
+          "member": "Command",
+          "name": "CommandSet",
+          "output_required": true,
+          "type": "list",
           "value_allowed_null": false
         },
         {
@@ -7209,7 +9416,7 @@
         },
         {
           "disabled": false,
-          "document": "该命令所属会话的会话开始时间（废弃，使用SessionTime）",
+          "document": "该命令所属会话的会话开始时间（使用SessionTime）",
           "example": "2023-04-24T18:47:18.118138659+08:00",
           "member": "string",
           "name": "SessTime",
@@ -7283,6 +9490,16 @@
           "example": "adef2345defdadaefdc1",
           "member": "string",
           "name": "SignValue",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "资产类型",
+          "example": "TKE",
+          "member": "string",
+          "name": "DeviceKind",
           "output_required": false,
           "type": "string",
           "value_allowed_null": false
@@ -8210,6 +10427,15 @@
           "name": "AppAssetUrl",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "资产类型",
+          "example": "Linux",
+          "member": "string",
+          "name": "DeviceKind",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -8233,6 +10459,198 @@
           "example": "[{\"Id\":\"bh-test-sid-1a2b3c\",\"Protocol\":\"SSH\"}]",
           "member": "SessionResult",
           "name": "SessionSet",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "SearchSubtaskResultByIdRequest": {
+      "document": "SearchSubtaskResultById请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "运维任务名称",
+          "example": "\"运维任务1\"",
+          "member": "string",
+          "name": "Name",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "查询偏移",
+          "example": "1",
+          "member": "uint64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "分页的页内记录数，默认为20，最大200",
+          "example": "10",
+          "member": "uint64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "运维父任务执行日志ID",
+          "example": "1",
+          "member": "string",
+          "name": "Id",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "运维父任务执行状态",
+          "example": "[1, 2]",
+          "member": "uint64",
+          "name": "Status",
+          "required": false,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "SearchSubtaskResultByIdResponse": {
+      "document": "SearchSubtaskResultById返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "记录数",
+          "example": "20",
+          "member": "uint64",
+          "name": "TotalCount",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "SearchTaskResultRequest": {
+      "document": "SearchTaskResult请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "搜索区间的开始时间",
+          "example": "2020-01-02T01:01:01+08:0",
+          "member": "datetime_iso",
+          "name": "StartTime",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "搜索区间的结束时间",
+          "example": "2020-01-02T01:01:01+08:0",
+          "member": "datetime_iso",
+          "name": "EndTime",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "运维任务ID",
+          "example": "ops-awe1d23",
+          "member": "string",
+          "name": "OperationId",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "运维任务名称",
+          "example": "\"运维任务1\"",
+          "member": "string",
+          "name": "Name",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "用户名，长度不超过20",
+          "example": "nick",
+          "member": "string",
+          "name": "UserName",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "姓名，长度不超过20",
+          "example": "tom",
+          "member": "string",
+          "name": "RealName",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "任务类型\n1 手工运维任务\n2 定时任务\n3 账号推送任务",
+          "example": "[1]",
+          "member": "uint64",
+          "name": "TaskType",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "查询偏移",
+          "example": "1",
+          "member": "uint64",
+          "name": "Offset",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "分页的页内记录数，默认为20，最大200",
+          "example": "10",
+          "member": "uint64",
+          "name": "Limit",
+          "required": false,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "SearchTaskResultResponse": {
+      "document": "SearchTaskResult返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "记录数",
+          "example": "20",
+          "member": "uint64",
+          "name": "TotalCount",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运维任务执行结果",
+          "example": " [ { \"UserName\": \"nick\", \"Status\": 0, \"Name\": \"nic\", \"FromIp\": \"192.168.0.1\", \"StartTime\": \"2020-09-22T00:00:00+08:00\", \"EndTime\": \"2020-09-22T00:00:00+08:00\", \"Id\": \"1\", \"RealName\": \"tom\", \"OperationId\": \"ops-adexdea\" } ]",
+          "member": "TaskResult",
+          "name": "TaskResult",
           "output_required": true,
           "type": "list",
           "value_allowed_null": false
@@ -8448,9 +10866,76 @@
           "output_required": false,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "回放类型 默认0, 1-rfb 2-mp4 3-ssh",
+          "example": "0",
+          "member": "uint64",
+          "name": "ReplayType",
+          "output_required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "会话资产类型",
+          "example": "Linux",
+          "member": "string",
+          "name": "DeviceKind",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群命名空间",
+          "example": "namespace1",
+          "member": "string",
+          "name": "Namespace",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群工作负载",
+          "example": "workload1",
+          "member": "string",
+          "name": "Workload",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "K8S集群容器名称",
+          "example": "pod0",
+          "member": "string",
+          "name": "PodName",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
+    },
+    "SetLDAPSyncFlagRequest": {
+      "document": "SetLDAPSyncFlag请求参数结构体",
+      "members": [],
+      "type": "object"
+    },
+    "SetLDAPSyncFlagResponse": {
+      "document": "SetLDAPSyncFlag返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
     },
     "TagFilter": {
       "document": "资产标签",
@@ -8475,6 +10960,129 @@
         }
       ],
       "usage": "in"
+    },
+    "TaskResult": {
+      "document": "运维父任务执行结果",
+      "members": [
+        {
+          "disabled": false,
+          "document": "运维任务结果日志ID",
+          "example": "dfac9070-8b23-499e-83b2-a50e3ca0",
+          "member": "string",
+          "name": "Id",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运维任务ID",
+          "example": "ops-1a2b3c",
+          "member": "string",
+          "name": "OperationId",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运维任务名称",
+          "example": "运维任务",
+          "member": "string",
+          "name": "Name",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "执行任务来源IP",
+          "example": "127.0.0.1",
+          "member": "string",
+          "name": "FromIp",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运维任务所属用户",
+          "example": "zhangsan",
+          "member": "string",
+          "name": "UserName",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运维任务所属用户的姓名",
+          "example": "张三",
+          "member": "string",
+          "name": "RealName",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运维任务执行状态 1 - 执行中，2 - 成功，3 - 失败，4 - 部分失败",
+          "example": "1",
+          "member": "uint64",
+          "name": "Status",
+          "output_required": true,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运维任务开始时间",
+          "example": "2022-04-13T19:44:57+08:00",
+          "member": "string",
+          "name": "StartTime",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运维任务结束时间",
+          "example": "2022-04-13T19:45:57+08:00",
+          "member": "string",
+          "name": "EndTime",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
+    "UnlockUserRequest": {
+      "document": "UnlockUser请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "用户id",
+          "example": "[1]",
+          "member": "uint64",
+          "name": "IdSet",
+          "required": true,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "UnlockUserResponse": {
+      "document": "UnlockUser返回参数结构体",
+      "members": [
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
     },
     "User": {
       "document": "用户信息",
@@ -8664,6 +11272,28 @@
           "output_required": false,
           "required": false,
           "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "用户来源，0-bh,1-ioa",
+          "example": "0",
+          "member": "uint64",
+          "name": "UserFrom",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "ioa同步过来的用户相关信息",
+          "example": "{\"Orgid\":4234,\"OrgName\":\"测试\"}",
+          "member": "IOAUserGroup",
+          "name": "IOAUserGroup",
+          "output_required": false,
+          "required": false,
+          "type": "object",
           "value_allowed_null": false
         }
       ],

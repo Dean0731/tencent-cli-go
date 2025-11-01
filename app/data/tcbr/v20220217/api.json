@@ -345,11 +345,29 @@
         },
         {
           "disabled": false,
-          "document": "服务配置信息",
+          "document": "服务配置信息(已废弃)",
           "example": "无",
           "member": "ServerBaseConfig",
           "name": "ServerConfig",
-          "required": true,
+          "required": false,
+          "type": "object"
+        },
+        {
+          "disabled": false,
+          "document": "服务配置信息",
+          "example": "无",
+          "member": "DiffConfigItem",
+          "name": "Items",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "vpc 信息",
+          "example": "无",
+          "member": "CreateVpcInfo",
+          "name": "VpcInfo",
+          "required": false,
           "type": "object"
         }
       ],
@@ -376,6 +394,39 @@
         }
       ],
       "type": "object"
+    },
+    "CreateVpcInfo": {
+      "document": "创建 vpc 信息",
+      "members": [
+        {
+          "disabled": false,
+          "document": "vpc id",
+          "example": "vpc-sdfd",
+          "member": "string",
+          "name": "VpcId",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "1 新建 2 指定",
+          "example": "2",
+          "member": "int64",
+          "name": "CreateType",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "子网ID列表",
+          "example": "[\"subnet-sdfdf\"]",
+          "member": "string",
+          "name": "SubnetIds",
+          "required": false,
+          "type": "list"
+        }
+      ],
+      "usage": "in"
     },
     "DatabasesInfo": {
       "document": "数据库资源信息",
@@ -659,6 +710,15 @@
           "name": "ServerType",
           "required": false,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "vpcId",
+          "example": "vpc-sret",
+          "member": "string",
+          "name": "VpcId",
+          "required": false,
+          "type": "string"
         }
       ],
       "type": "object"
@@ -816,6 +876,102 @@
       ],
       "type": "object"
     },
+    "DiffConfigItem": {
+      "document": "服务配置入参",
+      "members": [
+        {
+          "disabled": false,
+          "document": "配置项 Key\nMinNum 最小副本数\nMaxNum 最大副本数\nPolicyDetails 扩缩容策略\nAccessTypes 访问类型\nTimerScale 定时扩缩容\nInternalAccess 内网访问\nOperationMode 运行模式 noScale | condScale | alwaysScale | custom ｜ manualScale\nSessionAffinity 会话亲和性 open | close\nCpuSpecs cpu 规格\nMemSpecs mem规格\nEnvParam 环境变量\nLogPath 日志采集路径\nPort 端口\nDockerfile dockerfile 文件名\nBuildDir 目标目录\nTag 服务标签\nLogType 日志类型 none | default | custom \nLogSetId 日志集Id\nLogTopicId 日志主题ID\nLogParseType 日志解析类型 json ｜ line\nEntryPoint entrypoint 命令\nCmd cmd命令\nVpcConf 网络信息",
+          "example": "MinNum",
+          "member": "string",
+          "name": "Key",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "字符串类型配置项值\nInternalAccess、OperationMode、SessionAffinity、EnvParam、LogPath、Dockerfile、BuildDir、Tag、LogType、LogSetId、LogTopicId、LogParseType",
+          "example": "logs",
+          "member": "string",
+          "name": "Value",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "int 类型配置项值\nMinNum、MaxNum、Port",
+          "example": "1",
+          "member": "int64",
+          "name": "IntValue",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "bool 类型配置项值",
+          "example": "false",
+          "member": "bool",
+          "name": "BoolValue",
+          "required": false,
+          "type": "bool"
+        },
+        {
+          "disabled": false,
+          "document": "浮点型配置项值\nCpuSpecs、MemSpecs",
+          "example": "0.25",
+          "member": "float",
+          "name": "FloatValue",
+          "required": false,
+          "type": "float"
+        },
+        {
+          "disabled": false,
+          "document": "字符串数组配置项值\nAccessTypes，EntryPoint，Cmd",
+          "example": "[\"OA\", \"PUBLIC\"]",
+          "member": "string",
+          "name": "ArrayValue",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "扩缩容策略配置项值",
+          "example": "无",
+          "member": "HpaPolicy",
+          "name": "PolicyDetails",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "定时扩缩容配置项值",
+          "example": "无",
+          "member": "TimerScale",
+          "name": "TimerScale",
+          "required": false,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "配置内网访问时网络信息",
+          "example": "无",
+          "member": "VpcConf",
+          "name": "VpcConf",
+          "required": false,
+          "type": "object"
+        },
+        {
+          "disabled": false,
+          "document": "存储配置信息",
+          "example": "无",
+          "member": "VolumeConf",
+          "name": "VolumesConf",
+          "required": false,
+          "type": "list"
+        }
+      ],
+      "usage": "in"
+    },
     "EnvBaseInfo": {
       "document": "环境基础信息",
       "members": [
@@ -906,6 +1062,16 @@
           "member": "string",
           "name": "SubnetIds",
           "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "回收标志，为空则表示正常，recycle表示已回收",
+          "example": "recycle",
+          "member": "string",
+          "name": "Recycle",
+          "output_required": false,
           "type": "string",
           "value_allowed_null": false
         }
@@ -1508,7 +1674,7 @@
         {
           "disabled": false,
           "document": "是否开启公网访问",
-          "example": "[\"PUBLIC\", \"OA\", \"MINIAPP\", \"VPC\", \"\"]",
+          "example": "[\"PUBLIC\", \"OA\", \"MINIAPP\", \"VPC\"]",
           "member": "string",
           "name": "OpenAccessTypes",
           "output_required": true,
@@ -1563,7 +1729,7 @@
         {
           "disabled": false,
           "document": "扩缩容配置",
-          "example": "cpu, mem, cpu/mem",
+          "example": "无",
           "member": "HpaPolicy",
           "name": "PolicyDetails",
           "output_required": true,
@@ -1713,6 +1879,105 @@
           "required": false,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "内网访问开关 close | open",
+          "example": "close",
+          "member": "string",
+          "name": "InternalAccess",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "内网域名",
+          "example": "https://sdfsdf",
+          "member": "string",
+          "name": "InternalDomain",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "运行模式",
+          "example": "custom",
+          "member": "string",
+          "name": "OperationMode",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "定时扩缩容配置",
+          "example": "无",
+          "member": "TimerScale",
+          "name": "TimerScale",
+          "output_required": false,
+          "required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "Dockerfile EntryPoint 参数",
+          "example": "[\"echo\"]",
+          "member": "string",
+          "name": "EntryPoint",
+          "output_required": false,
+          "required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "Dockerfile Cmd 参数",
+          "example": "[\"echo\"]",
+          "member": "string",
+          "name": "Cmd",
+          "output_required": false,
+          "required": false,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "会话亲和性开关\n注意：此字段可能返回 null，表示取不到有效值。",
+          "example": "open",
+          "member": "string",
+          "name": "SessionAffinity",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": true
+        },
+        {
+          "disabled": false,
+          "document": "Vpc 配置参数",
+          "example": "无",
+          "member": "VpcConf",
+          "name": "VpcConf",
+          "output_required": false,
+          "required": false,
+          "type": "object",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "存储配置信息",
+          "example": "无",
+          "member": "VolumeConf",
+          "name": "VolumesConf",
+          "output_required": false,
+          "required": false,
+          "type": "list",
+          "value_allowed_null": false
         }
       ],
       "usage": "both"
@@ -1796,6 +2061,26 @@
           "example": "function",
           "member": "string",
           "name": "ServerType",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "流量类型，目前只有 FLOW",
+          "example": "FLOW",
+          "member": "string",
+          "name": "TrafficType",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "创建时间",
+          "example": "2022-03-09 14:00:00",
+          "member": "string",
+          "name": "CreateTime",
           "output_required": false,
           "type": "string",
           "value_allowed_null": false
@@ -2163,6 +2448,78 @@
       ],
       "usage": "out"
     },
+    "TimerScale": {
+      "document": "定时扩缩容配置",
+      "members": [
+        {
+          "disabled": false,
+          "document": "循环类型",
+          "example": "none",
+          "member": "string",
+          "name": "CycleType",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "循环起始",
+          "example": "2022-09-08",
+          "member": "string",
+          "name": "StartDate",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "循环结束",
+          "example": "2022-09-08",
+          "member": "string",
+          "name": "EndDate",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "起始时间",
+          "example": "00:00:00",
+          "member": "string",
+          "name": "StartTime",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "结束时间",
+          "example": "23:59:00",
+          "member": "string",
+          "name": "EndTime",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "副本个数",
+          "example": "1",
+          "member": "uint64",
+          "name": "ReplicaNum",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
+    },
     "UpdateCloudRunServerRequest": {
       "document": "UpdateCloudRunServer请求参数结构体",
       "members": [
@@ -2195,12 +2552,30 @@
         },
         {
           "disabled": false,
-          "document": "服务配置信息",
+          "document": "服务配置信息(已废弃)",
           "example": "无",
           "member": "ServerBaseConfig",
           "name": "ServerConfig",
-          "required": true,
+          "required": false,
           "type": "object"
+        },
+        {
+          "disabled": false,
+          "document": "业务类型，默认tcr",
+          "example": "tcb",
+          "member": "string",
+          "name": "Business",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "服务配置信息",
+          "example": "无",
+          "member": "DiffConfigItem",
+          "name": "Items",
+          "required": false,
+          "type": "list"
         }
       ],
       "type": "object"
@@ -2292,6 +2667,128 @@
         }
       ],
       "usage": "in"
+    },
+    "VolumeConf": {
+      "document": "存储配置",
+      "members": [
+        {
+          "disabled": false,
+          "document": "存储类型",
+          "example": "\"COS\",\"CFS\"",
+          "member": "string",
+          "name": "Type",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "对象存储桶名称",
+          "example": "xxx-appid",
+          "member": "string",
+          "name": "BucketName",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "存储连接地址",
+          "example": "https://cos.ap-shanghai",
+          "member": "string",
+          "name": "Endpoint",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "存储连接用户密码",
+          "example": "xxxx-xxxx",
+          "member": "string",
+          "name": "KeyID",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "存储挂载目的目录",
+          "example": "/data",
+          "member": "string",
+          "name": "DstPath",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "存储挂载源目录",
+          "example": "/data",
+          "member": "string",
+          "name": "SrcPath",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
+    },
+    "VpcConf": {
+      "document": "云托管服务 Vpc 配置",
+      "members": [
+        {
+          "disabled": false,
+          "document": "vpc id",
+          "example": "\"vpc-xxx\"",
+          "member": "string",
+          "name": "VpcId",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "vpc 网段",
+          "example": "\"192.168.0.0/24\"",
+          "member": "string",
+          "name": "VpcCIDR",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "subnet id",
+          "example": "\"subnet-xxx\"",
+          "member": "string",
+          "name": "SubnetId",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "subnet 网段",
+          "example": "\"192.168.0.0/25\"",
+          "member": "string",
+          "name": "SubnetCIDR",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
     }
   },
   "version": "1.0"

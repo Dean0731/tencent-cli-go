@@ -763,7 +763,7 @@
         {
           "disabled": false,
           "document": "参考：[事件模式](https://cloud.tencent.com/document/product/1359/56084)",
-          "example": "{   \"detail\": {     \"source-ip\": [ { \"cidr\": \"10.0.0.0/24\" } ]  ",
+          "example": "\"{\\\"source\\\":[\\\"cvm.cloud.tencent\\\"]}\"",
           "member": "string",
           "name": "EventPattern",
           "required": true,
@@ -780,7 +780,7 @@
         },
         {
           "disabled": false,
-          "document": "事件集名称，只能包含字母、中文、数字、下划线、连字符，以字母/中文开头，以数字、字母或中文结尾，2~60个字符",
+          "document": "事件规则名称，只能包含字母、中文、数字、下划线、连字符，以字母/中文开头，以数字、字母或中文结尾，2~60个字符",
           "example": "rule",
           "member": "string",
           "name": "RuleName",
@@ -798,7 +798,7 @@
         },
         {
           "disabled": false,
-          "document": "事件集描述，只能包含数字、中英文及常用标点符号，不超过200个字符",
+          "document": "事件规则描述，只能包含数字、中英文及常用标点符号，不超过200个字符",
           "example": "这是一个描述",
           "member": "string",
           "name": "Description",
@@ -854,7 +854,7 @@
         {
           "disabled": false,
           "document": "目标描述;scf类型示例:\n{\"ResourceDescription\":\"qcs::scf:ap-guangzhou:uin/2252646423:namespace/default/function/john-test-0326/$LATEST\"};\ncls类型示例:\n{\"ResourceDescription\":\"qcs::cls:ap-guangzhou:uin/12323442323:topic/7103f705-6c38-4b64-ac9d-428af0f2e732\"}\nckafka类型示例:\n{\"ResourceDescription\":\"qcs::ckafka:ap-guangzhou:uin/1500000688:ckafkaId/uin/1500000688/ckafka-018q1nwj\",\"CkafkaTargetParams\":{\"TopicName\":\"alert\",\"RetryPolicy\":{\"RetryInterval\":60,\"MaxRetryAttempts\":360}}}\namp类型-邮件/短信示例:\n{\"ResourceDescription\":\"qcs::eb-amp:ap-guangzhou:uin/100012505002:\",\"AMPParams\":{\"NotificationTemplateId\":10181,\"Lang\":\"cn\",\"NoticeReceivers\":[{\"UserType\":\"User\",\"UserIds\":[\"9424525\"],\"TimeWindow\":{\"From\":\"09:30:00\",\"To\":\"23:30:00\"},\"Channels\":[\"Email\",\"SMS\"]}]}}\nes类型示例:\n{\"ResourceDescription\":\"qcs::es:ap-guangzhou:uin/1500000688:instance/es-7cplmhsd\",\"ESTargetParams\":{\"EsVersion\":\"7.14.2\",\"UserName\":\"elastic\",\"Password\":\"xxxxx\",\"NetMode\":\"privateLink\",\"IndexPrefix\":\"auto-test\",\"IndexSuffixMode\":\"default\",\"RotationInterval\":\"none\",\"IndexTemplateType\":\"\",\"OutputMode\":\"default\"}}",
-          "example": "{\"ResourceDescription\":\"qcs::scf:ap-guangzhou:uin/2252646423:namespace/default/function/john-test-0326/$LATEST\"}",
+          "example": "无",
           "member": "TargetDescription",
           "name": "TargetDescription",
           "required": true,
@@ -868,6 +868,33 @@
           "name": "RuleId",
           "required": true,
           "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "批量投递最长等待时间",
+          "example": "1",
+          "member": "int64",
+          "name": "BatchTimeout",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "批量投递最大事件条数",
+          "example": "1",
+          "member": "int64",
+          "name": "BatchEventCount",
+          "required": false,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "开启批量投递使能",
+          "example": "false",
+          "member": "bool",
+          "name": "EnableBatchDelivery",
+          "required": false,
+          "type": "bool"
         }
       ],
       "type": "object"
@@ -1839,6 +1866,7 @@
           "example": "eb-xxxxxxxx",
           "member": "string",
           "name": "EventBusId",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1848,6 +1876,7 @@
           "example": "rule-xxxxxxxx",
           "member": "string",
           "name": "RuleId",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1857,6 +1886,7 @@
           "example": "rule",
           "member": "string",
           "name": "RuleName",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1866,6 +1896,7 @@
           "example": "Active",
           "member": "string",
           "name": "Status",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1875,6 +1906,7 @@
           "example": "true",
           "member": "bool",
           "name": "Enable",
+          "output_required": true,
           "type": "bool",
           "value_allowed_null": false
         },
@@ -1884,15 +1916,17 @@
           "example": "这是一个描述",
           "member": "string",
           "name": "Description",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
         {
           "disabled": false,
           "document": "事件模式",
-          "example": "{   \"detail\": {     \"source-ip\": [ { \"cidr\": \"10.0.0.0/24\" } ]  ",
+          "example": "\"{\\\"source\\\":[\\\"cvm.cloud.tencent\\\"]}\"",
           "member": "string",
           "name": "EventPattern",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1902,6 +1936,7 @@
           "example": "2021-04-27T14:34:19+08:00",
           "member": "datetime_iso",
           "name": "AddTime",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -1911,6 +1946,7 @@
           "example": "2021-04-27T14:34:19+08:00",
           "member": "datetime_iso",
           "name": "ModTime",
+          "output_required": true,
           "type": "string",
           "value_allowed_null": false
         },
@@ -2066,8 +2102,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "根据哪个字段进行返回结果排序,支持以下字段：AddTime（创建时间）, ModTime（修改时间）",
-          "example": "ModTime",
+          "document": "根据哪个字段进行返回结果排序,支持以下字段：created_at（创建时间）, updated_at（修改时间）",
+          "example": "created_at",
           "member": "string",
           "name": "OrderBy",
           "required": false,
@@ -3548,7 +3584,7 @@
         },
         {
           "disabled": false,
-          "document": "规则描述，只能包含数字、中英文及常用标点符号，不超过200个字符",
+          "document": "事件规则描述，只能包含数字、中英文及常用标点符号，不超过200个字符",
           "example": "这是一个描述",
           "member": "string",
           "name": "Description",
@@ -3558,7 +3594,7 @@
         {
           "disabled": false,
           "document": "参考：[事件模式](https://cloud.tencent.com/document/product/1359/56084)",
-          "example": "{   \"detail\": {     \"source-ip\": [ { \"cidr\": \"10.0.0.0/24\" } ]  ",
+          "example": "\"{\\\"source\\\":[\\\"cvm.cloud.tencent\\\"]}\"",
           "member": "string",
           "name": "EventPattern",
           "required": false,

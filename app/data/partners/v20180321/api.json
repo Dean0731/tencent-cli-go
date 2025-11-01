@@ -64,14 +64,21 @@
       "status": "online"
     },
     "DescribeAgentDealsByCache": {
-      "document": "供代理商拉取缓存的全量预付费客户订单",
+      "document": "供代理商拉取全量预付费普通客户订单\n（对应控制台：客户订单-预付费-普通订单）",
       "input": "DescribeAgentDealsByCacheRequest",
       "name": "代理商缓存订单查询接口（预付费）",
       "output": "DescribeAgentDealsByCacheResponse",
       "status": "online"
     },
+    "DescribeAgentDealsPriceDetailByDealName": {
+      "document": "供代理商使用名下有效普通代客的预付费子订单号查询订单费用详情",
+      "input": "DescribeAgentDealsPriceDetailByDealNameRequest",
+      "name": "查询伙伴订单的费用详情",
+      "output": "DescribeAgentDealsPriceDetailByDealNameResponse",
+      "status": "online"
+    },
     "DescribeAgentPayDealsV2": {
-      "document": "可以查询代理商代付的预付费订单",
+      "document": "查询最近15天内的代理商代付订单",
       "input": "DescribeAgentPayDealsV2Request",
       "name": "代理商代付订单查询接口（预付费）",
       "output": "DescribeAgentPayDealsV2Response",
@@ -85,7 +92,7 @@
       "status": "online"
     },
     "DescribeAgentSelfPayDealsV2": {
-      "document": "查询代理商名下指定代客的自付订单（预付费）",
+      "document": "查询代理商名下指定代客最近15天内的自付订单（预付费）",
       "input": "DescribeAgentSelfPayDealsV2Request",
       "name": "代理商自付订单查询接口（预付费）",
       "output": "DescribeAgentSelfPayDealsV2Response",
@@ -96,6 +103,20 @@
       "input": "DescribeClientBalanceNewRequest",
       "name": "查询客户余额（新）",
       "output": "DescribeClientBalanceNewResponse",
+      "status": "online"
+    },
+    "DescribeClientJoinIncreaseList": {
+      "document": "查询合作伙伴名下客户的参与增量激励考核信息列表",
+      "input": "DescribeClientJoinIncreaseListRequest",
+      "name": "查询客户参与增量激励考核信息",
+      "output": "DescribeClientJoinIncreaseListResponse",
+      "status": "online"
+    },
+    "DescribeClientSwitchTraTaskInfo": {
+      "document": "查询客户的交易类型切换任务的信息，查询成功则获取当前用户的切换链接，查询失败则返回失败的原因",
+      "input": "DescribeClientSwitchTraTaskInfoRequest",
+      "name": "查询客户交易类型切换任务信息",
+      "output": "DescribeClientSwitchTraTaskInfoResponse",
       "status": "online"
     },
     "DescribeRebateInfos": {
@@ -572,6 +593,16 @@
           "output_required": true,
           "type": "string",
           "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "增量目标金额(分)",
+          "example": "13000",
+          "member": "string",
+          "name": "IncreaseGoal",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
         }
       ],
       "usage": "out"
@@ -581,8 +612,8 @@
       "members": [
         {
           "disabled": false,
-          "document": "订单自增 ID【请勿依赖该字段作为唯一标识】",
-          "example": "20200812123456",
+          "document": " ID【请勿依赖该字段作为唯一标识】",
+          "example": "12231",
           "member": "string",
           "name": "DealId",
           "output_required": true,
@@ -592,7 +623,7 @@
         {
           "disabled": false,
           "document": "订单号【订单唯一键】",
-          "example": "20200812123456",
+          "example": "2020081592126562",
           "member": "string",
           "name": "DealName",
           "output_required": true,
@@ -642,7 +673,7 @@
         {
           "disabled": false,
           "document": "价格详情",
-          "example": "{           \"OriginalTotalCost\": 6988000,           \"RealTotalCost\": 6988000         }",
+          "example": "无",
           "member": "DealGoodsPriceNewElem",
           "name": "GoodsPrice",
           "output_required": true,
@@ -682,7 +713,7 @@
         {
           "disabled": false,
           "document": "扣费流水号",
-          "example": "12345615882524264",
+          "example": "2020081592126562",
           "member": "string",
           "name": "BillId",
           "output_required": true,
@@ -711,7 +742,7 @@
         },
         {
           "disabled": false,
-          "document": "订单的状态(1：未支付;2：已支付;3：发货中;4：已发货;5：发货失败;6：已退款;7：已关单;8：订单过期;9：订单已失效;10：产品已失效;11：代付拒绝;12：支付中)",
+          "document": "子订单状态(1-待支付,2-已支付,3-发货中,4-已发货,5-发货失败,6-已退款,7-已取消,8-已过期,9-已失效,12-支付中,13-退款中,30-处理中)\n\n控制台订单状态为大订单状态，是以上状态的聚合：未支付(1) 处理中(2,3,5,12,13,30) 已取消(7) 交易成功(4) 已过期(8) 已退款(6) 订单错误(9)",
           "example": "1",
           "member": "string",
           "name": "Status",
@@ -762,7 +793,7 @@
         {
           "disabled": false,
           "document": "大订单号",
-          "example": "20200812123456",
+          "example": "20200815921265621",
           "member": "string",
           "name": "BigDealId",
           "output_required": true,
@@ -832,7 +863,7 @@
         {
           "disabled": false,
           "document": "产品详情",
-          "example": "[           {             \"Name\": \"企业版高级账号\",             \"Value\": \"10\"           },           {             \"Name\": \"50方虚拟会议室\",             \"Value\": \"1\"           },           {             \"Name\": \"300方虚拟会议室\",             \"Value\": \"9\"           }         ]",
+          "example": "无",
           "member": "ProductInfoElem",
           "name": "ProductInfo",
           "output_required": true,
@@ -862,7 +893,7 @@
         {
           "disabled": false,
           "document": "资源id",
-          "example": "[           \"700000942629_2024012000000000\"         ]",
+          "example": "[\"700000942629_20240110893045198634\"]",
           "member": "string",
           "name": "ResourceIds",
           "output_required": true,
@@ -872,7 +903,7 @@
         {
           "disabled": false,
           "document": "退款单的原订单信息。当前仅 DescribeClientDealsByCache 接口会返回该字段",
-          "example": "[{\"DealName\":\"demo\",\"RefundAmount\":10001}]",
+          "example": "无",
           "member": "RefundMap",
           "name": "RefundMap",
           "output_required": false,
@@ -1178,6 +1209,72 @@
       ],
       "type": "object"
     },
+    "ClientIncreaseInfoList": {
+      "document": "客户增量激励考核信息列表",
+      "members": [
+        {
+          "disabled": false,
+          "document": "客户UIN",
+          "example": "10000014512",
+          "member": "string",
+          "name": "ClientUin",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "是否参与增量政策，\nY：是，N：否",
+          "example": "Y",
+          "member": "string",
+          "name": "IsJoinIncrease",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "增量考核关联时间",
+          "example": "2024-12",
+          "member": "string",
+          "name": "IncreaseUseAssociateDate",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "参与增量考核的原始客户等级",
+          "example": "T2",
+          "member": "string",
+          "name": "TLevel",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "增量考核目标,分",
+          "example": "12000",
+          "member": "string",
+          "name": "IncreaseGoal",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "完成订单金额,分",
+          "example": "100",
+          "member": "string",
+          "name": "TotalBaseAmt",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "out"
+    },
     "CreatePayRelationForClientRequest": {
       "document": "CreatePayRelationForClient请求参数结构体",
       "members": [
@@ -1231,6 +1328,45 @@
       ],
       "usage": "out"
     },
+    "DealPriceDetail": {
+      "document": "订单价格详情",
+      "members": [
+        {
+          "disabled": false,
+          "document": "子订单号",
+          "example": "20250411030002711111111",
+          "member": "string",
+          "name": "DealName",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "订单归属人uin（代客uin）",
+          "example": "1000001",
+          "member": "string",
+          "name": "OwnerUin",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "子产品价格详情列表",
+          "example": "无",
+          "member": "SubProductPriceDetail",
+          "name": "SubProductPriceDetail",
+          "output_required": false,
+          "required": false,
+          "type": "list",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
+    },
     "DescribeAgentAuditedClientsRequest": {
       "document": "DescribeAgentAuditedClients请求参数结构体",
       "members": [
@@ -1273,7 +1409,7 @@
         {
           "disabled": false,
           "document": "客户账号ID列表",
-          "example": "[10000, 10001]",
+          "example": "[\"1000021\", \"10000022\"]",
           "member": "string",
           "name": "ClientUins",
           "required": false,
@@ -1299,7 +1435,7 @@
         },
         {
           "disabled": false,
-          "document": "偏移量",
+          "document": "*偏移量 【请保持必传】",
           "example": "0",
           "member": "uint64",
           "name": "Offset",
@@ -1308,7 +1444,7 @@
         },
         {
           "disabled": false,
-          "document": "限制数目",
+          "document": "*限制数目 【请保持必传】最大2000",
           "example": "10",
           "member": "uint64",
           "name": "Limit",
@@ -1360,7 +1496,7 @@
         {
           "disabled": false,
           "document": "已审核代客列表",
-          "example": "{     \"Uin\": \"3286669433\",     \"ClientUin\": \"2461871653\",     \"C",
+          "example": "无",
           "member": "AgentAuditedClient",
           "name": "AgentClientSet",
           "output_required": true,
@@ -1471,7 +1607,7 @@
         {
           "disabled": false,
           "document": "业务明细列表",
-          "example": "[       {         \"ActivityId\": \"0\",         \"Amt\": 125,         \"ClientRemark\": \"有特批\",         \"ClientType\": \"old\",         \"ClientUin\": \"2000002\",         \"GoodsType\": \"购买云服务\",         \"OrderId\": \"202401311730494235252\",         \"PayMode\": \"prepay\",         \"PayTime\": \"2024-01-31 06:06:46\",         \"PayerMode\": \"selfpay\",         \"ProjectType\": \"platform\",         \"SettleMonth\": \"2024-01\",         \"Uin\": \"1000001\"       } \t\t\t ]",
+          "example": "无",
           "member": "AgentBillElem",
           "name": "AgentBillSet",
           "output_required": true,
@@ -1638,7 +1774,7 @@
         {
           "disabled": false,
           "document": "待审核代客列表",
-          "example": "[       {         \"ApplyTime\": 1722396845,         \"ClientFlag\": \"b\",         \"ClientName\": \"测试测试\",         \"ClientUin\": \"2000002\",         \"HasOverdueBill\": 0,         \"Mail\": \"dadd*******@qq.com\",         \"Phone\": \"111****0090\",         \"SalesName\": \"testname\",         \"SalesUin\": \"1000001\",         \"Status\": 1,         \"Uin\": \"1000002\"       }     ]",
+          "example": "无",
           "member": "AgentClientElem",
           "name": "AgentClientSet",
           "output_required": true,
@@ -1687,7 +1823,7 @@
         },
         {
           "disabled": false,
-          "document": "下单时间范围起始点【请保持时间范围最大90天】",
+          "document": "下单时间范围起始点【*请必传并控制时间范围最大90天，避免出现超时】",
           "example": "2020-01-01 00:00:00",
           "member": "datetime",
           "name": "CreatTimeRangeStart",
@@ -1696,7 +1832,7 @@
         },
         {
           "disabled": false,
-          "document": "下单时间范围终止点【请保持时间范围最大90天】",
+          "document": "下单时间范围终止点【*请必传并控制时间范围最大90天，避免出现超时】",
           "example": "2020-01-01 00:00:00",
           "member": "datetime",
           "name": "CreatTimeRangeEnd",
@@ -1714,7 +1850,7 @@
         },
         {
           "disabled": false,
-          "document": "订单的状态(1：未支付;2：已支付;3：发货中;4：已发货;5：发货失败;6：已退款;7：已关单;8：订单过期;9：订单已失效;10：产品已失效;11：代付拒绝;12：支付中)",
+          "document": "子订单状态(1-待支付,2-已支付,3-发货中,4-已发货,5-发货失败,6-已退款,7-已取消,8-已过期,9-已失效,12-支付中,13-退款中,30-处理中)\n\n控制台订单状态为以上状态的组合：未支付(1) 处理中(2,3,5,12,13,30) 已取消(7) 交易成功(4) 已过期(8) 已退款(6) 订单错误(9)",
           "example": "1",
           "member": "uint64",
           "name": "Status",
@@ -1724,7 +1860,7 @@
         {
           "disabled": false,
           "document": "下单人账号ID列表",
-          "example": "100001",
+          "example": "[\"100001\"]",
           "member": "string",
           "name": "OwnerUins",
           "required": false,
@@ -1733,7 +1869,7 @@
         {
           "disabled": false,
           "document": "子订单号列表",
-          "example": "[\"202001010000123456', '202001010000123457\"]",
+          "example": "[\"20250630941003020261651\", \"20250528341002900634981\"]",
           "member": "string",
           "name": "DealNames",
           "required": false,
@@ -1742,7 +1878,7 @@
         {
           "disabled": false,
           "document": "大订单号列表",
-          "example": "[\"202001010000123456', '202001010000123457\"]",
+          "example": "[\"20250630941003020261641\", \"20250528341002900634971\"]",
           "member": "string",
           "name": "BigDealIds",
           "required": false,
@@ -1766,7 +1902,7 @@
         {
           "disabled": false,
           "document": "订单数组",
-          "example": "[       {         \"ActionType\": \"purchase\",         \"ActivityId\": \"\",         \"AppId\": \"251255283\",         \"BigDealId\": \"2024012093925000000000\",         \"BillId\": \"2024012093925000111111\",         \"ClientRemark\": \"客户备注\",         \"ClientType\": \"old\",         \"CreatTime\": \"2024-10-23 16:57:28\",         \"Creater\": \"2000002\",         \"DealId\": \"293920000\",         \"DealName\": \"20240120939250001222222\",         \"DealStatus\": \"未支付\",         \"GoodsCategoryId\": \"101832\",         \"GoodsName\": \"腾讯会议（SAAS版）\",         \"GoodsNum\": \"1\",         \"GoodsPrice\": {           \"OriginalTotalCost\": 6988000,           \"RealTotalCost\": 6988000         },         \"OverdueTime\": \"2024-02-07 16:57:28\",         \"OwnerUin\": \"1000001\",         \"PayEndTime\": \"2024-01-23 16:57:33\",         \"Payer\": \"1000001\",         \"PayerMode\": \"0\",         \"PaymentMethod\": \"按年：1年\",         \"ProductInfo\": [           {             \"Name\": \"企业版高级账号\",             \"Value\": \"10\"           },           {             \"Name\": \"50方虚拟会议室\",             \"Value\": \"1\"           },           {             \"Name\": \"300方虚拟会议室\",             \"Value\": \"9\"           }         ],         \"ProjectType\": \"\",         \"RefundMap\": [],         \"ResourceIds\": [           \"700000942629_2024012362900000000001\"         ],         \"SalesUin\": \"2000002\",         \"Status\": \"1\",         \"SubGoodsName\": \"腾讯会议（SAAS版企业版）\",         \"UpdateTime\": \"2024-01-23 16:57:35\",         \"VoucherDecline\": \"0\"       }     ]",
+          "example": "无",
           "member": "AgentDealNewElem",
           "name": "AgentDealSet",
           "output_required": true,
@@ -1781,6 +1917,61 @@
           "name": "TotalCount",
           "output_required": true,
           "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeAgentDealsPriceDetailByDealNameRequest": {
+      "document": "DescribeAgentDealsPriceDetailByDealName请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "下单年份（订单创建时间归属年份）",
+          "example": "2025",
+          "member": "uint64",
+          "name": "DealCreatYear",
+          "required": true,
+          "type": "int"
+        },
+        {
+          "disabled": false,
+          "document": "子订单号，每个请求最多查询100条",
+          "example": "[\"20250411030002711111111\", \"20250411030002722222222\"]",
+          "member": "string",
+          "name": "DealNames",
+          "required": true,
+          "type": "list"
+        },
+        {
+          "disabled": false,
+          "document": "订单归属代客uin",
+          "example": "100001",
+          "member": "string",
+          "name": "OwnerUin",
+          "required": false,
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeAgentDealsPriceDetailByDealNameResponse": {
+      "document": "DescribeAgentDealsPriceDetailByDealName返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "子订单的费用详情",
+          "example": "无",
+          "member": "DealPriceDetail",
+          "name": "DealList",
+          "output_required": false,
+          "type": "list",
           "value_allowed_null": false
         },
         {
@@ -1815,7 +2006,7 @@
         },
         {
           "disabled": false,
-          "document": "下单时间范围起始点(不传时会默认查15天内订单，传值时需要传15天内的起始时间)",
+          "document": "下单时间范围起始点(不传时会默认查最近15天内订单，传值时需要传最近15天内的起始时间)",
           "example": "2020-01-01 00:00:00",
           "member": "datetime",
           "name": "CreatTimeRangeStart",
@@ -1852,7 +2043,7 @@
         {
           "disabled": false,
           "document": "下单人账号ID列表",
-          "example": "[100001,100002]",
+          "example": "[\"100001\",\"100002\"]",
           "member": "string",
           "name": "OwnerUins",
           "required": false,
@@ -1885,7 +2076,7 @@
         {
           "disabled": false,
           "document": "订单数组",
-          "example": "[             {                 \"DealId\": \"1078264383\",                 \"DealName\": \"20240108122000905906371\",                 \"BigDealId\": \"20240108122000905906361\",                 \"GoodsCategoryId\": \"100058\",                 \"OwnerUin\": \"700000232122\",                 \"AppId\": \"251205747\",                 \"GoodsNum\": \"1\",                 \"GoodsPrice\": {                     \"RealTotalCost\": 1650,                     \"OriginalTotalCost\": 1750                 },                 \"ProductInfo\": [                     {                         \"Name\": \"磁盘属性\",                         \"Value\": \"数据盘\"                     },                     {                         \"Name\": \"容量\",                         \"Value\": \"50GB\"                     },                     {                         \"Name\": \"磁盘类型\",                         \"Value\": \"高性能云硬盘\"                     },                     {                         \"Name\": \"可用区\",                         \"Value\": \"广州二区\"                     }                 ],                 \"Creater\": \"700000232122\",                 \"CreatTime\": \"2024-01-08 10:13:49\",                 \"UpdateTime\": \"2024-01-08 10:14:55\",                 \"PaymentMethod\": \"按月：1个月\",                 \"Payer\": \"700000413752\",                 \"BillId\": \"20240108122000905906371\",                 \"PayEndTime\": \"2024-01-08 10:14:53\",                 \"Status\": \"4\",                 \"VoucherDecline\": \"100\",                 \"PayerMode\": \"1\",                 \"GoodsName\": \"云硬盘CBS\",                 \"SubGoodsName\": \"高性能云硬盘\",                 \"ClientRemark\": \"test\",                 \"ClientType\": \"new\",                 \"ProjectType\": \"platform\",                 \"SalesUin\": \"0\",                 \"DealStatus\": \"分配完成\",                 \"ActionType\": \"purchase\",                 \"ActivityId\": \"0\",                 \"OverdueTime\": \"2024-01-23 10:13:48\",                 \"ResourceIds\": [                     \"disk-bos529hc\"                 ]             }         ]",
+          "example": "无",
           "member": "AgentDealNewElem",
           "name": "AgentPayDealSet",
           "output_required": true,
@@ -1980,7 +2171,7 @@
         },
         {
           "disabled": false,
-          "document": "下单时间范围起始点(不传时会默认查15天内订单，传值时需要传15天内的起始时间)",
+          "document": "下单时间范围起始点(不传时会默认查最近15天内订单，传值时需要传最近15天内的起始时间)",
           "example": "2020-01-01 00:00:00",
           "member": "datetime",
           "name": "CreatTimeRangeStart",
@@ -2041,7 +2232,7 @@
         {
           "disabled": false,
           "document": "订单数组",
-          "example": "[ \t\t\t\t\t { \t\t\t\t\t\t\t \"DealId\": \"1078276337\", \t\t\t\t\t\t\t \"DealName\": \"20240108121000906445591\", \t\t\t\t\t\t\t \"BigDealId\": \"20240108121000906445581\", \t\t\t\t\t\t\t \"GoodsCategoryId\": \"176258\", \t\t\t\t\t\t\t \"OwnerUin\": \"700000232121\", \t\t\t\t\t\t\t \"AppId\": \"251205746\", \t\t\t\t\t\t\t \"GoodsNum\": \"1\", \t\t\t\t\t\t\t \"GoodsPrice\": { \t\t\t\t\t\t\t\t\t \"RealTotalCost\": -100000, \t\t\t\t\t\t\t\t\t \"OriginalTotalCost\": -100000 \t\t\t\t\t\t\t }, \t\t\t\t\t\t\t \"ProductInfo\": [ \t\t\t\t\t\t\t\t\t { \t\t\t\t\t\t\t\t\t\t\t \"Name\": \"计费测试商品新购\", \t\t\t\t\t\t\t\t\t\t\t \"Value\": \"jfcs\" \t\t\t\t\t\t\t\t\t } \t\t\t\t\t\t\t ], \t\t\t\t\t\t\t \"Creater\": \"700000232121\", \t\t\t\t\t\t\t \"CreatTime\": \"2024-01-08 15:56:09\", \t\t\t\t\t\t\t \"UpdateTime\": \"2024-01-08 15:56:13\", \t\t\t\t\t\t\t \"PaymentMethod\": \"按月：个月\", \t\t\t\t\t\t\t \"Payer\": \"700000232121\", \t\t\t\t\t\t\t \"BillId\": \"20240108121000906445591\", \t\t\t\t\t\t\t \"PayEndTime\": \"2024-01-08 15:56:11\", \t\t\t\t\t\t\t \"Status\": \"6\", \t\t\t\t\t\t\t \"VoucherDecline\": \"0\", \t\t\t\t\t\t\t \"PayerMode\": \"0\", \t\t\t\t\t\t\t \"GoodsName\": \"计费测试商品\", \t\t\t\t\t\t\t \"SubGoodsName\": \"非资源工厂验证预付费子产品（勿动）\", \t\t\t\t\t\t\t \"ClientRemark\": \"test\", \t\t\t\t\t\t\t \"ClientType\": \"new\", \t\t\t\t\t\t\t \"ProjectType\": \"platform\", \t\t\t\t\t\t\t \"SalesUin\": \"0\", \t\t\t\t\t\t\t \"DealStatus\": \"已退款\", \t\t\t\t\t\t\t \"ActionType\": \"refund\", \t\t\t\t\t\t\t \"ActivityId\": \"0\", \t\t\t\t\t\t\t \"OverdueTime\": \"2024-01-23 15:56:09\", \t\t\t\t\t\t\t \"ResourceIds\": [ \t\t\t\t\t\t\t\t\t \"4712106445241\" \t\t\t\t\t\t\t ] \t\t\t\t\t } \t\t\t ]",
+          "example": "无",
           "member": "AgentDealNewElem",
           "name": "AgentPayDealSet",
           "output_required": true,
@@ -2091,7 +2282,7 @@
           "example": "40",
           "member": "int64",
           "name": "Balance",
-          "required": true,
+          "output_required": true,
           "type": "int",
           "value_allowed_null": false
         },
@@ -2101,8 +2292,131 @@
           "example": "40",
           "member": "int64",
           "name": "Cash",
-          "required": true,
+          "output_required": true,
           "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeClientJoinIncreaseListRequest": {
+      "document": "DescribeClientJoinIncreaseList请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "客户UIN列表",
+          "example": "{\"1000000\",\"1000001\"}",
+          "member": "string",
+          "name": "ClientUins",
+          "required": true,
+          "type": "list"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeClientJoinIncreaseListResponse": {
+      "document": "DescribeClientJoinIncreaseList返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "已审核代客列表",
+          "example": "{\"ClientUin\": \"1000000121\",\"IsJoinIncrease\":\"Y\",\"IncreaseUseAssociateDate\":\"2024-09-12\",\"TLevel\":\"T1\",\"IncreaseGoal\":\"1000\",\"TotalBaseAmt\":\"10\"}",
+          "member": "ClientIncreaseInfoList",
+          "name": "List",
+          "output_required": true,
+          "type": "list",
+          "value_allowed_null": false
+        },
+        {
+          "document": "唯一请求 ID，由服务端生成，每次请求都会返回（若请求因其他原因未能抵达服务端，则该次请求不会获得 RequestId）。定位问题时需要提供该次请求的 RequestId。",
+          "member": "string",
+          "name": "RequestId",
+          "type": "string"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeClientSwitchTraTaskInfoRequest": {
+      "document": "DescribeClientSwitchTraTaskInfo请求参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "代客UIN",
+          "example": "10000001",
+          "member": "string",
+          "name": "ClientUin",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "disabled": false,
+          "document": "1：代理，2：代采",
+          "example": "1",
+          "member": "int64",
+          "name": "SwitchType",
+          "required": true,
+          "type": "int"
+        }
+      ],
+      "type": "object"
+    },
+    "DescribeClientSwitchTraTaskInfoResponse": {
+      "document": "DescribeClientSwitchTraTaskInfo返回参数结构体",
+      "members": [
+        {
+          "disabled": false,
+          "document": "客户UIN",
+          "example": "100000001",
+          "member": "string",
+          "name": "ClientUin",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "切换类型：代理,代采",
+          "example": "代理",
+          "member": "string",
+          "name": "SwitchType",
+          "output_required": true,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "ok，符合，fail，不符合",
+          "example": "ok",
+          "member": "string",
+          "name": "Result",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "切换链接",
+          "example": "https://xxxx/translate?taskId=xxxx",
+          "member": "string",
+          "name": "SwitchUrl",
+          "output_required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "不符合的原因",
+          "example": "xxxx处于欠票状态",
+          "member": "string",
+          "name": "ResultMsg",
+          "output_required": false,
+          "type": "string",
           "value_allowed_null": false
         },
         {
@@ -2674,6 +2988,56 @@
         }
       ],
       "type": "object"
+    },
+    "SubProductPriceDetail": {
+      "document": "订单子产品价格详情",
+      "members": [
+        {
+          "disabled": false,
+          "document": "子产品名称",
+          "example": "云服务器CVM-标准型SA5",
+          "member": "string",
+          "name": "Name",
+          "output_required": false,
+          "required": false,
+          "type": "string",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "折扣值，=100时表示无折扣，=85时表示8.5折",
+          "example": "85",
+          "member": "float",
+          "name": "DiscountValue",
+          "output_required": false,
+          "required": false,
+          "type": "float",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "原价，折扣前价格，单位：分",
+          "example": "900000",
+          "member": "int64",
+          "name": "TotalCost",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        },
+        {
+          "disabled": false,
+          "document": "折后价，单位：分",
+          "example": "765000",
+          "member": "int64",
+          "name": "RealTotalCost",
+          "output_required": false,
+          "required": false,
+          "type": "int",
+          "value_allowed_null": false
+        }
+      ],
+      "usage": "both"
     },
     "UnbindClientElem": {
       "document": "解绑客户信息",
