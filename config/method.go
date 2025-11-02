@@ -55,7 +55,7 @@ func BindFlags(cmd *cobra.Command) {
 	if err := viper.BindPFlags(cmd.PersistentFlags()); err != nil {
 		panic(exception.UnknownError.SetMessage(err.Error()))
 	}
-	config.LoadConfig(AppDir)
+	config.LoadConfig(config.GetConfigDir(AppDir))
 	viper.SetDefault(Region, DefaultRegion)
 }
 
