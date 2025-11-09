@@ -10,6 +10,7 @@ func main() {
 	rootCmd := app.GetRootCmd()
 	config.BindFlags(rootCmd)
 	rootCmd.AddCommand(VERSIONCMD)
+	rootCmd.AddCommand(UpgradeCMD)
 	defer func() {
 		if err := recover(); err != nil {
 			log.Println(err)

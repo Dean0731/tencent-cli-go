@@ -3,7 +3,7 @@
 # 安装TCCLI
 1. 下载最新版本的即可二进制文件即可，注意选择对应的架构
 # 配置TCCLI
-1. 在家目录下创建./tencent-cli/Config.yaml
+1. 在家目录下创建~/.tencent-cli/Config.yaml
 ```yaml
 SecretId: AKID*****************************
 SecretKey: Key*****************************

@@ -1,5 +1,7 @@
 package config
 
+import _const "github.com/dean0731/dean-tool/const"
+
 const (
 	Debug            = "D"
 	OutPutJsonFormat = "J"
@@ -11,7 +13,7 @@ const (
 	EndPoint  = "EndPoint"
 	SecretId  = "SecretId"
 	SecretKey = "SecretKey"
-	HttpProxy = "HttpProxy"
+	HttpProxy = _const.HttpProxy
 )
 
 var (
@@ -27,11 +29,8 @@ const (
 )
 
 const (
-	ConfigurationFileName = "Config"
-	ConfigurationFileType = "yaml"
-
-	WindowsHomeEnv = "USERPROFILE"
-	LinuxHomeEnv   = "HOME"
-
-	AppDir = ".tencent-cli"
+	AppDir      = ".tencent-cli"
+	GithubOwner = "Dean0731"
+	GithubRepo  = "tencent-cli-go"
+	GitAppName  = "tencent_cli_go"
 )
